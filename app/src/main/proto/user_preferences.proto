@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.hefengbao.wenqu.datastore";
+option java_multiple_files = true;
+
+message UserPreferences {
+
+    bool poem_synced = 16;
+    uint64 poem_count = 17,
+    uint64 poem_last_read_id = 18,
+}
