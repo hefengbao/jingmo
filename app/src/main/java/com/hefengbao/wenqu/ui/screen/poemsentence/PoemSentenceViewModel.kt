@@ -1,10 +1,9 @@
-package com.hefengbao.wenqu.ui.screen.poem
+package com.hefengbao.wenqu.ui.screen.poemsentence
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.wenqu.data.database.entity.PoemWithWriterAndTags
-import com.hefengbao.wenqu.data.repository.PoemRepository
+import com.hefengbao.wenqu.data.database.entity.SentenceWithPoem
+import com.hefengbao.wenqu.data.repository.PoemSentenceRepository
 import com.hefengbao.wenqu.data.repository.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,45 +13,45 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PoemViewModel @Inject constructor(
+class PoemSentenceViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val poemRepository: PoemRepository
-): ViewModel() {
+    private val poemSentenceRepository: PoemSentenceRepository
+) : ViewModel() {
     var id = 1L
+
     init {
         viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().poemLastReadId
+            id = preferenceRepository.getDataStatus().first().poemSentenceLastReadId
         }
     }
 
-    fun setLastReadId(id: Long){
+    fun setLastReadId(id: Long) {
         viewModelScope.launch {
-            preferenceRepository.setPoemLastReadId(id)
+            preferenceRepository.setPoemSentenceLastReadId(id)
         }
     }
 
     private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
     val nextId: SharedFlow<Long?> = _nextId
-    fun getNextId(id: Long){
+    fun getNextId(id: Long) {
         viewModelScope.launch {
-            _nextId.value = poemRepository.getNextId(id)
+            _nextId.value = poemSentenceRepository.getNextId(id)
         }
     }
 
     private val _prevId: MutableStateFlow<Long?> = MutableStateFlow(null)
     val prevId: SharedFlow<Long?> = _prevId
-    fun getPrevId(id: Long){
+    fun getPrevId(id: Long) {
         viewModelScope.launch {
-            _prevId.value = poemRepository.getPrevId(id)
-            Log.i("PoemVM", _prevId.value.toString())
+            _prevId.value = poemSentenceRepository.getPrevId(id)
         }
     }
 
-    private val _poem: MutableStateFlow<PoemWithWriterAndTags?> = MutableStateFlow(null)
-    val poem: SharedFlow<PoemWithWriterAndTags?> = _poem
-    fun getPoem(id: Long){
+    private val _sentence: MutableStateFlow<SentenceWithPoem?> = MutableStateFlow(null)
+    val sentence: SharedFlow<SentenceWithPoem?> = _sentence
+    fun getSentence(id: Long) {
         viewModelScope.launch {
-            _poem.value = poemRepository.getPoem(id)
+            _sentence.value = poemSentenceRepository.getSentence(id)
         }
     }
 }

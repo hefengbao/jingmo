@@ -16,7 +16,7 @@ package com.hefengbao.wenqu.data.network
  */
 
 import androidx.annotation.VisibleForTesting
-import com.google.samples.apps.nowinandroid.core.network.fake.FakeAssetManager
+import com.hefengbao.wenqu.data.network.fake.FakeAssetManager
 import java.io.File
 import java.io.InputStream
 import java.util.Properties

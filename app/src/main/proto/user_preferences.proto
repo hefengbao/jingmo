@@ -5,7 +5,19 @@ option java_multiple_files = true;
 
 message UserPreferences {
 
-    bool poem_synced = 16;
-    uint64 poem_count = 17,
-    uint64 poem_last_read_id = 18,
+  bool poem_synced = 16;
+  uint32 poem_count = 17;
+  uint32 poem_last_read_id = 18;
+  bool tag_synced = 19;
+  uint32 tag_count = 20;
+  bool poem_tag_synced = 21;
+  uint32 poem_tag_count = 22;
+  bool writer_synced = 23;
+  uint32 writer_count = 24;
+  bool poem_sentence_synced = 25;
+  uint32 poem_sentence_count = 26;
+  uint32 poem_sentence_last_read_id = 27;
+  bool idiom_synced = 28;
+  uint32 idiom_count = 29;
+  uint32 idiom_last_read_id = 30;
 }

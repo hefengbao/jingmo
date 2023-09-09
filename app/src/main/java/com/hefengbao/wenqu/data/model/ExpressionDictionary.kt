@@ -1,8 +1,8 @@
 package com.hefengbao.wenqu.data.model
 
 /**
- * 字典
+ * 词典
  */
-data class WordDictionary(
+data class ExpressionDictionary(
     val id: Long
 )

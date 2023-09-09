@@ -9,19 +9,19 @@ import com.hefengbao.wenqu.ui.screen.idiom.IdiomRoute
 private const val ROUTE_IDIOM = "idiom"
 private const val ROUTE_IDIOM_GRAPH = "idiom_graph"
 
-fun NavController.navigateToIdiomGraph(){
+fun NavController.navigateToIdiomGraph() {
     this.navigate(ROUTE_IDIOM)
 }
 
 fun NavGraphBuilder.idiomGraph(
     onBackClick: () -> Unit,
-    nestGraph:NavGraphBuilder.() -> Unit
-){
+    nestGraph: NavGraphBuilder.() -> Unit
+) {
     navigation(
         startDestination = ROUTE_IDIOM,
         route = ROUTE_IDIOM_GRAPH
-    ){
-        composable(ROUTE_IDIOM){
+    ) {
+        composable(ROUTE_IDIOM) {
             IdiomRoute(
                 onBackClick = onBackClick
             )

@@ -1,22 +1,26 @@
-package com.hefengbao.wenqu.data.model
+package com.hefengbao.wenqu.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 
 data class PoemWithWriterAndTags(
-    @Embedded val poem: Poem,
+    @Embedded val poemEntity: PoemEntity,
+
+    @Relation(
+        parentColumn = "writer_id",
+        entityColumn = "id"
+    )
+    val writerEntity: WriterEntity?,
 
     @Relation(
         parentColumn = "id",
-        entityColumn = "writer_id"
+        entityColumn = "id",
+        associateBy = Junction(
+            PoemTagCrossRef::class,
+            parentColumn = "poem_id",
+            entityColumn = "tag_id"
+        )
     )
-    val writer: Writer?,
-
-    @Relation(
-        parentColumn = "poem_id",
-        entityColumn = "tag_id",
-        associateBy = Junction(PoemTagCrossRef::class)
-    )
-    val tags: List<Tag>
+    val tags: List<TagEntity> = emptyList()
 )

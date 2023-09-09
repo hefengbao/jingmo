@@ -29,16 +29,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.wenqu.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.wenqu.data.database.entity.IdiomEntity
 
 @Composable
-fun ChineseWisecrackRoute(
+fun IdiomRoute(
     onBackClick: () -> Unit,
     viewModel: IdiomViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(Unit){
-        viewModel.getChineseWisecrack(viewModel.id)
+    LaunchedEffect(Unit) {
+        viewModel.getIdiom(viewModel.id)
         viewModel.getPrevId(viewModel.id)
         viewModel.getNextId(viewModel.id)
     }
@@ -47,20 +47,20 @@ fun ChineseWisecrackRoute(
 
     val nextId by viewModel.nextId.collectAsState(initial = null)
 
-    val chineseWisecrack by viewModel.chineseCrack.collectAsState(initial = null)
+    val idiom by viewModel.idiom.collectAsState(initial = null)
 
-    ChineseCrackScreen(
+    IdiomScreen(
         onBackClick = onBackClick,
-        chineseCrack = chineseWisecrack,
+        idiom = idiom,
         prevId = prevId,
         nextId = nextId,
         onPrevClick = {
-            viewModel.getChineseWisecrack(prevId!!)
+            viewModel.getIdiom(prevId!!)
             viewModel.getPrevId(prevId!!)
             viewModel.getNextId(prevId!!)
         },
         onNextClick = {
-            viewModel.getChineseWisecrack(nextId!!)
+            viewModel.getIdiom(nextId!!)
             viewModel.getPrevId(nextId!!)
             viewModel.getNextId(nextId!!)
         },
@@ -72,18 +72,18 @@ fun ChineseWisecrackRoute(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ChineseCrackScreen(
+private fun IdiomScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    chineseCrack: ChineseWisecrackEntity?,
+    idiom: IdiomEntity?,
     prevId: Long?,
     nextId: Long?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
     setLastReadId: (Long) -> Unit
 ) {
-    chineseCrack?.let { entity ->
-        LaunchedEffect(entity){
+    idiom?.let { entity ->
+        LaunchedEffect(entity) {
             setLastReadId(entity.id)
         }
 
@@ -91,7 +91,7 @@ private fun ChineseCrackScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "歇后语")
+                        Text(text = "成语")
                     },
                     navigationIcon = {
                         IconButton(onClick = onBackClick) {
@@ -100,7 +100,7 @@ private fun ChineseCrackScreen(
                     }
                 )
             },
-        ) {paddingValues ->
+        ) { paddingValues ->
             Box(
                 modifier = modifier
                     .padding(paddingValues)
@@ -123,14 +123,56 @@ private fun ChineseCrackScreen(
                                 .padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(
-                                text = chineseCrack.riddle,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Text(
-                                text = chineseCrack.answer,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text(
+                                    text = idiom.pinyin,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                                Text(
+                                    text = entity.word,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text(
+                                    text = "释义",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = idiom.explanation,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text(
+                                    text = "示例",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = idiom.example,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text(
+                                    text = "出处",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = idiom.derivation,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
                         }
                     }
                 }

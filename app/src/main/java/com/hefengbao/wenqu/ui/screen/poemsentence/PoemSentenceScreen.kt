@@ -1,5 +1,6 @@
-package com.hefengbao.wenqu.ui.screen.poem
+package com.hefengbao.wenqu.ui.screen.poemsentence
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,33 +21,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.wenqu.data.database.entity.PoemWithWriterAndTags
+import com.hefengbao.wenqu.data.database.entity.SentenceWithPoem
 import kotlinx.coroutines.launch
 
 @Composable
-fun PoemRoute(
+fun PoemSentenceRoute(
     onBackClick: () -> Unit,
-    viewModel: PoemViewModel = hiltViewModel()
+    viewModel: PoemSentenceViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(Unit){
-        viewModel.getPoem(viewModel.id)
+    LaunchedEffect(Unit) {
+        viewModel.getSentence(viewModel.id)
         viewModel.getPrevId(viewModel.id)
         viewModel.getNextId(viewModel.id)
     }
@@ -55,20 +55,20 @@ fun PoemRoute(
 
     val nextId by viewModel.nextId.collectAsState(initial = null)
 
-    val poem by viewModel.poem.collectAsState(initial = null)
+    val sentence by viewModel.sentence.collectAsState(initial = null)
 
-    PoemScreen(
+    PoemSentenceScreen(
         onBackClick = onBackClick,
-        poem = poem,
+        sentence = sentence,
         prevId = prevId,
         nextId = nextId,
         onPrevClick = {
-            viewModel.getPoem(prevId!!)
+            viewModel.getSentence(prevId!!)
             viewModel.getPrevId(prevId!!)
             viewModel.getNextId(prevId!!)
         },
         onNextClick = {
-            viewModel.getPoem(nextId!!)
+            viewModel.getSentence(nextId!!)
             viewModel.getPrevId(nextId!!)
             viewModel.getNextId(nextId!!)
         },
@@ -80,10 +80,10 @@ fun PoemRoute(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PoemScreen(
+private fun PoemSentenceScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    poem: PoemWithWriterAndTags?,
+    sentence: SentenceWithPoem?,
     prevId: Long?,
     nextId: Long?,
     onPrevClick: () -> Unit,
@@ -91,18 +91,28 @@ private fun PoemScreen(
     setLastReadId: (Long) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
-    var status by rememberSaveable { mutableStateOf(0) }
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = rememberStandardBottomSheetState(
+            initialValue = SheetValue.Hidden,
+            skipHiddenState = false
+        )
+    )
 
-    poem?.let {entity ->
-        LaunchedEffect(entity){
-            setLastReadId(entity.poemEntity.id)
+    BackHandler(scaffoldState.bottomSheetState.isVisible) {
+        coroutineScope.launch {
+            scaffoldState.bottomSheetState.hide()
+        }
+    }
+
+    sentence?.let { entity ->
+        LaunchedEffect(entity) {
+            setLastReadId(entity.sentence.id)
         }
         BottomSheetScaffold(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "古诗词文")
+                        Text(text = "古诗词文名句")
                     },
                     navigationIcon = {
                         IconButton(onClick = onBackClick) {
@@ -117,33 +127,21 @@ private fun PoemScreen(
                 Column(
                     modifier = modifier
                         .padding(horizontal = 16.dp)
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    when (status) {
-                        1 -> {
-                            Text(text = "${entity.poemEntity.remark}")
-                        }
-                        2 -> {
-                            Text(text = "${entity.poemEntity.shangxi}")
-                        }
-                        3 -> {
-                            entity.writerEntity?.let { writerEntity ->
-                                Text(text = writerEntity.name)
-                                writerEntity.simpleIntro?.let {
-                                    Text(text = it)
-                                }
-                                writerEntity.detailIntro?.let {
-                                    it.map { introItem ->
-                                        Text(
-                                            text = introItem.title,
-                                            style = MaterialTheme.typography.titleMedium
-                                        )
-                                        Text(text = "${introItem.content}")
-                                    }
-                                }
-                            }
-                        }
-                        else -> {}
+                    entity.poem?.let { poemEntity ->
+                        Text(
+                            text = poemEntity.title,
+                            modifier = modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+
+                        Text(
+                            text = poemEntity.content,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                 }
             },
@@ -171,22 +169,12 @@ private fun PoemScreen(
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text(
-                                text = entity.poemEntity.title,
-                                modifier = modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleMedium
-                            )
-
-                            Text(
-                                text = "【${entity.writerEntity?.dynasty}】${entity.writerEntity?.name}",
-                                modifier = modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-
-                            Text(
-                                text = entity.poemEntity.content,
+                                text = sentence.sentence.content,
                                 style = MaterialTheme.typography.bodyLarge
+                            )
+                            Text(
+                                text = "—— ${sentence.sentence.from}",
+                                style = MaterialTheme.typography.titleMedium
                             )
                         }
                     }
@@ -208,29 +196,15 @@ private fun PoemScreen(
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
 
-                    OutlinedButton(onClick = {
-                        coroutineScope.launch {
-                            status = 1
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }) {
-                        Text(text = "注释")
-                    }
-                    OutlinedButton(onClick = {
-                        coroutineScope.launch {
-                            status = 2
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }) {
-                        Text(text = "赏析")
-                    }
-                    OutlinedButton(onClick = {
-                        coroutineScope.launch {
-                            status = 3
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }) {
-                        Text(text = "作者")
+                    OutlinedButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                scaffoldState.bottomSheetState.expand()
+                            }
+                        },
+                        enabled = sentence.poem != null
+                    ) {
+                        Text(text = "原文")
                     }
 
                     IconButton(

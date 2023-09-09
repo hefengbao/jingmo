@@ -1,13 +1,16 @@
-package com.hefengbao.wenqu.data.model
+package com.hefengbao.wenqu.data.database.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Serializable
-data class PoemSentence(
+@Entity(tableName = "poem_sentences")
+data class PoemSentenceEntity(
+    @PrimaryKey
     val id: Long,
     val content: String,
     val from: String,
-    @SerialName("poem_id")
-    val poemId: Long?
+    @ColumnInfo("poem_id")
+    val poemId: Long?,
+    val bookmarked: Boolean = false
 )

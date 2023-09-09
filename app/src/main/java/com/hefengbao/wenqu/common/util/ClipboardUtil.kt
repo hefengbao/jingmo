@@ -1,4 +1,4 @@
-package com.hefengbao.nil.core.common.util
+package com.hefengbao.wenqu.common.util
 
 import android.content.ClipData
 import android.content.ClipboardManager

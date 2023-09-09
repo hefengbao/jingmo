@@ -1,3 +1,10 @@
 package com.hefengbao.wenqu.data.model
 
-data class IntroItem()
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class IntroItem(
+    val title: String,
+    val content: String?
+)
+

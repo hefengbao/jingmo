@@ -1,3 +1,8 @@
 package com.hefengbao.wenqu.data.model
 
-data class WordDictionary()
+/**
+ * 字典
+ */
+data class WordDictionary(
+    val id: Long
+)

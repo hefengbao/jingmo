@@ -1,21 +1,24 @@
 package com.hefengbao.wenqu.data.database.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * 成语
  */
-@Serializable
+@Entity(tableName = "idioms")
 data class IdiomEntity(
+    @PrimaryKey
     val id: Long,
     val word: String,
     val pinyin: String,
     val explanation: String,
     val example: String,
     val derivation: String,
-    @SerialName("first_word")
+    @ColumnInfo("first_word")
     val firstWord: String,
-    @SerialName("first_letter")
-    val firstLetter: String
+    @ColumnInfo("first_letter")
+    val firstLetter: String,
+    val bookmarked: Boolean = false,
 )

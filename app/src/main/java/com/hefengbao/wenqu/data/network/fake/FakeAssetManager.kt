@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.nowinandroid.core.network.fake
+package com.hefengbao.wenqu.data.network.fake
 
 import java.io.InputStream
 

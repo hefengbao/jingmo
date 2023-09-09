@@ -1,4 +1,4 @@
-package com.hefengbao.wenqu.ui.screen.chinesecrack
+package com.hefengbao.wenqu.ui.screen.chinesewisecrack
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +37,7 @@ fun ChineseWisecrackRoute(
     viewModel: ChineseWisecrackViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.getChineseWisecrack(viewModel.id)
         viewModel.getPrevId(viewModel.id)
         viewModel.getNextId(viewModel.id)
@@ -83,7 +83,7 @@ private fun ChineseWisecrackScreen(
     setLastReadId: (Long) -> Unit
 ) {
     chineseCrack?.let { entity ->
-        LaunchedEffect(entity){
+        LaunchedEffect(entity) {
             setLastReadId(entity.id)
         }
 
@@ -100,7 +100,7 @@ private fun ChineseWisecrackScreen(
                     }
                 )
             },
-        ) {paddingValues ->
+        ) { paddingValues ->
             Box(
                 modifier = modifier
                     .padding(paddingValues)
@@ -128,7 +128,7 @@ private fun ChineseWisecrackScreen(
                                 style = MaterialTheme.typography.bodyLarge
                             )
                             Text(
-                                text = chineseCrack.answer,
+                                text = "—— ${chineseCrack.answer}",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }

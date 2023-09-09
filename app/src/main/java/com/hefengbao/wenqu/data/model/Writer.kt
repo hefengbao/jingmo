@@ -1,3 +1,21 @@
 package com.hefengbao.wenqu.data.model
 
-data class Writer()
+import com.hefengbao.wenqu.data.database.entity.WriterEntity
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Writer(
+    val id: Long,
+    val name: String,
+    val avatar: String?,
+    val dynasty: String?,
+    @SerialName("simple_intro")
+    val simpleIntro: String?,
+    @SerialName("detail_intro")
+    val detailIntro: List<IntroItem>?
+)
+
+fun Writer.toWriterEntity() = WriterEntity(
+    id, name, avatar, dynasty, simpleIntro, detailIntro
+)

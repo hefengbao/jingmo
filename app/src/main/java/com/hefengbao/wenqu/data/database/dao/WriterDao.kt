@@ -1,11 +1,12 @@
 package com.hefengbao.wenqu.data.database.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import com.hefengbao.wenqu.data.database.entity.PoemEntity
-import com.hefengbao.wenqu.data.database.entity.TagEntity
+import com.hefengbao.wenqu.data.database.entity.WriterEntity
 
-interface TagDao {
+@Dao
+interface WriterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(tagEntity: TagEntity)
+    suspend fun insert(writerEntity: WriterEntity)
 }

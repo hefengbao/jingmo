@@ -7,14 +7,14 @@ import com.hefengbao.wenqu.ui.screen.settings.AboutRoute
 
 private const val ROUTE_ABOUT = "about"
 
-fun NavController.navigateToAboutScreen(){
+fun NavController.navigateToAboutScreen() {
     this.navigate(ROUTE_ABOUT)
 }
 
 fun NavGraphBuilder.aboutScreen(
     onBackClick: () -> Unit
-){
-    composable(ROUTE_ABOUT){
+) {
+    composable(ROUTE_ABOUT) {
         AboutRoute(onBackClick)
     }
 }

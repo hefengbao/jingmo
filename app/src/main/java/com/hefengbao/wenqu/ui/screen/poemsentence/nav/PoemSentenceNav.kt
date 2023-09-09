@@ -4,25 +4,25 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.hefengbao.wenqu.ui.screen.poem.PoemRoute
+import com.hefengbao.wenqu.ui.screen.poemsentence.PoemSentenceRoute
 
-private const val ROUTE_POEM = "poem"
-private const val ROUTE_POEM_GRAPH = "poem_graph"
+private const val ROUTE_POEM_SENTENCE = "poem_sentence"
+private const val ROUTE_POEM_SENTENCE_GRAPH = "poem_sentence_graph"
 
-fun NavController.navigateToPoemGraph(){
-    this.navigate(ROUTE_POEM_GRAPH)
+fun NavController.navigateToPoemSentenceGraph() {
+    this.navigate(ROUTE_POEM_SENTENCE)
 }
 
-fun NavGraphBuilder.poemGraph(
+fun NavGraphBuilder.poemSentenceGraph(
     onBackClick: () -> Unit,
-    nestGraph:NavGraphBuilder.() -> Unit
-){
+    nestGraph: NavGraphBuilder.() -> Unit
+) {
     navigation(
-        startDestination = ROUTE_POEM,
-        route = ROUTE_POEM_GRAPH
-    ){
-        composable(ROUTE_POEM){
-            PoemRoute(
+        startDestination = ROUTE_POEM_SENTENCE,
+        route = ROUTE_POEM_SENTENCE_GRAPH
+    ) {
+        composable(ROUTE_POEM_SENTENCE) {
+            PoemSentenceRoute(
                 onBackClick = onBackClick
             )
         }
