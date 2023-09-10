@@ -1,6 +1,6 @@
-# 文曲星
+# 京墨
 
-『文曲星』开源、免费、公益性 APP。献给喜欢中华文字、文学、文化的人。
+『京墨』开源、免费、公益性 APP。献给喜欢中华文字、文学、文化的人。
 
 目前的内容有：
 
@@ -11,8 +11,6 @@
 3、歇后语 14026 条；
 
 4、成语 30895 条；
-
-**源码会晚于版本发布一段时间后提交，原因懂的都懂，不懂的我也没有义务去解释。**
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
@@ -35,3 +33,6 @@
 [https://github.com/caoxingyu/chinese-gushiwen.git](https://github.com/caoxingyu/chinese-gushiwen.git)
 
 [https://github.com/chinese-poetry/chinese-poetry.git](https://github.com/chinese-poetry/chinese-poetry.git)
+
+
+~初名为『文曲星』，很俗套的名字，又容易让人误会和文曲星字典有什么关系，在网上搜来搜去，第一次知道”京墨“，是一味中药，觉着还不错，暂时就是这个名字了。 2023.09.10~

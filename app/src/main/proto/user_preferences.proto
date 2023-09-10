@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.hefengbao.wenqu.datastore";
+option java_package = "com.hefengbao.jingmo.datastore";
 option java_multiple_files = true;
 
 message UserPreferences {

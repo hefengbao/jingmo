@@ -19,15 +19,15 @@ val keystoreProperties = Properties()
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
-    namespace = "com.hefengbao.wenqu"
+    namespace = "com.hefengbao.jingmo"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.hefengbao.wenqu"
+        applicationId = "com.hefengbao.jingmo"
         minSdk = 26
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -75,7 +75,7 @@ android {
                 val buildType = this.buildType.name
                 outputs.all {
                     if (this is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
-                        outputFileName = "wenqu_v${defaultConfig.versionName}_$buildType.apk"
+                        outputFileName = "jingmo_v${defaultConfig.versionName}_$buildType.apk"
                     }
                 }
             }
