@@ -16,7 +16,7 @@
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
-![](https://open.weixin.qq.com/qr/code?username=NowInLife)
+![](screenshot/公众号.png)
 
 ### 参考数据源：
 
@@ -35,6 +35,8 @@
 [https://github.com/caoxingyu/chinese-gushiwen.git](https://github.com/caoxingyu/chinese-gushiwen.git)
 
 [https://github.com/chinese-poetry/chinese-poetry.git](https://github.com/chinese-poetry/chinese-poetry.git)
+
+**本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀**
 
 ### 其他
 
