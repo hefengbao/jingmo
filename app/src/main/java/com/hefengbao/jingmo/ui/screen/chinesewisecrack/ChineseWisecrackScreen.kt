@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -123,14 +124,18 @@ private fun ChineseWisecrackScreen(
                                 .padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(
-                                text = chineseCrack.riddle,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Text(
-                                text = "—— ${chineseCrack.answer}",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                            SelectionContainer {
+                                Text(
+                                    text = chineseCrack.riddle,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+                            SelectionContainer {
+                                Text(
+                                    text = "—— ${chineseCrack.answer}",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
                         }
                     }
                 }
