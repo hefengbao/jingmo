@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -191,26 +192,32 @@ private fun PoemScreen(
                                 .padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(
-                                text = entity.poemEntity.title,
-                                modifier = modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleLarge
-                            )
+                            SelectionContainer {
+                                Text(
+                                    text = entity.poemEntity.title,
+                                    modifier = modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                            }
 
-                            Text(
-                                text = "【${entity.poemEntity.dynasty}】${entity.poemEntity.writerName}",
-                                modifier = modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.labelMedium
-                            )
+                            SelectionContainer {
+                                Text(
+                                    text = "【${entity.poemEntity.dynasty}】${entity.poemEntity.writerName}",
+                                    modifier = modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                            }
 
-                            Text(
-                                modifier = modifier.fillMaxWidth(),
-                                text = entity.poemEntity.content,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
+                            SelectionContainer {
+                                Text(
+                                    modifier = modifier.fillMaxWidth(),
+                                    text = entity.poemEntity.content,
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
                         }
                     }
                 }

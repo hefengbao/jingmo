@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -126,14 +127,18 @@ private fun IdiomScreen(
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Text(
-                                    text = idiom.pinyin,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                                Text(
-                                    text = entity.word,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+                                SelectionContainer {
+                                    Text(
+                                        text = idiom.pinyin,
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                                SelectionContainer {
+                                    Text(
+                                        text = entity.word,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
                             }
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -142,10 +147,12 @@ private fun IdiomScreen(
                                     text = "释义",
                                     style = MaterialTheme.typography.titleMedium
                                 )
-                                Text(
-                                    text = idiom.explanation,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+                                SelectionContainer {
+                                    Text(
+                                        text = idiom.explanation,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
                             }
 
                             Column(
@@ -155,10 +162,12 @@ private fun IdiomScreen(
                                     text = "示例",
                                     style = MaterialTheme.typography.titleMedium
                                 )
-                                Text(
-                                    text = idiom.example,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+                                SelectionContainer {
+                                    Text(
+                                        text = idiom.example,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
                             }
 
                             Column(
@@ -168,10 +177,12 @@ private fun IdiomScreen(
                                     text = "出处",
                                     style = MaterialTheme.typography.titleMedium
                                 )
-                                Text(
-                                    text = idiom.derivation,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+                                SelectionContainer {
+                                    Text(
+                                        text = idiom.derivation,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
                             }
                         }
                     }

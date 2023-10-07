@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -131,17 +132,20 @@ private fun PoemSentenceScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     entity.poem?.let { poemEntity ->
-                        Text(
-                            text = poemEntity.title,
-                            modifier = modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-
-                        Text(
-                            text = poemEntity.content,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = poemEntity.title,
+                                modifier = modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                        SelectionContainer {
+                            Text(
+                                text = poemEntity.content,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
             },
@@ -168,14 +172,18 @@ private fun PoemSentenceScreen(
                                 .padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(
-                                text = sentence.sentence.content,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Text(
-                                text = "—— ${sentence.sentence.from}",
-                                style = MaterialTheme.typography.titleMedium
-                            )
+                            SelectionContainer {
+                                Text(
+                                    text = sentence.sentence.content,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+                            SelectionContainer {
+                                Text(
+                                    text = "—— ${sentence.sentence.from}",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
                         }
                     }
                 }
