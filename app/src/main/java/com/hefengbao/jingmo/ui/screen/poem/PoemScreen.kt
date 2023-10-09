@@ -190,13 +190,12 @@ private fun PoemScreen(
                             modifier = modifier
                                 .fillMaxWidth()
                                 .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             SelectionContainer {
                                 Text(
                                     text = entity.poemEntity.title,
-                                    modifier = modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.titleLarge
                                 )
                             }
@@ -204,17 +203,13 @@ private fun PoemScreen(
                             SelectionContainer {
                                 Text(
                                     text = "【${entity.poemEntity.dynasty}】${entity.poemEntity.writerName}",
-                                    modifier = modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.labelMedium
                                 )
                             }
 
                             SelectionContainer {
                                 Text(
-                                    modifier = modifier.fillMaxWidth(),
                                     text = entity.poemEntity.content,
-                                    textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.bodyLarge
                                 )
                             }
