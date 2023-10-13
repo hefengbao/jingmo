@@ -15,29 +15,30 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.PoemWithWriterAndTags
@@ -101,7 +102,6 @@ private fun PoemScreen(
             skipHiddenState = false
         )
     )
-    var status by rememberSaveable { mutableStateOf(0) }
 
     BackHandler(scaffoldState.bottomSheetState.isVisible) {
         coroutineScope.launch {
@@ -109,11 +109,15 @@ private fun PoemScreen(
         }
     }
 
+    var openBottomSheetRemark by remember { mutableStateOf(false) }
+    var openBottomSheetAppreciation by remember { mutableStateOf(false) }
+    var openBottomSheetAuthor by remember { mutableStateOf(false) }
+
     poem?.let { entity ->
         LaunchedEffect(entity) {
             setLastReadId(entity.poemEntity.id)
         }
-        BottomSheetScaffold(
+        Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
@@ -125,49 +129,6 @@ private fun PoemScreen(
                         }
                     }
                 )
-            },
-            sheetPeekHeight = 0.dp,
-            scaffoldState = scaffoldState,
-            sheetContent = {
-                Column(
-                    modifier = modifier
-                        .padding(horizontal = 16.dp)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    when (status) {
-                        1 -> {
-                            Text(text = "${entity.poemEntity.remark}")
-                        }
-
-                        2 -> {
-                            Text(text = "${entity.poemEntity.shangxi}")
-                        }
-
-                        3 -> {
-                            entity.writerEntity?.let { writerEntity ->
-                                Column(
-                                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    Text(text = writerEntity.name)
-                                    writerEntity.simpleIntro?.let {
-                                        Text(text = it)
-                                    }
-                                    writerEntity.detailIntro?.let {
-                                        it.map { introItem ->
-                                            Text(
-                                                text = introItem.title,
-                                                style = MaterialTheme.typography.titleMedium
-                                            )
-                                            Text(text = "${introItem.content}")
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        else -> {}
-                    }
-                }
             },
         ) { paddingValues ->
             Box(
@@ -235,24 +196,21 @@ private fun PoemScreen(
 
                     OutlinedButton(onClick = {
                         coroutineScope.launch {
-                            status = 1
-                            scaffoldState.bottomSheetState.expand()
+                            openBottomSheetRemark = true
                         }
                     }) {
                         Text(text = "注释")
                     }
                     OutlinedButton(onClick = {
                         coroutineScope.launch {
-                            status = 2
-                            scaffoldState.bottomSheetState.expand()
+                            openBottomSheetAppreciation = true
                         }
                     }) {
                         Text(text = "赏析")
                     }
                     OutlinedButton(onClick = {
                         coroutineScope.launch {
-                            status = 3
-                            scaffoldState.bottomSheetState.expand()
+                            openBottomSheetAuthor = true
                         }
                     }) {
                         Text(text = "作者")
@@ -263,6 +221,69 @@ private fun PoemScreen(
                         enabled = nextId != 0L
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
+                    }
+                }
+            }
+        }
+
+        if (openBottomSheetRemark) {
+            ModalBottomSheet(
+                onDismissRequest = { openBottomSheetRemark = false },
+                sheetState = rememberModalBottomSheetState(true)
+            ) {
+                Column(
+                    modifier = modifier
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(text = "${entity.poemEntity.remark}")
+                }
+            }
+        }
+
+        if (openBottomSheetAppreciation) {
+            ModalBottomSheet(
+                onDismissRequest = { openBottomSheetAppreciation = false },
+                sheetState = rememberModalBottomSheetState(true),
+            ) {
+                Column(
+                    modifier = modifier
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(text = "${entity.poemEntity.shangxi}")
+                }
+            }
+        }
+
+        if (openBottomSheetAuthor) {
+            ModalBottomSheet(
+                onDismissRequest = { openBottomSheetAuthor = false },
+                sheetState = rememberModalBottomSheetState(true)
+            ) {
+                Column(
+                    modifier = modifier
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    entity.writerEntity?.let { writerEntity ->
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(text = writerEntity.name)
+                            writerEntity.simpleIntro?.let {
+                                Text(text = it)
+                            }
+                            writerEntity.detailIntro?.let {
+                                it.map { introItem ->
+                                    Text(
+                                        text = introItem.title,
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                    Text(text = "${introItem.content}")
+                                }
+                            }
+                        }
                     }
                 }
             }

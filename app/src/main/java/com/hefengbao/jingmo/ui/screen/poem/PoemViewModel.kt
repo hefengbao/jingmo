@@ -1,29 +1,27 @@
 package com.hefengbao.jingmo.ui.screen.poem
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.PoemWithWriterAndTags
 import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.ui.screen.poem.nav.PoemArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PoemViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val preferenceRepository: PreferenceRepository,
     private val poemRepository: PoemRepository
 ) : ViewModel() {
-    var id = 1L
+    private val poemArgs: PoemArgs = PoemArgs(savedStateHandle)
 
-    init {
-        viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().poemLastReadId
-        }
-    }
+    val id = poemArgs.poemId.toLong()
 
     fun setLastReadId(id: Long) {
         viewModelScope.launch {

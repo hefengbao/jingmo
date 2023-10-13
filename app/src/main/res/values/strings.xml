@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">京墨</string>
+    <string name="app_name_debug">京墨 Debug</string>
 </resources>

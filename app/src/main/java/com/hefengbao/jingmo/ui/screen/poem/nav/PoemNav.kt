@@ -1,32 +1,43 @@
 package com.hefengbao.jingmo.ui.screen.poem.nav
 
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import androidx.navigation.navArgument
 import com.hefengbao.jingmo.ui.screen.poem.PoemRoute
+import java.net.URLDecoder
+import java.net.URLEncoder
+import kotlin.text.Charsets.UTF_8
 
-private const val ROUTE_POEM = "poem"
-private const val ROUTE_POEM_GRAPH = "poem_graph"
+@VisibleForTesting
+internal const val poemIdArg = "poemId"
 
-fun NavController.navigateToPoemGraph() {
-    this.navigate(ROUTE_POEM_GRAPH)
+internal class PoemArgs(val poemId: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(URLDecoder.decode(checkNotNull(savedStateHandle[poemIdArg]), UTF_8.name()))
 }
 
-fun NavGraphBuilder.poemGraph(
-    onBackClick: () -> Unit,
-    nestGraph: NavGraphBuilder.() -> Unit
-) {
-    navigation(
-        startDestination = ROUTE_POEM,
-        route = ROUTE_POEM_GRAPH
-    ) {
-        composable(ROUTE_POEM) {
-            PoemRoute(
-                onBackClick = onBackClick
-            )
-        }
+fun NavController.navigateToPoemScreen(id: String) {
+    val encodedId = URLEncoder.encode(id, UTF_8.name())
+    this.navigate("poem/$encodedId") {
+        launchSingleTop = true
     }
+}
 
-    nestGraph()
+fun NavGraphBuilder.poemScreen(
+    onBackClick: () -> Unit
+) {
+    composable(
+        route = "poem/{$poemIdArg}",
+        arguments = listOf(
+            navArgument(poemIdArg) { type = NavType.StringType }
+        )
+    ) {
+        PoemRoute(
+            onBackClick = onBackClick
+        )
+    }
 }
