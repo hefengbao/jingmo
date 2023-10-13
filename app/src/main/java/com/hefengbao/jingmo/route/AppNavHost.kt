@@ -9,8 +9,10 @@ import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemListGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemListGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
@@ -30,14 +32,19 @@ fun AppNavHost(
     ) {
         homeGraph(
             onSettingsClick = { navController.navigateToSettingsGraph() },
-            onPoemClick = { navController.navigateToPoemGraph() },
+            onPoemClick = { navController.navigateToPoemListGraph() },
             onPoemSentenceClick = { navController.navigateToPoemSentenceGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackGraph() },
             onIdiomClick = { navController.navigateToIdiomGraph() },
             nestGraph = {
-                poemGraph(
+                poemListGraph(
                     onBackClick = navController::navigateUp,
-                    nestGraph = {}
+                    onItemClick = { navController.navigateToPoemScreen(it.toString()) },
+                    nestGraph = {
+                        poemScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
                 )
                 poemSentenceGraph(
                     onBackClick = navController::navigateUp,

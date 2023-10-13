@@ -68,7 +68,7 @@ class MainActivityViewModel @Inject constructor(
 
     fun closeLanding() {
         viewModelScope.launch {
-            delay(3000)
+            delay(1000)
             _showLanding.value = false
         }
     }

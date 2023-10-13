@@ -36,8 +36,13 @@
 
 [https://github.com/chinese-poetry/chinese-poetry.git](https://github.com/chinese-poetry/chinese-poetry.git)
 
+[https://github.com/zerosoul/chinese-colors](https://github.com/zerosoul/chinese-colors)
+
+[http://zhongguose.com/](http://zhongguose.com/)
+
 **本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀**
 
 ### 其他
 
-~初名为『文曲星』，很俗套的名字，又容易让人误会和文曲星字典有什么关系，在网上搜来搜去，第一次知道”京墨“，是一味中药，觉着还不错，暂时就是这个名字了。 2023.09.10~
+~初名为『文曲星』，很俗套的名字，又容易让人误会和文曲星字典有什么关系，在网上搜来搜去，第一次知道”京墨“，是一味中药，觉着还不错，暂时就是这个名字了。
+2023.09.10~
