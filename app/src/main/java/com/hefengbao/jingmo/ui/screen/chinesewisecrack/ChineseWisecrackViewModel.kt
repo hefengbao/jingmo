@@ -8,6 +8,7 @@ import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,6 +53,21 @@ class ChineseWisecrackViewModel @Inject constructor(
     fun getChineseWisecrack(id: Long) {
         viewModelScope.launch {
             _chineseCrack.value = chineseWisecrackRepository.getChineseCrack(id)
+        }
+    }
+
+    private val _searchWisecrackList: MutableStateFlow<List<ChineseWisecrackEntity>> =
+        MutableStateFlow(
+            emptyList()
+        )
+    val searchWisecrackList: SharedFlow<List<ChineseWisecrackEntity>> = _searchWisecrackList
+
+    fun search(query: String) {
+        _searchWisecrackList.value = emptyList()
+        viewModelScope.launch {
+            chineseWisecrackRepository.searchWisecrackList("%$query%").collectLatest {
+                _searchWisecrackList.value = it
+            }
         }
     }
 }

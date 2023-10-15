@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.repository
 
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ChineseCrackRepositoryImpl @Inject constructor(
@@ -12,4 +13,6 @@ class ChineseCrackRepositoryImpl @Inject constructor(
 
     override suspend fun getNextId(id: Long): Long = chineseWisecrackDao.getNextId(id)
     override suspend fun getPrevId(id: Long): Long = chineseWisecrackDao.getPrevId(id)
+    override fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>> =
+        chineseWisecrackDao.searchWisecrackList(query)
 }
