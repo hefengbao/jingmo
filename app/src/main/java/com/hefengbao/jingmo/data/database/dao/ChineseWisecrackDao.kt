@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChineseWisecrackDao {
@@ -19,4 +20,7 @@ interface ChineseWisecrackDao {
 
     @Query("select id from chinese_wisecracks where id < :id order by id desc limit 1")
     suspend fun getPrevId(id: Long): Long
+
+    @Query("select * from chinese_wisecracks where riddle like :query")
+    fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>>
 }
