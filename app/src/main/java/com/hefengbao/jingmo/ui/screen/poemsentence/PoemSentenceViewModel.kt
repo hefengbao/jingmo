@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.ui.screen.poemsentence
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.SentenceWithPoem
 import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
@@ -52,6 +53,19 @@ class PoemSentenceViewModel @Inject constructor(
     fun getSentence(id: Long) {
         viewModelScope.launch {
             _sentence.value = poemSentenceRepository.getSentence(id)
+        }
+    }
+
+    private val _searchSentences: MutableStateFlow<List<PoemSentenceEntity>> = MutableStateFlow(
+        emptyList()
+    )
+    val searchSentences: SharedFlow<List<PoemSentenceEntity>> = _searchSentences
+    fun search(query: String) {
+        _searchSentences.value = emptyList()
+        viewModelScope.launch {
+            poemSentenceRepository.searchSentencesList("%$query%").collect {
+                _searchSentences.value = it
+            }
         }
     }
 }
