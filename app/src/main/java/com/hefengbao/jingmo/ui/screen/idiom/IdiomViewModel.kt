@@ -1,29 +1,28 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.ui.screen.idiom.nav.IdiomArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class IdiomViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val preferenceRepository: PreferenceRepository,
     private val idiomRepository: IdiomRepository
 ) : ViewModel() {
-    var id = 1L
 
-    init {
-        viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().idiomLastReadId
-        }
-    }
+    private val idiomArgs = IdiomArgs(savedStateHandle)
+
+    val id = idiomArgs.idiomId.toLong()
 
     fun setLastReadId(id: Long) {
         viewModelScope.launch {

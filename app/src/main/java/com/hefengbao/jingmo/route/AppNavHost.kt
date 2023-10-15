@@ -7,8 +7,10 @@ import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomListGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemListGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemListGraph
@@ -35,7 +37,7 @@ fun AppNavHost(
             onPoemClick = { navController.navigateToPoemListGraph() },
             onPoemSentenceClick = { navController.navigateToPoemSentenceGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackGraph() },
-            onIdiomClick = { navController.navigateToIdiomGraph() },
+            onIdiomClick = { navController.navigateToIdiomListGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -54,9 +56,14 @@ fun AppNavHost(
                     onBackClick = navController::navigateUp,
                     nestGraph = {}
                 )
-                idiomGraph(
+                idiomListGraph(
                     onBackClick = navController::navigateUp,
-                    nestGraph = {}
+                    onItemClick = { navController.navigateToIdiomScreen(it.toString()) },
+                    nestGraph = {
+                        idiomScreen(
+                            onBackClick = navController::navigateUp,
+                        )
+                    }
                 )
                 settingsGraph(
                     onBackClick = navController::navigateUp,
