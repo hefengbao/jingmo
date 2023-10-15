@@ -2,6 +2,8 @@ package com.hefengbao.jingmo.data.repository
 
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.model.SimpleIdiomInfo
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class IdiomRepositoryImpl @Inject constructor(
@@ -10,4 +12,9 @@ class IdiomRepositoryImpl @Inject constructor(
     override suspend fun getIdiom(id: Long): IdiomEntity = idiomDao.getIdiom(id)
     override suspend fun getNextId(id: Long): Long = idiomDao.getNextId(id)
     override suspend fun getPrevId(id: Long): Long = idiomDao.getPrevId(id)
+    override fun getSimpleIdiomInfoList(): Flow<List<SimpleIdiomInfo>> =
+        idiomDao.getSimpleIdiomInfoList()
+
+    override fun searchSimpleIdiomInfoList(query: String): Flow<List<SimpleIdiomInfo>> =
+        idiomDao.searchSimpleIdiomInfoList(query)
 }

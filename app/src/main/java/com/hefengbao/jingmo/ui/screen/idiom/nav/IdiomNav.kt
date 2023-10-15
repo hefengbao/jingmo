@@ -1,32 +1,47 @@
 package com.hefengbao.jingmo.ui.screen.idiom.nav
 
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import androidx.navigation.navArgument
 import com.hefengbao.jingmo.ui.screen.idiom.IdiomRoute
+import java.net.URLDecoder
+import java.net.URLEncoder
 
-private const val ROUTE_IDIOM = "idiom"
-private const val ROUTE_IDIOM_GRAPH = "idiom_graph"
+@VisibleForTesting
+internal const val idiomIdArg = "idiomId"
 
-fun NavController.navigateToIdiomGraph() {
-    this.navigate(ROUTE_IDIOM)
+internal class IdiomArgs(val idiomId: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(
+                URLDecoder.decode(
+                    checkNotNull(savedStateHandle[idiomIdArg]),
+                    Charsets.UTF_8.name()
+                )
+            )
 }
 
-fun NavGraphBuilder.idiomGraph(
-    onBackClick: () -> Unit,
-    nestGraph: NavGraphBuilder.() -> Unit
-) {
-    navigation(
-        startDestination = ROUTE_IDIOM,
-        route = ROUTE_IDIOM_GRAPH
-    ) {
-        composable(ROUTE_IDIOM) {
-            IdiomRoute(
-                onBackClick = onBackClick
-            )
-        }
+fun NavController.navigateToIdiomScreen(id: String) {
+    val encodedId = URLEncoder.encode(id, Charsets.UTF_8.name())
+    this.navigate("idiom/$encodedId") {
+        launchSingleTop = true
     }
+}
 
-    nestGraph()
+fun NavGraphBuilder.idiomScreen(
+    onBackClick: () -> Unit,
+) {
+    composable(
+        route = "idiom/{$idiomIdArg}",
+        arguments = listOf(
+            navArgument(idiomIdArg) { type = NavType.StringType }
+        )
+    ) {
+        IdiomRoute(
+            onBackClick = onBackClick
+        )
+    }
 }
