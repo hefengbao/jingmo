@@ -47,7 +47,7 @@ class MainActivityViewModel @Inject constructor(
     private val _chineseWiseCrackSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var chineseWisecrackSynced: SharedFlow<Boolean> = _chineseWiseCrackSynced
 
-    var dataStatus: Flow<DataStatus> = preferenceRepository.getDataStatus()
+    private var dataStatus: Flow<DataStatus> = preferenceRepository.getDataStatus()
 
     init {
         viewModelScope.launch {
@@ -68,7 +68,7 @@ class MainActivityViewModel @Inject constructor(
 
     fun closeLanding() {
         viewModelScope.launch {
-            delay(1000)
+            delay(1500)
             _showLanding.value = false
         }
     }
