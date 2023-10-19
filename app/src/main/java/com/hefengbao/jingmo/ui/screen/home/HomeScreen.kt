@@ -32,7 +32,8 @@ fun HomeRoute(
     onPoemClick: () -> Unit,
     onPoemSentenceClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
-    onIdiomClick: () -> Unit
+    onIdiomClick: () -> Unit,
+    onChineseColorClick: () -> Unit
 ) {
     HomeScreen(
         onSettingsClick = onSettingsClick,
@@ -40,6 +41,7 @@ fun HomeRoute(
         onPoemSentenceClick = onPoemSentenceClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
         onIdiomClick = onIdiomClick,
+        onChineseColorClick = onChineseColorClick,
         dataStatus = viewModel.dataStatus
     )
 }
@@ -53,6 +55,7 @@ private fun HomeScreen(
     onPoemSentenceClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
     onIdiomClick: () -> Unit,
+    onChineseColorClick: () -> Unit,
     dataStatus: DataStatus
 ) {
     Scaffold(
@@ -106,6 +109,13 @@ private fun HomeScreen(
                             title = "成语",
                             subtitle = "${dataStatus.idiomCount} 条",
                             onClick = onIdiomClick
+                        )
+                    }
+                    item {
+                        Item(
+                            title = "中国传统色",
+                            subtitle = "161 种",
+                            onClick = onChineseColorClick
                         )
                     }
                 }
