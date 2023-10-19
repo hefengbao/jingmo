@@ -3,6 +3,10 @@ package com.hefengbao.jingmo.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorListGraph
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorScreen
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorListGraph
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
@@ -38,6 +42,7 @@ fun AppNavHost(
             onPoemSentenceClick = { navController.navigateToPoemSentenceGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackGraph() },
             onIdiomClick = { navController.navigateToIdiomListGraph() },
+            onChineseColorClick = { navController.navigateToChineseColorListGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -62,6 +67,15 @@ fun AppNavHost(
                     nestGraph = {
                         idiomScreen(
                             onBackClick = navController::navigateUp,
+                        )
+                    }
+                )
+                chineseColorListGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemClick = { navController.navigateToChineseColorScreen(it) },
+                    nestGraph = {
+                        chineseColorScreen(
+                            onBackClick = navController::navigateUp
                         )
                     }
                 )

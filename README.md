@@ -28,6 +28,8 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ## 参考数据源：
 
+### 古诗词等
+
 [https://github.com/a2636340559/PoetryCrawler](https://github.com/a2636340559/PoetryCrawler)
 
 [https://github.com/yht050511/gushiwen](https://github.com/yht050511/gushiwen)
@@ -44,9 +46,13 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 [https://github.com/chinese-poetry/chinese-poetry.git](https://github.com/chinese-poetry/chinese-poetry.git)
 
+### 中国色
+
 [https://github.com/zerosoul/chinese-colors](https://github.com/zerosoul/chinese-colors)
 
 [http://zhongguose.com/](http://zhongguose.com/)
+
+[https://github.com/imoyao/GUSCSS/](https://github.com/imoyao/GUSCSS/)
 
 **本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀**
 

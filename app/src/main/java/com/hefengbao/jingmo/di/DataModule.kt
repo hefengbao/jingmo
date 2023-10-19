@@ -1,5 +1,7 @@
 package com.hefengbao.jingmo.di
 
+import com.hefengbao.jingmo.data.repository.ChineseColorRepository
+import com.hefengbao.jingmo.data.repository.ChineseColorRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseCrackRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepository
@@ -49,4 +51,9 @@ interface DataModule {
     fun bindsIdiomRepository(
         idiomRepository: IdiomRepositoryImpl
     ): IdiomRepository
+
+    @Binds
+    fun bindsChineseColorRepository(
+        chineseColorRepository: ChineseColorRepositoryImpl
+    ): ChineseColorRepository
 }
