@@ -22,6 +22,8 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 4、成语 30895 条；
 
+5、中国传统色 161 种；
+
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
 ![](screenshot/公众号.png)
