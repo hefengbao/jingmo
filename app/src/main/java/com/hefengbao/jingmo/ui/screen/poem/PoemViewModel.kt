@@ -49,7 +49,7 @@ class PoemViewModel @Inject constructor(
     val poem: SharedFlow<PoemWithWriterAndTags?> = _poem
     fun getPoem(id: Long) {
         viewModelScope.launch {
-            _poem.value = poemRepository.getPoem(id)
+            _poem.value = poemRepository.getPoemWithWriterAndTags(id)
         }
     }
 }

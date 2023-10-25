@@ -16,7 +16,10 @@ interface PoemSentenceDao {
 
     @Transaction
     @Query("select * from poem_sentences where id = :id")
-    suspend fun getSentence(id: Long): SentenceWithPoem
+    suspend fun getSentenceWithPoem(id: Long): SentenceWithPoem
+
+    @Query("select * from poem_sentences where id = :id")
+    fun getSentence(id: Long): Flow<PoemSentenceEntity>
 
     @Query("select id from poem_sentences where id > :id order by id asc limit 1")
     suspend fun getNextId(id: Long): Long

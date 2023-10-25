@@ -7,19 +7,27 @@ import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorListGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorScreen
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorListGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorScreen
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomCaptureScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomListGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomCaptureScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemListGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemListGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemScreen
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
@@ -46,27 +54,49 @@ fun AppNavHost(
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToPoemScreen(it.toString()) },
+                    onItemClick = { navController.navigateToPoemGraph(it.toString()) },
                     nestGraph = {
-                        poemScreen(
-                            onBackClick = navController::navigateUp
+                        poemGraph(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
+                            nestGraph = {
+                                poemCaptureScreen(
+                                    onBackClick = navController::navigateUp
+                                )
+                            }
                         )
                     }
                 )
                 poemSentenceGraph(
                     onBackClick = navController::navigateUp,
-                    nestGraph = {}
+                    onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
+                    nestGraph = {
+                        poemSentenceCaptureScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
                 )
                 chineseWisecrackGraph(
                     onBackClick = navController::navigateUp,
-                    nestGraph = {}
+                    onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
+                    nestGraph = {
+                        chineseWisecrackCaptureScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
                 )
                 idiomListGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToIdiomScreen(it.toString()) },
+                    onItemClick = { navController.navigateToIdiomGraph(it.toString()) },
                     nestGraph = {
-                        idiomScreen(
+                        idiomGraph(
                             onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToIdiomCaptureScreen(it.toString()) },
+                            nestGraph = {
+                                idiomCaptureScreen(
+                                    onBackClick = navController::navigateUp
+                                )
+                            }
                         )
                     }
                 )

@@ -3,14 +3,13 @@ package com.hefengbao.jingmo.ui.screen.idiom
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.PoemEntity
+import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.model.DataStatus
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepository
-import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
-import com.hefengbao.jingmo.ui.screen.poem.nav.PoemCaptureArgs
+import com.hefengbao.jingmo.ui.screen.idiom.nav.IdiomCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class Idiom @Inject constructor(
+class IdiomCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val idiomRepository: IdiomRepository,
     private val chineseColorRepository: ChineseColorRepository,
@@ -27,15 +26,15 @@ class Idiom @Inject constructor(
 ) : ViewModel() {
     private val args: IdiomCaptureArgs = IdiomCaptureArgs(savedStateHandle)
 
-    private val _poem: MutableStateFlow<PoemEntity?> = MutableStateFlow(null)
-    val poem: SharedFlow<PoemEntity?> = _poem
+    private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
+    val idiom: SharedFlow<IdiomEntity?> = _idiom
 
     lateinit var dataStatus: DataStatus
 
     init {
         viewModelScope.launch {
             dataStatus = preferenceRepository.getDataStatus().first()
-            _poem.value = poemRepository.getPoem(args.poemId.toLong()).first()
+            _idiom.value = idiomRepository.getIdiom(args.idiomId.toLong())
         }
     }
 

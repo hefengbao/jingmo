@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Card
@@ -54,6 +55,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PoemSentenceRoute(
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     viewModel: PoemSentenceViewModel = hiltViewModel()
 ) {
 
@@ -73,6 +75,7 @@ fun PoemSentenceRoute(
 
     PoemSentenceScreen(
         onBackClick = onBackClick,
+        onCaptureClick = onCaptureClick,
         sentence = sentence,
         prevId = prevId,
         nextId = nextId,
@@ -105,6 +108,7 @@ fun PoemSentenceRoute(
 private fun PoemSentenceScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     sentence: SentenceWithPoem?,
     prevId: Long?,
     nextId: Long?,
@@ -151,6 +155,9 @@ private fun PoemSentenceScreen(
                         }
                     },
                     actions = {
+                        IconButton(onClick = { onCaptureClick(entity.sentence.id) }) {
+                            Icon(imageVector = Icons.Default.Photo, contentDescription = null)
+                        }
                         IconButton(onClick = { showSearchBar = true }) {
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)
                         }

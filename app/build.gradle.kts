@@ -25,7 +25,6 @@ android {
     defaultConfig {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
-        targetSdk = 33
         versionCode = 3
         versionName = "1.2.0"
 
@@ -42,8 +41,7 @@ android {
                 )
             }
         }
-
-        ndk {
+        /*ndk {
             // 设置支持的SO库架构
             abiFilters += setOf(
                 "armeabi",
@@ -51,7 +49,8 @@ android {
                 "arm64-v8a",
                 "x86_64"
             )//, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
-        }
+        }*/
+
     }
     signingConfigs {
         create("release") {
@@ -103,6 +102,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -128,6 +128,7 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.dataStore.core)
     //implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.capturable)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

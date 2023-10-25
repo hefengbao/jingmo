@@ -16,4 +16,6 @@ interface PreferenceRepository {
     suspend fun setIdiomLastReadId(id: Long)
     suspend fun setChineseWisecrackSyncedAndCount(synced: Boolean, count: Long)
     suspend fun setChineseWisecrackLastReadId(id: Long)
+    suspend fun setCaptureColor(color: String)
+    suspend fun setCaptureBackgroundColor(color: String)
 }

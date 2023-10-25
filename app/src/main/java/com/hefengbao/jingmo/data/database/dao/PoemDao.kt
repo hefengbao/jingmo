@@ -17,7 +17,10 @@ interface PoemDao {
 
     @Transaction
     @Query("select * from poems where id = :id")
-    suspend fun getPoem(id: Long): PoemWithWriterAndTags
+    suspend fun getPoemWithWriterAndTags(id: Long): PoemWithWriterAndTags
+
+    @Query("select * from poems where id = :id")
+    fun getPoem(id: Long): Flow<PoemEntity>
 
     @Query("select id from poems where id > :id order by id asc limit 1")
     suspend fun getNextId(id: Long): Long

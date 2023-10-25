@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem.nav
+package com.hefengbao.jingmo.ui.screen.idiom.nav
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
@@ -7,36 +7,36 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.hefengbao.jingmo.ui.screen.poem.PoemCaptureRoute
+import com.hefengbao.jingmo.ui.screen.idiom.IdiomCaptureRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val poemCaptureIdArg = "poemId"
+internal const val idiomCaptureIdArg = "idiomId"
 
-internal class PoemCaptureArgs(val poemId: String) {
+internal class IdiomCaptureArgs(val idiomId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(URLDecoder.decode(checkNotNull(savedStateHandle[poemCaptureIdArg]), UTF_8.name()))
+            this(URLDecoder.decode(checkNotNull(savedStateHandle[idiomCaptureIdArg]), UTF_8.name()))
 }
 
-fun NavController.navigateToPoemCaptureScreen(id: String) {
+fun NavController.navigateToIdiomCaptureScreen(id: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
-    this.navigate("poem_capture/$encodedId") {
+    this.navigate("idiom_capture/$encodedId") {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.poemCaptureScreen(
+fun NavGraphBuilder.idiomCaptureScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = "poem_capture/{$poemCaptureIdArg}",
+        route = "idiom_capture/{$idiomCaptureIdArg}",
         arguments = listOf(
-            navArgument(poemCaptureIdArg) { type = NavType.StringType }
+            navArgument(idiomCaptureIdArg) { type = NavType.StringType }
         )
     ) {
-        PoemCaptureRoute(
+        IdiomCaptureRoute(
             onBackClick = onBackClick
         )
     }
