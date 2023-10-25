@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.hefengbao.jingmo.data.model.DataStatus
 import kotlinx.coroutines.flow.Flow
@@ -53,7 +54,9 @@ class AppPreference(
             chineseWisecrackLastReadId = it[PREF_CHINESE_WISECRACK_LAST_READ_ID] ?: 1L,
             idiomSynced = it[PREF_IDIOM_SYNCED] ?: false,
             idiomCount = it[PREF_IDIOM_COUNT] ?: 0L,
-            idiomLastReadId = it[PREF_IDIOM_LAST_READ_ID] ?: 1L
+            idiomLastReadId = it[PREF_IDIOM_LAST_READ_ID] ?: 1L,
+            captureColor = it[PREF_CAPTURE_COLOR] ?: "white",
+            captureBackgroundColor = it[PREF_CAPTURE_BACKGROUND_COLOR] ?: "#065279"
         )
     }
 
@@ -116,6 +119,14 @@ class AppPreference(
 
     suspend fun setIdiomLastReadId(id: Long) = setLong(context, PREF_IDIOM_LAST_READ_ID, id)
 
+    suspend fun setCaptureColor(color: String) = context.dataStore.edit {
+        it[PREF_CAPTURE_COLOR] = color
+    }
+
+    suspend fun setCaptureBackgroundColor(color: String) = context.dataStore.edit {
+        it[PREF_CAPTURE_BACKGROUND_COLOR] = color
+    }
+
     companion object {
         private val PREF_POEM_SYNCED = booleanPreferencesKey("key_poem_synced")
         private val PREF_POEM_COUNT = longPreferencesKey("key_poem_count")
@@ -139,5 +150,10 @@ class AppPreference(
         private val PREF_IDIOM_SYNCED = booleanPreferencesKey("key_idiom_synced")
         private val PREF_IDIOM_COUNT = longPreferencesKey("pref_idiom_count")
         private val PREF_IDIOM_LAST_READ_ID = longPreferencesKey("key_idiom_last_read_id")
+
+        private val PREF_CAPTURE_COLOR = stringPreferencesKey("pref_capture_color")
+        private val PREF_CAPTURE_BACKGROUND_COLOR =
+            stringPreferencesKey("pref_capture_background_color")
+
     }
 }

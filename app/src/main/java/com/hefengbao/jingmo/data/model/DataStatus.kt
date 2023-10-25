@@ -19,6 +19,8 @@ data class DataStatus(
     val chineseWisecrackSynced: Boolean = false,
     val chineseWisecrackCount: Long = 0,
     val chineseWisecrackLastReadId: Long = 1,
+    val captureColor: String,
+    val captureBackgroundColor: String
 ) {
     val allSynced: Boolean =
         poemSynced && tagSynced && poemTagSynced && writerSynced && poemSentenceSynced && idiomSynced && chineseWisecrackSynced

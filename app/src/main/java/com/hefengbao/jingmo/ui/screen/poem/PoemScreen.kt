@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,8 +47,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PoemRoute(
+    viewModel: PoemViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    viewModel: PoemViewModel = hiltViewModel()
+    onCaptureClick: (Long) -> Unit
 ) {
 
     LaunchedEffect(Unit) {
@@ -64,6 +66,7 @@ fun PoemRoute(
 
     PoemScreen(
         onBackClick = onBackClick,
+        onCaptureClick = onCaptureClick,
         poem = poem,
         prevId = prevId,
         nextId = nextId,
@@ -88,6 +91,7 @@ fun PoemRoute(
 private fun PoemScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     poem: PoemWithWriterAndTags?,
     prevId: Long?,
     nextId: Long?,
@@ -126,6 +130,11 @@ private fun PoemScreen(
                     navigationIcon = {
                         IconButton(onClick = onBackClick) {
                             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { onCaptureClick(entity.poemEntity.id) }) {
+                            Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                         }
                     }
                 )

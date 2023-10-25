@@ -52,4 +52,12 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setChineseWisecrackLastReadId(id: Long) {
         preference.setChineseWisecrackLastReadId(id)
     }
+
+    override suspend fun setCaptureColor(color: String) {
+        preference.setCaptureColor(color)
+    }
+
+    override suspend fun setCaptureBackgroundColor(color: String) {
+        preference.setCaptureBackgroundColor(color)
+    }
 }

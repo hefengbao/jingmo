@@ -52,7 +52,7 @@ class PoemSentenceViewModel @Inject constructor(
     val sentence: SharedFlow<SentenceWithPoem?> = _sentence
     fun getSentence(id: Long) {
         viewModelScope.launch {
-            _sentence.value = poemSentenceRepository.getSentence(id)
+            _sentence.value = poemSentenceRepository.getSentenceWithPoem(id)
         }
     }
 

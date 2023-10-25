@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -35,6 +36,7 @@ import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 @Composable
 fun IdiomRoute(
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     viewModel: IdiomViewModel = hiltViewModel()
 ) {
 
@@ -52,6 +54,7 @@ fun IdiomRoute(
 
     IdiomScreen(
         onBackClick = onBackClick,
+        onCaptureClick = onCaptureClick,
         idiom = idiom,
         prevId = prevId,
         nextId = nextId,
@@ -76,6 +79,7 @@ fun IdiomRoute(
 private fun IdiomScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     idiom: IdiomEntity?,
     prevId: Long?,
     nextId: Long?,
@@ -97,6 +101,11 @@ private fun IdiomScreen(
                     navigationIcon = {
                         IconButton(onClick = onBackClick) {
                             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { onCaptureClick(entity.id) }) {
+                            Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                         }
                     }
                 )
@@ -145,7 +154,7 @@ private fun IdiomScreen(
                             ) {
                                 Text(
                                     text = "释义",
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                                 SelectionContainer {
                                     Text(
@@ -160,7 +169,7 @@ private fun IdiomScreen(
                             ) {
                                 Text(
                                     text = "示例",
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                                 SelectionContainer {
                                     Text(
@@ -175,7 +184,7 @@ private fun IdiomScreen(
                             ) {
                                 Text(
                                     text = "出处",
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                                 SelectionContainer {
                                     Text(

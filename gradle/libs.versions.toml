@@ -8,6 +8,7 @@ espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.1"
 activity-compose = "1.7.2"
 compose-bom = "2023.06.01"
+capturable = "1.0.3"
 androidx-core-splashscreen = "1.0.1"
 androidx-datastore-preferences = "1.0.0"
 androidx-datastore = "1.0.0"
@@ -33,6 +34,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+capturable = { group = "dev.shreyaspatil", name = "capturable", version.ref = "capturable" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }

@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -46,6 +47,7 @@ import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 @Composable
 fun ChineseWisecrackRoute(
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     viewModel: ChineseWisecrackViewModel = hiltViewModel()
 ) {
 
@@ -65,6 +67,7 @@ fun ChineseWisecrackRoute(
 
     ChineseWisecrackScreen(
         onBackClick = onBackClick,
+        onCaptureClick = onCaptureClick,
         chineseCrack = chineseWisecrack,
         prevId = prevId,
         nextId = nextId,
@@ -97,6 +100,7 @@ fun ChineseWisecrackRoute(
 private fun ChineseWisecrackScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCaptureClick: (Long) -> Unit,
     chineseCrack: ChineseWisecrackEntity?,
     prevId: Long?,
     nextId: Long?,
@@ -130,6 +134,9 @@ private fun ChineseWisecrackScreen(
                         }
                     },
                     actions = {
+                        IconButton(onClick = { onCaptureClick(entity.id) }) {
+                            Icon(imageVector = Icons.Default.Photo, contentDescription = null)
+                        }
                         IconButton(onClick = { showSearchBar = true }) {
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)
                         }
