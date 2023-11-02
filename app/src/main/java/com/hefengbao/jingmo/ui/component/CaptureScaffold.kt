@@ -1,5 +1,7 @@
 package com.hefengbao.jingmo.ui.component
 
+import android.Manifest
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -33,15 +35,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +60,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.util.FileUtil
 import com.hefengbao.jingmo.data.model.ChineseColor
@@ -61,7 +73,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun CaptureScaffold(
     modifier: Modifier = Modifier,
@@ -90,6 +102,13 @@ fun CaptureScaffold(
 
     var color by remember { mutableStateOf(defaultColor) }
 
+    val writeStoragePermissionState = rememberPermissionState(
+        permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    )
+    var shouldShowRationale by rememberSaveable { mutableStateOf(false) }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
     BackHandler(scaffoldState.bottomSheetState.isVisible) {
         coroutineScope.launch {
             scaffoldState.bottomSheetState.hide()
@@ -111,7 +130,23 @@ fun CaptureScaffold(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { captureController.capture() }) {
+                    IconButton(onClick = {
+                        // Android 10 以下需要存储权限
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
+                        {
+                            if (writeStoragePermissionState.status.isGranted){
+                                captureController.capture()
+                            }else{
+                                if (writeStoragePermissionState.status.shouldShowRationale){
+                                    shouldShowRationale = true
+                                }else{
+                                    writeStoragePermissionState.launchPermissionRequest()
+                                }
+                            }
+                        }else{
+                            captureController.capture()
+                        }
+                    }) {
                         Icon(imageVector = Icons.Default.SaveAlt, contentDescription = null)
                     }
                     IconButton(onClick = {
@@ -126,6 +161,7 @@ fun CaptureScaffold(
         },
         sheetPeekHeight = 0.dp,
         scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         sheetContent = {
             LazyColumn(
                 modifier = modifier.padding(16.dp),
@@ -260,6 +296,28 @@ fun CaptureScaffold(
                         text = "『京墨』",
                         color = color
                     )
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(shouldShowRationale){
+        if (shouldShowRationale){
+            val result = snackbarHostState.showSnackbar(
+                message = "保存图片到手机需要授予文件读写权限，请授予权限",
+                actionLabel = "开始授权",
+                duration = SnackbarDuration.Indefinite,
+                withDismissAction = true
+            )
+
+            shouldShowRationale = when (result) {
+                SnackbarResult.Dismissed -> {
+                    false
+                }
+
+                SnackbarResult.ActionPerformed -> {
+                    writeStoragePermissionState.launchPermissionRequest()
+                    false
                 }
             }
         }

@@ -1,4 +1,5 @@
 [versions]
+accompanist = "0.28.0"
 agp = "8.1.2"
 org-jetbrains-kotlin-android = "1.8.10"
 core-ktx = "1.10.1"
@@ -27,6 +28,7 @@ protobuf = "3.23.0"
 protobuf-plugin = "0.9.3"
 
 [libraries]
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
