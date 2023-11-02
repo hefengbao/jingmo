@@ -5,16 +5,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface PreferenceRepository {
     fun getDataStatus(): Flow<DataStatus>
-    suspend fun setPoemSyncedAndCount(synced: Boolean, count: Long)
+    suspend fun setPoemVersion(version: Int)
     suspend fun setPoemLastReadId(id: Long)
-    suspend fun setTagSyncedAndCount(synced: Boolean, count: Long)
-    suspend fun setPoemTagSyncedAndCount(synced: Boolean, count: Long)
-    suspend fun setWriterSyncedAndCount(synced: Boolean, count: Long)
-    suspend fun setPoemSentenceSyncedAndCount(synced: Boolean, count: Long)
+    suspend fun setTagVersion(version: Int)
+    suspend fun setPoemTagVersion(version: Int)
+    suspend fun setWriterVersion(version: Int)
+    suspend fun setPoemSentenceVersion(version: Int)
     suspend fun setPoemSentenceLastReadId(id: Long)
-    suspend fun setIdiomSyncedAndCount(synced: Boolean, count: Long)
+    suspend fun setIdiomVersion(version: Int)
     suspend fun setIdiomLastReadId(id: Long)
-    suspend fun setChineseWisecrackSyncedAndCount(synced: Boolean, count: Long)
+    suspend fun setChineseWisecrackVersion(version: Int)
     suspend fun setChineseWisecrackLastReadId(id: Long)
     suspend fun setCaptureColor(color: String)
     suspend fun setCaptureBackgroundColor(color: String)

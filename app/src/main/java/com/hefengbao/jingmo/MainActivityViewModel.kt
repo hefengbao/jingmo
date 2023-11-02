@@ -2,6 +2,7 @@ package com.hefengbao.jingmo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.DataSetVersion
 import com.hefengbao.jingmo.data.model.DataStatus
 import com.hefengbao.jingmo.data.model.toChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.toIdiomEntity
@@ -26,39 +27,44 @@ class MainActivityViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val syncRepository: SyncRepository,
 ) : ViewModel() {
-    private val _poemSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var poemSynced: SharedFlow<Boolean> = _poemSynced
+    private val _synced: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    var synced: SharedFlow<Boolean> = _synced
 
-    private val _tagSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var tagSynced: SharedFlow<Boolean> = _tagSynced
+    private val _poemVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var poemVersion: SharedFlow<Int> = _poemVersion
 
-    private val _poemTagSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var poemTagSynced: SharedFlow<Boolean> = _poemTagSynced
+    private val _tagVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var tagVersion: SharedFlow<Int> = _tagVersion
 
-    private val _writerSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var writerSynced: SharedFlow<Boolean> = _writerSynced
+    private val _poemTagVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var poemTagVersion: SharedFlow<Int> = _poemTagVersion
 
-    private val _idiomSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var idiomSynced: SharedFlow<Boolean> = _idiomSynced
+    private val _writerVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var writerVersion: SharedFlow<Int> = _writerVersion
 
-    private val _poemSentenceSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var poemSentenceSynced: SharedFlow<Boolean> = _poemSentenceSynced
+    private val _idiomVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var idiomVersion: SharedFlow<Int> = _idiomVersion
 
-    private val _chineseWiseCrackSynced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var chineseWisecrackSynced: SharedFlow<Boolean> = _chineseWiseCrackSynced
+    private val _poemSentenceVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var poemSentenceVersion: SharedFlow<Int> = _poemSentenceVersion
+
+    private val _chineseWiseCrackVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    var chineseWiseCrackVersion: SharedFlow<Int> = _chineseWiseCrackVersion
 
     private var dataStatus: Flow<DataStatus> = preferenceRepository.getDataStatus()
 
     init {
         viewModelScope.launch {
             dataStatus.collectLatest {
-                _poemSynced.value = it.poemSynced
-                _tagSynced.value = it.tagSynced
-                _poemTagSynced.value = it.poemTagSynced
-                _writerSynced.value = it.writerSynced
-                _idiomSynced.value = it.idiomSynced
-                _chineseWiseCrackSynced.value = it.chineseWisecrackSynced
-                _poemSentenceSynced.value = it.poemSentenceSynced
+                _poemVersion.value = it.poemVersion
+                _tagVersion.value = it.tagVersion
+                _poemTagVersion.value = it.poemTagVersion
+                _writerVersion.value = it.writerVersion
+                _idiomVersion.value = it.idiomVersion
+                _chineseWiseCrackVersion.value = it.chineseWisecrackVersion
+                _poemSentenceVersion.value = it.poemSentenceVersion
+
+                _synced.value = it.allSynced
             }
         }
     }
@@ -96,7 +102,7 @@ class MainActivityViewModel @Inject constructor(
 
     fun sync() {
         viewModelScope.launch {
-            if (!_poemSynced.value) {
+            if (_poemVersion.value != DataSetVersion.poem) {
                 var count: Long = 0
                 syncRepository.syncPoems().collectLatest {
                     it.map { poem ->
@@ -105,11 +111,11 @@ class MainActivityViewModel @Inject constructor(
                         _poemProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setPoemSyncedAndCount(true, count)
-                _poemSynced.value = true
+                preferenceRepository.setPoemVersion(DataSetVersion.poem)
+                _poemVersion.value = DataSetVersion.poem
             }
 
-            if (!_tagSynced.value) {
+            if (_tagVersion.value != DataSetVersion.tag) {
                 var count: Long = 0
                 syncRepository.syncTags().collectLatest {
                     it.map { tag ->
@@ -118,11 +124,11 @@ class MainActivityViewModel @Inject constructor(
                         _tagProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setTagSyncedAndCount(true, count)
-                _tagSynced.value = true
+                preferenceRepository.setTagVersion(DataSetVersion.tag)
+                _tagVersion.value = DataSetVersion.tag
             }
 
-            if (!_poemTagSynced.value) {
+            if (_poemTagVersion.value != DataSetVersion.poemTag) {
                 var count: Long = 0
                 syncRepository.syncPoemTagList().collectLatest {
                     it.map { poemTag ->
@@ -131,11 +137,11 @@ class MainActivityViewModel @Inject constructor(
                         _poemTagProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setPoemTagSyncedAndCount(true, count)
-                _poemTagSynced.value = true
+                preferenceRepository.setPoemTagVersion(DataSetVersion.poemTag)
+                _poemTagVersion.value = DataSetVersion.poemTag
             }
 
-            if (!_writerSynced.value) {
+            if (_writerVersion.value != DataSetVersion.writer) {
                 var count = 0L
                 syncRepository.syncWriters().collectLatest {
                     it.map { writer ->
@@ -144,11 +150,11 @@ class MainActivityViewModel @Inject constructor(
                         _writerProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setWriterSyncedAndCount(true, count)
-                _writerSynced.value = true
+                preferenceRepository.setWriterVersion(DataSetVersion.writer)
+                _writerVersion.value = DataSetVersion.writer
             }
 
-            if (!_poemSentenceSynced.value) {
+            if (_poemSentenceVersion.value != DataSetVersion.poemSentence) {
                 var count: Long = 0
                 syncRepository.syncPoemSentences().collectLatest {
                     it.map { sentence ->
@@ -157,11 +163,11 @@ class MainActivityViewModel @Inject constructor(
                         _poemSentenceProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setPoemSentenceSyncedAndCount(true, count)
-                _poemSentenceSynced.value = true
+                preferenceRepository.setPoemSentenceVersion(DataSetVersion.poemSentence)
+                _poemSentenceVersion.value = DataSetVersion.poemSentence
             }
 
-            if (!_idiomSynced.value) {
+            if (_idiomVersion.value != DataSetVersion.idiom) {
                 var count: Long = 0
                 syncRepository.syncIdioms().collectLatest {
                     it.map { sentence ->
@@ -170,11 +176,11 @@ class MainActivityViewModel @Inject constructor(
                         _idiomProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setIdiomSyncedAndCount(true, count)
-                _idiomSynced.value = true
+                preferenceRepository.setIdiomVersion(DataSetVersion.idiom)
+                _idiomVersion.value = DataSetVersion.idiom
             }
 
-            if (!_chineseWiseCrackSynced.value) {
+            if (_chineseWiseCrackVersion.value != DataSetVersion.chineseWisecrack) {
                 var count: Long = 0
                 syncRepository.syncChineseWisecracks().collectLatest {
                     it.map { sentence ->
@@ -183,8 +189,8 @@ class MainActivityViewModel @Inject constructor(
                         _chineseWisecrackProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setChineseWisecrackSyncedAndCount(true, count)
-                _chineseWiseCrackSynced.value = true
+                preferenceRepository.setChineseWisecrackVersion(DataSetVersion.chineseWisecrack)
+                _chineseWiseCrackVersion.value = DataSetVersion.chineseWisecrack
             }
         }
     }
