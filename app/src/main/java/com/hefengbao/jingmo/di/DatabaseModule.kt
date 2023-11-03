@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.di
 
 import android.content.Context
 import androidx.room.Room.databaseBuilder
+import com.hefengbao.jingmo.common.Constant
 import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
@@ -27,7 +28,7 @@ object DatabaseModule {
     ): AppDatabase = databaseBuilder(
         context,
         AppDatabase::class.java,
-        "wenqu.db",
+        Constant.DB_NAME,
     ).build()
 
 

@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.hefengbao.jingmo.data.DataSetVersion
 import com.hefengbao.jingmo.route.AppNavHost
 import com.hefengbao.jingmo.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,14 +43,18 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val appNavController = rememberNavController()
+
             val showLanding by viewModel.showLanding.collectAsState(initial = true)
-            val poemSynced by viewModel.poemSynced.collectAsState(initial = false)
-            val tagSynced by viewModel.tagSynced.collectAsState(initial = false)
-            val poemTagSynced by viewModel.poemTagSynced.collectAsState(initial = false)
-            val writerSynced by viewModel.writerSynced.collectAsState(initial = false)
-            val poemSentenceSynced by viewModel.poemSentenceSynced.collectAsState(initial = false)
-            val idiomSynced by viewModel.idiomSynced.collectAsState(initial = false)
-            val chineseWisecrackSynced by viewModel.chineseWisecrackSynced.collectAsState(initial = false)
+
+            val synced by viewModel.synced.collectAsState(initial = false)
+
+            val poemVersion by viewModel.poemVersion.collectAsState(initial = 0)
+            val tagVersion by viewModel.tagVersion.collectAsState(initial = 0)
+            val poemTagVersion by viewModel.poemTagVersion.collectAsState(initial = 0)
+            val writerVersion by viewModel.writerVersion.collectAsState(initial = 0)
+            val poemSentenceVersion by viewModel.poemSentenceVersion.collectAsState(initial = 0)
+            val idiomVersion by viewModel.idiomVersion.collectAsState(initial = 0)
+            val chineseWiseCrackVersion by viewModel.chineseWiseCrackVersion.collectAsState(initial = 0)
 
             val poemProgress by viewModel.poemProgress.collectAsState(initial = 0f)
             val tagProgress by viewModel.tagProgress.collectAsState(initial = 0f)
@@ -71,23 +76,17 @@ class MainActivity : ComponentActivity() {
                         LandingScreen()
                         viewModel.closeLanding()
                     } else if (
-                        !poemSynced ||
-                        !tagSynced ||
-                        !poemTagSynced ||
-                        !writerSynced ||
-                        !poemSentenceSynced ||
-                        !idiomSynced ||
-                        !chineseWisecrackSynced
+                        !synced
                     ) {
                         SyncScreen(
                             onSyncClick = { viewModel.sync() },
-                            poemSynced = poemSynced,
-                            tagSynced = tagSynced,
-                            poemTagSynced = poemTagSynced,
-                            writerSynced = writerSynced,
-                            poemSentenceSynced = poemSentenceSynced,
-                            idiomSynced = idiomSynced,
-                            chineseWisecrackSynced = chineseWisecrackSynced,
+                            poemVersion = poemVersion,
+                            tagVersion = tagVersion,
+                            poemTagVersion = poemTagVersion,
+                            writerVersion = writerVersion,
+                            poemSentenceVersion = poemSentenceVersion,
+                            idiomVersion = idiomVersion,
+                            chineseWiseCrackVersion = chineseWiseCrackVersion,
                             poemProgress = poemProgress,
                             tagProgress = tagProgress,
                             poemTagProgress = poemTagProgress,
@@ -127,13 +126,13 @@ private fun LandingScreen(
 private fun SyncScreen(
     modifier: Modifier = Modifier,
     onSyncClick: () -> Unit,
-    poemSynced: Boolean,
-    tagSynced: Boolean,
-    poemTagSynced: Boolean,
-    writerSynced: Boolean,
-    poemSentenceSynced: Boolean,
-    idiomSynced: Boolean,
-    chineseWisecrackSynced: Boolean,
+    poemVersion: Int,
+    tagVersion: Int,
+    poemTagVersion: Int,
+    writerVersion: Int,
+    poemSentenceVersion: Int,
+    idiomVersion: Int,
+    chineseWiseCrackVersion: Int,
     poemProgress: Float,
     tagProgress: Float,
     poemTagProgress: Float,
@@ -152,21 +151,30 @@ private fun SyncScreen(
         Button(onClick = onSyncClick) {
             Text(text = "同步数据")
         }
-        Item(title = "古诗词文", progress = if (poemSynced) 1f else poemProgress)
-        Item(title = "标签", progress = if (tagSynced) 1f else tagProgress)
+        Item(
+            title = "古诗词文",
+            progress = if (poemVersion == DataSetVersion.poem) 1f else poemProgress
+        )
+        Item(title = "标签", progress = if (tagVersion == DataSetVersion.tag) 1f else tagProgress)
         Item(
             title = "古诗词文和标签对应关系",
-            progress = if (poemTagSynced) 1f else poemTagProgress
+            progress = if (poemTagVersion == DataSetVersion.poemTag) 1f else poemTagProgress
         )
-        Item(title = "诗人", progress = if (writerSynced) 1f else writerProgress)
+        Item(
+            title = "诗人",
+            progress = if (writerVersion == DataSetVersion.writer) 1f else writerProgress
+        )
         Item(
             title = "古诗词文名句",
-            progress = if (poemSentenceSynced) 1f else poemSentenceProgress
+            progress = if (poemSentenceVersion == DataSetVersion.poemSentence) 1f else poemSentenceProgress
         )
-        Item(title = "成语", progress = if (idiomSynced) 1f else idiomProgress)
+        Item(
+            title = "成语",
+            progress = if (idiomVersion == DataSetVersion.idiom) 1f else idiomProgress
+        )
         Item(
             title = "歇后语",
-            progress = if (chineseWisecrackSynced) 1f else chineseWisecrackProgress
+            progress = if (chineseWiseCrackVersion == DataSetVersion.chineseWisecrack) 1f else chineseWisecrackProgress
         )
     }
 }

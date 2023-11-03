@@ -21,13 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.R
-import com.hefengbao.jingmo.data.model.DataStatus
 
 @Composable
 fun HomeRoute(
-    viewModel: HomeViewModel = hiltViewModel(),
     onSettingsClick: () -> Unit,
     onPoemClick: () -> Unit,
     onPoemSentenceClick: () -> Unit,
@@ -42,7 +39,6 @@ fun HomeRoute(
         onChineseWisecrackClick = onChineseWisecrackClick,
         onIdiomClick = onIdiomClick,
         onChineseColorClick = onChineseColorClick,
-        dataStatus = viewModel.dataStatus
     )
 }
 
@@ -56,7 +52,6 @@ private fun HomeScreen(
     onChineseWisecrackClick: () -> Unit,
     onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
-    dataStatus: DataStatus
 ) {
     Scaffold(
         topBar = {
@@ -86,28 +81,28 @@ private fun HomeScreen(
                     item {
                         Item(
                             title = "古诗词文",
-                            subtitle = "${dataStatus.poemCount} 首（阙/篇）",
+                            subtitle = "10000 首（阙/篇）",
                             onClick = onPoemClick
                         )
                     }
                     item {
                         Item(
                             title = "古诗词文名句",
-                            subtitle = "${dataStatus.poemSentenceCount} 句",
+                            subtitle = "10000 句",
                             onClick = onPoemSentenceClick
                         )
                     }
                     item {
                         Item(
                             title = "歇后语",
-                            subtitle = "${dataStatus.chineseWisecrackCount} 条",
+                            subtitle = "14026 条",
                             onClick = onChineseWisecrackClick
                         )
                     }
                     item {
                         Item(
                             title = "成语",
-                            subtitle = "${dataStatus.idiomCount} 条",
+                            subtitle = "30895 条",
                             onClick = onIdiomClick
                         )
                     }
