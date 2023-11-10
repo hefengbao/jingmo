@@ -21,6 +21,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 android {
     namespace = "com.hefengbao.jingmo"
     compileSdk = 33
+    buildToolsVersion = "34.0.0"
 
     defaultConfig {
         applicationId = "com.hefengbao.jingmo"
@@ -102,10 +103,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
+    implementation(libs.accompanist.permissions)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
