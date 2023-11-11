@@ -28,6 +28,12 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ![](screenshot/公众号.png)
 
+## 获取更新消息
+
+1. 经常使用 Github 或 Gitee 的人，可点个 "star"。
+
+2. 关注微信公众号『NowInLife』或者 B 站『NowInLife』获取最新更新，一般会在公众号发布一篇更新说明，在 B 站发布新功能演示视频。
+
 ## 参考数据源：
 
 ### 古诗词等
