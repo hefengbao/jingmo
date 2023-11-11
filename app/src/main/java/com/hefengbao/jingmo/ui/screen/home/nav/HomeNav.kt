@@ -9,6 +9,7 @@ const val ROUTE_HOME_GRAPH = "home_graph"
 private const val ROUTE_HOME = "home"
 
 fun NavGraphBuilder.homeGraph(
+    onLinksClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onPoemClick: () -> Unit,
     onPoemSentenceClick: () -> Unit,
@@ -25,6 +26,7 @@ fun NavGraphBuilder.homeGraph(
             route = ROUTE_HOME
         ) {
             HomeRoute(
+                onLinksClick = onLinksClick,
                 onSettingsClick = onSettingsClick,
                 onPoemClick = onPoemClick,
                 onPoemSentenceClick = onPoemSentenceClick,

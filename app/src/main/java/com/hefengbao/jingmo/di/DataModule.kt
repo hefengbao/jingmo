@@ -6,6 +6,8 @@ import com.hefengbao.jingmo.data.repository.ChineseCrackRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepositoryImpl
+import com.hefengbao.jingmo.data.repository.LinksRepository
+import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PoemRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
@@ -56,4 +58,9 @@ interface DataModule {
     fun bindsChineseColorRepository(
         chineseColorRepository: ChineseColorRepositoryImpl
     ): ChineseColorRepository
+
+    @Binds
+    fun bindsLinksRepository(
+        linksRepositoryImpl: LinksRepositoryImpl
+    ): LinksRepository
 }

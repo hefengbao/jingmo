@@ -19,6 +19,8 @@ import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomListGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomCaptureScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
+import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
+import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemListGraph
@@ -45,6 +47,7 @@ fun AppNavHost(
         startDestination = ROUTE_HOME_GRAPH
     ) {
         homeGraph(
+            onLinksClick = { navController.navigateToLinksScreen() },
             onSettingsClick = { navController.navigateToSettingsGraph() },
             onPoemClick = { navController.navigateToPoemListGraph() },
             onPoemSentenceClick = { navController.navigateToPoemSentenceGraph() },
@@ -108,6 +111,9 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp
                         )
                     }
+                )
+                linksScreen(
+                    onBackClick = navController::navigateUp
                 )
                 settingsGraph(
                     onBackClick = navController::navigateUp,

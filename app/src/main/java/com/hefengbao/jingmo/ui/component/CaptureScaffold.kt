@@ -132,18 +132,17 @@ fun CaptureScaffold(
                 actions = {
                     IconButton(onClick = {
                         // Android 10 以下需要存储权限
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
-                        {
-                            if (writeStoragePermissionState.status.isGranted){
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                            if (writeStoragePermissionState.status.isGranted) {
                                 captureController.capture()
-                            }else{
-                                if (writeStoragePermissionState.status.shouldShowRationale){
+                            } else {
+                                if (writeStoragePermissionState.status.shouldShowRationale) {
                                     shouldShowRationale = true
-                                }else{
+                                } else {
                                     writeStoragePermissionState.launchPermissionRequest()
                                 }
                             }
-                        }else{
+                        } else {
                             captureController.capture()
                         }
                     }) {
@@ -301,8 +300,8 @@ fun CaptureScaffold(
         }
     }
 
-    LaunchedEffect(shouldShowRationale){
-        if (shouldShowRationale){
+    LaunchedEffect(shouldShowRationale) {
+        if (shouldShowRationale) {
             val result = snackbarHostState.showSnackbar(
                 message = "保存图片到手机需要授予文件读写权限，请授予权限",
                 actionLabel = "开始授权",
