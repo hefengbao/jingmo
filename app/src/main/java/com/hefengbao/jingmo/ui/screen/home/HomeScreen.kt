@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,7 @@ import com.hefengbao.jingmo.R
 
 @Composable
 fun HomeRoute(
+    onLinksClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onPoemClick: () -> Unit,
     onPoemSentenceClick: () -> Unit,
@@ -33,6 +35,7 @@ fun HomeRoute(
     onChineseColorClick: () -> Unit
 ) {
     HomeScreen(
+        onLinksClick = onLinksClick,
         onSettingsClick = onSettingsClick,
         onPoemClick = onPoemClick,
         onPoemSentenceClick = onPoemSentenceClick,
@@ -46,6 +49,7 @@ fun HomeRoute(
 @Composable
 private fun HomeScreen(
     modifier: Modifier = Modifier,
+    onLinksClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onPoemClick: () -> Unit,
     onPoemSentenceClick: () -> Unit,
@@ -60,6 +64,9 @@ private fun HomeScreen(
                     Text(text = stringResource(id = R.string.app_name))
                 },
                 actions = {
+                    IconButton(onClick = onLinksClick) {
+                        Icon(imageVector = Icons.Default.Link, contentDescription = "链接")
+                    }
                     IconButton(onClick = onSettingsClick) {
                         Icon(imageVector = Icons.Default.Settings, contentDescription = "设置")
                     }
