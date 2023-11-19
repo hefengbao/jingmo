@@ -184,7 +184,7 @@ fun SearchBar(
                 active = it
                 showSearchBarStatusChange(it)
             },
-            placeholder = { Text("请输入诗人或标题搜索") },
+            placeholder = { Text("请输入") },
             leadingIcon = {
                 IconButton(onClick = { showSearchBarStatusChange(false) }) {
                     Icon(Default.ArrowBack, contentDescription = null)

@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -29,8 +30,11 @@ import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
         TagEntity::class,
         WriterEntity::class,
     ],
-    version = 1,
-    exportSchema = false
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ],
+    exportSchema = true
 )
 @TypeConverters(
     DetailInfoListConverter::class

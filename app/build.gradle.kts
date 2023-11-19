@@ -103,6 +103,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    ksp {
+        arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
+    }
 }
 
 dependencies {
@@ -140,4 +143,12 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     implementation("com.tencent.bugly:crashreport:latest.release")
+}
+
+class RoomSchemaArgProvider(
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val schemaDir: File,
+) : CommandLineArgumentProvider {
+    override fun asArguments() = listOf("room.schemaLocation=${schemaDir.path}")
 }
