@@ -53,7 +53,7 @@ private fun FestivalListScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "阴历节日、习俗")
+                    Text(text = "传统节日")
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
