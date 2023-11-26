@@ -11,6 +11,10 @@ import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptu
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.festival.nav.festivalGraph
+import com.hefengbao.jingmo.ui.screen.festival.nav.festivalScreen
+import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestival
+import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalGraph
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomCaptureScreen
@@ -54,6 +58,7 @@ fun AppNavHost(
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackGraph() },
             onIdiomClick = { navController.navigateToIdiomListGraph() },
             onChineseColorClick = { navController.navigateToChineseColorListGraph() },
+            onFestivalClick = { navController.navigateToFestivalGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -108,6 +113,15 @@ fun AppNavHost(
                     onItemClick = { navController.navigateToChineseColorScreen(it) },
                     nestGraph = {
                         chineseColorScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                festivalGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemClick = { navController.navigateToFestival(it.toString()) },
+                    nestGraph = {
+                        festivalScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

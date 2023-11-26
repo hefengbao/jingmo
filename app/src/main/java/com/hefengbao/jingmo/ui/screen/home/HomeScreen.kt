@@ -32,7 +32,8 @@ fun HomeRoute(
     onPoemSentenceClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
     onIdiomClick: () -> Unit,
-    onChineseColorClick: () -> Unit
+    onChineseColorClick: () -> Unit,
+    onFestivalClick: () -> Unit,
 ) {
     HomeScreen(
         onLinksClick = onLinksClick,
@@ -42,6 +43,7 @@ fun HomeRoute(
         onChineseWisecrackClick = onChineseWisecrackClick,
         onIdiomClick = onIdiomClick,
         onChineseColorClick = onChineseColorClick,
+        onFestivalClick = onFestivalClick
     )
 }
 
@@ -56,6 +58,7 @@ private fun HomeScreen(
     onChineseWisecrackClick: () -> Unit,
     onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
+    onFestivalClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -111,6 +114,13 @@ private fun HomeScreen(
                             title = "成语",
                             subtitle = "30895 条",
                             onClick = onIdiomClick
+                        )
+                    }
+                    item {
+                        Item(
+                            title = "中国传统节日",
+                            subtitle = "16 个",
+                            onClick = onFestivalClick
                         )
                     }
                     item {
