@@ -71,7 +71,7 @@ private fun TextItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = title, style = MaterialTheme.typography.titleSmall)
+        Text(text = title, style = MaterialTheme.typography.headlineSmall)
         Text(text = content)
     }
 }
