@@ -41,6 +41,10 @@ import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsGraph
 import com.hefengbao.jingmo.ui.screen.settings.nav.privacyScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsGraph
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTerm
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermGraph
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermGraph
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermScreen
 
 @Composable
 fun AppNavHost(
@@ -59,6 +63,7 @@ fun AppNavHost(
             onIdiomClick = { navController.navigateToIdiomListGraph() },
             onChineseColorClick = { navController.navigateToChineseColorListGraph() },
             onFestivalClick = { navController.navigateToFestivalGraph() },
+            onSolarTermsClick = { navController.navigateToSolarTermGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -122,6 +127,15 @@ fun AppNavHost(
                     onItemClick = { navController.navigateToFestival(it.toString()) },
                     nestGraph = {
                         festivalScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                solarTermGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemClick = { navController.navigateToSolarTerm(it.toString()) },
+                    nestGraph = {
+                        solarTermScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
