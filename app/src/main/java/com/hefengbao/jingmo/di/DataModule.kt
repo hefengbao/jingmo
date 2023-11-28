@@ -16,6 +16,8 @@ import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
 import com.hefengbao.jingmo.data.repository.PoemSentenceRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepositoryImpl
+import com.hefengbao.jingmo.data.repository.SolarTermsRepository
+import com.hefengbao.jingmo.data.repository.SolarTermsRepositoryImpl
 import com.hefengbao.jingmo.data.repository.SyncRepository
 import com.hefengbao.jingmo.data.repository.SyncRepositoryImpl
 import dagger.Binds
@@ -70,4 +72,9 @@ interface DataModule {
     fun bindsFestivalRepository(
         festivalRepositoryImpl: FestivalRepositoryImpl
     ): FestivalRepository
+
+    @Binds
+    fun bindsSolarTermsRepository(
+        solarTermsRepositoryImpl: SolarTermsRepositoryImpl
+    ): SolarTermsRepository
 }
