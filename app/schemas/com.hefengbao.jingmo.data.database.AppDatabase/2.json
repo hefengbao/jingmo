@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0c8be56ef36f5f321ea176cc452e398c",
+    "identityHash": "6155743716b6a62976751066ef8bcbe5",
     "entities": [
       {
         "tableName": "chinese_wisecracks",
@@ -290,44 +290,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "tongue_twisters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `content2` TEXT, PRIMARY KEY(`id`))",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "title",
-            "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "content",
-            "columnName": "content",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "content2",
-            "columnName": "content2",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "writers",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `avatar` TEXT, `dynasty` TEXT, `simple_intro` TEXT, `detail_intro` TEXT, PRIMARY KEY(`id`))",
         "fields": [
@@ -381,7 +343,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0c8be56ef36f5f321ea176cc452e398c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6155743716b6a62976751066ef8bcbe5')"
     ]
   }
 }
