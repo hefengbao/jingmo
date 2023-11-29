@@ -55,6 +55,7 @@ class MainActivity : ComponentActivity() {
             val poemSentenceVersion by viewModel.poemSentenceVersion.collectAsState(initial = 0)
             val idiomVersion by viewModel.idiomVersion.collectAsState(initial = 0)
             val chineseWiseCrackVersion by viewModel.chineseWiseCrackVersion.collectAsState(initial = 0)
+            val tongueTwisterVersion by viewModel.tongueTwisterVersion.collectAsState(initial = 0)
 
             val poemProgress by viewModel.poemProgress.collectAsState(initial = 0f)
             val tagProgress by viewModel.tagProgress.collectAsState(initial = 0f)
@@ -65,6 +66,7 @@ class MainActivity : ComponentActivity() {
             val chineseWisecrackProgress by viewModel.chineseWisecrackProgress.collectAsState(
                 initial = 0f
             )
+            val tongueTwisterProgress by viewModel.tongueTwisterProgress.collectAsState(initial = 0f)
 
             AppTheme {
                 // A surface container using the 'background' color from the theme
@@ -87,6 +89,7 @@ class MainActivity : ComponentActivity() {
                             poemSentenceVersion = poemSentenceVersion,
                             idiomVersion = idiomVersion,
                             chineseWiseCrackVersion = chineseWiseCrackVersion,
+                            tongueTwisterVersion = tongueTwisterVersion,
                             poemProgress = poemProgress,
                             tagProgress = tagProgress,
                             poemTagProgress = poemTagProgress,
@@ -94,6 +97,7 @@ class MainActivity : ComponentActivity() {
                             poemSentenceProgress = poemSentenceProgress,
                             idiomProgress = idiomProgress,
                             chineseWisecrackProgress = chineseWisecrackProgress,
+                            tongueTwisterProgress = tongueTwisterProgress
                         )
                     } else {
                         AppNavHost(navController = appNavController)
@@ -133,13 +137,15 @@ private fun SyncScreen(
     poemSentenceVersion: Int,
     idiomVersion: Int,
     chineseWiseCrackVersion: Int,
+    tongueTwisterVersion: Int,
     poemProgress: Float,
     tagProgress: Float,
     poemTagProgress: Float,
     writerProgress: Float,
     poemSentenceProgress: Float,
     idiomProgress: Float,
-    chineseWisecrackProgress: Float
+    chineseWisecrackProgress: Float,
+    tongueTwisterProgress: Float
 ) {
     Column(
         modifier = modifier
@@ -175,6 +181,10 @@ private fun SyncScreen(
         Item(
             title = "歇后语",
             progress = if (chineseWiseCrackVersion == DataSetVersion.chineseWisecrack) 1f else chineseWisecrackProgress
+        )
+        Item(
+            title = "绕口令",
+            progress = if (tongueTwisterVersion == DataSetVersion.tongueTwister) 1f else tongueTwisterProgress
         )
     }
 }

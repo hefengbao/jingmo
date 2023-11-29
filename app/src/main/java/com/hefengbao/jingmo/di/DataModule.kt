@@ -20,6 +20,8 @@ import com.hefengbao.jingmo.data.repository.SolarTermsRepository
 import com.hefengbao.jingmo.data.repository.SolarTermsRepositoryImpl
 import com.hefengbao.jingmo.data.repository.SyncRepository
 import com.hefengbao.jingmo.data.repository.SyncRepositoryImpl
+import com.hefengbao.jingmo.data.repository.TongueTwisterRepository
+import com.hefengbao.jingmo.data.repository.TongueTwisterRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -77,4 +79,9 @@ interface DataModule {
     fun bindsSolarTermsRepository(
         solarTermsRepositoryImpl: SolarTermsRepositoryImpl
     ): SolarTermsRepository
+
+    @Binds
+    fun bindsTongueTwisterRepository(
+        tongueTwisterRepositoryImpl: TongueTwisterRepositoryImpl
+    ): TongueTwisterRepository
 }

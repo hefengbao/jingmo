@@ -10,6 +10,7 @@ import com.hefengbao.jingmo.data.model.toPoemEntity
 import com.hefengbao.jingmo.data.model.toPoemSentenceEntity
 import com.hefengbao.jingmo.data.model.toPoemTagEntity
 import com.hefengbao.jingmo.data.model.toTagEntity
+import com.hefengbao.jingmo.data.model.toTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.toWriterEntity
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.SyncRepository
@@ -28,30 +29,33 @@ class MainActivityViewModel @Inject constructor(
     private val syncRepository: SyncRepository,
 ) : ViewModel() {
     private val _synced: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var synced: SharedFlow<Boolean> = _synced
+    val synced: SharedFlow<Boolean> = _synced
 
     private val _poemVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var poemVersion: SharedFlow<Int> = _poemVersion
+    val poemVersion: SharedFlow<Int> = _poemVersion
 
     private val _tagVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var tagVersion: SharedFlow<Int> = _tagVersion
+    val tagVersion: SharedFlow<Int> = _tagVersion
 
     private val _poemTagVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var poemTagVersion: SharedFlow<Int> = _poemTagVersion
+    val poemTagVersion: SharedFlow<Int> = _poemTagVersion
 
     private val _writerVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var writerVersion: SharedFlow<Int> = _writerVersion
+    val writerVersion: SharedFlow<Int> = _writerVersion
 
     private val _idiomVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var idiomVersion: SharedFlow<Int> = _idiomVersion
+    val idiomVersion: SharedFlow<Int> = _idiomVersion
 
     private val _poemSentenceVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var poemSentenceVersion: SharedFlow<Int> = _poemSentenceVersion
+    val poemSentenceVersion: SharedFlow<Int> = _poemSentenceVersion
 
     private val _chineseWiseCrackVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    var chineseWiseCrackVersion: SharedFlow<Int> = _chineseWiseCrackVersion
+    val chineseWiseCrackVersion: SharedFlow<Int> = _chineseWiseCrackVersion
 
-    private var dataStatus: Flow<DataStatus> = preferenceRepository.getDataStatus()
+    private val _tongueTwisterVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    val tongueTwisterVersion: SharedFlow<Int> = _tongueTwisterVersion
+
+    private val dataStatus: Flow<DataStatus> = preferenceRepository.getDataStatus()
 
     init {
         viewModelScope.launch {
@@ -63,6 +67,7 @@ class MainActivityViewModel @Inject constructor(
                 _idiomVersion.value = it.idiomVersion
                 _chineseWiseCrackVersion.value = it.chineseWisecrackVersion
                 _poemSentenceVersion.value = it.poemSentenceVersion
+                _tongueTwisterVersion.value = it.tongueTwisterVersion
 
                 _synced.value = it.allSynced
             }
@@ -99,6 +104,9 @@ class MainActivityViewModel @Inject constructor(
 
     private val _chineseWisecrackProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val chineseWisecrackProgress: SharedFlow<Float> = _chineseWisecrackProgress
+
+    private val _tongueTwisterProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val tongueTwisterProgress: SharedFlow<Float> = _tongueTwisterProgress
 
     fun sync() {
         viewModelScope.launch {
@@ -191,6 +199,19 @@ class MainActivityViewModel @Inject constructor(
                 }
                 preferenceRepository.setChineseWisecrackVersion(DataSetVersion.chineseWisecrack)
                 _chineseWiseCrackVersion.value = DataSetVersion.chineseWisecrack
+            }
+
+            if(_tongueTwisterVersion.value != DataSetVersion.chineseWisecrack){
+                var count: Long = 0
+                syncRepository.syncTongueTwisters().collectLatest {
+                    it.map { tongueTwister ->
+                        syncRepository.insertTongueTwister(tongueTwister.toTongueTwisterEntity())
+                        count ++
+                        _tongueTwisterProgress.value = count.toFloat() / it.size
+                    }
+                }
+                preferenceRepository.setTongueTwisterVersion(DataSetVersion.tongueTwister)
+                _tongueTwisterVersion.value = DataSetVersion.tongueTwister
             }
         }
     }

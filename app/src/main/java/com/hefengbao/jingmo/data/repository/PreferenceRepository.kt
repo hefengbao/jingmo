@@ -18,4 +18,6 @@ interface PreferenceRepository {
     suspend fun setChineseWisecrackLastReadId(id: Long)
     suspend fun setCaptureColor(color: String)
     suspend fun setCaptureBackgroundColor(color: String)
+    suspend fun setTongueTwisterVersion(version: Int)
+    suspend fun setTongueTwisterLastReadId(id: Int)
 }

@@ -8,6 +8,7 @@ import com.hefengbao.jingmo.data.model.Poem
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.PoemTag
 import com.hefengbao.jingmo.data.model.Tag
+import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.Writer
 import com.hefengbao.jingmo.data.network.JvmUnitTestFakeAssetManager
 import com.hefengbao.jingmo.data.network.NetworkDataSource
@@ -63,6 +64,11 @@ class FakeNetworkDataSource @Inject constructor(
             assets.open(IDIOM_ASSET).use(networkJson::decodeFromStream)
         }
 
+    override suspend fun getTongueTwisters(): List<TongueTwister> =
+        withContext(ioDispatcher) {
+            assets.open(TONGUE_TWISTER_ASST).use(networkJson::decodeFromStream)
+        }
+
     companion object {
         private const val POEMS_ASSET = "json/poems.json"
         private const val WRITERS_ASSET = "json/writers.json"
@@ -71,5 +77,6 @@ class FakeNetworkDataSource @Inject constructor(
         private const val POEM_SENTENCE_ASSET = "json/poem_sentences.json"
         private const val CHINESE_WISECRACK_ASSET = "json/chinese_wisecracks.json"
         private const val IDIOM_ASSET = "json/idioms.json"
+        private const val TONGUE_TWISTER_ASST = "json/tongue_twisters.json"
     }
 }

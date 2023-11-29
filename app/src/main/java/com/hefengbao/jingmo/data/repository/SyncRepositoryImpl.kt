@@ -8,6 +8,7 @@ import com.hefengbao.jingmo.data.database.dao.PoemDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.PoemTagDao
 import com.hefengbao.jingmo.data.database.dao.TagDao
+import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WriterDao
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
@@ -15,6 +16,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.PoemTagCrossRef
 import com.hefengbao.jingmo.data.database.entity.TagEntity
+import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WriterEntity
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Idiom
@@ -22,6 +24,7 @@ import com.hefengbao.jingmo.data.model.Poem
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.PoemTag
 import com.hefengbao.jingmo.data.model.Tag
+import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.Writer
 import com.hefengbao.jingmo.data.network.fake.FakeNetworkDataSource
 import kotlinx.coroutines.CoroutineDispatcher
@@ -40,6 +43,7 @@ class SyncRepositoryImpl @Inject constructor(
     private val poemSentenceDao: PoemSentenceDao,
     private val chineseWisecrackDao: ChineseWisecrackDao,
     private val idiomDao: IdiomDao,
+    private val tongueTwisterDao: TongueTwisterDao
 ) : SyncRepository {
     override fun syncPoems(): Flow<List<Poem>> = flow {
         emit(
@@ -83,6 +87,12 @@ class SyncRepositoryImpl @Inject constructor(
         )
     }.flowOn(ioDispatcher)
 
+    override fun syncTongueTwisters(): Flow<List<TongueTwister>> = flow {
+        emit(
+            networkDataSource.getTongueTwisters()
+        )
+    }.flowOn(ioDispatcher)
+
     override suspend fun insertPoem(entity: PoemEntity) {
         poemDao.insert(entity)
     }
@@ -109,5 +119,9 @@ class SyncRepositoryImpl @Inject constructor(
 
     override suspend fun insertIdiom(entity: IdiomEntity) {
         idiomDao.insert(entity)
+    }
+
+    override suspend fun insertTongueTwister(entity: TongueTwisterEntity) {
+        tongueTwisterDao.insert(entity)
     }
 }

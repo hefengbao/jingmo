@@ -6,6 +6,7 @@ import com.hefengbao.jingmo.data.model.Poem
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.PoemTag
 import com.hefengbao.jingmo.data.model.Tag
+import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.Writer
 
 interface NetworkDataSource {
@@ -16,4 +17,5 @@ interface NetworkDataSource {
     suspend fun getPoemSentences(): List<PoemSentence>
     suspend fun getChineseWisecracks(): List<ChineseWisecrack>
     suspend fun getIdioms(): List<Idiom>
+    suspend fun getTongueTwisters(): List<TongueTwister>
 }

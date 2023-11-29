@@ -8,4 +8,5 @@ object DataSetVersion {
     const val tag = 1
     const val writer = 1
     const val poemTag = 1
+    const val tongueTwister = 1
 }
