@@ -34,7 +34,8 @@ fun HomeRoute(
     onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
     onFestivalClick: () -> Unit,
-    onSolarTermsClick: () -> Unit
+    onSolarTermsClick: () -> Unit,
+    onTongueTwisterClick: () -> Unit,
 ) {
     HomeScreen(
         onLinksClick = onLinksClick,
@@ -46,6 +47,7 @@ fun HomeRoute(
         onChineseColorClick = onChineseColorClick,
         onFestivalClick = onFestivalClick,
         onSolarTermsClick = onSolarTermsClick,
+        onTongueTwisterClick = onTongueTwisterClick,
     )
 }
 
@@ -61,7 +63,8 @@ private fun HomeScreen(
     onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
     onFestivalClick: () -> Unit,
-    onSolarTermsClick: () -> Unit
+    onSolarTermsClick: () -> Unit,
+    onTongueTwisterClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -117,6 +120,13 @@ private fun HomeScreen(
                             title = "成语",
                             subtitle = "30895 条",
                             onClick = onIdiomClick
+                        )
+                    }
+                    item {
+                        Item(
+                            title = "绕口令",
+                            subtitle = "45 段",
+                            onClick = onTongueTwisterClick
                         )
                     }
                     item {

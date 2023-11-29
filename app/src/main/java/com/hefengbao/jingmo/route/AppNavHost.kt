@@ -45,6 +45,10 @@ import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTerm
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermGraph
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermGraph
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermScreen
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterScreen
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterGraph
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterGraph
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterScreen
 
 @Composable
 fun AppNavHost(
@@ -64,6 +68,7 @@ fun AppNavHost(
             onChineseColorClick = { navController.navigateToChineseColorListGraph() },
             onFestivalClick = { navController.navigateToFestivalGraph() },
             onSolarTermsClick = { navController.navigateToSolarTermGraph() },
+            onTongueTwisterClick = { navController.navigateToTongueTwisterGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -136,6 +141,15 @@ fun AppNavHost(
                     onItemClick = { navController.navigateToSolarTerm(it.toString()) },
                     nestGraph = {
                         solarTermScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                tongueTwisterGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemsClick = { navController.navigateToTongueTwisterScreen(it.toString()) },
+                    nestGraph = {
+                        tongueTwisterScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

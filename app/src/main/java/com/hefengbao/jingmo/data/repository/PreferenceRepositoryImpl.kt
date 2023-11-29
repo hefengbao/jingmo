@@ -31,4 +31,10 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setCaptureColor(color: String) = preference.setCaptureColor(color)
     override suspend fun setCaptureBackgroundColor(color: String) =
         preference.setCaptureBackgroundColor(color)
+
+    override suspend fun setTongueTwisterVersion(version: Int) =
+        preference.setTongueTwisterVersion(version)
+
+    override suspend fun setTongueTwisterLastReadId(id: Int) =
+        preference.setTongueTwisterLastReadId(id)
 }
