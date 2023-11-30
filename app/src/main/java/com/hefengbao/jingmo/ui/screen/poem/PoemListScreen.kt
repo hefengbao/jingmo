@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Default
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -34,7 +33,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,7 +46,8 @@ fun PoemListRoute(
     modifier: Modifier = Modifier,
     viewModel: PoemListViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (Long) -> Unit
+    onItemClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit,
 ) {
     val poems by viewModel.poems.collectAsState()
     val searchPoems by viewModel.searchResult.collectAsState(emptyList())
@@ -54,6 +56,7 @@ fun PoemListRoute(
         modifier = modifier,
         onBackClick = onBackClick,
         onItemClick = onItemClick,
+        onSearchItemClick = onSearchItemClick,
         poems = poems,
         currentId = viewModel.id,
         onSearch = { viewModel.search(it) },
@@ -67,6 +70,7 @@ private fun PoemListScreen(
     modifier: Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit,
     currentId: Long,
     poems: List<PoemSimpleInfo>,
     onSearch: (String) -> Unit,
@@ -149,34 +153,36 @@ private fun PoemListScreen(
             showSearchBarStatusChange = { showSearchBar = it },
             onSearch = onSearch,
             searchPoems = searchPoems,
-            onItemClick = onItemClick
+            onSearchItemClick = onSearchItemClick
         )
     }
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchPoems: List<PoemSimpleInfo>,
-    onItemClick: (Long) -> Unit
+    onSearchItemClick: (Long, String) -> Unit
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+    var query by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(true) }
+    val keyboard = LocalSoftwareKeyboardController.current
 
     Box(Modifier.fillMaxSize()) {
         SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            query = text,
-            onQueryChange = { text = it },
+            query = query,
+            onQueryChange = { query = it },
             onSearch = {
                 active = true
-                if (text.isNotEmpty()) {
-                    onSearch(text)
+                if (query.isNotEmpty()) {
+                    onSearch(query)
+                    keyboard?.hide()
                 }
             },
             active = active,
@@ -191,8 +197,8 @@ fun SearchBar(
                 }
             },
             trailingIcon = {
-                IconButton(onClick = { text = "" }) {
-                    Icon(Icons.Default.Clear, contentDescription = null)
+                IconButton(onClick = { query = "" }) {
+                    Icon(Default.Clear, contentDescription = null)
                 }
             },
         ) {
@@ -209,7 +215,7 @@ fun SearchBar(
                             Column(
                                 modifier = modifier
                                     .clickable {
-                                        onItemClick(item.id)
+                                        onSearchItemClick(item.id, query)
                                     }
                                     .padding(horizontal = 16.dp, vertical = 16.dp)
                                     .fillMaxWidth()

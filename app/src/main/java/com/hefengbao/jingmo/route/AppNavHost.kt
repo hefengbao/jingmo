@@ -28,9 +28,11 @@ import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemListGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemListGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceCaptureScreen
@@ -45,8 +47,8 @@ import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTerm
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermGraph
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermGraph
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermScreen
-import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterScreen
 import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterGraph
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterScreen
 import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterGraph
 import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterScreen
 
@@ -73,15 +75,24 @@ fun AppNavHost(
                 poemListGraph(
                     onBackClick = navController::navigateUp,
                     onItemClick = { navController.navigateToPoemGraph(it.toString()) },
+                    onSearchItemClick = { id, query ->
+                        navController.navigateToPoemSearchShowScreen(
+                            id.toString(),
+                            query
+                        )
+                    },
                     nestGraph = {
                         poemGraph(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
-                            nestGraph = {
-                                poemCaptureScreen(
-                                    onBackClick = navController::navigateUp
-                                )
-                            }
+                            nestGraph = {}
+                        )
+                        poemSearchShowScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
+                        )
+                        poemCaptureScreen(
+                            onBackClick = navController::navigateUp
                         )
                     }
                 )

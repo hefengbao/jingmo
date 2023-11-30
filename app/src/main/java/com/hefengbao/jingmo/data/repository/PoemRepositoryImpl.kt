@@ -18,5 +18,11 @@ class PoemRepositoryImpl @Inject constructor(
     override suspend fun getPoem(id: Long): Flow<PoemEntity> = poemDao.getPoem(id)
     override fun getPoemSimpleList(): Flow<List<PoemSimpleInfo>> = poemDao.getPoemSimpleInfoList()
     override fun searchPoemSimpleList(query: String): Flow<List<PoemSimpleInfo>> =
-        poemDao.searchPoemSimpleInfoList(query)
+        poemDao.searchPoemSimpleInfoList("%$query%")
+
+    override suspend fun getSearchNextId(id: Long, query: String): Long =
+        poemDao.getSearchNextId(id, "%$query%")
+
+    override suspend fun getSearchPrevId(id: Long, query: String): Long =
+        poemDao.getSearchPrevId(id, "%$query%")
 }

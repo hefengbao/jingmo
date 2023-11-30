@@ -40,7 +40,7 @@ class PoemListViewModel @Inject constructor(
     fun search(query: String) {
         _searchResult.value = emptyList()
         viewModelScope.launch {
-            repository.searchPoemSimpleList("%$query%").collect {
+            repository.searchPoemSimpleList(query).collect {
                 _searchResult.value = it
             }
         }
