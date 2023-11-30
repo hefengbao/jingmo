@@ -12,4 +12,6 @@ interface PoemRepository {
     suspend fun getPoem(id: Long): Flow<PoemEntity>
     fun getPoemSimpleList(): Flow<List<PoemSimpleInfo>>
     fun searchPoemSimpleList(query: String): Flow<List<PoemSimpleInfo>>
+    suspend fun getSearchNextId(id: Long, query: String): Long
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }

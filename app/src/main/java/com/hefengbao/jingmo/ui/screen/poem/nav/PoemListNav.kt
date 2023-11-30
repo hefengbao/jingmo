@@ -16,6 +16,7 @@ fun NavController.navigateToPoemListGraph() {
 fun NavGraphBuilder.poemListGraph(
     onBackClick: () -> Unit,
     onItemClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -25,7 +26,8 @@ fun NavGraphBuilder.poemListGraph(
         composable(ROUTE_POEM_LIST) {
             PoemListRoute(
                 onBackClick = onBackClick,
-                onItemClick = onItemClick
+                onItemClick = onItemClick,
+                onSearchItemClick = onSearchItemClick,
             )
         }
     }

@@ -33,4 +33,10 @@ interface PoemDao {
 
     @Query("select id,writer_name, dynasty, title from poems where writer_name like :query or title like :query or dynasty like :query or content like :query order by id asc")
     fun searchPoemSimpleInfoList(query: String): Flow<List<PoemSimpleInfo>>
+
+    @Query("select id from poems where id > :id and (writer_name like :query or title like :query or dynasty like :query or content like :query) order by id asc limit 1")
+    suspend fun getSearchNextId(id: Long, query: String): Long
+
+    @Query("select id from poems where id < :id and (writer_name like :query or title like :query or dynasty like :query or content like :query) order by id desc limit 1")
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }
