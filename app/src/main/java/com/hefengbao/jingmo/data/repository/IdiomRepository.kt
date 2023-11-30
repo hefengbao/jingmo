@@ -10,4 +10,6 @@ interface IdiomRepository {
     suspend fun getPrevId(id: Long): Long
     fun getSimpleIdiomInfoList(): Flow<List<SimpleIdiomInfo>>
     fun searchSimpleIdiomInfoList(query: String): Flow<List<SimpleIdiomInfo>>
+    suspend fun getSearchNextId(id: Long, query: String): Long
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }

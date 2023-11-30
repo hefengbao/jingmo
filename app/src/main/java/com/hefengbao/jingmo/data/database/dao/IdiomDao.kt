@@ -27,4 +27,10 @@ interface IdiomDao {
 
     @Query("select id, word from idioms where word like :query order by id asc")
     fun searchSimpleIdiomInfoList(query: String): Flow<List<SimpleIdiomInfo>>
+
+    @Query("select id from idioms where id > :id and word like :query order by id asc limit 1")
+    suspend fun getSearchNextId(id: Long, query: String): Long
+
+    @Query("select id from idioms where id < :id and word like :query order by id desc limit 1")
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }
