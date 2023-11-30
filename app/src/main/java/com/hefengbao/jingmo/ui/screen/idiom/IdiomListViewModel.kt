@@ -40,7 +40,7 @@ class IdiomListViewModel @Inject constructor(
     fun search(query: String) {
         _searchResult.value = emptyList()
         viewModelScope.launch {
-            idiomRepository.searchSimpleIdiomInfoList("%$query%").collect {
+            idiomRepository.searchSimpleIdiomInfoList(query).collect {
                 _searchResult.value = it
             }
         }

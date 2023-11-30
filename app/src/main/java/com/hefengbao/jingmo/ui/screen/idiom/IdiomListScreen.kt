@@ -18,9 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,10 +27,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.model.SimpleIdiomInfo
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun IdiomListRoute(
@@ -40,6 +41,7 @@ fun IdiomListRoute(
     viewModel: IdiomListViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit
 ) {
     val idioms by viewModel.idioms.collectAsState()
     val searchIdioms by viewModel.searchResult.collectAsState(initial = emptyList())
@@ -48,6 +50,7 @@ fun IdiomListRoute(
         modifier = modifier,
         onBackClick = onBackClick,
         onItemClick = onItemClick,
+        onSearchItemClick = onSearchItemClick,
         currentId = viewModel.id,
         idioms = idioms,
         onSearch = { viewModel.search(it) },
@@ -56,12 +59,12 @@ fun IdiomListRoute(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun IdiomListScreen(
     modifier: Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit,
     currentId: Long,
     idioms: List<SimpleIdiomInfo>,
     onSearch: (String) -> Unit,
@@ -74,25 +77,15 @@ private fun IdiomListScreen(
         showSearchBar = false
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "成语")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { showSearchBar = true }) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                    }
-                }
-            )
-        },
-    ) { paddingValues ->
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "成语",
+        actions = {
+            IconButton(onClick = { showSearchBar = true }) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            }
+        }
+    ) {
         if (idioms.isNotEmpty()) {
             val state = rememberLazyListState()
 
@@ -104,7 +97,6 @@ private fun IdiomListScreen(
             }
 
             LazyColumn(
-                modifier = modifier.padding(paddingValues),
                 state = state,
                 content = {
                     itemsIndexed(items = idioms, key = { _, item -> item.id }) { _, item ->
@@ -132,36 +124,39 @@ private fun IdiomListScreen(
             showSearchBarStatusChange = { showSearchBar = it },
             onSearch = onSearch,
             searchIdioms = searchIdioms,
-            onItemClick = onItemClick,
+            onSearchItemClick = onSearchItemClick,
             changeFistLoading = { firstLoading = false }
         )
     }
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchIdioms: List<SimpleIdiomInfo>,
-    onItemClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit,
     changeFistLoading: () -> Unit
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+    var query by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(true) }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(Modifier.fillMaxSize()) {
         androidx.compose.material3.SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            query = text,
-            onQueryChange = { text = it },
+            query = query,
+            onQueryChange = { query = it },
             onSearch = {
                 active = true
-                if (text.isNotEmpty()) {
-                    onSearch(text)
+                if (query.isNotEmpty()) {
+                    onSearch(query)
+                    keyboardController?.hide()
                 }
             },
             active = active,
@@ -176,7 +171,7 @@ fun SearchBar(
                 }
             },
             trailingIcon = {
-                IconButton(onClick = { text = "" }) {
+                IconButton(onClick = { query = "" }) {
                     Icon(Icons.Default.Clear, contentDescription = null)
                 }
             },
@@ -195,7 +190,7 @@ fun SearchBar(
                                 text = item.word,
                                 modifier = modifier
                                     .clickable {
-                                        onItemClick(item.id)
+                                        onSearchItemClick(item.id, query)
                                         changeFistLoading()
                                     }
                                     .padding(16.dp)

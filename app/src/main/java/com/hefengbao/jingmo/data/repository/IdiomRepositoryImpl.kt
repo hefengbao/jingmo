@@ -16,5 +16,11 @@ class IdiomRepositoryImpl @Inject constructor(
         idiomDao.getSimpleIdiomInfoList()
 
     override fun searchSimpleIdiomInfoList(query: String): Flow<List<SimpleIdiomInfo>> =
-        idiomDao.searchSimpleIdiomInfoList(query)
+        idiomDao.searchSimpleIdiomInfoList("%$query%")
+
+    override suspend fun getSearchNextId(id: Long, query: String): Long =
+        idiomDao.getSearchNextId(id, "%$query%")
+
+    override suspend fun getSearchPrevId(id: Long, query: String): Long =
+        idiomDao.getSearchPrevId(id, "%$query%")
 }
