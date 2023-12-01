@@ -65,7 +65,7 @@ class ChineseWisecrackViewModel @Inject constructor(
     fun search(query: String) {
         _searchWisecrackList.value = emptyList()
         viewModelScope.launch {
-            chineseWisecrackRepository.searchWisecrackList("%$query%").collectLatest {
+            chineseWisecrackRepository.searchWisecrackList(query).collectLatest {
                 _searchWisecrackList.value = it
             }
         }

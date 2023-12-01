@@ -8,4 +8,6 @@ interface ChineseWisecrackRepository {
     suspend fun getNextId(id: Long): Long
     suspend fun getPrevId(id: Long): Long
     fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>>
+    suspend fun getSearchNextId(id: Long, query: String): Long
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }

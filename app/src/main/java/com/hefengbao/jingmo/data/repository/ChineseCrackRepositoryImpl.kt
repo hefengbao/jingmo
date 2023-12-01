@@ -14,5 +14,11 @@ class ChineseCrackRepositoryImpl @Inject constructor(
     override suspend fun getNextId(id: Long): Long = chineseWisecrackDao.getNextId(id)
     override suspend fun getPrevId(id: Long): Long = chineseWisecrackDao.getPrevId(id)
     override fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>> =
-        chineseWisecrackDao.searchWisecrackList(query)
+        chineseWisecrackDao.searchWisecrackList("%$query%")
+
+    override suspend fun getSearchNextId(id: Long, query: String): Long =
+        chineseWisecrackDao.getSearchNextId(id, "%$query%")
+
+    override suspend fun getSearchPrevId(id: Long, query: String): Long =
+        chineseWisecrackDao.getSearchPrevId(id, "%$query%")
 }

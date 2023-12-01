@@ -9,8 +9,10 @@ import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorLis
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.festival.nav.festivalGraph
 import com.hefengbao.jingmo.ui.screen.festival.nav.festivalScreen
 import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestival
@@ -122,9 +124,23 @@ fun AppNavHost(
                 chineseWisecrackGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
+                    onSearchItemClick = { id, query ->
+                        navController.navigateToChineseWisecrackSearchShowScreen(
+                            id.toString(),
+                            query
+                        )
+                    },
                     nestGraph = {
                         chineseWisecrackCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        chineseWisecrackSearchShowScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = {
+                                navController.navigateToChineseWisecrackCaptureScreen(
+                                    it.toString()
+                                )
+                            },
                         )
                     }
                 )
