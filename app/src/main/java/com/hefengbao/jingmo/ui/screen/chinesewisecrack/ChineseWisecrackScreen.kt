@@ -89,7 +89,9 @@ fun ChineseWisecrackRoute(
         },
         onSearch = { viewModel.search(it) },
         searchWisecrackList = searchWisecrackList,
-        onItemClick = onSearchItemClick
+        onSearchItemClick = onSearchItemClick,
+        query = viewModel.query,
+        onQueryChange = { viewModel.onQueryChange(it) }
     )
 }
 
@@ -107,7 +109,9 @@ private fun ChineseWisecrackScreen(
     setLastReadId: (Long) -> Unit,
     onSearch: (String) -> Unit,
     searchWisecrackList: List<ChineseWisecrackEntity>,
-    onItemClick: (Long, String) -> Unit
+    onSearchItemClick: (Long, String) -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit
 ) {
     var showSearchBar by rememberSaveable { mutableStateOf(false) }
 
@@ -212,10 +216,12 @@ private fun ChineseWisecrackScreen(
             showSearchBarStatusChange = { showSearchBar = it },
             onSearch = onSearch,
             searchWisecrackList = searchWisecrackList,
-            onItemClick = { id, query ->
-                onItemClick(id, query)
+            onSearchItemClick = { id, query ->
+                onSearchItemClick(id, query)
                 showSearchBar = false
-            }
+            },
+            query = query,
+            onQueryChange = onQueryChange
         )
     }
 }
@@ -228,9 +234,11 @@ private fun SearchBar(
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchWisecrackList: List<ChineseWisecrackEntity>,
-    onItemClick: (Long, String) -> Unit
+    onSearchItemClick: (Long, String) -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit
 ) {
-    var query by rememberSaveable { mutableStateOf("") }
+    var newQuery by rememberSaveable { mutableStateOf(query) }
     var active by rememberSaveable { mutableStateOf(true) }
     val keyboard = LocalSoftwareKeyboardController.current
 
@@ -238,12 +246,15 @@ private fun SearchBar(
         androidx.compose.material3.SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            query = query,
-            onQueryChange = { query = it },
+            query = newQuery,
+            onQueryChange = {
+                newQuery = it
+                onQueryChange(it)
+            },
             onSearch = {
                 active = true
-                if (query.isNotEmpty()) {
-                    onSearch(query)
+                if (newQuery.isNotEmpty()) {
+                    onSearch(newQuery)
                     keyboard?.hide()
                 }
             },
@@ -259,7 +270,7 @@ private fun SearchBar(
                 }
             },
             trailingIcon = {
-                IconButton(onClick = { query = "" }) {
+                IconButton(onClick = { newQuery = "" }) {
                     Icon(Icons.Default.Clear, contentDescription = null)
                 }
             },
@@ -277,7 +288,7 @@ private fun SearchBar(
                             Text(
                                 modifier = modifier
                                     .clickable {
-                                        onItemClick(item.id, query)
+                                        onSearchItemClick(item.id, newQuery)
                                     }
                                     .padding(horizontal = 16.dp, vertical = 16.dp)
                                     .fillMaxWidth(),

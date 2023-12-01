@@ -32,6 +32,12 @@ class ChineseWisecrackViewModel @Inject constructor(
         }
     }
 
+    var query = ""
+
+    fun onQueryChange(query: String) {
+        this.query = query
+    }
+
     private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
     val nextId: SharedFlow<Long?> = _nextId
     fun getNextId(id: Long) {

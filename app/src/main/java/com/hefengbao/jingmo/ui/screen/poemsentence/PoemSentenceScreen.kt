@@ -61,7 +61,6 @@ fun PoemSentenceRoute(
     onCaptureClick: (Long) -> Unit,
     onSearchItemClick: (Long, String) -> Unit
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.getSentence(viewModel.id)
         viewModel.getPrevId(viewModel.id)
@@ -96,14 +95,10 @@ fun PoemSentenceRoute(
         setLastReadId = {
             viewModel.setLastReadId(it)
         },
-        onItemClick = {
-            viewModel.getSentence(it)
-            viewModel.getPrevId(it)
-            viewModel.getNextId(it)
-            viewModel.setLastReadId(it)
-        },
         onSearch = { viewModel.search(it) },
-        searchSentences = searchSentences
+        searchSentences = searchSentences,
+        query = viewModel.query,
+        onQueryChange = { viewModel.changeQuery(it) }
     )
 }
 
@@ -120,9 +115,10 @@ private fun PoemSentenceScreen(
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
     setLastReadId: (Long) -> Unit,
-    onItemClick: (Long) -> Unit,
     onSearch: (String) -> Unit,
-    searchSentences: List<PoemSentenceEntity>
+    searchSentences: List<PoemSentenceEntity>,
+    query: String,
+    onQueryChange: (String) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState(
@@ -281,7 +277,9 @@ private fun PoemSentenceScreen(
             onItemClick = { id, query ->
                 onSearchItemClick(id, query)
                 showSearchBar = false
-            }
+            },
+            query = query,
+            onQueryChange = onQueryChange
         )
     }
 }
@@ -293,9 +291,11 @@ private fun SearchBar(
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchSentences: List<PoemSentenceEntity>,
-    onItemClick: (Long, String) -> Unit
+    onItemClick: (Long, String) -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit
 ) {
-    var query by rememberSaveable { mutableStateOf("") }
+    var newQuery by rememberSaveable { mutableStateOf(query) }
     var active by rememberSaveable { mutableStateOf(true) }
     val keyboard = LocalSoftwareKeyboardController.current
 
@@ -303,12 +303,15 @@ private fun SearchBar(
         androidx.compose.material3.SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            query = query,
-            onQueryChange = { query = it },
+            query = newQuery,
+            onQueryChange = {
+                newQuery = it
+                onQueryChange(it)
+            },
             onSearch = {
                 active = true
-                if (query.isNotEmpty()) {
-                    onSearch(query)
+                if (newQuery.isNotEmpty()) {
+                    onSearch(newQuery)
                     keyboard?.hide()
                 }
             },
@@ -324,7 +327,7 @@ private fun SearchBar(
                 }
             },
             trailingIcon = {
-                IconButton(onClick = { query = "" }) {
+                IconButton(onClick = { newQuery = "" }) {
                     Icon(Icons.Default.Clear, contentDescription = null)
                 }
             },
@@ -342,7 +345,7 @@ private fun SearchBar(
                             Text(
                                 modifier = modifier
                                     .clickable {
-                                        onItemClick(item.id, query)
+                                        onItemClick(item.id, newQuery)
                                     }
                                     .padding(horizontal = 16.dp, vertical = 16.dp)
                                     .fillMaxWidth(),

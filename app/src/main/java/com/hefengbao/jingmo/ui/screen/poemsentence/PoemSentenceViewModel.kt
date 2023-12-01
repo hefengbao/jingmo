@@ -32,6 +32,12 @@ class PoemSentenceViewModel @Inject constructor(
         }
     }
 
+    var query = ""
+
+    fun changeQuery(query: String) {
+        this.query = query
+    }
+
     private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
     val nextId: SharedFlow<Long?> = _nextId
     fun getNextId(id: Long) {
