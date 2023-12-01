@@ -64,8 +64,6 @@ fun PoemSearchShowRoute(
 
     val poem by viewModel.poem.collectAsState(initial = null)
 
-    Log.i("PoemSearchShowRoute", viewModel.query)
-
     PoemSearchShowScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,

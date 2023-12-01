@@ -85,7 +85,7 @@ fun PoemSentenceSearchShowRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PoemSentenceSearchShowScreen(
     modifier: Modifier = Modifier,
@@ -106,16 +106,11 @@ private fun PoemSentenceSearchShowScreen(
         )
     )
 
-    var showSearchBar by rememberSaveable { mutableStateOf(false) }
 
     BackHandler(scaffoldState.bottomSheetState.isVisible) {
         coroutineScope.launch {
             scaffoldState.bottomSheetState.hide()
         }
-    }
-
-    BackHandler(showSearchBar) {
-        showSearchBar = false
     }
 
     sentence?.let { entity ->
@@ -133,9 +128,6 @@ private fun PoemSentenceSearchShowScreen(
                     actions = {
                         IconButton(onClick = { onCaptureClick(entity.sentence.id) }) {
                             Icon(imageVector = Icons.Default.Photo, contentDescription = null)
-                        }
-                        IconButton(onClick = { showSearchBar = true }) {
-                            Icon(imageVector = Icons.Default.Search, contentDescription = null)
                         }
                     }
                 )
