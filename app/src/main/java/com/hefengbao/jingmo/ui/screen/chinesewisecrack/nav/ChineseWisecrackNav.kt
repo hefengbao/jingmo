@@ -16,6 +16,7 @@ fun NavController.navigateToChineseWisecrackGraph() {
 fun NavGraphBuilder.chineseWisecrackGraph(
     onBackClick: () -> Unit,
     onCaptureClick: (Long) -> Unit,
+    onSearchItemClick: (Long, String) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -25,7 +26,8 @@ fun NavGraphBuilder.chineseWisecrackGraph(
         composable(ROUTE_CHINESE_WISECRACK) {
             ChineseWisecrackRoute(
                 onBackClick = onBackClick,
-                onCaptureClick = onCaptureClick
+                onCaptureClick = onCaptureClick,
+                onSearchItemClick = onSearchItemClick
             )
         }
     }

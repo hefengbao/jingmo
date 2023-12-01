@@ -21,6 +21,12 @@ interface ChineseWisecrackDao {
     @Query("select id from chinese_wisecracks where id < :id order by id desc limit 1")
     suspend fun getPrevId(id: Long): Long
 
-    @Query("select * from chinese_wisecracks where riddle like :query")
+    @Query("select * from chinese_wisecracks where riddle like :query or answer like :query")
     fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>>
+
+    @Query("select id from chinese_wisecracks where id > :id and (riddle like :query or answer like :query) order by id asc limit 1")
+    suspend fun getSearchNextId(id: Long, query: String): Long
+
+    @Query("select id from chinese_wisecracks where id < :id and (riddle like :query or answer like :query) order by id desc limit 1")
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }
