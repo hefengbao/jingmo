@@ -65,7 +65,8 @@ fun IdiomSearchShowRoute(
             viewModel.getIdiom(nextId!!)
             viewModel.getPrevId(nextId!!, viewModel.query)
             viewModel.getNextId(nextId!!, viewModel.query)
-        }
+        },
+        query = viewModel.query
     )
 }
 
@@ -79,11 +80,12 @@ private fun IdiomSearchShowScreen(
     nextId: Long?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
+    query: String
 ) {
     idiom?.let { entity ->
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "成语",
+            title = "搜索：$query",
             actions = {
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
                     Icon(imageVector = Icons.Default.Photo, contentDescription = null)

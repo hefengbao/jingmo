@@ -79,7 +79,8 @@ fun PoemSearchShowRoute(
             viewModel.getPoem(nextId!!)
             viewModel.getPrevId(nextId!!, viewModel.query)
             viewModel.getNextId(nextId!!, viewModel.query)
-        }
+        },
+        query = viewModel.query
     )
 }
 
@@ -94,6 +95,7 @@ private fun PoemSearchShowScreen(
     nextId: Long?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
+    query: String
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState(
@@ -118,7 +120,7 @@ private fun PoemSearchShowScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "古诗词文")
+                        Text(text = "搜索：$query")
                     },
                     navigationIcon = {
                         IconButton(onClick = onBackClick) {
