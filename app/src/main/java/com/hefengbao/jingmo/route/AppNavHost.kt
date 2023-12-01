@@ -37,8 +37,10 @@ import com.hefengbao.jingmo.ui.screen.poem.nav.poemListGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceGraph
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
@@ -101,9 +103,19 @@ fun AppNavHost(
                 poemSentenceGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
+                    onSearchItemClick = { id, query ->
+                        navController.navigateToPoemSentenceSearchShowScreen(
+                            id.toString(),
+                            query
+                        )
+                    },
                     nestGraph = {
                         poemSentenceCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        poemSentenceSearchShowScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
                         )
                     }
                 )

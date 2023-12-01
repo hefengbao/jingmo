@@ -63,7 +63,7 @@ class PoemSentenceViewModel @Inject constructor(
     fun search(query: String) {
         _searchSentences.value = emptyList()
         viewModelScope.launch {
-            poemSentenceRepository.searchSentencesList("%$query%").collect {
+            poemSentenceRepository.searchSentencesList(query).collect {
                 _searchSentences.value = it
             }
         }
