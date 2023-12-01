@@ -10,4 +10,6 @@ interface PoemSentenceRepository {
     suspend fun getPrevId(id: Long): Long
     fun searchSentencesList(query: String): Flow<List<PoemSentenceEntity>>
     suspend fun getSentence(id: Long): Flow<PoemSentenceEntity>
+    suspend fun getSearchNextId(id: Long, query: String): Long
+    suspend fun getSearchPrevId(id: Long, query: String): Long
 }
