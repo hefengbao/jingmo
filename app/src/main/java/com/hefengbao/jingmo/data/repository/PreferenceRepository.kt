@@ -20,4 +20,6 @@ interface PreferenceRepository {
     suspend fun setCaptureBackgroundColor(color: String)
     suspend fun setTongueTwisterVersion(version: Int)
     suspend fun setTongueTwisterLastReadId(id: Int)
+    suspend fun setChineseKnowledgeVersion(version: Int)
+    suspend fun setChineseKnowledgeLastReadId(id: Int)
 }

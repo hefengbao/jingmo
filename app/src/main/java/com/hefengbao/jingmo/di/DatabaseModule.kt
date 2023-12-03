@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room.databaseBuilder
 import com.hefengbao.jingmo.common.Constant
 import com.hefengbao.jingmo.data.database.AppDatabase
+import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PoemDao
@@ -72,4 +73,9 @@ object DatabaseModule {
     fun providesTongueTwisterDao(
         database: AppDatabase
     ): TongueTwisterDao = database.tongueTwisterDao()
+
+    @Provides
+    fun providesChineseKnowledgeDao(
+        database: AppDatabase
+    ): ChineseKnowledgeDao = database.chineseKnowledgeDao()
 }

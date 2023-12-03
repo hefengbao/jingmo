@@ -3,6 +3,8 @@ package com.hefengbao.jingmo.di
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.ChineseColorRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseCrackRepositoryImpl
+import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepository
+import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
 import com.hefengbao.jingmo.data.repository.FestivalRepository
 import com.hefengbao.jingmo.data.repository.FestivalRepositoryImpl
@@ -84,4 +86,9 @@ interface DataModule {
     fun bindsTongueTwisterRepository(
         tongueTwisterRepositoryImpl: TongueTwisterRepositoryImpl
     ): TongueTwisterRepository
+
+    @Binds
+    fun bindsChineseKnowledgeRepository(
+        chineseKnowledgeRepositoryImpl: ChineseKnowledgeRepositoryImpl
+    ): ChineseKnowledgeRepository
 }

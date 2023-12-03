@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.network.fake
 
 import com.hefengbao.jingmo.common.network.AppDispatchers
 import com.hefengbao.jingmo.common.network.Dispatcher
+import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.Poem
@@ -69,6 +70,11 @@ class FakeNetworkDataSource @Inject constructor(
             assets.open(TONGUE_TWISTER_ASST).use(networkJson::decodeFromStream)
         }
 
+    override suspend fun getChinesKnowledge(): List<ChineseKnowledge> =
+        withContext(ioDispatcher){
+            assets.open(CHINESE_KNOWLEDGE_ASSET).use(networkJson::decodeFromStream)
+        }
+
     companion object {
         private const val POEMS_ASSET = "json/poems.json"
         private const val WRITERS_ASSET = "json/writers.json"
@@ -78,5 +84,6 @@ class FakeNetworkDataSource @Inject constructor(
         private const val CHINESE_WISECRACK_ASSET = "json/chinese_wisecracks.json"
         private const val IDIOM_ASSET = "json/idioms.json"
         private const val TONGUE_TWISTER_ASST = "json/tongue_twisters.json"
+        private const val CHINESE_KNOWLEDGE_ASSET = "json/chinese_knowledge.json"
     }
 }

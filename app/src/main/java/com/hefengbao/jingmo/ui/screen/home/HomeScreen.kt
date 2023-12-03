@@ -36,6 +36,7 @@ fun HomeRoute(
     onFestivalClick: () -> Unit,
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
+    onChineseKnowledgeClick: () -> Unit,
 ) {
     HomeScreen(
         onLinksClick = onLinksClick,
@@ -48,6 +49,7 @@ fun HomeRoute(
         onFestivalClick = onFestivalClick,
         onSolarTermsClick = onSolarTermsClick,
         onTongueTwisterClick = onTongueTwisterClick,
+        onChineseKnowledgeClick = onChineseKnowledgeClick,
     )
 }
 
@@ -65,6 +67,7 @@ private fun HomeScreen(
     onFestivalClick: () -> Unit,
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
+    onChineseKnowledgeClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -141,6 +144,13 @@ private fun HomeScreen(
                             title = "二十四节气",
                             subtitle = "24 个",
                             onClick = onSolarTermsClick
+                        )
+                    }
+                    item {
+                        Item(
+                            title = "知识卡片",
+                            subtitle = "464 组",
+                            onClick = onChineseKnowledgeClick
                         )
                     }
                     item {

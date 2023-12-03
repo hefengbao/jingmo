@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.network
 
+import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.Poem
@@ -18,4 +19,5 @@ interface NetworkDataSource {
     suspend fun getChineseWisecracks(): List<ChineseWisecrack>
     suspend fun getIdioms(): List<Idiom>
     suspend fun getTongueTwisters(): List<TongueTwister>
+    suspend fun getChinesKnowledge(): List<ChineseKnowledge>
 }

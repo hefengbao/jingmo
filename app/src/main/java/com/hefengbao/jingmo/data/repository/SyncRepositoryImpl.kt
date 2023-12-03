@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.repository
 
 import com.hefengbao.jingmo.common.network.AppDispatchers
 import com.hefengbao.jingmo.common.network.Dispatcher
+import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PoemDao
@@ -10,6 +11,7 @@ import com.hefengbao.jingmo.data.database.dao.PoemTagDao
 import com.hefengbao.jingmo.data.database.dao.TagDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WriterDao
+import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PoemEntity
@@ -18,6 +20,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemTagCrossRef
 import com.hefengbao.jingmo.data.database.entity.TagEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WriterEntity
+import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.Poem
@@ -43,7 +46,8 @@ class SyncRepositoryImpl @Inject constructor(
     private val poemSentenceDao: PoemSentenceDao,
     private val chineseWisecrackDao: ChineseWisecrackDao,
     private val idiomDao: IdiomDao,
-    private val tongueTwisterDao: TongueTwisterDao
+    private val tongueTwisterDao: TongueTwisterDao,
+    private val chineseKnowledgeDao: ChineseKnowledgeDao,
 ) : SyncRepository {
     override fun syncPoems(): Flow<List<Poem>> = flow {
         emit(
@@ -93,6 +97,12 @@ class SyncRepositoryImpl @Inject constructor(
         )
     }.flowOn(ioDispatcher)
 
+    override fun syncChineseKnowledge(): Flow<List<ChineseKnowledge>> = flow {
+        emit(
+            networkDataSource.getChinesKnowledge()
+        )
+    }.flowOn(ioDispatcher)
+
     override suspend fun insertPoem(entity: PoemEntity) {
         poemDao.insert(entity)
     }
@@ -123,5 +133,9 @@ class SyncRepositoryImpl @Inject constructor(
 
     override suspend fun insertTongueTwister(entity: TongueTwisterEntity) {
         tongueTwisterDao.insert(entity)
+    }
+
+    override suspend fun insertChineseKnowledge(entity: ChineseKnowledgeEntity) {
+        chineseKnowledgeDao.insert(entity)
     }
 }
