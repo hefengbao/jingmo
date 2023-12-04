@@ -6,5 +6,6 @@ data class Festival(
     val alias: String,
     val desc: String,
     val images: List<String> = emptyList(),
-    val url: String
+    val url: String,
+    val comments: List<String> = emptyList()
 )

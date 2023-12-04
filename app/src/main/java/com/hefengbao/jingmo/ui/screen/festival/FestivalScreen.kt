@@ -2,7 +2,10 @@ package com.hefengbao.jingmo.ui.screen.festival
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -20,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.Festival
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import org.w3c.dom.Comment
 
 @Composable
 fun FestivalRoute(
@@ -62,6 +66,9 @@ private fun FestivalScreen(
                 TextItem(title = "名称", content = festival.name)
                 TextItem(title = "别名", content = festival.alias)
                 TextItem(title = "简介", content = festival.desc)
+                if (festival.comments.isNotEmpty()){
+                    CommentItem(title = "其他", comments = festival.comments)
+                }
             }
         }
     }
@@ -77,5 +84,20 @@ private fun TextItem(
     ) {
         Text(text = title, style = MaterialTheme.typography.headlineSmall)
         Text(text = content)
+    }
+}
+
+@Composable
+fun CommentItem(
+    title: String,
+    comments: List<String>
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(text = title, style = MaterialTheme.typography.headlineSmall)
+        for (comment in comments){
+            Text(text = comment)
+        }
     }
 }
