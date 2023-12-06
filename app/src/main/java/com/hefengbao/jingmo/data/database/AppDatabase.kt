@@ -4,6 +4,7 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PoemDao
@@ -12,6 +13,7 @@ import com.hefengbao.jingmo.data.database.dao.PoemTagDao
 import com.hefengbao.jingmo.data.database.dao.TagDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WriterDao
+import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PoemEntity
@@ -24,6 +26,7 @@ import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
 
 @Database(
     entities = [
+        ChineseKnowledgeEntity::class,
         ChineseWisecrackEntity::class,
         IdiomEntity::class,
         PoemEntity::class,
@@ -33,10 +36,11 @@ import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
         TongueTwisterEntity::class,
         WriterEntity::class,
     ],
-    version = 3,
+    version = 4,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4),
     ],
     exportSchema = true
 )
@@ -44,6 +48,7 @@ import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
     DetailInfoListConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
     abstract fun chineseWisecrackDao(): ChineseWisecrackDao
     abstract fun idiomDao(): IdiomDao
     abstract fun poemDao(): PoemDao

@@ -19,6 +19,7 @@ fun NavGraphBuilder.homeGraph(
     onFestivalClick: () -> Unit,
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
+    onChineseKnowledgeClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
@@ -39,6 +40,7 @@ fun NavGraphBuilder.homeGraph(
                 onFestivalClick = onFestivalClick,
                 onSolarTermsClick = onSolarTermsClick,
                 onTongueTwisterClick = onTongueTwisterClick,
+                onChineseKnowledgeClick = onChineseKnowledgeClick,
             )
         }
         nestGraph()

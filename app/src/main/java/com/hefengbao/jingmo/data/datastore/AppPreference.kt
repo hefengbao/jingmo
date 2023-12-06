@@ -53,6 +53,8 @@ class AppPreference(
             captureBackgroundColor = it[PREF_CAPTURE_BACKGROUND_COLOR] ?: "#065279",
             tongueTwisterVersion = it[PREF_TONGUE_TWISTER_VERSION] ?: 0,
             tongueTwisterLastReadId = it[PREF_TONGUE_TWISTER_LAST_READ_ID] ?: 1,
+            chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE_VERSION] ?: 0,
+            chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE_LAST_READ_ID] ?: 1
         )
     }
 
@@ -93,6 +95,10 @@ class AppPreference(
     suspend fun setTongueTwisterLastReadId(id: Int) =
         setInt(context, PREF_TONGUE_TWISTER_LAST_READ_ID, id)
 
+    suspend fun setChineseKnowledgeVersion(version: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE_VERSION, version)
+
+    suspend fun setChineseKnowledgeLastReadId(id: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE_LAST_READ_ID, id)
+
     companion object {
         private val PREF_POEM_VERSION = intPreferencesKey("key_poem_version")
         private val PREF_POEM_LAST_READ_ID = longPreferencesKey("key_poem_last_read_id")
@@ -106,14 +112,15 @@ class AppPreference(
             intPreferencesKey("key_chinese_wisecrack_version")
         private val PREF_CHINESE_WISECRACK_LAST_READ_ID =
             longPreferencesKey("key_chinese_wisecrack_last_read_id")
-        private val PREF_IDIOM_VERSION = intPreferencesKey("pref_idiom_version")
+        private val PREF_IDIOM_VERSION = intPreferencesKey("key_idiom_version")
         private val PREF_IDIOM_LAST_READ_ID = longPreferencesKey("key_idiom_last_read_id")
-
-        private val PREF_CAPTURE_COLOR = stringPreferencesKey("pref_capture_color")
+        private val PREF_CAPTURE_COLOR = stringPreferencesKey("key_capture_color")
         private val PREF_CAPTURE_BACKGROUND_COLOR =
-            stringPreferencesKey("pref_capture_background_color")
-        private val PREF_TONGUE_TWISTER_VERSION = intPreferencesKey("pref_tongue_twister_version")
+            stringPreferencesKey("key_capture_background_color")
+        private val PREF_TONGUE_TWISTER_VERSION = intPreferencesKey("key_tongue_twister_version")
         private val PREF_TONGUE_TWISTER_LAST_READ_ID =
-            intPreferencesKey("pref_tongue_twister_last_read_id")
+            intPreferencesKey("key_tongue_twister_last_read_id")
+        private val PREF_CHINESE_KNOWLEDGE_VERSION = intPreferencesKey("key_chinese_knowledge_version")
+        private val PREF_CHINESE_KNOWLEDGE_LAST_READ_ID = intPreferencesKey("key_chinese_knowledge_last_read_id")
     }
 }

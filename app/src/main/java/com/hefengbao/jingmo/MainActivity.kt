@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
             val idiomVersion by viewModel.idiomVersion.collectAsState(initial = 0)
             val chineseWiseCrackVersion by viewModel.chineseWiseCrackVersion.collectAsState(initial = 0)
             val tongueTwisterVersion by viewModel.tongueTwisterVersion.collectAsState(initial = 0)
+            val chineseKnowledgeVersion by viewModel.chineseKnowledgeVersion.collectAsState(initial = 0)
 
             val poemProgress by viewModel.poemProgress.collectAsState(initial = 0f)
             val tagProgress by viewModel.tagProgress.collectAsState(initial = 0f)
@@ -67,6 +68,9 @@ class MainActivity : ComponentActivity() {
                 initial = 0f
             )
             val tongueTwisterProgress by viewModel.tongueTwisterProgress.collectAsState(initial = 0f)
+            val chineseKnowledgeProgress by viewModel.chineseKnowledgeProgress.collectAsState(
+                initial = 0f
+            )
 
             AppTheme {
                 // A surface container using the 'background' color from the theme
@@ -90,6 +94,7 @@ class MainActivity : ComponentActivity() {
                             idiomVersion = idiomVersion,
                             chineseWiseCrackVersion = chineseWiseCrackVersion,
                             tongueTwisterVersion = tongueTwisterVersion,
+                            chineseKnowledgeVersion = chineseKnowledgeVersion,
                             poemProgress = poemProgress,
                             tagProgress = tagProgress,
                             poemTagProgress = poemTagProgress,
@@ -97,7 +102,8 @@ class MainActivity : ComponentActivity() {
                             poemSentenceProgress = poemSentenceProgress,
                             idiomProgress = idiomProgress,
                             chineseWisecrackProgress = chineseWisecrackProgress,
-                            tongueTwisterProgress = tongueTwisterProgress
+                            tongueTwisterProgress = tongueTwisterProgress,
+                            chineseKnowledgeProgress = chineseKnowledgeProgress,
                         )
                     } else {
                         AppNavHost(navController = appNavController)
@@ -138,6 +144,7 @@ private fun SyncScreen(
     idiomVersion: Int,
     chineseWiseCrackVersion: Int,
     tongueTwisterVersion: Int,
+    chineseKnowledgeVersion: Int,
     poemProgress: Float,
     tagProgress: Float,
     poemTagProgress: Float,
@@ -145,7 +152,8 @@ private fun SyncScreen(
     poemSentenceProgress: Float,
     idiomProgress: Float,
     chineseWisecrackProgress: Float,
-    tongueTwisterProgress: Float
+    tongueTwisterProgress: Float,
+    chineseKnowledgeProgress: Float,
 ) {
     Column(
         modifier = modifier
@@ -185,6 +193,10 @@ private fun SyncScreen(
         Item(
             title = "绕口令",
             progress = if (tongueTwisterVersion == DataSetVersion.tongueTwister) 1f else tongueTwisterProgress
+        )
+        Item(
+            title = "知识卡片",
+            progress = if (chineseKnowledgeVersion == DataSetVersion.chineseKnowledge) 1f else chineseKnowledgeProgress
         )
     }
 }

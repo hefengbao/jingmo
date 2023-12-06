@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.DataSetVersion
 import com.hefengbao.jingmo.data.model.DataStatus
+import com.hefengbao.jingmo.data.model.toChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.toChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.toIdiomEntity
 import com.hefengbao.jingmo.data.model.toPoemEntity
@@ -55,6 +56,9 @@ class MainActivityViewModel @Inject constructor(
     private val _tongueTwisterVersion: MutableStateFlow<Int> = MutableStateFlow(0)
     val tongueTwisterVersion: SharedFlow<Int> = _tongueTwisterVersion
 
+    private val _chineseKnowledgeVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    val chineseKnowledgeVersion: SharedFlow<Int> = _chineseKnowledgeVersion
+
     private val dataStatus: Flow<DataStatus> = preferenceRepository.getDataStatus()
 
     init {
@@ -68,6 +72,7 @@ class MainActivityViewModel @Inject constructor(
                 _chineseWiseCrackVersion.value = it.chineseWisecrackVersion
                 _poemSentenceVersion.value = it.poemSentenceVersion
                 _tongueTwisterVersion.value = it.tongueTwisterVersion
+                _chineseKnowledgeVersion.value = it.chineseKnowledgeVersion
 
                 _synced.value = it.allSynced
             }
@@ -107,6 +112,9 @@ class MainActivityViewModel @Inject constructor(
 
     private val _tongueTwisterProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val tongueTwisterProgress: SharedFlow<Float> = _tongueTwisterProgress
+
+    private val _chineseKnowledgeProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseKnowledgeProgress: SharedFlow<Float> = _chineseKnowledgeProgress
 
     fun sync() {
         viewModelScope.launch {
@@ -201,17 +209,30 @@ class MainActivityViewModel @Inject constructor(
                 _chineseWiseCrackVersion.value = DataSetVersion.chineseWisecrack
             }
 
-            if(_tongueTwisterVersion.value != DataSetVersion.chineseWisecrack){
+            if (_tongueTwisterVersion.value != DataSetVersion.chineseWisecrack) {
                 var count: Long = 0
                 syncRepository.syncTongueTwisters().collectLatest {
                     it.map { tongueTwister ->
                         syncRepository.insertTongueTwister(tongueTwister.toTongueTwisterEntity())
-                        count ++
+                        count++
                         _tongueTwisterProgress.value = count.toFloat() / it.size
                     }
                 }
                 preferenceRepository.setTongueTwisterVersion(DataSetVersion.tongueTwister)
                 _tongueTwisterVersion.value = DataSetVersion.tongueTwister
+            }
+
+            if (_chineseKnowledgeVersion.value != DataSetVersion.chineseKnowledge) {
+                var count: Long = 0
+                syncRepository.syncChineseKnowledge().collectLatest {
+                    it.map { chineseKnowledge ->
+                        syncRepository.insertChineseKnowledge(chineseKnowledge.toChineseKnowledgeEntity())
+                        count++
+                        _chineseKnowledgeProgress.value = count.toFloat() / it.size
+                    }
+                }
+                preferenceRepository.setChineseKnowledgeVersion(DataSetVersion.chineseKnowledge)
+                _chineseKnowledgeVersion.value = DataSetVersion.chineseKnowledge
             }
         }
     }

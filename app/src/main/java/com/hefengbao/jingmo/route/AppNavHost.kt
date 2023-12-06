@@ -7,6 +7,10 @@ import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorListGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorScreen
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorListGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorScreen
+import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeGraph
+import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeSearchScreen
+import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowSearchScreen
+import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowledgeGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchShowScreen
@@ -77,6 +81,7 @@ fun AppNavHost(
             onFestivalClick = { navController.navigateToFestivalGraph() },
             onSolarTermsClick = { navController.navigateToSolarTermGraph() },
             onTongueTwisterClick = { navController.navigateToTongueTwisterGraph() },
+            onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -200,6 +205,15 @@ fun AppNavHost(
                     onItemsClick = { navController.navigateToTongueTwisterScreen(it.toString()) },
                     nestGraph = {
                         tongueTwisterScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                chineseKnowledgeGraph(
+                    onBackClick = navController::navigateUp,
+                    onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
+                    nestGraph = {
+                        chineseKnowledgeSearchScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
