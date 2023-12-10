@@ -24,7 +24,7 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 5. 中国传统色 161 种；
 
-6. 中国传统节日 16 个；
+6. 中国传统节日 19 个；
 
 7. 二十四节气；
 
