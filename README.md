@@ -1,6 +1,6 @@
 # 京墨
 
-![](screenshot/1.gif)
+![](screenshot/1.jpg)
 
 ## 仓库
 
