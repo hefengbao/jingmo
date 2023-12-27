@@ -46,6 +46,8 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ### 古诗词等
 
+[https://cnkgraph.com/](https://cnkgraph.com/) 👍
+
 [https://github.com/a2636340559/PoetryCrawler](https://github.com/a2636340559/PoetryCrawler)
 
 [https://github.com/yht050511/gushiwen](https://github.com/yht050511/gushiwen)
