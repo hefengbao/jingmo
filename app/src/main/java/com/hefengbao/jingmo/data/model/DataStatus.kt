@@ -20,6 +20,8 @@ data class DataStatus(
     val tongueTwisterLastReadId: Int = 1,
     val chineseKnowledgeVersion: Int,
     val chineseKnowledgeLastReadId: Int = 1,
+    val riddleVersion: Int,
+    val riddleLastReadId: Int = 1,
 ) {
     val allSynced: Boolean = poemVersion == DataSetVersion.poem
             && tagVersion == DataSetVersion.tag
@@ -30,4 +32,5 @@ data class DataStatus(
             && chineseWisecrackVersion == DataSetVersion.chineseWisecrack
             && tongueTwisterVersion == DataSetVersion.tongueTwister
             && chineseKnowledgeVersion == DataSetVersion.chineseKnowledge
+            && riddleVersion == DataSetVersion.riddle
 }

@@ -43,4 +43,8 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setChineseKnowledgeLastReadId(id: Int) =
         preference.setChineseKnowledgeLastReadId(id)
+
+    override suspend fun setRiddleVersion(version: Int) = preference.setRiddleVersion(version)
+
+    override suspend fun setRiddleLastReadId(id: Int) = preference.setRiddleLastReadId(id)
 }

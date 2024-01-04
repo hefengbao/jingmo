@@ -37,6 +37,7 @@ fun HomeRoute(
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onRiddleClick: () -> Unit,
 ) {
     HomeScreen(
         onLinksClick = onLinksClick,
@@ -50,6 +51,7 @@ fun HomeRoute(
         onSolarTermsClick = onSolarTermsClick,
         onTongueTwisterClick = onTongueTwisterClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
+        onRiddleClick = onRiddleClick,
     )
 }
 
@@ -68,6 +70,7 @@ private fun HomeScreen(
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onRiddleClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -123,6 +126,13 @@ private fun HomeScreen(
                             title = "成语",
                             subtitle = "30895 条",
                             onClick = onIdiomClick
+                        )
+                    }
+                    item {
+                        Item(
+                            title = "谜语",
+                            subtitle = "42446 组",
+                            onClick = onRiddleClick
                         )
                     }
                     item {

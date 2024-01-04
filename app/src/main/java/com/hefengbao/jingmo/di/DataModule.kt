@@ -18,6 +18,8 @@ import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
 import com.hefengbao.jingmo.data.repository.PoemSentenceRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepositoryImpl
+import com.hefengbao.jingmo.data.repository.RiddleRepository
+import com.hefengbao.jingmo.data.repository.RiddleRepositoryImpl
 import com.hefengbao.jingmo.data.repository.SolarTermsRepository
 import com.hefengbao.jingmo.data.repository.SolarTermsRepositoryImpl
 import com.hefengbao.jingmo.data.repository.SyncRepository
@@ -91,4 +93,9 @@ interface DataModule {
     fun bindsChineseKnowledgeRepository(
         chineseKnowledgeRepositoryImpl: ChineseKnowledgeRepositoryImpl
     ): ChineseKnowledgeRepository
+
+    @Binds
+    fun bindsRiddleRepository(
+        riddleRepositoryImpl: RiddleRepositoryImpl
+    ): RiddleRepository
 }

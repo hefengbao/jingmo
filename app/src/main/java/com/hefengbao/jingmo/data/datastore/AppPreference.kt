@@ -54,7 +54,9 @@ class AppPreference(
             tongueTwisterVersion = it[PREF_TONGUE_TWISTER_VERSION] ?: 0,
             tongueTwisterLastReadId = it[PREF_TONGUE_TWISTER_LAST_READ_ID] ?: 1,
             chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE_VERSION] ?: 0,
-            chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE_LAST_READ_ID] ?: 1
+            chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE_LAST_READ_ID] ?: 1,
+            riddleVersion = it[PREF_RIDDLE_VERSION] ?: 0,
+            riddleLastReadId = it[PREF_RIDDLE_LAST_READ_ID] ?: 1
         )
     }
 
@@ -99,6 +101,10 @@ class AppPreference(
 
     suspend fun setChineseKnowledgeLastReadId(id: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE_LAST_READ_ID, id)
 
+    suspend fun setRiddleVersion(version: Int) = setInt(context, PREF_RIDDLE_VERSION, version)
+
+    suspend fun setRiddleLastReadId(id: Int) = setInt(context, PREF_RIDDLE_LAST_READ_ID, id)
+
     companion object {
         private val PREF_POEM_VERSION = intPreferencesKey("key_poem_version")
         private val PREF_POEM_LAST_READ_ID = longPreferencesKey("key_poem_last_read_id")
@@ -122,5 +128,7 @@ class AppPreference(
             intPreferencesKey("key_tongue_twister_last_read_id")
         private val PREF_CHINESE_KNOWLEDGE_VERSION = intPreferencesKey("key_chinese_knowledge_version")
         private val PREF_CHINESE_KNOWLEDGE_LAST_READ_ID = intPreferencesKey("key_chinese_knowledge_last_read_id")
+        private val PREF_RIDDLE_VERSION = intPreferencesKey("key_riddle_version")
+        private val PREF_RIDDLE_LAST_READ_ID = intPreferencesKey("key_riddle_last_read_id")
     }
 }

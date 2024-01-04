@@ -22,4 +22,6 @@ interface PreferenceRepository {
     suspend fun setTongueTwisterLastReadId(id: Int)
     suspend fun setChineseKnowledgeVersion(version: Int)
     suspend fun setChineseKnowledgeLastReadId(id: Int)
+    suspend fun setRiddleVersion(version: Int)
+    suspend fun setRiddleLastReadId(id: Int)
 }

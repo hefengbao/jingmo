@@ -47,6 +47,12 @@ import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSea
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleGraph
+import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleInfoScreen
+import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleSearchScreen
+import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleGraph
+import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleInfoScreen
+import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
@@ -82,6 +88,7 @@ fun AppNavHost(
             onSolarTermsClick = { navController.navigateToSolarTermGraph() },
             onTongueTwisterClick = { navController.navigateToTongueTwisterGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeGraph() },
+            onRiddleClick = { navController.navigateToRiddleGraph() },
             nestGraph = {
                 poemListGraph(
                     onBackClick = navController::navigateUp,
@@ -230,6 +237,19 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp
                         )
                         privacyScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                riddleGraph(
+                    onBackClick = navController::navigateUp,
+                    onInfoClick = { navController.navigateToRiddleInfoScreen() },
+                    onSearchClick = { navController.navigateToRiddleSearchScreen() },
+                    nestGraph = {
+                        riddleInfoScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        riddleSearchScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

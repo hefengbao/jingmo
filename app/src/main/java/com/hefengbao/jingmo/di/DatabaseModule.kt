@@ -10,6 +10,7 @@ import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PoemDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.PoemTagDao
+import com.hefengbao.jingmo.data.database.dao.RiddleDao
 import com.hefengbao.jingmo.data.database.dao.TagDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WriterDao
@@ -78,4 +79,9 @@ object DatabaseModule {
     fun providesChineseKnowledgeDao(
         database: AppDatabase
     ): ChineseKnowledgeDao = database.chineseKnowledgeDao()
+
+    @Provides
+    fun providesRiddleDao(
+        database: AppDatabase
+    ): RiddleDao = database.riddleDao()
 }
