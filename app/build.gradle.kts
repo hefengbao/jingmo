@@ -134,6 +134,7 @@ dependencies {
     implementation(libs.androidx.dataStore.core)
     //implementation(libs.protobuf.kotlin.lite)
     implementation(libs.capturable)
+    implementation(libs.retrofit)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

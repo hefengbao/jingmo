@@ -26,6 +26,7 @@ kotlinxSerializationJson = "1.5.1"
 ksp = "1.9.0-1.0.13"
 protobuf = "3.23.0"
 protobuf-plugin = "0.9.3"
+retrofit = "2.9.0"
 
 [libraries]
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
@@ -69,7 +70,7 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
-
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 
