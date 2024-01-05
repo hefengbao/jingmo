@@ -7,6 +7,7 @@ import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
+import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.PoemTagDao
@@ -84,4 +85,9 @@ object DatabaseModule {
     fun providesRiddleDao(
         database: AppDatabase
     ): RiddleDao = database.riddleDao()
+
+    @Provides
+    fun providesPeopleDao(
+        database: AppDatabase
+    ): PeopleDao = database.peopleDao()
 }

@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.network.retrofit
 
+import com.hefengbao.jingmo.data.model.People
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.network.Network
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -26,4 +27,5 @@ class NetworkImpl @Inject constructor(
         .create(Api::class.java)
 
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()
+    override suspend fun people(): List<People> = networkApi.people()
 }

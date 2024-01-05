@@ -29,15 +29,16 @@ fun DataRoute(
     viewModel: DataViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    
+    val syncPeopleResult by viewModel.syncPeopleResult.collectAsState(initial = null)
     val syncRiddlesResult by viewModel.syncRiddlesResult.collectAsState(initial = null)
+    
         
     DataScreen(
         onBackClick = onBackClick,
+        syncPeopleResult = syncPeopleResult,
+        onSyncPeopleClick = { viewModel.syncPeople() },
         syncRiddlesResult = syncRiddlesResult,
-        onSyncRiddlesClick = {
-            viewModel.syncRiddles()
-        }
+        onSyncRiddlesClick = { viewModel.syncRiddles() }
     )
 }
 
@@ -45,6 +46,8 @@ fun DataRoute(
 private fun DataScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    syncPeopleResult: Result<Any>?,
+    onSyncPeopleClick: () -> Unit,
     syncRiddlesResult: Result<Any>?,
     onSyncRiddlesClick: () -> Unit,
 ) {
@@ -58,22 +61,44 @@ private fun DataScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ){
-                Text(text = "谜语", style = MaterialTheme.typography.titleMedium)
-                IconButton(
-                    onClick = onSyncRiddlesClick,
-                    enabled = true
-                ) {
-                    if (syncRiddlesResult == Result.Loading){
-                        CircularProgressIndicator()
-                    }
-                    Icon(imageVector = Icons.Default.Download, contentDescription = null)
-                }
+            Item(
+                title = "人物",
+                onClick = onSyncPeopleClick,
+                enabled = true,
+                showProgressIndicator = syncPeopleResult == Result.Loading
+            )
+            Item(
+                title = "谜语",
+                onClick = onSyncRiddlesClick,
+                enabled = true,
+                showProgressIndicator = syncRiddlesResult == Result.Loading
+            )
+        }
+    }
+}
+
+@Composable
+private fun Item(
+    modifier: Modifier = Modifier,
+    title: String,
+    onClick: () -> Unit,
+    enabled: Boolean,
+    showProgressIndicator: Boolean
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ){
+        Text(text = title, style = MaterialTheme.typography.titleMedium)
+        IconButton(
+            onClick = onClick,
+            enabled = enabled
+        ) {
+            if (showProgressIndicator){
+                CircularProgressIndicator()
             }
+            Icon(imageVector = Icons.Default.Download, contentDescription = null)
         }
     }
 }

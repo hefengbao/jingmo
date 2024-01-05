@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.model
 
+import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -29,5 +30,19 @@ data class People(
     @SerialName("Hometown")
     val hometown: List<PeopleHometown>?,
     @SerialName("Detail")
-    val Details: List<PeopleDetail>?
+    val details: List<PeopleDetail>?
+)
+
+fun People.asPeopleEntity() = PeopleEntity(
+    id = id,
+    name = name,
+    birthYear = birthYear,
+    birthDay = birthDay,
+    deathYear = deathYear,
+    deathDay = deathDay,
+    dynasty = dynasty,
+    aliases = aliases,
+    titles = titles,
+    hometown = hometown,
+    details = details
 )

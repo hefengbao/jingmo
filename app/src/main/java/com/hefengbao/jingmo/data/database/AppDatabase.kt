@@ -7,6 +7,7 @@ import androidx.room.TypeConverters
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
+import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.PoemTagDao
@@ -66,6 +67,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
     abstract fun chineseWisecrackDao(): ChineseWisecrackDao
     abstract fun idiomDao(): IdiomDao
+    abstract fun peopleDao(): PeopleDao
     abstract fun poemDao(): PoemDao
     abstract fun poemTagDao(): PoemTagDao
     abstract fun riddleDao(): RiddleDao
