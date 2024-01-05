@@ -17,6 +17,7 @@ import com.hefengbao.jingmo.data.database.dao.WriterDao
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.PoemTagCrossRef
@@ -25,12 +26,17 @@ import com.hefengbao.jingmo.data.database.entity.TagEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WriterEntity
 import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
+import com.hefengbao.jingmo.data.database.util.PeopleAliasListConverter
+import com.hefengbao.jingmo.data.database.util.PeopleDetailListConverter
+import com.hefengbao.jingmo.data.database.util.PeopleHometownListConverter
+import com.hefengbao.jingmo.data.database.util.StringListConverter
 
 @Database(
     entities = [
         ChineseKnowledgeEntity::class,
         ChineseWisecrackEntity::class,
         IdiomEntity::class,
+        PeopleEntity::class,
         PoemEntity::class,
         PoemSentenceEntity::class,
         PoemTagCrossRef::class,
@@ -50,7 +56,11 @@ import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
     exportSchema = true
 )
 @TypeConverters(
-    DetailInfoListConverter::class
+    DetailInfoListConverter::class,
+    PeopleAliasListConverter::class,
+    PeopleDetailListConverter::class,
+    PeopleHometownListConverter::class,
+    StringListConverter::class,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
