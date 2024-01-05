@@ -4,6 +4,6 @@ import com.hefengbao.jingmo.data.model.Riddle
 import retrofit2.http.GET
 
 interface Api {
-    @GET("riddles")
+    @GET("riddles.json")
     suspend fun riddles(): List<Riddle>
 }

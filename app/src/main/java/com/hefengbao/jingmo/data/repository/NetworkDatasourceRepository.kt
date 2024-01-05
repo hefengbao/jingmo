@@ -6,6 +6,6 @@ import com.hefengbao.jingmo.data.database.entity.RiddleEntity
 
 
 interface NetworkDatasourceRepository {
-    suspend fun syncRiddle(): Result<List<Riddle>>
+    suspend fun syncRiddle(): Result<Any>
     suspend fun insertRiddleEntities(entities: List<RiddleEntity>)
 }

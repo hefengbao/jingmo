@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -106,20 +108,22 @@ private fun RiddleScreen(
 
             Box(
                 modifier = modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(16.dp)
             ) {
                 Column(
                     modifier = modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 56.dp)
+                        .fillMaxSize()
+                        .padding(bottom = 80.dp)
                 ) {
                     Card(
                         modifier = modifier
                             .fillMaxWidth()
-                            .padding(32.dp)
+                            .fillMaxHeight(.5f)
                     ) {
                         Column(
+                            modifier = modifier
+                                .padding(32.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text(text = entity.puzzle)
@@ -133,7 +137,7 @@ private fun RiddleScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
-                        .height(48.dp)
+                        .height(64.dp)
                         .align(
                             Alignment.BottomCenter
                         ),
@@ -141,18 +145,20 @@ private fun RiddleScreen(
                 ) {
                     IconButton(
                         onClick = onPrevClick,
-                        enabled = prevId != 0
+                        enabled = prevId != 0,
+                        modifier = modifier.padding(16.dp),
                     ) {
                         Icon(
-                            modifier = modifier.padding(8.dp),
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = null
                         )
                     }
 
-                    IconButton(onClick = { showAnswer = !showAnswer }) {
+                    IconButton(
+                        onClick = { showAnswer = !showAnswer },
+                        modifier = modifier.padding(16.dp),
+                    ) {
                         Icon(
-                            modifier = modifier.padding(8.dp),
                             imageVector = if (showAnswer) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null
                         )
@@ -160,10 +166,10 @@ private fun RiddleScreen(
 
                     IconButton(
                         onClick = onNextClick,
-                        enabled = nextId != 0
+                        enabled = nextId != 0,
+                        modifier = modifier.padding(16.dp),
                     ) {
                         Icon(
-                            modifier = modifier.padding(8.dp),
                             imageVector = Icons.Default.ArrowForward,
                             contentDescription = null
                         )
