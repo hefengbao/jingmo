@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                     if (showLanding) {
                         LandingScreen()
                         viewModel.closeLanding()
-                    } else if (
+                    } /*else if (
                         !synced
                     ) {
                         SyncScreen(
@@ -105,7 +105,7 @@ class MainActivity : ComponentActivity() {
                             tongueTwisterProgress = tongueTwisterProgress,
                             chineseKnowledgeProgress = chineseKnowledgeProgress,
                         )
-                    } else {
+                    }*/ else {
                         AppNavHost(navController = appNavController)
                     }
                 }
