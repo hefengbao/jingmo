@@ -10,6 +10,8 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ## 介绍
 
+『京墨』开源免费的古诗词文（名句）、歇后语、成语、传统节日、绕口令等的阅读APP
+
 『京墨』开源、免费、公益性 APP。献给喜欢中华文字、文学、文化的人。
 
 目前的内容有：
@@ -35,6 +37,10 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
 ![](screenshot/公众号.png)
+
+## 平台支持
+
+Android 8.0 及以上
 
 ## 获取更新消息
 
@@ -74,7 +80,7 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 **本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀**
 
-## Star History
+## Github Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=hefengbao/jingmo&type=Date)](https://star-history.com/#hefengbao/jingmo&Date)
 
