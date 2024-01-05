@@ -56,8 +56,10 @@ import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsDataScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsGraph
 import com.hefengbao.jingmo.ui.screen.settings.nav.privacyScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsDataScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsGraph
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTerm
 import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermGraph
@@ -232,11 +234,15 @@ fun AppNavHost(
                     onBackClick = navController::navigateUp,
                     onAboutClick = { navController.navigateToAboutScreen() },
                     onPrivacyClick = { navController.navigateToPrivacyScreen() },
+                    onDataClick = { navController.navigateToSettingsDataScreen() },
                     nestGraph = {
                         aboutScreen(
                             onBackClick = navController::navigateUp
                         )
                         privacyScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        settingsDataScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

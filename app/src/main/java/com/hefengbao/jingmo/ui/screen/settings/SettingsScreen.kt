@@ -24,11 +24,13 @@ fun SettingsRoute(
     onBackClick: () -> Unit,
     onAboutClick: () -> Unit,
     onPrivacyClick: () -> Unit,
+    onDataClick: () -> Unit,
 ) {
     SettingsScreen(
         onBackClick = onBackClick,
         onAboutClick = onAboutClick,
-        onPrivacyClick = onPrivacyClick
+        onPrivacyClick = onPrivacyClick,
+        onDataClick = onDataClick,
     )
 }
 
@@ -39,6 +41,7 @@ fun SettingsScreen(
     onBackClick: () -> Unit,
     onAboutClick: () -> Unit,
     onPrivacyClick: () -> Unit,
+    onDataClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -61,6 +64,15 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Text(
+                text = "同步数据",
+                modifier = modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        onDataClick()
+                    }
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
             Text(
                 text = "隐私政策",
                 modifier = modifier
