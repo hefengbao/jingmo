@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 interface RiddleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: RiddleEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<RiddleEntity>)
     @Query("select * from riddles where id = :id limit 1")
     fun getRiddle(id: Int): Flow<RiddleEntity>
     @Query("select id from riddles where id > :id order by id asc limit 1")

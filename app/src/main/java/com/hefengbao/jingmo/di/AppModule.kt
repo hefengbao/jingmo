@@ -18,6 +18,7 @@ object AppModule {
     @Singleton
     fun providesNetworkJson(): Json = Json {
         ignoreUnknownKeys = true
+        isLenient = true
     }
 
     @Provides

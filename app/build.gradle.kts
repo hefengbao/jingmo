@@ -135,6 +135,8 @@ dependencies {
     //implementation(libs.protobuf.kotlin.lite)
     implementation(libs.capturable)
     implementation(libs.retrofit)
+    implementation(libs.okhttp.logging)
+    implementation(libs.retrofit.kotlin.serialization)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

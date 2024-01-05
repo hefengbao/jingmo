@@ -12,6 +12,8 @@ import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepositoryImpl
 import com.hefengbao.jingmo.data.repository.LinksRepository
 import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
+import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepository
+import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PoemRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
@@ -98,4 +100,9 @@ interface DataModule {
     fun bindsRiddleRepository(
         riddleRepositoryImpl: RiddleRepositoryImpl
     ): RiddleRepository
+
+    @Binds
+    fun bindsNetworkDatasourceRepository(
+        networkDatasourceRepositoryImpl: NetworkDatasourceRepositoryImpl
+    ): NetworkDatasourceRepository
 }

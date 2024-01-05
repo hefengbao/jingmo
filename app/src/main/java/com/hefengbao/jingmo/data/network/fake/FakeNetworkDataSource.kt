@@ -8,6 +8,7 @@ import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.Poem
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.PoemTag
+import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.Tag
 import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.Writer
@@ -74,6 +75,10 @@ class FakeNetworkDataSource @Inject constructor(
         withContext(ioDispatcher){
             assets.open(CHINESE_KNOWLEDGE_ASSET).use(networkJson::decodeFromStream)
         }
+
+    override suspend fun getRiddles(): List<Riddle> {
+        TODO("Not yet implemented")
+    }
 
     companion object {
         private const val POEMS_ASSET = "json/poems.json"
