@@ -29,12 +29,15 @@ fun DataRoute(
     viewModel: DataViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
+    val syncWritingsResult by viewModel.syncWritingsResult.collectAsState(initial = null)
     val syncPeopleResult by viewModel.syncPeopleResult.collectAsState(initial = null)
     val syncRiddlesResult by viewModel.syncRiddlesResult.collectAsState(initial = null)
     
         
     DataScreen(
         onBackClick = onBackClick,
+        syncWritingsResult = syncWritingsResult,
+        onSyncWritingsClick = { viewModel.syncWritings() },
         syncPeopleResult = syncPeopleResult,
         onSyncPeopleClick = { viewModel.syncPeople() },
         syncRiddlesResult = syncRiddlesResult,
@@ -46,6 +49,8 @@ fun DataRoute(
 private fun DataScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    syncWritingsResult: Result<Any>?,
+    onSyncWritingsClick: () -> Unit,
     syncPeopleResult: Result<Any>?,
     onSyncPeopleClick: () -> Unit,
     syncRiddlesResult: Result<Any>?,
@@ -61,6 +66,12 @@ private fun DataScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            Item(
+                title = "诗文",
+                onClick = onSyncWritingsClick,
+                enabled = true,
+                showProgressIndicator = syncWritingsResult == Result.Loading
+            )
             Item(
                 title = "人物",
                 onClick = onSyncPeopleClick,

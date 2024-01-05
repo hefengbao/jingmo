@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Comment(
     @SerialName("Category")
-    val category: String,
+    val category: String?,
     @SerialName("Content")
     val content: String,
     @SerialName("Type")

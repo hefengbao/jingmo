@@ -10,4 +10,5 @@ interface NetworkDatasourceRepository {
     suspend fun syncRiddle(): Result<Any>
     suspend fun insertRiddleEntities(entities: List<RiddleEntity>)
     suspend fun syncPeople(): Result<Any>
+    suspend fun syncWritings(): Result<Any>
 }

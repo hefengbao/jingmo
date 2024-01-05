@@ -15,6 +15,14 @@ import javax.inject.Inject
 class DataViewModel @Inject constructor(
     private val repository: NetworkDatasourceRepository
 ) : ViewModel() {
+    private val _syncWritingsResult: MutableStateFlow<Result<Any>?> = MutableStateFlow(null)
+    val syncWritingsResult: SharedFlow<Result<Any>?> = _syncWritingsResult
+    fun syncWritings(){
+        _syncWritingsResult.value = Result.Loading
+        viewModelScope.launch {
+            _syncWritingsResult.value = repository.syncWritings()
+        }
+    }
 
     private val _syncPeopleResult: MutableStateFlow<Result<Any>?> = MutableStateFlow(null)
     val syncPeopleResult: SharedFlow<Result<Any>?> = _syncPeopleResult

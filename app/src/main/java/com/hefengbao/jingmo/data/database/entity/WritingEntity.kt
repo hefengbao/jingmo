@@ -12,7 +12,7 @@ import com.hefengbao.jingmo.data.model.writing.Tune
 @Fts4
 @Entity(tableName = "writings")
 data class WritingEntity(
-    val id: String,
+    val id: Int,
     @ColumnInfo(name = "group_index")
     val groupIndex: Int?,
     val classes: List<String>?,
@@ -22,7 +22,7 @@ data class WritingEntity(
     val dynasty: String,
     val author: String,
     @ColumnInfo("author_id")
-    val authorId: Int,
+    val authorId: Int?,
     @ColumnInfo(name = "author_date")
     val authorDate: String?,
     @ColumnInfo(name = "author_place")
@@ -30,14 +30,17 @@ data class WritingEntity(
     val type: String,
     @ColumnInfo(name = "type_detail")
     val typeDetail: String,
-    val rhyme: String,
+    val rhyme: String?,
     @Embedded("title_")
     val title: Clause,
-    val subtitle: String?,
+    @Embedded("subtitle_")
+    val subtitle: Clause?,
     @Embedded(prefix = "tune_")
-    val tuneId: Tune,
-    val preface: String,
+    val tuneId: Tune?,
+    val preface: String?,
     val clauses: List<Clause>,
     val note: String?,
     val comments: List<Quote>?
-)
+){
+    var content: String? = clauses.map { it.content }.toString()
+}

@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.network.retrofit
 
 import com.hefengbao.jingmo.data.model.People
 import com.hefengbao.jingmo.data.model.Riddle
+import com.hefengbao.jingmo.data.model.WritingWrapper
 import com.hefengbao.jingmo.data.network.Network
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -28,4 +29,5 @@ class NetworkImpl @Inject constructor(
 
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()
     override suspend fun people(): List<People> = networkApi.people()
+    override suspend fun writings(page: Int): WritingWrapper = networkApi.writings(page)
 }

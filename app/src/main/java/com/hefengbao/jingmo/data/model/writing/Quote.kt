@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Quote(
     @SerialName("Book")
-    val book: String,
+    val book: String?,
     @SerialName("Section")
     val section: String?,
     @SerialName("Content")
-    val content: String,
+    val content: String?,
     @SerialName("IsComment")
     val isComment: Boolean = false,
     @SerialName("ReferrenceUrls")

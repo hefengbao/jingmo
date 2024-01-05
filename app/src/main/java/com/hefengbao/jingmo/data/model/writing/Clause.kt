@@ -7,8 +7,6 @@ import kotlinx.serialization.Serializable
 data class Clause(
     @SerialName("Content")
     val content: String,
-    @SerialName("Tones")
-    val tones: List<Int>?,
     @SerialName("Comments")
     val comments: List<Comment>?,
     @SerialName("BreakAfter")

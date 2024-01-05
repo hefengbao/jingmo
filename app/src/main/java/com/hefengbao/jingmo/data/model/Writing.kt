@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Writing(
     @SerialName("Id")
-    val id: String,
+    val id: Int,
     @SerialName("GroupIndex")
     val groupIndex: Int?,
     @SerialName("Classes")
@@ -30,7 +30,7 @@ data class Writing(
     @SerialName("Author")
     val author: String,
     @SerialName("AuthorId")
-    val authorId: Int,
+    val authorId: Int?,
     @SerialName("AuthorDate")
     val authorDate: String?,
     @SerialName("AuthorPlace")
@@ -40,15 +40,15 @@ data class Writing(
     @SerialName("TypeDetail")
     val typeDetail: String,
     @SerialName("Rhyme")
-    val rhyme: String,
+    val rhyme: String?,
     @SerialName("Title")
     val title: Clause,
     @SerialName("SubTitle")
-    val subtitle: String?,
+    val subtitle: Clause?,
     @SerialName("TuneId")
-    val tuneId: Tune,
+    val tuneId: Tune?,
     @SerialName("Preface")
-    val preface: String,
+    val preface: String?,
     @SerialName("Clauses")
     val clauses: List<Clause>,
     @SerialName("Note")
