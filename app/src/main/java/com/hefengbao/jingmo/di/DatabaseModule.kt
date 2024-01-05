@@ -15,6 +15,7 @@ import com.hefengbao.jingmo.data.database.dao.RiddleDao
 import com.hefengbao.jingmo.data.database.dao.TagDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WriterDao
+import com.hefengbao.jingmo.data.database.dao.WritingDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -90,4 +91,9 @@ object DatabaseModule {
     fun providesPeopleDao(
         database: AppDatabase
     ): PeopleDao = database.peopleDao()
+
+    @Provides
+    fun providesWritingDao(
+        database: AppDatabase
+    ): WritingDao = database.writingDao()
 }

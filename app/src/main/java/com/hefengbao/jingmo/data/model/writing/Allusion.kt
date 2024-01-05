@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.data.model
+package com.hefengbao.jingmo.data.model.writing
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * 引用典故数据
  */
 @Serializable
-data class WritingAllusion(
+data class Allusion(
     @SerialName("AllusionIndex")
     val allusionIndex: Int,
     @SerialName("AllusionKey")
