@@ -76,9 +76,6 @@ class FakeNetworkDataSource @Inject constructor(
             assets.open(CHINESE_KNOWLEDGE_ASSET).use(networkJson::decodeFromStream)
         }
 
-    override suspend fun getRiddles(): List<Riddle> {
-        TODO("Not yet implemented")
-    }
 
     companion object {
         private const val POEMS_ASSET = "json/poems.json"
