@@ -15,11 +15,11 @@ data class People(
     val name: String,
     @SerialName("BirthYear")
     val birthYear: String?,
-    @SerialName("BirthDay")
+    @SerialName("Birthday")
     val birthDay: String?,
     @SerialName("DeathYear")
     val deathYear: String?,
-    @SerialName("DeathDay")
+    @SerialName("Deathday")
     val deathDay: String?,
     @SerialName("Dynasty")
     val dynasty: String,
@@ -29,7 +29,7 @@ data class People(
     val titles: List<String>?,
     @SerialName("Hometown")
     val hometown: List<PeopleHometown>?,
-    @SerialName("Detail")
+    @SerialName("Details")
     val details: List<PeopleDetail>?
 )
 
