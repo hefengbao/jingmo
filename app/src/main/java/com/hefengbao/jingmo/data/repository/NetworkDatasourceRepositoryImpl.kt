@@ -58,9 +58,8 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
             while (page != null){
 
-                Log.i("NetworkDatasourceRepositoryImpl", "page = $page")
                 val response = network.writings(page)
-                Log.i("NetworkDatasourceRepositoryImpl", "count = ${response.data.size}")
+
                 if (response.nextPage != null){
                     page ++
                 }else{
@@ -69,7 +68,6 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
                 response.data.map {
                     database.writingDao().insert(it.toWritingEntity())
-                    Log.i("NetworkDatasourceRepositoryImpl", "id = ${it.id}")
                 }
             }
 
@@ -77,7 +75,6 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         }catch (exception: CancellationException){
             throw exception
         }catch (throwable: Throwable){
-            Log.e("NetworkDatasourceRepositoryImpl", throwable.message.toString())
             Result.Error(throwable)
         }
     }
