@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PeopleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entities: List<PeopleEntity>)
+    suspend fun insert(entity: PeopleEntity)
 
     @Query("select * from people where id = :id limit 1")
     fun getPeople(id: Int): Flow<PeopleEntity>

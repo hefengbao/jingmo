@@ -40,9 +40,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         return try {
             val people = network.people()
 
-            database.peopleDao().insert(people.map {
-                it.asPeopleEntity()
-            })
+            people.map {
+                database.peopleDao().insert(it.asPeopleEntity())
+            }
 
             Result.Success(Any())
         }catch (exception: CancellationException){
