@@ -33,18 +33,28 @@ class DatasetPreference(
         )
     }
 
-    suspend fun setChineseKnowledgeVersion(version: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE_VERSION, version)
-    suspend fun setChineseWisecracksVersion(version: Int) = setInt(context, PREF_CHINESE_WISECRACKS_VERSION, version)
+    suspend fun setChineseKnowledgeVersion(version: Int) =
+        setInt(context, PREF_CHINESE_KNOWLEDGE_VERSION, version)
+
+    suspend fun setChineseWisecracksVersion(version: Int) =
+        setInt(context, PREF_CHINESE_WISECRACKS_VERSION, version)
+
     suspend fun setIdiomsVersion(version: Int) = setInt(context, PREF_IDIOMS_VERSION, version)
     suspend fun setPeopleVersion(version: Int) = setInt(context, PREF_PEOPLE_VERSION, version)
-    suspend fun setPoemSentencesVersion(version: Int) = setInt(context, PREF_POEM_SENTENCES_VERSION, version)
+    suspend fun setPoemSentencesVersion(version: Int) =
+        setInt(context, PREF_POEM_SENTENCES_VERSION, version)
+
     suspend fun setRiddlesVersion(version: Int) = setInt(context, PREF_RIDDLES_VERSION, version)
-    suspend fun setTongueTwistersVersion(version: Int) = setInt(context, PREF_TONGUE_TWISTERS_VERSION, version)
+    suspend fun setTongueTwistersVersion(version: Int) =
+        setInt(context, PREF_TONGUE_TWISTERS_VERSION, version)
+
     suspend fun setWritingsVersion(version: Int) = setInt(context, PREF_WRITINGS_VERSION, version)
 
     companion object {
-        private val PREF_CHINESE_KNOWLEDGE_VERSION = intPreferencesKey("key_chinese_knowledge_version")
-        private val PREF_CHINESE_WISECRACKS_VERSION = intPreferencesKey("key_chinese_wisecracks_version")
+        private val PREF_CHINESE_KNOWLEDGE_VERSION =
+            intPreferencesKey("key_chinese_knowledge_version")
+        private val PREF_CHINESE_WISECRACKS_VERSION =
+            intPreferencesKey("key_chinese_wisecracks_version")
         private val PREF_IDIOMS_VERSION = intPreferencesKey("key_idioms_version")
         private val PREF_PEOPLE_VERSION = intPreferencesKey("key_people_version")
         private val PREF_POEM_SENTENCES_VERSION = intPreferencesKey("key_poem_sentences_version")

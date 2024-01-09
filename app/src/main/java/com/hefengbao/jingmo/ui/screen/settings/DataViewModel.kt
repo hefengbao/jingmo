@@ -66,7 +66,8 @@ class DataViewModel @Inject constructor(
     }
 
 
-    private val _chineseWisecracksResult: MutableStateFlow<SyncStatus<Any>> = MutableStateFlow(SyncStatus.NonStatus)
+    private val _chineseWisecracksResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
     val chineseWisecracksResult: SharedFlow<SyncStatus<Any>> = _chineseWisecracksResult
     private val _chineseWisecracksResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val chineseWisecracksResultProgress: SharedFlow<Float> = _chineseWisecracksResultProgress
@@ -102,9 +103,10 @@ class DataViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = repository.syncIdioms()) {
                 is Result.Error -> {
-                    Log.e("DataViewModel","${response.exception?.message}")
+                    Log.e("DataViewModel", "${response.exception?.message}")
                     _idiomsResult.value = SyncStatus.Error(response.exception)
                 }
+
                 Result.Loading -> {}
                 is Result.Success -> {
                     var count = 0
@@ -155,9 +157,10 @@ class DataViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = repository.syncPoemSentences()) {
                 is Result.Error -> {
-                    Log.e("DataViewModel","${response.exception?.message}")
+                    Log.e("DataViewModel", "${response.exception?.message}")
                     _poemSentencesResult.value = SyncStatus.Error(response.exception)
                 }
+
                 Result.Loading -> {}
                 is Result.Success -> {
                     var count = 0
@@ -238,9 +241,9 @@ class DataViewModel @Inject constructor(
 
             while (page != null) {
                 var count = 0
-                val response = if (page <= 20){
+                val response = if (page <= 20) {
                     repository.syncWritings(page)
-                }else{
+                } else {
                     repository.syncWritings2(page)
                 }
                 when (response) {

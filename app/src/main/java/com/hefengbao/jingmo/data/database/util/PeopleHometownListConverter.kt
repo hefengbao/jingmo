@@ -1,8 +1,6 @@
 package com.hefengbao.jingmo.data.database.util
 
 import androidx.room.TypeConverter
-import com.hefengbao.jingmo.data.model.IntroItem
-import com.hefengbao.jingmo.data.model.PeopleAlias
 import com.hefengbao.jingmo.data.model.PeopleHometown
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

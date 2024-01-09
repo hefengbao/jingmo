@@ -25,7 +25,7 @@ private val baseUrl2 = "https://hefengbao.github.io/jingmo-data2/api/"
 class NetworkImpl @Inject constructor(
     networkJson: Json,
     okhttpCallFactory: Call.Factory
-) : Network{
+) : Network {
 
     private val networkApi = Retrofit.Builder()
         .baseUrl(baseUrl)
@@ -44,9 +44,11 @@ class NetworkImpl @Inject constructor(
         .create(Api::class.java)
 
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
-    override suspend fun chineseKnowledge(): List<ChineseKnowledge>  = networkApi.chineseKnowledge()
-    override suspend fun chineseWisecracks(): List<ChineseWisecrack> = networkApi.chineseWisecracks()
-    override suspend fun idioms(): List<Idiom>  = networkApi.idioms()
+    override suspend fun chineseKnowledge(): List<ChineseKnowledge> = networkApi.chineseKnowledge()
+    override suspend fun chineseWisecracks(): List<ChineseWisecrack> =
+        networkApi.chineseWisecracks()
+
+    override suspend fun idioms(): List<Idiom> = networkApi.idioms()
     override suspend fun people(): List<People> = networkApi.people()
     override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()

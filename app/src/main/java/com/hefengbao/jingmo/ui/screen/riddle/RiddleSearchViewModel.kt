@@ -18,7 +18,7 @@ class RiddleSearchViewModel @Inject constructor(
 
     private val _list: MutableStateFlow<List<RiddleEntity>> = MutableStateFlow(emptyList())
     val list: SharedFlow<List<RiddleEntity>> = _list
-    fun search(query: String){
+    fun search(query: String) {
         viewModelScope.launch {
             riddleRepository.searchResultList(query).collectLatest {
                 _list.value = it

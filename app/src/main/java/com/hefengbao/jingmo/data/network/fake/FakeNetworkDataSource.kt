@@ -8,7 +8,6 @@ import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.Poem
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.PoemTag
-import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.Tag
 import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.Writer
@@ -72,7 +71,7 @@ class FakeNetworkDataSource @Inject constructor(
         }
 
     override suspend fun getChinesKnowledge(): List<ChineseKnowledge> =
-        withContext(ioDispatcher){
+        withContext(ioDispatcher) {
             assets.open(CHINESE_KNOWLEDGE_ASSET).use(networkJson::decodeFromStream)
         }
 

@@ -58,12 +58,12 @@ private fun RiddleSearchScreen(
                 title = {
                     SearchBar(
                         query = query,
-                        onQueryChange = { query = it},
+                        onQueryChange = { query = it },
                         onSearch = onSearchClick,
                         active = false,
                         onActiveChange = {}
                     ) {
-                        
+
                     }
                 },
                 navigationIcon = {
@@ -76,17 +76,20 @@ private fun RiddleSearchScreen(
     ) { paddingValues ->
         Box(
             modifier = modifier.padding(paddingValues)
-        ){
+        ) {
             LazyColumn {
                 itemsIndexed(
                     items = list
-                ){index: Int, item: RiddleEntity ->  
+                ) { index: Int, item: RiddleEntity ->
                     Card(
-                        modifier = modifier.fillMaxWidth()
+                        modifier = modifier
+                            .fillMaxWidth()
                             .padding(16.dp)
                     ) {
                         Column(
-                            modifier = modifier.fillMaxWidth().padding(16.dp),
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text(text = item.puzzle)

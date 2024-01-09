@@ -17,7 +17,6 @@ import com.hefengbao.jingmo.data.model.People
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.TongueTwister
-import com.hefengbao.jingmo.data.model.Writing
 import com.hefengbao.jingmo.data.model.WritingWrapper
 
 

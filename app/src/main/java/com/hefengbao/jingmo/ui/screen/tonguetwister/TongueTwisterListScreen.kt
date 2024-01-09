@@ -1,6 +1,5 @@
 package com.hefengbao.jingmo.ui.screen.tonguetwister
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -52,7 +51,7 @@ private fun TongueTwisterListScreen(
         onBackClick = onBackClick,
         title = "绕口令"
     ) {
-        if (tongueTwisters.isNotEmpty()){
+        if (tongueTwisters.isNotEmpty()) {
             val state = rememberLazyListState()
 
             if (firstLoading) {

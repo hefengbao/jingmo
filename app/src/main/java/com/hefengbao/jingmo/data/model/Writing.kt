@@ -58,5 +58,25 @@ data class Writing(
 )
 
 fun Writing.toWritingEntity() = WritingEntity(
-    id, groupIndex, classes, froms, allusions, pictures, dynasty, author, authorId, authorDate, authorPlace, type, typeDetail, rhyme, title, subtitle, tuneId, preface, clauses, note, comments
+    id,
+    groupIndex,
+    classes,
+    froms,
+    allusions,
+    pictures,
+    dynasty,
+    author,
+    authorId,
+    authorDate,
+    authorPlace,
+    type,
+    typeDetail,
+    rhyme,
+    title,
+    subtitle,
+    tuneId,
+    preface,
+    clauses,
+    note,
+    comments
 )

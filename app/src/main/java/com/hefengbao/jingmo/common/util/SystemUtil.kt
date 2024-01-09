@@ -54,7 +54,7 @@ object SystemUtil {
      * @return  手机厂商名
      */
     fun getDeviceManufacturer(): String {
-        return Build.MANUFACTURER;
+        return Build.MANUFACTURER
     }
 
     // 操作系统版本

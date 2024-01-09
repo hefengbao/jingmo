@@ -1,9 +1,8 @@
 package com.hefengbao.jingmo.data.repository
 
+import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.common.network.SafeApiCall
 import com.hefengbao.jingmo.data.database.AppDatabase
-import com.hefengbao.jingmo.data.network.Network
-import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
@@ -20,24 +19,15 @@ import com.hefengbao.jingmo.data.model.People
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.TongueTwister
-import com.hefengbao.jingmo.data.model.Writing
 import com.hefengbao.jingmo.data.model.WritingWrapper
-import com.hefengbao.jingmo.data.model.asPeopleEntity
-import com.hefengbao.jingmo.data.model.asRiddleEntity
-import com.hefengbao.jingmo.data.model.toChineseKnowledgeEntity
-import com.hefengbao.jingmo.data.model.toChineseWisecrackEntity
-import com.hefengbao.jingmo.data.model.toIdiomEntity
-import com.hefengbao.jingmo.data.model.toPoemSentenceEntity
-import com.hefengbao.jingmo.data.model.toTongueTwisterEntity
-import com.hefengbao.jingmo.data.model.toWritingEntity
+import com.hefengbao.jingmo.data.network.Network
 import javax.inject.Inject
-import kotlin.coroutines.cancellation.CancellationException
 
 class NetworkDatasourceRepositoryImpl @Inject constructor(
     private val network: Network,
     private val database: AppDatabase
 ) : NetworkDatasourceRepository, SafeApiCall {
-    override suspend fun dataset(): Result<List<Dataset>>  = safeApiCall {
+    override suspend fun dataset(): Result<List<Dataset>> = safeApiCall {
         network.dataset()
     }
 

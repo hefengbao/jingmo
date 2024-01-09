@@ -7,14 +7,14 @@ import com.hefengbao.jingmo.ui.screen.settings.DataRoute
 
 private const val ROUTE_DATA = "settings_data"
 
-fun NavController.navigateToSettingsDataScreen(){
+fun NavController.navigateToSettingsDataScreen() {
     this.navigate(ROUTE_DATA)
 }
 
 fun NavGraphBuilder.settingsDataScreen(
-    onBackClick: ()-> Unit
-){
-    composable(ROUTE_DATA){
+    onBackClick: () -> Unit
+) {
+    composable(ROUTE_DATA) {
         DataRoute(
             onBackClick = onBackClick
         )

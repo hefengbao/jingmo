@@ -97,9 +97,11 @@ class AppPreference(
     suspend fun setTongueTwisterLastReadId(id: Int) =
         setInt(context, PREF_TONGUE_TWISTER_LAST_READ_ID, id)
 
-    suspend fun setChineseKnowledgeVersion(version: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE_VERSION, version)
+    suspend fun setChineseKnowledgeVersion(version: Int) =
+        setInt(context, PREF_CHINESE_KNOWLEDGE_VERSION, version)
 
-    suspend fun setChineseKnowledgeLastReadId(id: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE_LAST_READ_ID, id)
+    suspend fun setChineseKnowledgeLastReadId(id: Int) =
+        setInt(context, PREF_CHINESE_KNOWLEDGE_LAST_READ_ID, id)
 
     suspend fun setRiddleVersion(version: Int) = setInt(context, PREF_RIDDLE_VERSION, version)
 
@@ -126,8 +128,10 @@ class AppPreference(
         private val PREF_TONGUE_TWISTER_VERSION = intPreferencesKey("key_tongue_twister_version")
         private val PREF_TONGUE_TWISTER_LAST_READ_ID =
             intPreferencesKey("key_tongue_twister_last_read_id")
-        private val PREF_CHINESE_KNOWLEDGE_VERSION = intPreferencesKey("key_chinese_knowledge_version")
-        private val PREF_CHINESE_KNOWLEDGE_LAST_READ_ID = intPreferencesKey("key_chinese_knowledge_last_read_id")
+        private val PREF_CHINESE_KNOWLEDGE_VERSION =
+            intPreferencesKey("key_chinese_knowledge_version")
+        private val PREF_CHINESE_KNOWLEDGE_LAST_READ_ID =
+            intPreferencesKey("key_chinese_knowledge_last_read_id")
         private val PREF_RIDDLE_VERSION = intPreferencesKey("key_riddle_version")
         private val PREF_RIDDLE_LAST_READ_ID = intPreferencesKey("key_riddle_last_read_id")
     }

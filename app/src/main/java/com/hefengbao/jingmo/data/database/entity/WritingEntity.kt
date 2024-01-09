@@ -44,6 +44,6 @@ data class WritingEntity(
     val clauses: List<Clause>,
     val note: String?,
     val comments: List<Quote>?
-){
+) {
     var content: String? = clauses.map { it.content }.toString()
 }

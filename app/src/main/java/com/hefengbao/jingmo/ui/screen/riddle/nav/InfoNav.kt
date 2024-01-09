@@ -7,14 +7,14 @@ import com.hefengbao.jingmo.ui.screen.riddle.InfoRoute
 
 private const val ROUTE_INFO = "riddle_info"
 
-fun NavController.navigateToRiddleInfoScreen(){
+fun NavController.navigateToRiddleInfoScreen() {
     this.navigate(ROUTE_INFO)
 }
 
 fun NavGraphBuilder.riddleInfoScreen(
     onBackClick: () -> Unit,
-){
-    composable(ROUTE_INFO){
+) {
+    composable(ROUTE_INFO) {
         InfoRoute(
             onBackClick = onBackClick
         )

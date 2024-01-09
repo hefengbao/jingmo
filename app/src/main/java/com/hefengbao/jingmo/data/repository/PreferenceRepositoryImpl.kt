@@ -12,13 +12,21 @@ class PreferenceRepositoryImpl @Inject constructor(
     private val dataset: DatasetPreference,
 ) : PreferenceRepository {
     override fun getDatasetStatus(): Flow<DatasetVersion> = dataset.datasetVersion
-    override suspend fun setChineseKnowledgeVersion(version: Int) = dataset.setChineseKnowledgeVersion(version)
-    override suspend fun setChineseWisecracksVersion(version: Int) = dataset.setChineseWisecracksVersion(version)
+    override suspend fun setChineseKnowledgeVersion(version: Int) =
+        dataset.setChineseKnowledgeVersion(version)
+
+    override suspend fun setChineseWisecracksVersion(version: Int) =
+        dataset.setChineseWisecracksVersion(version)
+
     override suspend fun setIdiomsVersion(version: Int) = dataset.setIdiomsVersion(version)
     override suspend fun setPeopleVersion(version: Int) = dataset.setPeopleVersion(version)
-    override suspend fun setPoemSentencesVersion(version: Int) = dataset.setPoemSentencesVersion(version)
+    override suspend fun setPoemSentencesVersion(version: Int) =
+        dataset.setPoemSentencesVersion(version)
+
     override suspend fun setRiddlesVersion(version: Int) = dataset.setRiddlesVersion(version)
-    override suspend fun setTongueTwistersVersion(version: Int) = dataset.setTongueTwistersVersion(version)
+    override suspend fun setTongueTwistersVersion(version: Int) =
+        dataset.setTongueTwistersVersion(version)
+
     override suspend fun setWritingsVersion(version: Int) = dataset.setWritingsVersion(version)
 
     override fun getDataStatus(): Flow<DataStatus> = app.dataStats

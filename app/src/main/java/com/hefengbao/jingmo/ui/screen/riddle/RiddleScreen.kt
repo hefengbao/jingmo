@@ -127,7 +127,7 @@ private fun RiddleScreen(
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text(text = entity.puzzle)
-                            if (showAnswer){
+                            if (showAnswer) {
                                 Text(text = entity.answer)
                             }
                         }
