@@ -13,30 +13,30 @@ import com.hefengbao.jingmo.data.model.DataStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Constant.DATASTORE_NAME)
+val Context.app: DataStore<Preferences> by preferencesDataStore(name = Constant.DATASTORE_NAME)
 
 private fun getLong(context: Context, key: Preferences.Key<Long>, default: Long = 0L): Flow<Long> =
-    context.dataStore.data.map { it[key] ?: default }
+    context.app.data.map { it[key] ?: default }
 
 private suspend fun setLong(context: Context, key: Preferences.Key<Long>, value: Long) {
-    context.dataStore.edit { it[key] = value }
+    context.app.edit { it[key] = value }
 }
 
 private fun getInt(context: Context, key: Preferences.Key<Int>, default: Int = 0): Flow<Int> =
-    context.dataStore.data.map { it[key] ?: default }
+    context.app.data.map { it[key] ?: default }
 
 private suspend fun setInt(context: Context, key: Preferences.Key<Int>, value: Int) {
-    context.dataStore.edit { it[key] = value }
+    context.app.edit { it[key] = value }
 }
 
 private suspend fun setString(context: Context, key: Preferences.Key<String>, value: String) {
-    context.dataStore.edit { it[key] = value }
+    context.app.edit { it[key] = value }
 }
 
 class AppPreference(
     private val context: Context
 ) {
-    val dataStats: Flow<DataStatus> = context.dataStore.data.map {
+    val dataStats: Flow<DataStatus> = context.app.data.map {
         DataStatus(
             poemVersion = it[PREF_POEM_VERSION] ?: 0,
             poemLastReadId = it[PREF_POEM_LAST_READ_ID] ?: 1L,

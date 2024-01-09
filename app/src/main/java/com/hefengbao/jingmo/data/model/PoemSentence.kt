@@ -10,7 +10,7 @@ data class PoemSentence(
     val content: String,
     val from: String,
     @SerialName("poem_id")
-    val poemId: Long?
+    val poemId: Long? = null
 )
 
 fun PoemSentence.toPoemSentenceEntity() = PoemSentenceEntity(

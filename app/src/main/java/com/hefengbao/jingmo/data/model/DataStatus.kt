@@ -1,7 +1,5 @@
 package com.hefengbao.jingmo.data.model
 
-import com.hefengbao.jingmo.data.DataSetVersion
-
 data class DataStatus(
     val poemVersion: Int = 0,
     val poemLastReadId: Long = 1,
@@ -23,14 +21,5 @@ data class DataStatus(
     val riddleVersion: Int,
     val riddleLastReadId: Int = 1,
 ) {
-    val allSynced: Boolean = poemVersion == DataSetVersion.poem
-            && tagVersion == DataSetVersion.tag
-            && poemTagVersion == DataSetVersion.poemTag
-            && writerVersion == DataSetVersion.writer
-            && poemSentenceVersion == DataSetVersion.poemSentence
-            && idiomVersion == DataSetVersion.idiom
-            && chineseWisecrackVersion == DataSetVersion.chineseWisecrack
-            && tongueTwisterVersion == DataSetVersion.tongueTwister
-            && chineseKnowledgeVersion == DataSetVersion.chineseKnowledge
-            && riddleVersion == DataSetVersion.riddle
+    val allSynced: Boolean = true
 }

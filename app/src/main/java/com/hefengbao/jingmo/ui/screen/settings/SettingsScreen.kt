@@ -71,7 +71,7 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState()),
         ) {
-            Item(title = "同步数据", onClick = onDataClick, showBadge = true)
+            Item(title = "同步数据", onClick = onDataClick, showBadge = false)
             Item(title = "隐私政策", onClick = onPrivacyClick, showBadge = false)
             Item(title = "关于", onClick = onAboutClick, showBadge = false)
         }

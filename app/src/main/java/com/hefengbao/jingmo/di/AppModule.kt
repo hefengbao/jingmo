@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.di
 
 import android.content.Context
 import com.hefengbao.jingmo.data.datastore.AppPreference
+import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.network.fake.FakeAssetManager
 import dagger.Module
 import dagger.Provides
@@ -29,7 +30,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAppPreference(
+    fun providesAppPreference(
         @ApplicationContext context: Context
     ): AppPreference = AppPreference(context)
+
+    @Provides
+    @Singleton
+    fun providesDatasetPreference(
+        @ApplicationContext context: Context
+    ): DatasetPreference = DatasetPreference(context)
 }

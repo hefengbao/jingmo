@@ -13,9 +13,9 @@ data class ChineseWisecrack(
     val riddle: String,
     val answer: String,
     @SerialName("first_word")
-    val firstWord: String,
+    val firstWord: String = "",
     @SerialName("first_letter")
-    val firstLetter: String
+    val firstLetter: String = ""
 )
 
 fun ChineseWisecrack.toChineseWisecrackEntity() = ChineseWisecrackEntity(

@@ -6,26 +6,34 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.network.Result
+import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.DatasetVersion
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -33,19 +41,80 @@ fun DataRoute(
     viewModel: DataViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val syncWritingsResult by viewModel.syncWritingsResult.collectAsState(initial = null)
-    val syncPeopleResult by viewModel.syncPeopleResult.collectAsState(initial = null)
-    val syncRiddlesResult by viewModel.syncRiddlesResult.collectAsState(initial = null)
-    
-        
+    LaunchedEffect(Unit) {
+        viewModel.getDataset()
+    }
+
+    val datasetPref by viewModel.datasetPref.collectAsState(initial = DatasetVersion())
+    val datasetResult by viewModel.datasetResult.collectAsState(initial = Result.Loading)
+    val chineseKnowledgeResult by viewModel.chineseKnowledgeResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseKnowledgeResultProgress by viewModel.chineseKnowledgeResultProgress.collectAsState(
+        initial = 0f
+    )
+    val chineseWisecracksResult by viewModel.chineseWisecracksResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseWisecracksResultProgress by viewModel.chineseWisecracksResultProgress.collectAsState(
+        initial = 0f
+    )
+    val idiomsResult by viewModel.idiomsResult.collectAsState(initial = SyncStatus.NonStatus)
+    val idiomsResultProgress by viewModel.idiomsResultProgress.collectAsState(initial = 0f)
+    val peopleResult by viewModel.peopleResult.collectAsState(initial = SyncStatus.NonStatus)
+    val peopleResultProgress by viewModel.peopleResultProgress.collectAsState(initial = 0f)
+    val poemSentencesResult by viewModel.poemSentencesResult.collectAsState(initial = SyncStatus.NonStatus)
+    val poemSentencesResultProgress by viewModel.poemSentencesResultProgress.collectAsState(initial = 0f)
+    val riddlesResult by viewModel.riddlesResult.collectAsState(initial = SyncStatus.NonStatus)
+    val riddlesResultProgress by viewModel.riddlesResultProgress.collectAsState(initial = 0f)
+    val tongueTwistersResult by viewModel.tongueTwisterResult.collectAsState(initial = SyncStatus.NonStatus)
+    val tongueTwistersResultProgress by viewModel.tongueTwistersResultProgress.collectAsState(
+        initial = 0f
+    )
+    val writingsResult by viewModel.writingsResult.collectAsState(initial = SyncStatus.NonStatus)
+    val writingsResultProgress by viewModel.writingsResultProgress.collectAsState(initial = 0f)
+
     DataScreen(
         onBackClick = onBackClick,
-        syncWritingsResult = syncWritingsResult,
-        onSyncWritingsClick = { viewModel.syncWritings() },
-        syncPeopleResult = syncPeopleResult,
-        onSyncPeopleClick = { viewModel.syncPeople() },
-        syncRiddlesResult = syncRiddlesResult,
-        onSyncRiddlesClick = { viewModel.syncRiddles() }
+        datasetPref = datasetPref,
+        datasetResult = datasetResult,
+        syncChineseKnowledge = { total: Int, version: Int ->
+            viewModel.syncChineseKnowledge(total, version)
+        },
+        chineseKnowledgeResult = chineseKnowledgeResult,
+        chineseKnowledgeResultProgress = chineseKnowledgeResultProgress,
+        syncChineseWisecracks = { total: Int, version: Int ->
+            viewModel.syncChineseWisecracks(
+                total,
+                version
+            )
+        },
+        chineseWisecracksResult = chineseWisecracksResult,
+        chineseWisecracksResultProgress = chineseWisecracksResultProgress,
+        syncIdioms = { total: Int, version: Int -> viewModel.syncIdioms(total, version) },
+        idiomsResult = idiomsResult,
+        idiomsResultProgress = idiomsResultProgress,
+        syncPeople = { total: Int, version: Int -> viewModel.syncPeople(total, version) },
+        peopleResult = peopleResult,
+        peopleResultProgress = peopleResultProgress,
+        syncPoemSentences = { total: Int, version: Int ->
+            viewModel.syncPoemSentences(
+                total,
+                version
+            )
+        },
+        poemSentencesResult = poemSentencesResult,
+        poemSentencesResultProgress = poemSentencesResultProgress,
+        syncRiddles = { total: Int, version: Int -> viewModel.syncRiddles(total, version) },
+        riddlesResult = riddlesResult,
+        riddlesResultProgress = riddlesResultProgress,
+        syncTongueTwisters = { total: Int, version: Int ->
+            viewModel.syncTongueTwisters(
+                total,
+                version
+            )
+        },
+        tongueTwistersResult = tongueTwistersResult,
+        tongueTwistersResultProgress = tongueTwistersResultProgress,
+        syncWritings = { total: Int, version: Int -> viewModel.syncWritings(total, version) },
+        writingsResult = writingsResult,
+        writingsResultProgress = writingsResultProgress
     )
 }
 
@@ -53,42 +122,181 @@ fun DataRoute(
 private fun DataScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    syncWritingsResult: Result<Any>?,
-    onSyncWritingsClick: () -> Unit,
-    syncPeopleResult: Result<Any>?,
-    onSyncPeopleClick: () -> Unit,
-    syncRiddlesResult: Result<Any>?,
-    onSyncRiddlesClick: () -> Unit,
+    datasetPref: DatasetVersion,
+    datasetResult: Result<List<Dataset>>,
+    syncChineseKnowledge: (total: Int, version: Int) -> Unit,
+    chineseKnowledgeResult: SyncStatus<Any>,
+    chineseKnowledgeResultProgress: Float,
+    syncChineseWisecracks: (total: Int, version: Int) -> Unit,
+    chineseWisecracksResult: SyncStatus<Any>,
+    chineseWisecracksResultProgress: Float,
+    syncIdioms: (total: Int, version: Int) -> Unit,
+    idiomsResult: SyncStatus<Any>,
+    idiomsResultProgress: Float,
+    syncPeople: (total: Int, version: Int) -> Unit,
+    peopleResult: SyncStatus<Any>,
+    peopleResultProgress: Float,
+    syncPoemSentences: (total: Int, version: Int) -> Unit,
+    poemSentencesResult: SyncStatus<Any>,
+    poemSentencesResultProgress: Float,
+    syncRiddles: (total: Int, version: Int) -> Unit,
+    riddlesResult: SyncStatus<Any>,
+    riddlesResultProgress: Float,
+    syncTongueTwisters: (total: Int, version: Int) -> Unit,
+    tongueTwistersResult: SyncStatus<Any>,
+    tongueTwistersResultProgress: Float,
+    syncWritings: (total: Int, version: Int) -> Unit,
+    writingsResult: SyncStatus<Any>,
+    writingsResultProgress: Float,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "同步数据"
-    ){
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Item(
-                title = "诗文",
-                onClick = onSyncWritingsClick,
-                enabled = true,
-                showProgressIndicator = syncWritingsResult == Result.Loading
-            )
-            Item(
-                title = "人物",
-                onClick = onSyncPeopleClick,
-                enabled = true,
-                showProgressIndicator = syncPeopleResult == Result.Loading
-            )
-            Item(
-                title = "谜语",
-                onClick = onSyncRiddlesClick,
-                enabled = true,
-                showProgressIndicator = syncRiddlesResult == Result.Loading
-            )
+    ) {
+        when (datasetResult) {
+            is Result.Error -> {}
+            Result.Loading -> {
+                LinearProgressIndicator(modifier = modifier.fillMaxWidth())
+            }
+
+            is Result.Success -> {
+                TipDialog()
+
+                val nameList = datasetResult.data.map { it.name }
+                val countList = datasetResult.data.map { it.count }
+                val versionList = datasetResult.data.map { it.version }
+
+                val menus = listOf(
+                    Menu(
+                        title = "知识卡片",
+                        name = "chinese_knowledge",
+                        localVersion = datasetPref.chineseKnowledgeVersion,
+                        status = chineseKnowledgeResult,
+                        progress = chineseKnowledgeResultProgress,
+                        onClick = { count: Int, version: Int ->
+                            syncChineseKnowledge(
+                                count,
+                                version
+                            )
+                        }
+                    ),
+                    Menu(
+                        title = "歇后语",
+                        name = "chinese_wisecracks",
+                        localVersion = datasetPref.chineseWisecracksVersion,
+                        status = chineseWisecracksResult,
+                        progress = chineseWisecracksResultProgress,
+                        onClick = { count: Int, version: Int ->
+                            syncChineseWisecracks(
+                                count,
+                                version
+                            )
+                        }
+                    ),
+                    Menu(
+                        title = "成语",
+                        name = "idioms",
+                        localVersion = datasetPref.idiomsVersion,
+                        status = idiomsResult,
+                        progress = idiomsResultProgress,
+                        onClick = { count: Int, version: Int -> syncIdioms(count, version) }
+                    ),
+                    Menu(
+                        title = "人物",
+                        name = "people",
+                        localVersion = datasetPref.peopleVersion,
+                        status = peopleResult,
+                        progress = peopleResultProgress,
+                        onClick = { count: Int, version: Int -> syncPeople(count, version) }
+                    ),
+                    Menu(
+                        title = "诗词名句",
+                        name = "poem_sentences",
+                        localVersion = datasetPref.poemSentencesVersion,
+                        status = poemSentencesResult,
+                        progress = poemSentencesResultProgress,
+                        onClick = { count: Int, version: Int -> syncPoemSentences(count, version) }
+                    ),
+                    Menu(
+                        title = "谜语",
+                        name = "riddles",
+                        localVersion = datasetPref.riddlesVersion,
+                        status = riddlesResult,
+                        progress = riddlesResultProgress,
+                        onClick = { count: Int, version: Int -> syncRiddles(count, version) }
+                    ),
+                    Menu(
+                        title = "绕口令",
+                        name = "tongue_twisters",
+                        localVersion = datasetPref.tongueTwistersVersion,
+                        status = tongueTwistersResult,
+                        progress = tongueTwistersResultProgress,
+                        onClick = { count: Int, version: Int -> syncTongueTwisters(count, version) }
+                    ),
+                    Menu(
+                        title = "诗文",
+                        name = "writings",
+                        localVersion = datasetPref.writingsVersion,
+                        status = writingsResult,
+                        progress = writingsResultProgress,
+                        onClick = { count: Int, version: Int -> syncWritings(count, version) }
+                    ),
+                )
+
+                LazyColumn {
+                    itemsIndexed(
+                        items = menus
+                    ) { _: Int, item: Menu ->
+                        val key = nameList.indexOf(item.name)
+
+                        if (item.status is SyncStatus.Error) {
+                            item.status.exception?.message
+                        }
+
+                        Item(
+                            title = item.title,
+                            onClick = { item.onClick(countList[key], versionList[key]) },
+                            enabled = item.localVersion != versionList[key] || item.status == SyncStatus.Loading,
+                            showProgressIndicator = item.status == SyncStatus.Loading,
+                            progress = item.progress,
+                            error = if (item.status is SyncStatus.Error) {
+                                item.status.exception?.message
+                            } else null
+                        )
+                    }
+                }
+            }
         }
+    }
+}
+
+private class Menu(
+    val title: String,
+    val name: String,
+    val localVersion: Int,
+    val status: SyncStatus<Any>,
+    val progress: Float,
+    val onClick: (count: Int, version: Int) -> Unit,
+)
+
+@Composable
+private fun TipDialog() {
+    var showDialog by rememberSaveable { mutableStateOf(true) }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                Button(onClick = { showDialog = false }) {
+                    Text(text = "知道了")
+                }
+            },
+            title = {
+                Text(text = "提示")
+            },
+            text = {
+                Text(text = "数据量大，预计需要半小时以上时间，建议在电量充足、流量充足的空闲时间同步数据！建议一个一个同步,不然可能因占用太多内存而被系统杀死进程。")
+            }
+        )
     }
 }
 
@@ -99,22 +307,44 @@ private fun Item(
     onClick: () -> Unit,
     enabled: Boolean,
     showProgressIndicator: Boolean,
+    progress: Float,
+    error: String?,
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ){
-        Text(text = title, style = MaterialTheme.typography.titleLarge)
-        Spacer(modifier = modifier.width(16.dp))
-        IconButton(
-            onClick = onClick,
-            enabled = enabled
+    Column(
+        modifier = modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            if (showProgressIndicator){
-                CircularProgressIndicator()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(text = title, style = MaterialTheme.typography.titleLarge)
+                CircularProgressIndicator(
+                    progress = progress,
+                    strokeWidth = 2.dp,
+                    modifier = modifier.size(24.dp)
+                )
             }
-            Icon(imageVector = Icons.Default.Download, contentDescription = null)
+            Spacer(modifier = modifier.width(16.dp))
+            IconButton(
+                onClick = onClick,
+                enabled = enabled
+            ) {
+                if (showProgressIndicator) {
+                    CircularProgressIndicator()
+                }
+                Icon(imageVector = Icons.Default.Download, contentDescription = null)
+            }
+        }
+
+        if (error != null) {
+            Text(text = error, color = MaterialTheme.colorScheme.error)
         }
     }
 }

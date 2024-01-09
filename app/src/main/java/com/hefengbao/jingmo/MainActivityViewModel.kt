@@ -179,7 +179,7 @@ class MainActivityViewModel @Inject constructor(
                         _poemSentenceProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setPoemSentenceVersion(DataSetVersion.poemSentence)
+                //preferenceRepository.setPoemSentenceVersion(DataSetVersion.poemSentence)
                 _poemSentenceVersion.value = DataSetVersion.poemSentence
             }
 
@@ -192,7 +192,7 @@ class MainActivityViewModel @Inject constructor(
                         _idiomProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setIdiomVersion(DataSetVersion.idiom)
+                //preferenceRepository.setIdiomVersion(DataSetVersion.idiom)
                 _idiomVersion.value = DataSetVersion.idiom
             }
 
@@ -205,7 +205,7 @@ class MainActivityViewModel @Inject constructor(
                         _chineseWisecrackProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setChineseWisecrackVersion(DataSetVersion.chineseWisecrack)
+                //preferenceRepository.setChineseWisecrackVersion(DataSetVersion.chineseWisecrack)
                 _chineseWiseCrackVersion.value = DataSetVersion.chineseWisecrack
             }
 
@@ -218,7 +218,7 @@ class MainActivityViewModel @Inject constructor(
                         _tongueTwisterProgress.value = count.toFloat() / it.size
                     }
                 }
-                preferenceRepository.setTongueTwisterVersion(DataSetVersion.tongueTwister)
+                //preferenceRepository.setTongueTwisterVersion(DataSetVersion.tongueTwister)
                 _tongueTwisterVersion.value = DataSetVersion.tongueTwister
             }
 

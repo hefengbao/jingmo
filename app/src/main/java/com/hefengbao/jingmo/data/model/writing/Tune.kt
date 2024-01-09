@@ -8,5 +8,5 @@ data class Tune(
     @SerialName("Name")
     val name: String? = null,
     @SerialName("Id")
-    val id: Int,
+    val id: Int?,
 )
