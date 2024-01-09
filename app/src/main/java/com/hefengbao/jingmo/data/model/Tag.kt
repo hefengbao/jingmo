@@ -9,6 +9,6 @@ data class Tag(
     val title: String
 )
 
-fun Tag.toTagEntity() = TagEntity(
+fun Tag.asTagEntity() = TagEntity(
     id, title
 )

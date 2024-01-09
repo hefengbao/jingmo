@@ -23,6 +23,6 @@ data class Poem(
     val bookmark: Boolean = false,
 )
 
-fun Poem.toPoemEntity() = PoemEntity(
+fun Poem.asPoemEntity() = PoemEntity(
     id, writerId, writerName, dynasty, title, content, remark, translation, shangxi
 )

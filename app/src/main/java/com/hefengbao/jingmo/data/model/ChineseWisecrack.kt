@@ -18,6 +18,6 @@ data class ChineseWisecrack(
     val firstLetter: String = ""
 )
 
-fun ChineseWisecrack.toChineseWisecrackEntity() = ChineseWisecrackEntity(
+fun ChineseWisecrack.asChineseWisecrackEntity() = ChineseWisecrackEntity(
     id, riddle, answer, firstWord, firstLetter
 )

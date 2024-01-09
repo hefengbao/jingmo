@@ -11,6 +11,6 @@ data class ChineseKnowledge(
     val url: String?,
 )
 
-fun ChineseKnowledge.toChineseKnowledgeEntity() = ChineseKnowledgeEntity(
+fun ChineseKnowledge.asChineseKnowledgeEntity() = ChineseKnowledgeEntity(
     id, content, label, url
 )

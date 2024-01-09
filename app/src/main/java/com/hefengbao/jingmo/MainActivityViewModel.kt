@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.DataSetVersion
 import com.hefengbao.jingmo.data.model.DataStatus
-import com.hefengbao.jingmo.data.model.toChineseKnowledgeEntity
-import com.hefengbao.jingmo.data.model.toChineseWisecrackEntity
-import com.hefengbao.jingmo.data.model.toIdiomEntity
-import com.hefengbao.jingmo.data.model.toPoemEntity
-import com.hefengbao.jingmo.data.model.toPoemSentenceEntity
-import com.hefengbao.jingmo.data.model.toPoemTagEntity
-import com.hefengbao.jingmo.data.model.toTagEntity
-import com.hefengbao.jingmo.data.model.toTongueTwisterEntity
-import com.hefengbao.jingmo.data.model.toWriterEntity
+import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
+import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
+import com.hefengbao.jingmo.data.model.asIdiomEntity
+import com.hefengbao.jingmo.data.model.asPoemEntity
+import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
+import com.hefengbao.jingmo.data.model.asPoemTagEntity
+import com.hefengbao.jingmo.data.model.asTagEntity
+import com.hefengbao.jingmo.data.model.asTongueTwisterEntity
+import com.hefengbao.jingmo.data.model.asWriterEntity
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.SyncRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -122,7 +122,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncPoems().collectLatest {
                     it.map { poem ->
-                        syncRepository.insertPoem(poem.toPoemEntity())
+                        syncRepository.insertPoem(poem.asPoemEntity())
                         count++
                         _poemProgress.value = count.toFloat() / it.size
                     }
@@ -135,7 +135,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncTags().collectLatest {
                     it.map { tag ->
-                        syncRepository.insertTag(tag.toTagEntity())
+                        syncRepository.insertTag(tag.asTagEntity())
                         count++
                         _tagProgress.value = count.toFloat() / it.size
                     }
@@ -148,7 +148,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncPoemTagList().collectLatest {
                     it.map { poemTag ->
-                        syncRepository.insertPoemTag(poemTag.toPoemTagEntity())
+                        syncRepository.insertPoemTag(poemTag.asPoemTagEntity())
                         count++
                         _poemTagProgress.value = count.toFloat() / it.size
                     }
@@ -161,7 +161,7 @@ class MainActivityViewModel @Inject constructor(
                 var count = 0L
                 syncRepository.syncWriters().collectLatest {
                     it.map { writer ->
-                        syncRepository.insertWriter(writer.toWriterEntity())
+                        syncRepository.insertWriter(writer.asWriterEntity())
                         count++
                         _writerProgress.value = count.toFloat() / it.size
                     }
@@ -174,7 +174,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncPoemSentences().collectLatest {
                     it.map { sentence ->
-                        syncRepository.insertPoemSentence(sentence.toPoemSentenceEntity())
+                        syncRepository.insertPoemSentence(sentence.asPoemSentenceEntity())
                         count++
                         _poemSentenceProgress.value = count.toFloat() / it.size
                     }
@@ -187,7 +187,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncIdioms().collectLatest {
                     it.map { sentence ->
-                        syncRepository.insertIdiom(sentence.toIdiomEntity())
+                        syncRepository.insertIdiom(sentence.asIdiomEntity())
                         count++
                         _idiomProgress.value = count.toFloat() / it.size
                     }
@@ -200,7 +200,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncChineseWisecracks().collectLatest {
                     it.map { sentence ->
-                        syncRepository.insertChineseWisecrack(sentence.toChineseWisecrackEntity())
+                        syncRepository.insertChineseWisecrack(sentence.asChineseWisecrackEntity())
                         count++
                         _chineseWisecrackProgress.value = count.toFloat() / it.size
                     }
@@ -213,7 +213,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncTongueTwisters().collectLatest {
                     it.map { tongueTwister ->
-                        syncRepository.insertTongueTwister(tongueTwister.toTongueTwisterEntity())
+                        syncRepository.insertTongueTwister(tongueTwister.asTongueTwisterEntity())
                         count++
                         _tongueTwisterProgress.value = count.toFloat() / it.size
                     }
@@ -226,7 +226,7 @@ class MainActivityViewModel @Inject constructor(
                 var count: Long = 0
                 syncRepository.syncChineseKnowledge().collectLatest {
                     it.map { chineseKnowledge ->
-                        syncRepository.insertChineseKnowledge(chineseKnowledge.toChineseKnowledgeEntity())
+                        syncRepository.insertChineseKnowledge(chineseKnowledge.asChineseKnowledgeEntity())
                         count++
                         _chineseKnowledgeProgress.value = count.toFloat() / it.size
                     }

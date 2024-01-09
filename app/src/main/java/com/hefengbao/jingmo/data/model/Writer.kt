@@ -16,6 +16,6 @@ data class Writer(
     val detailIntro: List<IntroItem>?
 )
 
-fun Writer.toWriterEntity() = WriterEntity(
+fun Writer.asWriterEntity() = WriterEntity(
     id, name, avatar, dynasty, simpleIntro, detailIntro
 )

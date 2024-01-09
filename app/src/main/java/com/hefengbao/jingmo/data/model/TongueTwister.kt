@@ -11,7 +11,7 @@ data class TongueTwister(
     val content2: String?,
 )
 
-fun TongueTwister.toTongueTwisterEntity() = TongueTwisterEntity(
+fun TongueTwister.asTongueTwisterEntity() = TongueTwisterEntity(
     id = id,
     title = title,
     content = content,

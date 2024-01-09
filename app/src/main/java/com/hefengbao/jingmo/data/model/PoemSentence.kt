@@ -13,6 +13,6 @@ data class PoemSentence(
     val poemId: Long? = null
 )
 
-fun PoemSentence.toPoemSentenceEntity() = PoemSentenceEntity(
+fun PoemSentence.asPoemSentenceEntity() = PoemSentenceEntity(
     id, content, from, poemId
 )

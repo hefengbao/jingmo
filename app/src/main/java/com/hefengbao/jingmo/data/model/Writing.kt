@@ -57,7 +57,7 @@ data class Writing(
     val comments: List<Quote>?
 )
 
-fun Writing.toWritingEntity() = WritingEntity(
+fun Writing.asWritingEntity() = WritingEntity(
     id,
     groupIndex,
     classes,

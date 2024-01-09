@@ -21,6 +21,6 @@ data class Idiom(
     val firstLetter: String
 )
 
-fun Idiom.toIdiomEntity() = IdiomEntity(
+fun Idiom.asIdiomEntity() = IdiomEntity(
     id, word, pinyin, explanation, example, derivation, firstWord, firstLetter
 )

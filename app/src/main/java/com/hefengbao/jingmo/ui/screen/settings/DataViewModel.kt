@@ -8,12 +8,12 @@ import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asRiddleEntity
-import com.hefengbao.jingmo.data.model.toChineseKnowledgeEntity
-import com.hefengbao.jingmo.data.model.toChineseWisecrackEntity
-import com.hefengbao.jingmo.data.model.toIdiomEntity
-import com.hefengbao.jingmo.data.model.toPoemSentenceEntity
-import com.hefengbao.jingmo.data.model.toTongueTwisterEntity
-import com.hefengbao.jingmo.data.model.toWritingEntity
+import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
+import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
+import com.hefengbao.jingmo.data.model.asIdiomEntity
+import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
+import com.hefengbao.jingmo.data.model.asTongueTwisterEntity
+import com.hefengbao.jingmo.data.model.asWritingEntity
 import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,7 +54,7 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertChinesKnowledge(it.toChineseKnowledgeEntity())
+                        repository.insertChinesKnowledge(it.asChineseKnowledgeEntity())
                         count++
                         _chineseKnowledgeResultProgress.value = count.toFloat() / total
                     }
@@ -82,7 +82,7 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertChineseWisecrack(it.toChineseWisecrackEntity())
+                        repository.insertChineseWisecrack(it.asChineseWisecrackEntity())
                         count++
                         _chineseWisecracksResultProgress.value = count.toFloat() / total
                     }
@@ -111,7 +111,7 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertIdiom(it.toIdiomEntity())
+                        repository.insertIdiom(it.asIdiomEntity())
                         count++
                         _idiomsResultProgress.value = count.toFloat() / total
                     }
@@ -165,7 +165,7 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertPoemSentence(it.toPoemSentenceEntity())
+                        repository.insertPoemSentence(it.asPoemSentenceEntity())
                         count++
                         _poemSentencesResultProgress.value = count.toFloat() / total
                     }
@@ -217,7 +217,7 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertTongueTwister(it.toTongueTwisterEntity())
+                        repository.insertTongueTwister(it.asTongueTwisterEntity())
                         count++
                         _tongueTwistersResultProgress.value = count.toFloat() / total
                     }
@@ -257,7 +257,7 @@ class DataViewModel @Inject constructor(
                         }
 
                         response.data.data.map {
-                            repository.insertWriting(it.toWritingEntity())
+                            repository.insertWriting(it.asWritingEntity())
                             count++
                             _writingsResultProgress.value = count.toFloat() / total
                         }

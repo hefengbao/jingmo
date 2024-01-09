@@ -12,6 +12,6 @@ data class PoemTag(
     val tagId: Long
 )
 
-fun PoemTag.toPoemTagEntity() = PoemTagCrossRef(
+fun PoemTag.asPoemTagEntity() = PoemTagCrossRef(
     poemId, tagId
 )
