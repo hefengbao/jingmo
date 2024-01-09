@@ -238,9 +238,8 @@ class DataViewModel @Inject constructor(
 
         viewModelScope.launch {
             var page: Int? = 1
-
+            var count = 0
             while (page != null) {
-                var count = 0
                 val response = if (page <= 20) {
                     repository.syncWritings(page)
                 } else {
