@@ -29,6 +29,7 @@ protobuf-plugin = "0.9.3"
 retrofit = "2.9.0"
 okhttp = "4.10.0"
 retrofitKotlinxSerializationJson = "1.0.0"
+paging = "3.1.1"
 
 [libraries]
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
@@ -76,7 +77,8 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging"}
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

@@ -137,6 +137,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp.logging)
     implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
