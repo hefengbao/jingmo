@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data
 
+@Deprecated("")
 object DataSetVersion {
     const val poem = 2
     const val poemSentence = 1

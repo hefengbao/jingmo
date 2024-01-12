@@ -23,8 +23,8 @@ fun SimpleScaffold(
     onBackClick: () -> Unit,
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {},
-    floatingActionButton: @Composable () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
