@@ -3,6 +3,7 @@ package com.hefengbao.jingmo.di
 import android.content.Context
 import com.hefengbao.jingmo.data.datastore.AppPreference
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
+import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
 import com.hefengbao.jingmo.data.network.fake.FakeAssetManager
 import dagger.Module
 import dagger.Provides
@@ -39,4 +40,10 @@ object AppModule {
     fun providesDatasetPreference(
         @ApplicationContext context: Context
     ): DatasetPreference = DatasetPreference(context)
+
+    @Provides
+    @Singleton
+    fun providesReadStatusPreference(
+        @ApplicationContext context: Context
+    ): ReadStatusPreference = ReadStatusPreference(context)
 }
