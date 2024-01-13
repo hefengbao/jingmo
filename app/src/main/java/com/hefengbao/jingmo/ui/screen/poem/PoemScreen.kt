@@ -61,10 +61,12 @@ fun PoemRoute(
                 viewModel.getNextId(viewModel.id, viewModel.query)
                 viewModel.getPrevId(viewModel.id, viewModel.query)
             }
+
             "search" -> {
                 viewModel.getSearchNextId(viewModel.id, viewModel.query)
                 viewModel.getSearchPrevId(viewModel.id, viewModel.query)
             }
+
             else -> {
                 viewModel.getNextId(viewModel.id)
                 viewModel.getPrevId(viewModel.id)
@@ -89,10 +91,12 @@ fun PoemRoute(
                     viewModel.getNextId(prevId!!, viewModel.query)
                     viewModel.getPrevId(prevId!!, viewModel.query)
                 }
+
                 "search" -> {
                     viewModel.getSearchNextId(prevId!!, viewModel.query)
                     viewModel.getSearchPrevId(prevId!!, viewModel.query)
                 }
+
                 else -> {
                     viewModel.getNextId(prevId!!)
                     viewModel.getPrevId(prevId!!)
@@ -106,10 +110,12 @@ fun PoemRoute(
                     viewModel.getNextId(nextId!!, viewModel.query)
                     viewModel.getPrevId(nextId!!, viewModel.query)
                 }
+
                 "search" -> {
                     viewModel.getSearchNextId(nextId!!, viewModel.query)
                     viewModel.getSearchPrevId(nextId!!, viewModel.query)
                 }
+
                 else -> {
                     viewModel.getNextId(nextId!!)
                     viewModel.getPrevId(nextId!!)
@@ -117,7 +123,7 @@ fun PoemRoute(
             }
         },
         setLastReadId = {
-            if (viewModel.type == "read"){
+            if (viewModel.type == "read") {
                 viewModel.setLastReadId(it)
             }
         }
@@ -168,8 +174,8 @@ private fun Screen(
                 }
             }
             Box(
-                modifier =  modifier.fillMaxSize()
-            ){
+                modifier = modifier.fillMaxSize()
+            ) {
                 SelectionContainer {
                     Column(
                         modifier = modifier
@@ -190,10 +196,13 @@ private fun Screen(
                                 text = entity.title.content,
                                 style = MaterialTheme.typography.titleMedium
                             )
-                            Text(text = "${entity.dynasty}.${entity.author}", style = MaterialTheme.typography.titleSmall)
+                            Text(
+                                text = "${entity.dynasty}.${entity.author}",
+                                style = MaterialTheme.typography.titleSmall
+                            )
                             if (entity.preface != null) {
                                 Text(
-                                    text = entity.preface.replace("<br />","\n"),
+                                    text = entity.preface.replace("<br />", "\n"),
                                     style = MaterialTheme.typography.bodySmall,
                                     fontStyle = FontStyle.Italic
                                 )

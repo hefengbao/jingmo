@@ -37,7 +37,6 @@ import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemIndexGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchListScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemIndexGraph
@@ -98,7 +97,7 @@ fun AppNavHost(
                     onBackClick = navController::navigateUp,
                     onSearchClick = {
                         // search 补位用，不产生任何作用
-                        navController.navigateToPoemSearchListScreen("search","search")
+                        navController.navigateToPoemSearchListScreen("search", "search")
                     },
                     onAuthorClick = { navController.navigateToPoemSearchListScreen("author", it) },
                     onCollectClick = {},
@@ -109,7 +108,7 @@ fun AppNavHost(
                     nestGraph = {
                         poemSearchListScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {id: String,type: String, query: String ->
+                            onItemClick = { id: String, type: String, query: String ->
                                 navController.navigateToPoemGraph(id, type, query)
                             },
                         )

@@ -33,13 +33,21 @@ class DatasetPreference(
         )
     }
 
-    suspend fun setChineseKnowledgeVersion(version: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE, version)
-    suspend fun setChineseWisecracksVersion(version: Int) = setInt(context, PREF_CHINESE_WISECRACKS, version)
+    suspend fun setChineseKnowledgeVersion(version: Int) =
+        setInt(context, PREF_CHINESE_KNOWLEDGE, version)
+
+    suspend fun setChineseWisecracksVersion(version: Int) =
+        setInt(context, PREF_CHINESE_WISECRACKS, version)
+
     suspend fun setIdiomsVersion(version: Int) = setInt(context, PREF_IDIOMS, version)
     suspend fun setPeopleVersion(version: Int) = setInt(context, PREF_PEOPLE, version)
-    suspend fun setPoemSentencesVersion(version: Int) = setInt(context, PREF_POEM_SENTENCES, version)
+    suspend fun setPoemSentencesVersion(version: Int) =
+        setInt(context, PREF_POEM_SENTENCES, version)
+
     suspend fun setRiddlesVersion(version: Int) = setInt(context, PREF_RIDDLES, version)
-    suspend fun setTongueTwistersVersion(version: Int) = setInt(context, PREF_TONGUE_TWISTERS, version)
+    suspend fun setTongueTwistersVersion(version: Int) =
+        setInt(context, PREF_TONGUE_TWISTERS, version)
+
     suspend fun setWritingsVersion(version: Int) = setInt(context, PREF_WRITINGS, version)
 
     companion object {

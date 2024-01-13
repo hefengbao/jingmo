@@ -34,23 +34,28 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override fun getReadStatus(): Flow<ReadStatus> = readStatus.readStatus
 
-    override suspend fun setChineseKnowledgeLastReadId(id: Int) = readStatus.setChineseKnowledgeLastReadId(id)
+    override suspend fun setChineseKnowledgeLastReadId(id: Int) =
+        readStatus.setChineseKnowledgeLastReadId(id)
 
-    override suspend fun setChineseWisecracksLastReadId(id: Int) = readStatus.setChineseWisecracksLastReadId(id)
+    override suspend fun setChineseWisecracksLastReadId(id: Int) =
+        readStatus.setChineseWisecracksLastReadId(id)
 
     override suspend fun setIdiomsLastReadId(id: Int) = readStatus.setIdiomsLastReadId(id)
 
     override suspend fun setPeopleLastReadId(id: Int) = readStatus.setPeopleLastReadId(id)
 
-    override suspend fun setPoemSentencesLastReadId(id: Int) = readStatus.setPoemSentencesLastReadId(id)
+    override suspend fun setPoemSentencesLastReadId(id: Int) =
+        readStatus.setPoemSentencesLastReadId(id)
 
     override suspend fun setRiddlesLastReadId(id: Int) = readStatus.setRiddlesLastReadId(id)
 
-    override suspend fun setTongueTwistersLastReadId(id: Int) = readStatus.setTongueTwistersLastReadId(id)
+    override suspend fun setTongueTwistersLastReadId(id: Int) =
+        readStatus.setTongueTwistersLastReadId(id)
 
     override suspend fun setWritingsLastReadId(id: Int) = readStatus.setWritingsLastReadId(id)
 
     override fun getAppStatus(): Flow<AppStatus> = app.appStatus
     override suspend fun setCaptureTextColor(color: String) = app.setCaptureTextColor(color)
-    override suspend fun setCaptureBackgroundColor(color: String) = app.setCaptureBackgroundColor(color)
+    override suspend fun setCaptureBackgroundColor(color: String) =
+        app.setCaptureBackgroundColor(color)
 }

@@ -38,7 +38,7 @@ fun NavController.navigateToPoemSearchListScreen(type: String, query: String) {
 
 fun NavGraphBuilder.poemSearchListScreen(
     onBackClick: () -> Unit,
-    onItemClick: (id:String,type:String,query:String) -> Unit,
+    onItemClick: (id: String, type: String, query: String) -> Unit,
 ) {
     composable(
         route = "poem_search_list/{$poemSearchTypeArg}/{$poemSearchQueryArg}",

@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,8 +22,8 @@ class TongueTwisterListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-             preferenceRepository.getReadStatus().collectLatest {
-                 lastReadId = it.tongueTwistersLastReadId
+            preferenceRepository.getReadStatus().collectLatest {
+                lastReadId = it.tongueTwistersLastReadId
             }
         }
     }

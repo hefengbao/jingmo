@@ -41,8 +41,11 @@ class AppPreference(
         )
     }
 
-    suspend fun setCaptureTextColor(color: String) = setString(context, PREF_CAPTURE_TEXT_COLOR, color)
-    suspend fun setCaptureBackgroundColor(color: String) = setString(context, PREF_CAPTURE_BACKGROUND_COLOR, color)
+    suspend fun setCaptureTextColor(color: String) =
+        setString(context, PREF_CAPTURE_TEXT_COLOR, color)
+
+    suspend fun setCaptureBackgroundColor(color: String) =
+        setString(context, PREF_CAPTURE_BACKGROUND_COLOR, color)
 
     companion object {
         private val PREF_CAPTURE_TEXT_COLOR = stringPreferencesKey("key_capture_text_color")

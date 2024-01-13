@@ -33,13 +33,21 @@ class ReadStatusPreference(
         )
     }
 
-    suspend fun setChineseKnowledgeLastReadId(version: Int) = setInt(context, PREF_CHINESE_KNOWLEDGE, version)
-    suspend fun setChineseWisecracksLastReadId(version: Int) = setInt(context, PREF_CHINESE_WISECRACKS, version)
+    suspend fun setChineseKnowledgeLastReadId(version: Int) =
+        setInt(context, PREF_CHINESE_KNOWLEDGE, version)
+
+    suspend fun setChineseWisecracksLastReadId(version: Int) =
+        setInt(context, PREF_CHINESE_WISECRACKS, version)
+
     suspend fun setIdiomsLastReadId(version: Int) = setInt(context, PREF_IDIOMS, version)
     suspend fun setPeopleLastReadId(version: Int) = setInt(context, PREF_PEOPLE, version)
-    suspend fun setPoemSentencesLastReadId(version: Int) = setInt(context, PREF_POEM_SENTENCES, version)
+    suspend fun setPoemSentencesLastReadId(version: Int) =
+        setInt(context, PREF_POEM_SENTENCES, version)
+
     suspend fun setRiddlesLastReadId(version: Int) = setInt(context, PREF_RIDDLES, version)
-    suspend fun setTongueTwistersLastReadId(version: Int) = setInt(context, PREF_TONGUE_TWISTERS, version)
+    suspend fun setTongueTwistersLastReadId(version: Int) =
+        setInt(context, PREF_TONGUE_TWISTERS, version)
+
     suspend fun setWritingsLastReadId(version: Int) = setInt(context, PREF_WRITINGS, version)
 
     companion object {

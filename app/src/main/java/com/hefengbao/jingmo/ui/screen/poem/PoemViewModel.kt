@@ -26,8 +26,9 @@ class PoemViewModel @Inject constructor(
     var id = poemArgs.poemId.toInt()
     val type = poemArgs.type
     val query = poemArgs.query
+
     init {
-        if (type == "read"){
+        if (type == "read") {
             viewModelScope.launch {
                 id = preferenceRepository.getReadStatus().first().writingsLastReadId
             }
@@ -42,19 +43,19 @@ class PoemViewModel @Inject constructor(
 
     private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
     val nextId: SharedFlow<Int?> = _nextId
-    fun getNextId(id: Int){
+    fun getNextId(id: Int) {
         viewModelScope.launch {
             _nextId.value = writingRepository.getNextId(id)
         }
     }
 
-    fun getNextId(id: Int, author: String){
+    fun getNextId(id: Int, author: String) {
         viewModelScope.launch {
             _nextId.value = writingRepository.getNextId(id, author)
         }
     }
 
-    fun getSearchNextId(id: Int, query: String){
+    fun getSearchNextId(id: Int, query: String) {
         viewModelScope.launch {
             _nextId.value = writingRepository.getSearchNextId(id, query)
         }
@@ -62,19 +63,19 @@ class PoemViewModel @Inject constructor(
 
     private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
     val prevId: SharedFlow<Int?> = _prevId
-    fun getPrevId(id: Int){
+    fun getPrevId(id: Int) {
         viewModelScope.launch {
             _prevId.value = writingRepository.getPrevId(id)
         }
     }
 
-    fun getPrevId(id: Int, author: String){
+    fun getPrevId(id: Int, author: String) {
         viewModelScope.launch {
             _prevId.value = writingRepository.getPrevId(id, author)
         }
     }
 
-    fun getSearchPrevId(id: Int, query: String){
+    fun getSearchPrevId(id: Int, query: String) {
         viewModelScope.launch {
             _prevId.value = writingRepository.getSearchPrevId(id, query)
         }

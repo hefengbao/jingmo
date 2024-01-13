@@ -1,13 +1,11 @@
 package com.hefengbao.jingmo.ui.screen.poem
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
-import com.hefengbao.jingmo.data.database.model.PoemSimpleInfo
 import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.WritingRepository
@@ -17,13 +15,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

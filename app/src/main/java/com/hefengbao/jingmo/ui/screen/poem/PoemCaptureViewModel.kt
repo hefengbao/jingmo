@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.PoemEntity
-import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.model.AppStatus
+import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository

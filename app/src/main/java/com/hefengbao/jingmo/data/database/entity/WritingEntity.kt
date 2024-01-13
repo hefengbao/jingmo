@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Fts4
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.hefengbao.jingmo.data.model.writing.Allusion
 import com.hefengbao.jingmo.data.model.writing.Clause
