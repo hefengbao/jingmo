@@ -46,32 +46,6 @@ class MainActivity : ComponentActivity() {
 
             val showLanding by viewModel.showLanding.collectAsState(initial = true)
 
-            val synced by viewModel.synced.collectAsState(initial = false)
-
-            val poemVersion by viewModel.poemVersion.collectAsState(initial = 0)
-            val tagVersion by viewModel.tagVersion.collectAsState(initial = 0)
-            val poemTagVersion by viewModel.poemTagVersion.collectAsState(initial = 0)
-            val writerVersion by viewModel.writerVersion.collectAsState(initial = 0)
-            val poemSentenceVersion by viewModel.poemSentenceVersion.collectAsState(initial = 0)
-            val idiomVersion by viewModel.idiomVersion.collectAsState(initial = 0)
-            val chineseWiseCrackVersion by viewModel.chineseWiseCrackVersion.collectAsState(initial = 0)
-            val tongueTwisterVersion by viewModel.tongueTwisterVersion.collectAsState(initial = 0)
-            val chineseKnowledgeVersion by viewModel.chineseKnowledgeVersion.collectAsState(initial = 0)
-
-            val poemProgress by viewModel.poemProgress.collectAsState(initial = 0f)
-            val tagProgress by viewModel.tagProgress.collectAsState(initial = 0f)
-            val poemTagProgress by viewModel.poemTagProgress.collectAsState(initial = 0f)
-            val writerProgress by viewModel.writerProgress.collectAsState(initial = 0f)
-            val poemSentenceProgress by viewModel.poemSentenceProgress.collectAsState(initial = 0f)
-            val idiomProgress by viewModel.idiomProgress.collectAsState(initial = 0f)
-            val chineseWisecrackProgress by viewModel.chineseWisecrackProgress.collectAsState(
-                initial = 0f
-            )
-            val tongueTwisterProgress by viewModel.tongueTwisterProgress.collectAsState(initial = 0f)
-            val chineseKnowledgeProgress by viewModel.chineseKnowledgeProgress.collectAsState(
-                initial = 0f
-            )
-
             AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -81,31 +55,7 @@ class MainActivity : ComponentActivity() {
                     if (showLanding) {
                         LandingScreen()
                         viewModel.closeLanding()
-                    } /*else if (
-                        !synced
-                    ) {
-                        SyncScreen(
-                            onSyncClick = { viewModel.sync() },
-                            poemVersion = poemVersion,
-                            tagVersion = tagVersion,
-                            poemTagVersion = poemTagVersion,
-                            writerVersion = writerVersion,
-                            poemSentenceVersion = poemSentenceVersion,
-                            idiomVersion = idiomVersion,
-                            chineseWiseCrackVersion = chineseWiseCrackVersion,
-                            tongueTwisterVersion = tongueTwisterVersion,
-                            chineseKnowledgeVersion = chineseKnowledgeVersion,
-                            poemProgress = poemProgress,
-                            tagProgress = tagProgress,
-                            poemTagProgress = poemTagProgress,
-                            writerProgress = writerProgress,
-                            poemSentenceProgress = poemSentenceProgress,
-                            idiomProgress = idiomProgress,
-                            chineseWisecrackProgress = chineseWisecrackProgress,
-                            tongueTwisterProgress = tongueTwisterProgress,
-                            chineseKnowledgeProgress = chineseKnowledgeProgress,
-                        )
-                    }*/ else {
+                    } else {
                         AppNavHost(navController = appNavController)
                     }
                 }
@@ -128,75 +78,6 @@ private fun LandingScreen(
             modifier = modifier
                 .fillMaxWidth()
                 .align(Alignment.Center),
-        )
-    }
-}
-
-@Composable
-private fun SyncScreen(
-    modifier: Modifier = Modifier,
-    onSyncClick: () -> Unit,
-    poemVersion: Int,
-    tagVersion: Int,
-    poemTagVersion: Int,
-    writerVersion: Int,
-    poemSentenceVersion: Int,
-    idiomVersion: Int,
-    chineseWiseCrackVersion: Int,
-    tongueTwisterVersion: Int,
-    chineseKnowledgeVersion: Int,
-    poemProgress: Float,
-    tagProgress: Float,
-    poemTagProgress: Float,
-    writerProgress: Float,
-    poemSentenceProgress: Float,
-    idiomProgress: Float,
-    chineseWisecrackProgress: Float,
-    tongueTwisterProgress: Float,
-    chineseKnowledgeProgress: Float,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Button(onClick = onSyncClick) {
-            Text(text = "同步数据")
-        }
-        Item(
-            title = "古诗词文",
-            progress = if (poemVersion == DataSetVersion.poem) 1f else poemProgress
-        )
-        Item(title = "标签", progress = if (tagVersion == DataSetVersion.tag) 1f else tagProgress)
-        Item(
-            title = "古诗词文和标签对应关系",
-            progress = if (poemTagVersion == DataSetVersion.poemTag) 1f else poemTagProgress
-        )
-        Item(
-            title = "诗人",
-            progress = if (writerVersion == DataSetVersion.writer) 1f else writerProgress
-        )
-        Item(
-            title = "古诗词文名句",
-            progress = if (poemSentenceVersion == DataSetVersion.poemSentence) 1f else poemSentenceProgress
-        )
-        Item(
-            title = "成语",
-            progress = if (idiomVersion == DataSetVersion.idiom) 1f else idiomProgress
-        )
-        Item(
-            title = "歇后语",
-            progress = if (chineseWiseCrackVersion == DataSetVersion.chineseWisecrack) 1f else chineseWisecrackProgress
-        )
-        Item(
-            title = "绕口令",
-            progress = if (tongueTwisterVersion == DataSetVersion.tongueTwister) 1f else tongueTwisterProgress
-        )
-        Item(
-            title = "知识卡片",
-            progress = if (chineseKnowledgeVersion == DataSetVersion.chineseKnowledge) 1f else chineseKnowledgeProgress
         )
     }
 }
