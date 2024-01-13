@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.PoemEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
-import com.hefengbao.jingmo.data.model.DataStatus
+import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.PoemRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
@@ -29,11 +29,11 @@ class PoemCaptureViewModel @Inject constructor(
     private val _poem: MutableStateFlow<PoemEntity?> = MutableStateFlow(null)
     val poem: SharedFlow<PoemEntity?> = _poem
 
-    lateinit var dataStatus: DataStatus
+    lateinit var appStatus: AppStatus
 
     init {
         viewModelScope.launch {
-            dataStatus = preferenceRepository.getDataStatus().first()
+            appStatus = preferenceRepository.getAppStatus().first()
             _poem.value = poemRepository.getPoem(args.poemId.toLong()).first()
         }
     }
@@ -48,7 +48,7 @@ class PoemCaptureViewModel @Inject constructor(
 
     fun setCaptureColor(color: String) {
         viewModelScope.launch {
-            preferenceRepository.setCaptureColor(color)
+            preferenceRepository.setCaptureTextColor(color)
         }
     }
 

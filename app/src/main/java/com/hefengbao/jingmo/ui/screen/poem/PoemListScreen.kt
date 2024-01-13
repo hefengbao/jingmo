@@ -1,16 +1,21 @@
 package com.hefengbao.jingmo.ui.screen.poem
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons.Default
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -23,11 +28,11 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -35,24 +40,57 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.PoemSimpleInfo
 
 @Composable
 fun PoemListRoute(
-    modifier: Modifier = Modifier,
     viewModel: PoemListViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit,
+    onItemClick: (id: String, type: String, query: String) -> Unit,
 ) {
-    val poems by viewModel.poems.collectAsState()
-    val searchPoems by viewModel.searchResult.collectAsState(emptyList())
+    //val poems by viewModel.poems.collectAsState()
+    //val searchPoems by viewModel.searchResult.collectAsState(emptyList())
+    val writings = viewModel.writings.collectAsLazyPagingItems()
 
-    PoemListScreen(
+    var query: String by rememberSaveable {
+        if (viewModel.type == "author") {
+            mutableStateOf(viewModel.query)
+        } else {
+            mutableStateOf("")
+        }
+    }
+
+    /*LaunchedEffect(Unit) {
+        if (viewModel.type == "author") {
+            viewModel.searchByAuthor(viewModel.query)
+        }
+    }*/
+
+    Screen(
+        onBackClick = onBackClick,
+        writings = writings,
+        onItemClick = onItemClick,
+        type = viewModel.type,
+        query = query,
+        onQueryChange = {
+            query = it
+            viewModel.search(it)
+        }
+    )
+
+    /*PoemListScreen(
         modifier = modifier,
         onBackClick = onBackClick,
         onItemClick = onItemClick,
@@ -61,7 +99,108 @@ fun PoemListRoute(
         currentId = viewModel.id,
         onSearch = { viewModel.search(it) },
         searchPoems = searchPoems
-    )
+    )*/
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun Screen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    writings: LazyPagingItems<WritingEntity>,
+    onItemClick: (id: String, type: String, query: String) -> Unit,
+    type: String,
+    query: String,
+    onQueryChange: (String) -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    if (type == "author") {
+                        Text(text = query)
+                    } else {
+                        BasicTextField(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(end = 16.dp),
+                            value = query,
+                            onValueChange = {
+                                onQueryChange(it)
+                            },
+                            singleLine = true,
+                            /*keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Search
+                            ),*/
+                            keyboardActions = KeyboardActions {
+
+                            },
+                            textStyle = TextStyle(
+                                fontSize = 14.sp
+                            ),
+                            decorationBox = { innerTextField ->
+                                Row(
+                                    modifier = modifier
+                                        .background(
+                                            color = MaterialTheme.colorScheme.primaryContainer.copy(
+                                                alpha = .5f
+                                            ),
+                                            shape = RoundedCornerShape(16.dp)
+                                        )
+                                        .padding(16.dp, 8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    innerTextField()
+                                }
+                            }
+                        )
+                    }
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(imageVector = Default.ArrowBack, contentDescription = null)
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Surface(
+            modifier = modifier.padding(paddingValues)
+        ) {
+            LazyColumn {
+                items(
+                    items = writings
+                ) {
+                    it?.let { entity ->
+                        Column(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    onItemClick(entity.id.toString(), type, query)
+                                }
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        ) {
+                            Text(
+                                text = entity.title.content,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = "${entity.type} ${entity.dynasty}·${entity.author}",
+                                style = MaterialTheme.typography.titleSmall.copy(color = Color.Gray)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /*SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "诗文"
+    ){
+
+    }*/
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

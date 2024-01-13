@@ -19,7 +19,7 @@ fun PoemCaptureRoute(
 ) {
     val poem by viewModel.poem.collectAsState(initial = null)
     val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
-    val dataStatus = viewModel.dataStatus
+    val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {
         viewModel.getColors()
@@ -27,7 +27,7 @@ fun PoemCaptureRoute(
     PoemCaptureScreen(
         onBackClick = onBackClick,
         poem = poem,
-        defaultColor = if (dataStatus.captureColor == "white") Color.White else Color.Black,
+        defaultColor = if (dataStatus.captureTextColor == "white") Color.White else Color.Black,
         onColorChange = { viewModel.setCaptureColor(if (it == Color.White) "white" else "black") },
         defaultBackgroundColor = dataStatus.captureBackgroundColor,
         onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },

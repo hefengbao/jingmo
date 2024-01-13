@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "poem_sentences")
 data class PoemSentenceEntity(
     @PrimaryKey
-    val id: Long,
+    val id: Int,
     val content: String,
     val from: String,
     @ColumnInfo("poem_id")
-    val poemId: Long?
+    val poemId: Int?
 )

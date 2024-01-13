@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 @Entity("chinese_wisecracks")
 data class ChineseWisecrackEntity(
     @PrimaryKey
-    val id: Long,
+    val id: Int,
     val riddle: String,
     val answer: String,
     @ColumnInfo(name = "first_word")

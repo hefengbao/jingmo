@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "idioms")
 data class IdiomEntity(
     @PrimaryKey
-    val id: Long,
+    val id: Int,
     val word: String,
     val pinyin: String,
     val explanation: String,

@@ -15,25 +15,33 @@ import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
 internal const val poemIdArg = "poemId"
+internal const val poemTypeArg = "type"
+internal const val poemQueryArg = "query"
 
-private const val ROUTE_POEM = "poem/{$poemIdArg}"
-private const val ROUTE_POEM_GRAPH = "poem_graph/{$poemIdArg}"
+private const val ROUTE_POEM_GRAPH = "poem_graph/{$poemIdArg}/{$poemTypeArg}/{$poemQueryArg}"
+private const val ROUTE_POEM = "poem/{$poemIdArg}/{$poemTypeArg}/{$poemQueryArg}"
 
-internal class PoemArgs(val poemId: String) {
+internal class PoemArgs(val poemId: String, val type: String, val query: String) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(URLDecoder.decode(checkNotNull(savedStateHandle[poemIdArg]), UTF_8.name()))
+            this(
+                URLDecoder.decode(checkNotNull(savedStateHandle[poemIdArg]), UTF_8.name()),
+                URLDecoder.decode(checkNotNull(savedStateHandle[poemTypeArg]), UTF_8.name()),
+                URLDecoder.decode(checkNotNull(savedStateHandle[poemQueryArg]), UTF_8.name()),
+            )
 }
 
-fun NavController.navigateToPoemGraph(id: String) {
+fun NavController.navigateToPoemGraph(id: String, type: String, query: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
-    this.navigate("poem_graph/$encodedId") {
+    val encodedType = URLEncoder.encode(type, UTF_8.name())
+    val encodedQuery = URLEncoder.encode(query, UTF_8.name())
+    this.navigate("poem_graph/$encodedId/$encodedType/$encodedQuery") {
         launchSingleTop = true
     }
 }
 
 fun NavGraphBuilder.poemGraph(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -43,7 +51,9 @@ fun NavGraphBuilder.poemGraph(
         composable(
             route = ROUTE_POEM,
             arguments = listOf(
-                navArgument(poemIdArg) { type = NavType.StringType }
+                navArgument(poemIdArg) { type = NavType.StringType },
+                navArgument(poemTypeArg) { type = NavType.StringType },
+                navArgument(poemQueryArg) { type = NavType.StringType },
             )
         ) {
             PoemRoute(

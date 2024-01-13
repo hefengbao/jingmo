@@ -7,6 +7,7 @@ import com.hefengbao.jingmo.data.database.model.PoemSimpleInfo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@Deprecated("")
 class PoemRepositoryImpl @Inject constructor(
     private val poemDao: PoemDao
 ) : PoemRepository {

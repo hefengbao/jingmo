@@ -5,6 +5,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemWithWriterAndTags
 import com.hefengbao.jingmo.data.database.model.PoemSimpleInfo
 import kotlinx.coroutines.flow.Flow
 
+@Deprecated("")
 interface PoemRepository {
     suspend fun getPoemWithWriterAndTags(id: Long): PoemWithWriterAndTags
     suspend fun getNextId(id: Long): Long

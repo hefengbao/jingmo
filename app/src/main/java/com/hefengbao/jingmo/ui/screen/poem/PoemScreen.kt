@@ -40,50 +40,223 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.PoemWithWriterAndTags
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlinx.coroutines.launch
 
 @Composable
 fun PoemRoute(
     viewModel: PoemViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit
+    onCaptureClick: (Int) -> Unit
 ) {
-
     LaunchedEffect(Unit) {
-        viewModel.getPoem(viewModel.id)
-        viewModel.getPrevId(viewModel.id)
-        viewModel.getNextId(viewModel.id)
+        viewModel.getWriting(viewModel.id)
+        when (viewModel.type) {
+            "author" -> {
+                viewModel.getNextId(viewModel.id, viewModel.query)
+                viewModel.getPrevId(viewModel.id, viewModel.query)
+            }
+            "search" -> {
+                viewModel.getSearchNextId(viewModel.id, viewModel.query)
+                viewModel.getSearchPrevId(viewModel.id, viewModel.query)
+            }
+            else -> {
+                viewModel.getNextId(viewModel.id)
+                viewModel.getPrevId(viewModel.id)
+            }
+        }
     }
 
+    val writing by viewModel.writing.collectAsState(initial = null)
     val prevId by viewModel.prevId.collectAsState(initial = null)
-
     val nextId by viewModel.nextId.collectAsState(initial = null)
 
-    val poem by viewModel.poem.collectAsState(initial = null)
-
-    PoemScreen(
+    Screen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        poem = poem,
+        writing = writing,
         prevId = prevId,
         nextId = nextId,
         onPrevClick = {
-            viewModel.getPoem(prevId!!)
-            viewModel.getPrevId(prevId!!)
-            viewModel.getNextId(prevId!!)
+            viewModel.getWriting(prevId!!)
+            when (viewModel.type) {
+                "author" -> {
+                    viewModel.getNextId(prevId!!, viewModel.query)
+                    viewModel.getPrevId(prevId!!, viewModel.query)
+                }
+                "search" -> {
+                    viewModel.getSearchNextId(prevId!!, viewModel.query)
+                    viewModel.getSearchPrevId(prevId!!, viewModel.query)
+                }
+                else -> {
+                    viewModel.getNextId(prevId!!)
+                    viewModel.getPrevId(prevId!!)
+                }
+            }
         },
         onNextClick = {
-            viewModel.getPoem(nextId!!)
-            viewModel.getPrevId(nextId!!)
-            viewModel.getNextId(nextId!!)
+            viewModel.getWriting(nextId!!)
+            when (viewModel.type) {
+                "author" -> {
+                    viewModel.getNextId(nextId!!, viewModel.query)
+                    viewModel.getPrevId(nextId!!, viewModel.query)
+                }
+                "search" -> {
+                    viewModel.getSearchNextId(nextId!!, viewModel.query)
+                    viewModel.getSearchPrevId(nextId!!, viewModel.query)
+                }
+                else -> {
+                    viewModel.getNextId(nextId!!)
+                    viewModel.getPrevId(nextId!!)
+                }
+            }
         },
         setLastReadId = {
-            viewModel.setLastReadId(it)
+            if (viewModel.type == "read"){
+                viewModel.setLastReadId(it)
+            }
         }
     )
+}
+
+@Composable
+private fun Screen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    writing: WritingEntity?,
+    prevId: Int?,
+    nextId: Int?,
+    onPrevClick: () -> Unit,
+    onNextClick: () -> Unit,
+    setLastReadId: (Int) -> Unit
+) {
+    writing?.let { entity ->
+        setLastReadId(entity.id)
+
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = "诗文",
+            actions = {
+                IconButton(onClick = { onCaptureClick(entity.id) }) {
+                    Icon(imageVector = Icons.Default.Photo, contentDescription = "生成图片")
+                }
+            }
+        ) {
+            val content = buildString {
+                entity.clauses.mapIndexed { index, clause ->
+                    /*if (clause.comments != null){
+                        clause.comments.map {comment ->
+                            if (comment.type == CommentType.Text.name){
+                                val length = clause.content.length
+
+                            }
+                        }
+                    }else{
+                        append(clause.content)
+                    }*/
+                    append(clause.content)
+
+                    if (clause.breakAfter != null) {
+                        append("\n")
+                    }
+                }
+            }
+            Box(
+                modifier =  modifier.fillMaxSize()
+            ){
+                SelectionContainer {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .verticalScroll(
+                                rememberScrollState()
+                            )
+                            .padding(start = 32.dp, end = 32.dp, top = 16.dp, bottom = 80.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        Column(
+                            modifier = modifier
+                                .fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            Text(
+                                text = entity.title.content,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(text = "${entity.dynasty}.${entity.author}", style = MaterialTheme.typography.titleSmall)
+                            if (entity.preface != null) {
+                                Text(
+                                    text = entity.preface.replace("<br />","\n"),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontStyle = FontStyle.Italic
+                                )
+                            }
+                            Text(text = content, style = MaterialTheme.typography.bodyLarge)
+                        }
+                        /*Column(
+                            modifier = modifier
+                                .fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(text = entity.type)
+                            if (entity.note != null) {
+                                Text(text = entity.note)
+                            }
+                        }
+                        if (entity.comments != null) {
+                            SelectionContainer {
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    entity.comments.map {
+                                        it.content?.let { content ->
+                                            Text(text = content)
+                                        }
+                                    }
+                                }
+                            }
+                        }*/
+                    }
+                }
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .height(64.dp)
+                        .align(
+                            Alignment.BottomCenter
+                        ),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                        onClick = onPrevClick,
+                        enabled = prevId != 0
+                    ) {
+                        Icon(
+                            modifier = modifier.padding(8.dp),
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
+
+                    IconButton(
+                        modifier = modifier.padding(8.dp),
+                        onClick = onNextClick,
+                        enabled = nextId != 0
+                    ) {
+                        Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
+                    }
+                }
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
