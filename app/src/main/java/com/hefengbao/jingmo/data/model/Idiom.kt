@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Idiom(
-    val id: Long,
+    val id: Int,
     val word: String,
     val pinyin: String,
     val explanation: String,

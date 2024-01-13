@@ -37,7 +37,7 @@ fun NavController.navigateToChineseWisecrackSearchShowScreen(id: String, query: 
 
 fun NavGraphBuilder.chineseWisecrackSearchShowScreen(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = "chinese_wisecrack_search_show/{$chineseWisecrackSearchShowIdArg}/{$chineseWisecrackSearchShowQueryArg}",

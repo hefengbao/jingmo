@@ -19,20 +19,20 @@ class IdiomSearchShowViewModel @Inject constructor(
 ) : ViewModel() {
     private val idiomArgs = IdiomSearchShowArgs(savedStateHandle)
 
-    val id = idiomArgs.idiomId.toLong()
+    val id = idiomArgs.idiomId.toInt()
     val query = idiomArgs.query
 
-    private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Long?> = _nextId
-    fun getNextId(id: Long, query: String) {
+    private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val nextId: SharedFlow<Int?> = _nextId
+    fun getNextId(id: Int, query: String) {
         viewModelScope.launch {
             _nextId.value = idiomRepository.getSearchNextId(id, query)
         }
     }
 
-    private val _prevId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Long?> = _prevId
-    fun getPrevId(id: Long, query: String) {
+    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val prevId: SharedFlow<Int?> = _prevId
+    fun getPrevId(id: Int, query: String) {
         viewModelScope.launch {
             _prevId.value = idiomRepository.getSearchPrevId(id, query)
         }
@@ -40,7 +40,7 @@ class IdiomSearchShowViewModel @Inject constructor(
 
     private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
     val idiom: SharedFlow<IdiomEntity?> = _idiom
-    fun getIdiom(id: Long) {
+    fun getIdiom(id: Int) {
         viewModelScope.launch {
             _idiom.value = idiomRepository.getIdiom(id)
         }

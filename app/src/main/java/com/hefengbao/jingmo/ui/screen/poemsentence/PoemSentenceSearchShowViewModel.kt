@@ -19,20 +19,20 @@ class PoemSentenceSearchShowViewModel @Inject constructor(
 ) : ViewModel() {
     private val args = PoemSentenceSearchShowArgs(savedStateHandle)
 
-    val id = args.id.toLong()
+    val id = args.id.toInt()
     val query = args.query
 
-    private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Long?> = _nextId
-    fun getNextId(id: Long, query: String) {
+    private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val nextId: SharedFlow<Int?> = _nextId
+    fun getNextId(id: Int, query: String) {
         viewModelScope.launch {
             _nextId.value = poemSentenceRepository.getSearchNextId(id, query)
         }
     }
 
-    private val _prevId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Long?> = _prevId
-    fun getPrevId(id: Long, query: String) {
+    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val prevId: SharedFlow<Int?> = _prevId
+    fun getPrevId(id: Int, query: String) {
         viewModelScope.launch {
             _prevId.value = poemSentenceRepository.getSearchPrevId(id, query)
         }
@@ -40,7 +40,7 @@ class PoemSentenceSearchShowViewModel @Inject constructor(
 
     private val _sentence: MutableStateFlow<SentenceWithPoem?> = MutableStateFlow(null)
     val sentence: SharedFlow<SentenceWithPoem?> = _sentence
-    fun getSentence(id: Long) {
+    fun getSentence(id: Int) {
         viewModelScope.launch {
             _sentence.value = poemSentenceRepository.getSentenceWithPoem(id)
         }

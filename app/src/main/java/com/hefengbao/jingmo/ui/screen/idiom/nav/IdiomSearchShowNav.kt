@@ -41,7 +41,7 @@ fun NavController.navigateToIdiomSearchShowScreen(id: String, query: String) {
 
 fun NavGraphBuilder.idiomSearchShowScreen(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = "idiom_search_show/{$idiomSearchShowIdArg}/{$idiomSearchShowQueryArg}",

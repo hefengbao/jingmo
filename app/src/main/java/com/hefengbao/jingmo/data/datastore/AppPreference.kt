@@ -34,7 +34,7 @@ private suspend fun setString(context: Context, key: Preferences.Key<String>, va
 class AppPreference(
     private val context: Context
 ) {
-    val dataStats: Flow<AppStatus> = context.app.data.map {
+    val appStatus: Flow<AppStatus> = context.app.data.map {
         AppStatus(
             captureTextColor = it[PREF_CAPTURE_TEXT_COLOR] ?: "white",
             captureBackgroundColor = it[PREF_CAPTURE_BACKGROUND_COLOR] ?: "#065279",

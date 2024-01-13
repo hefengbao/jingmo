@@ -4,6 +4,7 @@ import com.hefengbao.jingmo.data.database.entity.WriterEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Deprecated("")
 @Serializable
 data class Writer(
     val id: Long,

@@ -36,7 +36,7 @@ import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 @Composable
 fun IdiomRoute(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     viewModel: IdiomViewModel = hiltViewModel()
 ) {
 
@@ -79,13 +79,13 @@ fun IdiomRoute(
 private fun IdiomScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     idiom: IdiomEntity?,
-    prevId: Long?,
-    nextId: Long?,
+    prevId: Int?,
+    nextId: Int?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
-    setLastReadId: (Long) -> Unit
+    setLastReadId: (Int) -> Unit
 ) {
     idiom?.let { entity ->
         LaunchedEffect(entity) {
@@ -208,14 +208,14 @@ private fun IdiomScreen(
                 ) {
                     IconButton(
                         onClick = onPrevClick,
-                        enabled = prevId != 0L
+                        enabled = prevId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
 
                     IconButton(
                         onClick = onNextClick,
-                        enabled = nextId != 0L
+                        enabled = nextId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }

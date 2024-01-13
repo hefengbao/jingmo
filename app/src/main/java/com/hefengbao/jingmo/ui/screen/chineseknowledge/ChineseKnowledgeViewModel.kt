@@ -22,7 +22,7 @@ class ChineseKnowledgeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().chineseKnowledgeLastReadId
+            id = preferenceRepository.getReadStatus().first().chineseKnowledgeLastReadId
         }
     }
 

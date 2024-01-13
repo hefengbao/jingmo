@@ -4,10 +4,10 @@ import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ChineseWisecrackRepository {
-    suspend fun getChineseCrack(id: Long): ChineseWisecrackEntity
-    suspend fun getNextId(id: Long): Long
-    suspend fun getPrevId(id: Long): Long
+    suspend fun getChineseCrack(id: Int): ChineseWisecrackEntity
+    suspend fun getNextId(id: Int): Int
+    suspend fun getPrevId(id: Int): Int
     fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>>
-    suspend fun getSearchNextId(id: Long, query: String): Long
-    suspend fun getSearchPrevId(id: Long, query: String): Long
+    suspend fun getSearchNextId(id: Int, query: String): Int
+    suspend fun getSearchPrevId(id: Int, query: String): Int
 }

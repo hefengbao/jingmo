@@ -40,8 +40,8 @@ fun IdiomListRoute(
     modifier: Modifier = Modifier,
     viewModel: IdiomListViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit
+    onItemClick: (Int) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit
 ) {
     val idioms by viewModel.idioms.collectAsState()
     val searchIdioms by viewModel.searchResult.collectAsState(initial = emptyList())
@@ -63,9 +63,9 @@ fun IdiomListRoute(
 private fun IdiomListScreen(
     modifier: Modifier,
     onBackClick: () -> Unit,
-    onItemClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit,
-    currentId: Long,
+    onItemClick: (Int) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit,
+    currentId: Int,
     idioms: List<SimpleIdiomInfo>,
     onSearch: (String) -> Unit,
     searchIdioms: List<SimpleIdiomInfo>
@@ -138,7 +138,7 @@ fun SearchBar(
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchIdioms: List<SimpleIdiomInfo>,
-    onSearchItemClick: (Long, String) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit,
     changeFistLoading: () -> Unit
 ) {
     var query by rememberSaveable { mutableStateOf("") }

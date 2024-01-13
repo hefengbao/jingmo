@@ -4,6 +4,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemTagCrossRef
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Deprecated("")
 @Serializable
 data class PoemTag(
     @SerialName("poem_id")

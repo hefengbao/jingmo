@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
-import com.hefengbao.jingmo.data.model.DataStatus
+import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
@@ -30,13 +30,13 @@ class ChineseWisecrackCaptureViewModel @Inject constructor(
         MutableStateFlow(null)
     val chineseWisecrack: SharedFlow<ChineseWisecrackEntity?> = _chineseWisecrack
 
-    lateinit var dataStatus: DataStatus
+    lateinit var appStatus: AppStatus
 
     init {
         viewModelScope.launch {
-            dataStatus = preferenceRepository.getDataStatus().first()
+            appStatus = preferenceRepository.getAppStatus().first()
             _chineseWisecrack.value =
-                chineseWisecrackRepository.getChineseCrack(args.chineseWisecrackId.toLong())
+                chineseWisecrackRepository.getChineseCrack(args.chineseWisecrackId.toInt())
         }
     }
 
@@ -50,7 +50,7 @@ class ChineseWisecrackCaptureViewModel @Inject constructor(
 
     fun setCaptureColor(color: String) {
         viewModelScope.launch {
-            preferenceRepository.setCaptureColor(color)
+            preferenceRepository.setCaptureTextColor(color)
         }
     }
 

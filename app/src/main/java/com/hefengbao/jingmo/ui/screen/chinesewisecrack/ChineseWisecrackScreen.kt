@@ -50,8 +50,8 @@ import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 fun ChineseWisecrackRoute(
     viewModel: ChineseWisecrackViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit
+    onCaptureClick: (Int) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit
 ) {
 
     LaunchedEffect(Unit) {
@@ -100,16 +100,16 @@ fun ChineseWisecrackRoute(
 private fun ChineseWisecrackScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     chineseCrack: ChineseWisecrackEntity?,
-    prevId: Long?,
-    nextId: Long?,
+    prevId: Int?,
+    nextId: Int?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
-    setLastReadId: (Long) -> Unit,
+    setLastReadId: (Int) -> Unit,
     onSearch: (String) -> Unit,
     searchWisecrackList: List<ChineseWisecrackEntity>,
-    onSearchItemClick: (Long, String) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit,
     query: String,
     onQueryChange: (String) -> Unit
 ) {
@@ -195,14 +195,14 @@ private fun ChineseWisecrackScreen(
                 ) {
                     IconButton(
                         onClick = onPrevClick,
-                        enabled = prevId != 0L
+                        enabled = prevId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
 
                     IconButton(
                         onClick = onNextClick,
-                        enabled = nextId != 0L
+                        enabled = nextId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }
@@ -234,7 +234,7 @@ private fun SearchBar(
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchWisecrackList: List<ChineseWisecrackEntity>,
-    onSearchItemClick: (Long, String) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit,
     query: String,
     onQueryChange: (String) -> Unit
 ) {

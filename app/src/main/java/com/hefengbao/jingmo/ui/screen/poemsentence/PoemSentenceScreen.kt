@@ -58,8 +58,8 @@ import kotlinx.coroutines.launch
 fun PoemSentenceRoute(
     viewModel: PoemSentenceViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit
+    onCaptureClick: (Int) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.getSentence(viewModel.id)
@@ -107,14 +107,14 @@ fun PoemSentenceRoute(
 private fun PoemSentenceScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit,
     sentence: SentenceWithPoem?,
-    prevId: Long?,
-    nextId: Long?,
+    prevId: Int?,
+    nextId: Int?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
-    setLastReadId: (Long) -> Unit,
+    setLastReadId: (Int) -> Unit,
     onSearch: (String) -> Unit,
     searchSentences: List<PoemSentenceEntity>,
     query: String,
@@ -242,7 +242,7 @@ private fun PoemSentenceScreen(
                 ) {
                     IconButton(
                         onClick = onPrevClick,
-                        enabled = prevId != 0L
+                        enabled = prevId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
@@ -260,7 +260,7 @@ private fun PoemSentenceScreen(
 
                     IconButton(
                         onClick = onNextClick,
-                        enabled = nextId != 0L
+                        enabled = nextId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }
@@ -291,7 +291,7 @@ private fun SearchBar(
     showSearchBarStatusChange: (Boolean) -> Unit,
     onSearch: (String) -> Unit,
     searchSentences: List<PoemSentenceEntity>,
-    onItemClick: (Long, String) -> Unit,
+    onItemClick: (Int, String) -> Unit,
     query: String,
     onQueryChange: (String) -> Unit
 ) {

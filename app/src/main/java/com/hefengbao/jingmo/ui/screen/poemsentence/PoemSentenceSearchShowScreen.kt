@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PoemSentenceSearchShowRoute(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     viewModel: PoemSentenceSearchShowViewModel = hiltViewModel()
 ) {
 
@@ -85,10 +85,10 @@ fun PoemSentenceSearchShowRoute(
 private fun PoemSentenceSearchShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     sentence: SentenceWithPoem?,
-    prevId: Long?,
-    nextId: Long?,
+    prevId: Int?,
+    nextId: Int?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
     query: String
@@ -204,7 +204,7 @@ private fun PoemSentenceSearchShowScreen(
                 ) {
                     IconButton(
                         onClick = onPrevClick,
-                        enabled = prevId != 0L
+                        enabled = prevId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
@@ -222,7 +222,7 @@ private fun PoemSentenceSearchShowScreen(
 
                     IconButton(
                         onClick = onNextClick,
-                        enabled = nextId != 0L
+                        enabled = nextId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }

@@ -18,17 +18,17 @@ class PoemSentenceViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val poemSentenceRepository: PoemSentenceRepository
 ) : ViewModel() {
-    var id = 1L
+    var id = 1
 
     init {
         viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().poemSentenceLastReadId
+            id = preferenceRepository.getReadStatus().first().poemSentencesLastReadId
         }
     }
 
-    fun setLastReadId(id: Long) {
+    fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setPoemSentenceLastReadId(id)
+            preferenceRepository.setPoemSentencesLastReadId(id.toInt())
         }
     }
 
@@ -38,17 +38,17 @@ class PoemSentenceViewModel @Inject constructor(
         this.query = query
     }
 
-    private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Long?> = _nextId
-    fun getNextId(id: Long) {
+    private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val nextId: SharedFlow<Int?> = _nextId
+    fun getNextId(id: Int) {
         viewModelScope.launch {
             _nextId.value = poemSentenceRepository.getNextId(id)
         }
     }
 
-    private val _prevId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Long?> = _prevId
-    fun getPrevId(id: Long) {
+    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val prevId: SharedFlow<Int?> = _prevId
+    fun getPrevId(id: Int) {
         viewModelScope.launch {
             _prevId.value = poemSentenceRepository.getPrevId(id)
         }
@@ -56,7 +56,7 @@ class PoemSentenceViewModel @Inject constructor(
 
     private val _sentence: MutableStateFlow<SentenceWithPoem?> = MutableStateFlow(null)
     val sentence: SharedFlow<SentenceWithPoem?> = _sentence
-    fun getSentence(id: Long) {
+    fun getSentence(id: Int) {
         viewModelScope.launch {
             _sentence.value = poemSentenceRepository.getSentenceWithPoem(id)
         }

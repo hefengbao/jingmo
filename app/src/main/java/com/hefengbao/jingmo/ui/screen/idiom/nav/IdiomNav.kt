@@ -37,7 +37,7 @@ fun NavController.navigateToIdiomGraph(id: String) {
 
 fun NavGraphBuilder.idiomGraph(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(

@@ -26,7 +26,7 @@ class TongueTwisterViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setTongueTwisterLastReadId(id)
+            preferenceRepository.setTongueTwistersLastReadId(id)
         }
     }
 

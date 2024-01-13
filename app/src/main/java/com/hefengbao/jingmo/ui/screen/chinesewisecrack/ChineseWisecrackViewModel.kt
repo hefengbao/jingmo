@@ -18,17 +18,17 @@ class ChineseWisecrackViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val chineseWisecrackRepository: ChineseWisecrackRepository
 ) : ViewModel() {
-    var id = 1L
+    var id = 1
 
     init {
         viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().chineseWisecrackLastReadId
+            id = preferenceRepository.getReadStatus().first().chineseWisecracksLastReadId
         }
     }
 
-    fun setLastReadId(id: Long) {
+    fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setChineseWisecrackLastReadId(id)
+            preferenceRepository.setChineseWisecracksLastReadId(id.toInt())
         }
     }
 
@@ -38,17 +38,17 @@ class ChineseWisecrackViewModel @Inject constructor(
         this.query = query
     }
 
-    private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Long?> = _nextId
-    fun getNextId(id: Long) {
+    private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val nextId: SharedFlow<Int?> = _nextId
+    fun getNextId(id: Int) {
         viewModelScope.launch {
             _nextId.value = chineseWisecrackRepository.getNextId(id)
         }
     }
 
-    private val _prevId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Long?> = _prevId
-    fun getPrevId(id: Long) {
+    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val prevId: SharedFlow<Int?> = _prevId
+    fun getPrevId(id: Int) {
         viewModelScope.launch {
             _prevId.value = chineseWisecrackRepository.getPrevId(id)
         }
@@ -56,7 +56,7 @@ class ChineseWisecrackViewModel @Inject constructor(
 
     private val _chineseCrack: MutableStateFlow<ChineseWisecrackEntity?> = MutableStateFlow(null)
     val chineseCrack: SharedFlow<ChineseWisecrackEntity?> = _chineseCrack
-    fun getChineseWisecrack(id: Long) {
+    fun getChineseWisecrack(id: Int) {
         viewModelScope.launch {
             _chineseCrack.value = chineseWisecrackRepository.getChineseCrack(id)
         }

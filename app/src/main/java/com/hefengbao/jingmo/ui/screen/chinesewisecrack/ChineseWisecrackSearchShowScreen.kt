@@ -37,7 +37,7 @@ import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 fun ChineseWisecrackSearchShowRoute(
     viewModel: ChineseWisecrackSearchShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -77,10 +77,10 @@ fun ChineseWisecrackSearchShowRoute(
 private fun ChineseWisecrackSearchShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
     chineseCrack: ChineseWisecrackEntity?,
-    prevId: Long?,
-    nextId: Long?,
+    prevId: Int?,
+    nextId: Int?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
     query: String
@@ -155,14 +155,14 @@ private fun ChineseWisecrackSearchShowScreen(
                 ) {
                     IconButton(
                         onClick = onPrevClick,
-                        enabled = prevId != 0L
+                        enabled = prevId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
 
                     IconButton(
                         onClick = onNextClick,
-                        enabled = nextId != 0L
+                        enabled = nextId != 0
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }

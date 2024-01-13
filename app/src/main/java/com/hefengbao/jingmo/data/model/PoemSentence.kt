@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PoemSentence(
-    val id: Long,
+    val id: Int,
     val content: String,
     val from: String,
     @SerialName("poem_id")
-    val poemId: Long? = null
+    val poemId: Int? = null
 )
 
 fun PoemSentence.asPoemSentenceEntity() = PoemSentenceEntity(

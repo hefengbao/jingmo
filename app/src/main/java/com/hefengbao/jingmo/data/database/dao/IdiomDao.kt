@@ -14,13 +14,13 @@ interface IdiomDao {
     suspend fun insert(entity: IdiomEntity)
 
     @Query("select * from idioms where id = :id")
-    suspend fun getIdiom(id: Long): IdiomEntity
+    suspend fun getIdiom(id: Int): IdiomEntity
 
     @Query("select id from idioms where id > :id order by id asc limit 1")
-    suspend fun getNextId(id: Long): Long
+    suspend fun getNextId(id: Int): Int
 
     @Query("select id from idioms where id < :id order by id desc limit 1")
-    suspend fun getPrevId(id: Long): Long
+    suspend fun getPrevId(id: Int): Int
 
     @Query("select id, word from idioms order by id asc")
     fun getSimpleIdiomInfoList(): Flow<List<SimpleIdiomInfo>>
@@ -29,8 +29,8 @@ interface IdiomDao {
     fun searchSimpleIdiomInfoList(query: String): Flow<List<SimpleIdiomInfo>>
 
     @Query("select id from idioms where id > :id and word like :query order by id asc limit 1")
-    suspend fun getSearchNextId(id: Long, query: String): Long
+    suspend fun getSearchNextId(id: Int, query: String): Int
 
     @Query("select id from idioms where id < :id and word like :query order by id desc limit 1")
-    suspend fun getSearchPrevId(id: Long, query: String): Long
+    suspend fun getSearchPrevId(id: Int, query: String): Int
 }

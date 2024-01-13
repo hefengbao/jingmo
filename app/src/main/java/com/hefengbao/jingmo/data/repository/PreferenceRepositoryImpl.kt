@@ -5,6 +5,7 @@ import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
 import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.model.DatasetVersion
+import com.hefengbao.jingmo.data.model.ReadStatus
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -31,7 +32,8 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setWritingsVersion(version: Int) = dataset.setWritingsVersion(version)
 
-    override fun getDataStatus(): Flow<AppStatus> = app.dataStats
+    override fun getReadStatus(): Flow<ReadStatus> = readStatus.readStatus
+
     override suspend fun setChineseKnowledgeLastReadId(id: Int) = readStatus.setChineseKnowledgeLastReadId(id)
 
     override suspend fun setChineseWisecracksLastReadId(id: Int) = readStatus.setChineseWisecracksLastReadId(id)
@@ -48,6 +50,7 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setWritingsLastReadId(id: Int) = readStatus.setWritingsLastReadId(id)
 
+    override fun getAppStatus(): Flow<AppStatus> = app.appStatus
     override suspend fun setCaptureTextColor(color: String) = app.setCaptureTextColor(color)
     override suspend fun setCaptureBackgroundColor(color: String) = app.setCaptureBackgroundColor(color)
 }

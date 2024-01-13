@@ -20,11 +20,11 @@ class IdiomListViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
 
-    var id = 1L
+    var id = 1
 
     init {
         viewModelScope.launch {
-            id = preferenceRepository.getDataStatus().first().idiomLastReadId
+            id = preferenceRepository.getReadStatus().first().idiomsLastReadId
         }
     }
 

@@ -15,8 +15,8 @@ fun NavController.navigateToPoemSentenceGraph() {
 
 fun NavGraphBuilder.poemSentenceGraph(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
-    onSearchItemClick: (Long, String) -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onSearchItemClick: (Int, String) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(

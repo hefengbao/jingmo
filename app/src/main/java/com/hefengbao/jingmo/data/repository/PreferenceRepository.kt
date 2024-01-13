@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.repository
 
 import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.model.DatasetVersion
+import com.hefengbao.jingmo.data.model.ReadStatus
 import kotlinx.coroutines.flow.Flow
 
 interface PreferenceRepository {
@@ -15,7 +16,7 @@ interface PreferenceRepository {
     suspend fun setTongueTwistersVersion(version: Int)
     suspend fun setWritingsVersion(version: Int)
 
-    fun getDataStatus(): Flow<AppStatus>
+    fun getReadStatus(): Flow<ReadStatus>
     suspend fun setChineseKnowledgeLastReadId(id: Int)
     suspend fun setChineseWisecracksLastReadId(id: Int)
     suspend fun setIdiomsLastReadId(id: Int)
@@ -25,7 +26,7 @@ interface PreferenceRepository {
     suspend fun setTongueTwistersLastReadId(id: Int)
     suspend fun setWritingsLastReadId(id: Int)
 
-
+    fun getAppStatus(): Flow<AppStatus>
     suspend fun setCaptureTextColor(color: String)
     suspend fun setCaptureBackgroundColor(color: String)
 }

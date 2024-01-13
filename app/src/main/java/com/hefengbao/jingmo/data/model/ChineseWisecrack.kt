@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ChineseWisecrack(
-    val id: Long,
+    val id: Int,
     val riddle: String,
     val answer: String,
     @SerialName("first_word")

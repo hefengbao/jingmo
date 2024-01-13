@@ -93,16 +93,10 @@ private fun TongueTwisterScreen(
                         .padding(bottom = 56.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Card(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                    ) {
-                        Text(
-                            modifier = modifier.padding(16.dp),
-                            text = entity.content
-                        )
-                    }
+                    Text(
+                        modifier = modifier.padding(16.dp),
+                        text = entity.content
+                    )
                 }
                 Row(
                     modifier = modifier

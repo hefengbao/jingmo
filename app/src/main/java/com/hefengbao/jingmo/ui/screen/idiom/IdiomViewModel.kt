@@ -22,25 +22,25 @@ class IdiomViewModel @Inject constructor(
 
     private val idiomArgs = IdiomArgs(savedStateHandle)
 
-    val id = idiomArgs.idiomId.toLong()
+    val id = idiomArgs.idiomId.toInt()
 
-    fun setLastReadId(id: Long) {
+    fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setIdiomLastReadId(id)
+            preferenceRepository.setIdiomsLastReadId(id)
         }
     }
 
-    private val _nextId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Long?> = _nextId
-    fun getNextId(id: Long) {
+    private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val nextId: SharedFlow<Int?> = _nextId
+    fun getNextId(id: Int) {
         viewModelScope.launch {
             _nextId.value = idiomRepository.getNextId(id)
         }
     }
 
-    private val _prevId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Long?> = _prevId
-    fun getPrevId(id: Long) {
+    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val prevId: SharedFlow<Int?> = _prevId
+    fun getPrevId(id: Int) {
         viewModelScope.launch {
             _prevId.value = idiomRepository.getPrevId(id)
         }
@@ -48,7 +48,7 @@ class IdiomViewModel @Inject constructor(
 
     private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
     val idiom: SharedFlow<IdiomEntity?> = _idiom
-    fun getIdiom(id: Long) {
+    fun getIdiom(id: Int) {
         viewModelScope.launch {
             _idiom.value = idiomRepository.getIdiom(id)
         }

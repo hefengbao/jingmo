@@ -1,6 +1,6 @@
 package com.hefengbao.jingmo.data.database.model
 
 data class SimpleIdiomInfo(
-    val id: Long,
+    val id: Int,
     val word: String,
 )

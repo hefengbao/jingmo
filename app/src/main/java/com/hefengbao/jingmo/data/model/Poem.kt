@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 /**
  * 诗词文
  */
+@Deprecated("")
 @Serializable
 data class Poem(
     val id: Long,

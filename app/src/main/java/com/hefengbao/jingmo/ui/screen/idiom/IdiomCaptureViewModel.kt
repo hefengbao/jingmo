@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
-import com.hefengbao.jingmo.data.model.DataStatus
+import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
@@ -29,12 +29,12 @@ class IdiomCaptureViewModel @Inject constructor(
     private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
     val idiom: SharedFlow<IdiomEntity?> = _idiom
 
-    lateinit var dataStatus: DataStatus
+    lateinit var appStatus: AppStatus
 
     init {
         viewModelScope.launch {
-            dataStatus = preferenceRepository.getDataStatus().first()
-            _idiom.value = idiomRepository.getIdiom(args.idiomId.toLong())
+            appStatus = preferenceRepository.getAppStatus().first()
+            _idiom.value = idiomRepository.getIdiom(args.idiomId.toInt())
         }
     }
 
@@ -48,7 +48,7 @@ class IdiomCaptureViewModel @Inject constructor(
 
     fun setCaptureColor(color: String) {
         viewModelScope.launch {
-            preferenceRepository.setCaptureColor(color)
+            preferenceRepository.setCaptureTextColor(color)
         }
     }
 

@@ -36,7 +36,7 @@ fun NavController.navigateToPoemSentenceSearchShowScreen(id: String, query: Stri
 
 fun NavGraphBuilder.poemSentenceSearchShowScreen(
     onBackClick: () -> Unit,
-    onCaptureClick: (Long) -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = "poemsentence_search_show/{$poemSentenceSearchShowIdArg}/{$poemSentenceSearchShowQueryArg}",

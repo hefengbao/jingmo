@@ -9,20 +9,20 @@ import javax.inject.Inject
 class PoemSentenceRepositoryImpl @Inject constructor(
     private val poemSentenceDao: PoemSentenceDao
 ) : PoemSentenceRepository {
-    override suspend fun getSentenceWithPoem(id: Long): SentenceWithPoem =
+    override suspend fun getSentenceWithPoem(id: Int): SentenceWithPoem =
         poemSentenceDao.getSentenceWithPoem(id)
 
-    override suspend fun getNextId(id: Long): Long = poemSentenceDao.getNextId(id)
-    override suspend fun getPrevId(id: Long): Long = poemSentenceDao.getPrevId(id)
+    override suspend fun getNextId(id: Int): Int = poemSentenceDao.getNextId(id)
+    override suspend fun getPrevId(id: Int): Int = poemSentenceDao.getPrevId(id)
     override fun searchSentencesList(query: String): Flow<List<PoemSentenceEntity>> =
         poemSentenceDao.searchSentencesList("%$query%")
 
-    override suspend fun getSentence(id: Long): Flow<PoemSentenceEntity> =
+    override suspend fun getSentence(id: Int): Flow<PoemSentenceEntity> =
         poemSentenceDao.getSentence(id)
 
-    override suspend fun getSearchNextId(id: Long, query: String): Long =
+    override suspend fun getSearchNextId(id: Int, query: String): Int =
         poemSentenceDao.getSearchNextId(id, "%$query%")
 
-    override suspend fun getSearchPrevId(id: Long, query: String): Long =
+    override suspend fun getSearchPrevId(id: Int, query: String): Int =
         poemSentenceDao.getSearchPrevId(id, "%$query%")
 }
