@@ -75,27 +75,3 @@ private fun LandingScreen(
         )
     }
 }
-
-@Composable
-private fun Item(
-    title: String,
-    progress: Float
-) {
-    Text(text = title, style = MaterialTheme.typography.titleMedium)
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        LinearProgressIndicator(
-            progress = progress, modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
-        Text(
-            text = "${String.format("%.2f", (progress * 100))}%",
-            modifier = Modifier.width(100.dp),
-            textAlign = TextAlign.End
-        )
-    }
-}
