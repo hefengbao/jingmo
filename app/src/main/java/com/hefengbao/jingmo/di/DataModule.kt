@@ -2,7 +2,7 @@ package com.hefengbao.jingmo.di
 
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.ChineseColorRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ChineseCrackRepositoryImpl
+import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepository
 import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
@@ -28,6 +28,8 @@ import com.hefengbao.jingmo.data.repository.SyncRepository
 import com.hefengbao.jingmo.data.repository.SyncRepositoryImpl
 import com.hefengbao.jingmo.data.repository.TongueTwisterRepository
 import com.hefengbao.jingmo.data.repository.TongueTwisterRepositoryImpl
+import com.hefengbao.jingmo.data.repository.WritingRepository
+import com.hefengbao.jingmo.data.repository.WritingRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -58,7 +60,7 @@ interface DataModule {
 
     @Binds
     fun bindsChineseWisecrackRepository(
-        chineseCrackRepository: ChineseCrackRepositoryImpl
+        chineseCrackRepository: ChineseWisecrackRepositoryImpl
     ): ChineseWisecrackRepository
 
     @Binds
@@ -105,4 +107,9 @@ interface DataModule {
     fun bindsNetworkDatasourceRepository(
         networkDatasourceRepositoryImpl: NetworkDatasourceRepositoryImpl
     ): NetworkDatasourceRepository
+
+    @Binds
+    fun bindsWritingRepository(
+        writingRepositoryImpl: WritingRepositoryImpl
+    ): WritingRepository
 }
