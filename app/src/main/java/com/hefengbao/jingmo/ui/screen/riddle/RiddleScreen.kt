@@ -116,20 +116,14 @@ private fun RiddleScreen(
                         .fillMaxSize()
                         .padding(bottom = 80.dp)
                 ) {
-                    Card(
+                    Column(
                         modifier = modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(.5f)
+                            .padding(32.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Column(
-                            modifier = modifier
-                                .padding(32.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            Text(text = entity.puzzle)
-                            if (showAnswer) {
-                                Text(text = entity.answer)
-                            }
+                        Text(text = entity.puzzle)
+                        if (showAnswer) {
+                            Text(text = entity.answer)
                         }
                     }
                 }

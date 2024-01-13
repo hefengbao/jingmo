@@ -21,15 +21,15 @@ class RiddleViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            preferenceRepository.getDataStatus().collectLatest {
-                id = it.riddleLastReadId
+            preferenceRepository.getReadStatus().collectLatest {
+                id = it.riddlesLastReadId
             }
         }
     }
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setRiddleLastReadId(id)
+            preferenceRepository.setRiddlesLastReadId(id)
         }
     }
 
