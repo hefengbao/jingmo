@@ -35,11 +35,13 @@ import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemListGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemIndexGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchListScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemListGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemIndexGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchListScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
@@ -81,7 +83,7 @@ fun AppNavHost(
         homeGraph(
             onLinksClick = { navController.navigateToLinksScreen() },
             onSettingsClick = { navController.navigateToSettingsGraph() },
-            onPoemClick = { navController.navigateToPoemListGraph() },
+            onPoemClick = { navController.navigateToPoemIndexGraph() },
             onPoemSentenceClick = { navController.navigateToPoemSentenceGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackGraph() },
             onIdiomClick = { navController.navigateToIdiomListGraph() },
@@ -92,16 +94,25 @@ fun AppNavHost(
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeGraph() },
             onRiddleClick = { navController.navigateToRiddleGraph() },
             nestGraph = {
-                poemListGraph(
+                poemIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToPoemGraph(it.toString()) },
-                    onSearchItemClick = { id, query ->
-                        navController.navigateToPoemSearchShowScreen(
-                            id.toString(),
-                            query
-                        )
+                    onSearchClick = {
+                        // search 补位用，不产生任何作用
+                        navController.navigateToPoemSearchListScreen("search","search")
+                    },
+                    onAuthorClick = { navController.navigateToPoemSearchListScreen("author", it) },
+                    onCollectClick = {},
+                    onReadMoreClick = {
+                        // read 补位用，不产生任何作用
+                        navController.navigateToPoemGraph("0", "read", "read")
                     },
                     nestGraph = {
+                        poemSearchListScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = {id: String,type: String, query: String ->
+                                navController.navigateToPoemGraph(id, type, query)
+                            },
+                        )
                         poemGraph(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
@@ -116,6 +127,7 @@ fun AppNavHost(
                         )
                     }
                 )
+
                 poemSentenceGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
