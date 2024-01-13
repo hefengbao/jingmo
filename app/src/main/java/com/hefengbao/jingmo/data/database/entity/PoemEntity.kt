@@ -7,6 +7,7 @@ import androidx.room.Fts4
 /**
  * 诗词文
  */
+@Deprecated("")
 @Entity(tableName = "poems")
 @Fts4
 data class PoemEntity(

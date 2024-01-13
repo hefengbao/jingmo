@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.hefengbao.jingmo.data.model.IntroItem
 
+@Deprecated("")
 @Entity(tableName = "writers")
 data class WriterEntity(
     @PrimaryKey

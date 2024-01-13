@@ -11,6 +11,7 @@ import androidx.room.Index
         Index(value = ["tag_id"])
     ]
 )
+@Deprecated("")
 data class PoemTagCrossRef(
     @ColumnInfo("poem_id")
     val poemId: Long,
