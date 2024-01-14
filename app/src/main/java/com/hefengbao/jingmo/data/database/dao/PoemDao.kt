@@ -10,6 +10,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemWithWriterAndTags
 import com.hefengbao.jingmo.data.database.model.PoemSimpleInfo
 import kotlinx.coroutines.flow.Flow
 
+@Deprecated("")
 @Dao
 interface PoemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

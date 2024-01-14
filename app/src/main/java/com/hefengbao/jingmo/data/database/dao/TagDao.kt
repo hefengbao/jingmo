@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import com.hefengbao.jingmo.data.database.entity.TagEntity
 
+@Deprecated("")
 @Dao
 interface TagDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
