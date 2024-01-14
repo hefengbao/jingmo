@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import com.hefengbao.jingmo.data.database.entity.PoemTagCrossRef
 
+@Deprecated("")
 @Dao
 interface PoemTagDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
