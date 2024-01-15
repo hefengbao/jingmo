@@ -290,10 +290,6 @@ fun CaptureScaffold(
                         ),
                         contentDescription = null
                     )
-                    Text(
-                        text = "『京墨』",
-                        color = color
-                    )
                 }
             }
         }
