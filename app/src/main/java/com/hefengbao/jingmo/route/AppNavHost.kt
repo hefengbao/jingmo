@@ -42,10 +42,10 @@ import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchListScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
-import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSearchScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceGraph
-import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceSearchScreen
 import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleGraph
 import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleSearchScreen
@@ -128,17 +128,12 @@ fun AppNavHost(
                 poemSentenceGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
-                    onSearchItemClick = { id, query ->
-                        navController.navigateToPoemSentenceSearchShowScreen(
-                            id.toString(),
-                            query
-                        )
-                    },
+                    onSearchClick = { navController.navigateToPoemSentenceSearchScreen() },
                     nestGraph = {
                         poemSentenceCaptureScreen(
                             onBackClick = navController::navigateUp
                         )
-                        poemSentenceSearchShowScreen(
+                        poemSentenceSearchScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
                         )

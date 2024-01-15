@@ -2,17 +2,20 @@ package com.hefengbao.jingmo.ui.screen.poemsentence
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
@@ -43,6 +46,7 @@ fun PoemSentenceCaptureRoute(
 
 @Composable
 private fun PoemSentenceCaptureScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     defaultColor: Color,
     onColorChange: (Color) -> Unit,
@@ -60,22 +64,37 @@ private fun PoemSentenceCaptureScreen(
         onBackgroundColorChange = onBackgroundColorChange
     ) { color, _ ->
         poemSentence?.let { entity ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 48.dp, horizontal = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+            Row(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(vertical = 64.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = entity.content,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = color
-                )
-                Text(
-                    text = entity.from,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = color
-                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    entity.content.split("，", "。", "？", "！").map {
+
+                        Column {
+                            it.toCharArray().map { char ->
+                                Text(
+                                    text = char.toString(),
+                                    style = TextStyle.Default.copy(fontSize = 24.sp),
+                                    color = color
+                                )
+                            }
+                        }
+                    }
+                }
+                Column {
+                    entity.from.replace("《", "﹁")
+                        .replace("》", "﹂")
+                        .toCharArray()
+                        .map {
+                            Text(text = it.toString(), color = color)
+                        }
+                }
             }
         }
     }

@@ -1,7 +1,5 @@
 package com.hefengbao.jingmo.ui.screen.poemsentence
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,56 +8,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
-import com.hefengbao.jingmo.data.database.entity.SentenceWithPoem
-import kotlinx.coroutines.launch
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun PoemSentenceRoute(
     viewModel: PoemSentenceViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    onSearchItemClick: (Int, String) -> Unit
+    onSearchItemClick: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.getSentence(viewModel.id)
@@ -73,12 +50,10 @@ fun PoemSentenceRoute(
 
     val sentence by viewModel.sentence.collectAsState(initial = null)
 
-    val searchSentences by viewModel.searchSentences.collectAsState(initial = emptyList())
-
     PoemSentenceScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        onSearchItemClick = onSearchItemClick,
+        onSearchClick = onSearchItemClick,
         sentence = sentence,
         prevId = prevId,
         nextId = nextId,
@@ -95,107 +70,42 @@ fun PoemSentenceRoute(
         setLastReadId = {
             viewModel.setLastReadId(it)
         },
-        onSearch = { viewModel.search(it) },
-        searchSentences = searchSentences,
-        query = viewModel.query,
-        onQueryChange = { viewModel.changeQuery(it) }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PoemSentenceScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    onSearchItemClick: (Int, String) -> Unit,
-    sentence: SentenceWithPoem?,
+    onSearchClick: () -> Unit,
+    sentence: PoemSentenceEntity?,
     prevId: Int?,
     nextId: Int?,
     onPrevClick: () -> Unit,
     onNextClick: () -> Unit,
     setLastReadId: (Int) -> Unit,
-    onSearch: (String) -> Unit,
-    searchSentences: List<PoemSentenceEntity>,
-    query: String,
-    onQueryChange: (String) -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberStandardBottomSheetState(
-            initialValue = SheetValue.Hidden,
-            skipHiddenState = false
-        )
-    )
 
-    var showSearchBar by rememberSaveable { mutableStateOf(false) }
-
-    BackHandler(scaffoldState.bottomSheetState.isVisible) {
-        coroutineScope.launch {
-            scaffoldState.bottomSheetState.hide()
+    sentence?.let {
+        LaunchedEffect(sentence) {
+            setLastReadId(sentence.id)
         }
-    }
 
-    BackHandler(showSearchBar) {
-        showSearchBar = false
-    }
-
-    sentence?.let { entity ->
-        LaunchedEffect(entity) {
-            setLastReadId(entity.sentence.id)
-        }
-        BottomSheetScaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = "古诗词文名句")
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = onBackClick) {
-                            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { onCaptureClick(entity.sentence.id) }) {
-                            Icon(imageVector = Icons.Default.Photo, contentDescription = null)
-                        }
-                        IconButton(onClick = { showSearchBar = true }) {
-                            Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                        }
-                    }
-                )
-            },
-            sheetPeekHeight = 0.dp,
-            scaffoldState = scaffoldState,
-            sheetContent = {
-                Column(
-                    modifier = modifier
-                        .padding(horizontal = 16.dp)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    entity.poem?.let { poemEntity ->
-                        SelectionContainer {
-                            Text(
-                                text = poemEntity.title,
-                                modifier = modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                        }
-                        SelectionContainer {
-                            Text(
-                                text = poemEntity.content,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
-                    }
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = "诗文名句",
+            actions = {
+                IconButton(onClick = { onCaptureClick(sentence.id) }) {
+                    Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                 }
-            },
-        ) { paddingValues ->
+                IconButton(onClick = onSearchClick) {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                }
+            }
+        ) {
             Box(
                 modifier = modifier
-                    .padding(paddingValues)
                     .fillMaxSize()
             ) {
                 Column(
@@ -204,29 +114,35 @@ private fun PoemSentenceScreen(
                         .padding(bottom = 56.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Card(
+                    Row(
                         modifier = modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
+                            .fillMaxSize()
+                            .padding(top = 64.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
-                            SelectionContainer {
-                                Text(
-                                    text = sentence.sentence.content,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+                            sentence.content.split("，", "。", "？", "！").map {
+
+                                Column {
+                                    it.toCharArray().map { char ->
+                                        Text(
+                                            text = char.toString(),
+                                            style = TextStyle.Default.copy(fontSize = 24.sp)
+                                        )
+                                    }
+                                }
                             }
-                            SelectionContainer {
-                                Text(
-                                    text = "—— ${sentence.sentence.from}",
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                            }
+                        }
+                        Column {
+                            sentence.from.replace("《", "﹁")
+                                .replace("》", "﹂")
+                                .toCharArray()
+                                .map {
+                                    Text(text = it.toString())
+                                }
                         }
                     }
                 }
@@ -247,17 +163,6 @@ private fun PoemSentenceScreen(
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
 
-                    OutlinedButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                scaffoldState.bottomSheetState.expand()
-                            }
-                        },
-                        enabled = sentence.poem != null
-                    ) {
-                        Text(text = "原文")
-                    }
-
                     IconButton(
                         onClick = onNextClick,
                         enabled = nextId != 0
@@ -265,96 +170,6 @@ private fun PoemSentenceScreen(
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }
                 }
-            }
-        }
-    }
-
-    if (showSearchBar) {
-        SearchBar(
-            showSearchBarStatusChange = { showSearchBar = it },
-            onSearch = onSearch,
-            searchSentences = searchSentences,
-            onItemClick = { id, query ->
-                onSearchItemClick(id, query)
-                showSearchBar = false
-            },
-            query = query,
-            onQueryChange = onQueryChange
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
-@Composable
-private fun SearchBar(
-    modifier: Modifier = Modifier,
-    showSearchBarStatusChange: (Boolean) -> Unit,
-    onSearch: (String) -> Unit,
-    searchSentences: List<PoemSentenceEntity>,
-    onItemClick: (Int, String) -> Unit,
-    query: String,
-    onQueryChange: (String) -> Unit
-) {
-    var newQuery by rememberSaveable { mutableStateOf(query) }
-    var active by rememberSaveable { mutableStateOf(true) }
-    val keyboard = LocalSoftwareKeyboardController.current
-
-    Box(Modifier.fillMaxSize()) {
-        androidx.compose.material3.SearchBar(
-            modifier = Modifier
-                .align(Alignment.TopCenter),
-            query = newQuery,
-            onQueryChange = {
-                newQuery = it
-                onQueryChange(it)
-            },
-            onSearch = {
-                active = true
-                if (newQuery.isNotEmpty()) {
-                    onSearch(newQuery)
-                    keyboard?.hide()
-                }
-            },
-            active = active,
-            onActiveChange = {
-                active = it
-                showSearchBarStatusChange(it)
-            },
-            placeholder = { Text("请输入") },
-            leadingIcon = {
-                IconButton(onClick = { showSearchBarStatusChange(false) }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = null)
-                }
-            },
-            trailingIcon = {
-                IconButton(onClick = { newQuery = "" }) {
-                    Icon(Icons.Default.Clear, contentDescription = null)
-                }
-            },
-        ) {
-            if (searchSentences.isNotEmpty()) {
-                val state = rememberLazyListState()
-
-                LazyColumn(
-                    modifier = modifier.fillMaxWidth(),
-                    state = state,
-                    content = {
-                        itemsIndexed(
-                            items = searchSentences,
-                        ) { _, item ->
-                            Text(
-                                modifier = modifier
-                                    .clickable {
-                                        onItemClick(item.id, newQuery)
-                                    }
-                                    .padding(horizontal = 16.dp, vertical = 16.dp)
-                                    .fillMaxWidth(),
-                                text = item.content,
-                            )
-                            Divider(thickness = 0.5.dp)
-                        }
-                    }
-                )
             }
         }
     }
