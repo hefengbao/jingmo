@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,7 +15,7 @@ interface IdiomDao {
     suspend fun insert(entity: IdiomEntity)
 
     @Query("select * from idioms where id = :id")
-    suspend fun getIdiom(id: Int): IdiomEntity
+    fun getIdiom(id: Int): Flow<IdiomEntity>
 
     @Query("select id from idioms where id > :id order by id asc limit 1")
     suspend fun getNextId(id: Int): Int
@@ -23,10 +24,10 @@ interface IdiomDao {
     suspend fun getPrevId(id: Int): Int
 
     @Query("select id, word from idioms order by id asc")
-    fun getSimpleIdiomInfoList(): Flow<List<SimpleIdiomInfo>>
+    fun getSimpleIdiomInfoList(): PagingSource<Int, SimpleIdiomInfo>
 
     @Query("select id, word from idioms where word like :query order by id asc")
-    fun searchSimpleIdiomInfoList(query: String): Flow<List<SimpleIdiomInfo>>
+    fun searchSimpleIdiomInfoList(query: String): PagingSource<Int, SimpleIdiomInfo>
 
     @Query("select id from idioms where id > :id and word like :query order by id asc limit 1")
     suspend fun getSearchNextId(id: Int, query: String): Int

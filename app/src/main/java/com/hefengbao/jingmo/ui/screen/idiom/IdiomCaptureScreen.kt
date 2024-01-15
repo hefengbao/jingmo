@@ -1,10 +1,10 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +26,7 @@ fun IdiomCaptureRoute(
 ) {
     val idiom by viewModel.idiom.collectAsState(initial = null)
     val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
+    Log.i("IdiomCaptureRoute", "before viewModel.appStatus")
     val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {
@@ -45,6 +46,7 @@ fun IdiomCaptureRoute(
 
 @Composable
 private fun IdiomCaptureScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     defaultColor: Color,
     onColorChange: (Color) -> Unit,
@@ -63,44 +65,38 @@ private fun IdiomCaptureScreen(
     ) { color, _ ->
         idiom?.let { entity ->
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
-                    .padding(vertical = 48.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(24.dp, 48.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    SelectionContainer {
-                        Text(
-                            text = idiom.pinyin,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = color
-                        )
-                    }
-                    SelectionContainer {
-                        Text(
-                            text = entity.word,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = color
-                        )
-                    }
+                    Text(
+                        text = idiom.pinyin,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = color
+                    )
+                    Text(
+                        text = entity.word,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = color
+                    )
                 }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
                         text = "释义",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         color = color
                     )
-                    SelectionContainer {
-                        Text(
-                            text = idiom.explanation,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = color
-                        )
-                    }
+                    Text(
+                        text = idiom.explanation,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = color
+                    )
                 }
 
                 Column(
@@ -108,16 +104,14 @@ private fun IdiomCaptureScreen(
                 ) {
                     Text(
                         text = "示例",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         color = color
                     )
-                    SelectionContainer {
-                        Text(
-                            text = idiom.example,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = color
-                        )
-                    }
+                    Text(
+                        text = idiom.example,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = color
+                    )
                 }
 
                 Column(
@@ -125,16 +119,14 @@ private fun IdiomCaptureScreen(
                 ) {
                     Text(
                         text = "出处",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         color = color
                     )
-                    SelectionContainer {
-                        Text(
-                            text = idiom.derivation,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = color
-                        )
-                    }
+                    Text(
+                        text = idiom.derivation,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = color
+                    )
                 }
             }
         }

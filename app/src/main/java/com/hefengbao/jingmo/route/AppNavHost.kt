@@ -26,11 +26,9 @@ import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomCaptureScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomListGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomCaptureScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
@@ -172,24 +170,15 @@ fun AppNavHost(
                 idiomListGraph(
                     onBackClick = navController::navigateUp,
                     onItemClick = { navController.navigateToIdiomGraph(it.toString()) },
-                    onSearchItemClick = { id, query ->
-                        navController.navigateToIdiomSearchShowScreen(
-                            id.toString(),
-                            query
-                        )
-                    },
                     nestGraph = {
                         idiomGraph(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToIdiomCaptureScreen(it.toString()) },
-                            nestGraph = {}
-                        )
-                        idiomSearchShowScreen(
-                            onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToIdiomCaptureScreen(it.toString()) },
-                        )
-                        idiomCaptureScreen(
-                            onBackClick = navController::navigateUp
+                            nestGraph = {
+                                idiomCaptureScreen(
+                                    onBackClick = navController::navigateUp
+                                )
+                            }
                         )
                     }
                 )

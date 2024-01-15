@@ -16,7 +16,6 @@ fun NavController.navigateToIdiomListGraph() {
 fun NavGraphBuilder.idiomListGraph(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    onSearchItemClick: (Int, String) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -27,7 +26,6 @@ fun NavGraphBuilder.idiomListGraph(
             IdiomListRoute(
                 onBackClick = onBackClick,
                 onItemClick = onItemClick,
-                onSearchItemClick = onSearchItemClick
             )
         }
     }

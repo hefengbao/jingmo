@@ -279,7 +279,6 @@ fun CaptureScaffold(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     content(color, backgroundColor)
-
                     Image(
                         modifier = modifier.size(64.dp),
                         painter = painterResource(

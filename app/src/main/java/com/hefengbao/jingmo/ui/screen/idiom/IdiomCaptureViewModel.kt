@@ -1,9 +1,9 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
@@ -20,21 +20,20 @@ import javax.inject.Inject
 @HiltViewModel
 class IdiomCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val idiomRepository: IdiomRepository,
+    idiomRepository: IdiomRepository,
     private val chineseColorRepository: ChineseColorRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
     private val args: IdiomCaptureArgs = IdiomCaptureArgs(savedStateHandle)
 
-    private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
-    val idiom: SharedFlow<IdiomEntity?> = _idiom
+    val idiom = idiomRepository.getIdiom(args.idiomId.toInt())
 
     lateinit var appStatus: AppStatus
 
     init {
         viewModelScope.launch {
             appStatus = preferenceRepository.getAppStatus().first()
-            _idiom.value = idiomRepository.getIdiom(args.idiomId.toInt())
+            Log.i("IdiomCaptureViewModel", "init appStatus")
         }
     }
 
