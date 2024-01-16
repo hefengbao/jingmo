@@ -11,9 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class PoemViewModel @Inject constructor(
@@ -23,15 +23,20 @@ class PoemViewModel @Inject constructor(
 ) : ViewModel() {
     private val poemArgs: PoemArgs = PoemArgs(savedStateHandle)
 
-    var id = poemArgs.poemId.toInt()
     val type = poemArgs.type
     val query = poemArgs.query
+
+    var initId by Delegates.notNull<Int>()
 
     init {
         if (type == "read") {
             viewModelScope.launch {
-                id = preferenceRepository.getReadStatus().first().writingsLastReadId
+                preferenceRepository.getReadStatus().collectLatest {
+                    initId = it.writingsLastReadId
+                }
             }
+        } else {
+            initId = poemArgs.poemId.toInt()
         }
     }
 
@@ -84,6 +89,7 @@ class PoemViewModel @Inject constructor(
     private val _writing: MutableStateFlow<WritingEntity?> = MutableStateFlow(null)
     val writing: SharedFlow<WritingEntity?> = _writing
     fun getWriting(id: Int) {
+        initId = id
         viewModelScope.launch {
             writingRepository.get(id).collectLatest {
                 _writing.value = it

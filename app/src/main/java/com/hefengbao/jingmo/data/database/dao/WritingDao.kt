@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,11 +20,11 @@ interface WritingDao {
     @Query("select rowid, w.* from writings w order by rowid asc")
     fun list(): PagingSource<Int, WritingEntity>
 
-    @Query("select rowid, w.* from writings w where w.author like :query or w.title_content like :query or w.content like :query order by rowid asc")
-    fun search(query: String): PagingSource<Int, WritingEntity>
+    @Query("select rowid,w.dynasty,w.author,w.type,w.title_content as title,w.content from writings w where w.author like :query or w.title_content like :query or w.content like :query order by rowid asc")
+    fun search(query: String): PagingSource<Int, SimpleWritingInfo>
 
-    @Query("select rowid, w.* from writings w where w.author = :author order by rowid asc")
-    fun searchByAuthor(author: String): PagingSource<Int, WritingEntity>
+    @Query("select rowid,w.dynasty,w.author,w.type,w.title_content as title,w.content from writings w where w.author = :author order by rowid asc")
+    fun searchByAuthor(author: String): PagingSource<Int, SimpleWritingInfo>
 
     @Query("select rowid from writings where author = :author and rowid > :id order by rowid asc limit 1")
     suspend fun getNextId(id: Int, author: String): Int

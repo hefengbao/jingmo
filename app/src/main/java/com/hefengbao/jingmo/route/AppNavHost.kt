@@ -34,12 +34,11 @@ import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemIndexGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchListScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemIndexGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchListScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSearchScreen
@@ -95,16 +94,16 @@ fun AppNavHost(
                     onBackClick = navController::navigateUp,
                     onSearchClick = {
                         // search 补位用，不产生任何作用
-                        navController.navigateToPoemSearchListScreen("search", "search")
+                        navController.navigateToPoemSearchScreen("search", "search")
                     },
-                    onAuthorClick = { navController.navigateToPoemSearchListScreen("author", it) },
+                    onAuthorClick = { navController.navigateToPoemSearchScreen("author", it) },
                     onCollectClick = {},
                     onReadMoreClick = {
                         // read 补位用，不产生任何作用
                         navController.navigateToPoemGraph("0", "read", "read")
                     },
                     nestGraph = {
-                        poemSearchListScreen(
+                        poemSearchScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { id: String, type: String, query: String ->
                                 navController.navigateToPoemGraph(id, type, query)
@@ -114,10 +113,6 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
                             nestGraph = {}
-                        )
-                        poemSearchShowScreen(
-                            onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
                         )
                         poemCaptureScreen(
                             onBackClick = navController::navigateUp

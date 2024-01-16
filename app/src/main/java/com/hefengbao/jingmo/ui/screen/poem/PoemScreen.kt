@@ -55,21 +55,21 @@ fun PoemRoute(
     onCaptureClick: (Int) -> Unit
 ) {
     LaunchedEffect(Unit) {
-        viewModel.getWriting(viewModel.id)
+        viewModel.getWriting(viewModel.initId)
         when (viewModel.type) {
             "author" -> {
-                viewModel.getNextId(viewModel.id, viewModel.query)
-                viewModel.getPrevId(viewModel.id, viewModel.query)
+                viewModel.getNextId(viewModel.initId, viewModel.query)
+                viewModel.getPrevId(viewModel.initId, viewModel.query)
             }
 
             "search" -> {
-                viewModel.getSearchNextId(viewModel.id, viewModel.query)
-                viewModel.getSearchPrevId(viewModel.id, viewModel.query)
+                viewModel.getSearchNextId(viewModel.initId, viewModel.query)
+                viewModel.getSearchPrevId(viewModel.initId, viewModel.query)
             }
 
             else -> {
-                viewModel.getNextId(viewModel.id)
-                viewModel.getPrevId(viewModel.id)
+                viewModel.getNextId(viewModel.initId)
+                viewModel.getPrevId(viewModel.initId)
             }
         }
     }
@@ -78,7 +78,7 @@ fun PoemRoute(
     val prevId by viewModel.prevId.collectAsState(initial = null)
     val nextId by viewModel.nextId.collectAsState(initial = null)
 
-    Screen(
+    PoemSearchScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         writing = writing,
@@ -131,7 +131,7 @@ fun PoemRoute(
 }
 
 @Composable
-private fun Screen(
+private fun PoemSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,

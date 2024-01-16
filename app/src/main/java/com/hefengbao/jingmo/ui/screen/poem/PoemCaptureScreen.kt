@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.PoemEntity
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -42,7 +42,7 @@ private fun PoemCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    poem: PoemEntity?,
+    poem: WritingEntity?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(
@@ -54,18 +54,27 @@ private fun PoemCaptureScreen(
         onBackgroundColorChange = onBackgroundColorChange
     ) { color, _ ->
         poem?.let { entity ->
+            val content = buildString {
+                entity.clauses.mapIndexed { _, clause ->
+                    append(clause.content)
+
+                    if (clause.breakAfter != null) {
+                        append("\n")
+                    }
+                }
+            }
             Text(
-                text = entity.title,
+                text = entity.title.content,
                 style = MaterialTheme.typography.titleLarge,
                 color = color
             )
             Text(
-                text = "【${entity.dynasty}】${entity.writerName}",
-                style = MaterialTheme.typography.labelMedium,
+                text = "${entity.dynasty}.${entity.author}",
+                style = MaterialTheme.typography.titleSmall,
                 color = color
             )
             Text(
-                text = entity.content,
+                text = content,
                 style = MaterialTheme.typography.bodyLarge,
                 color = color
             )

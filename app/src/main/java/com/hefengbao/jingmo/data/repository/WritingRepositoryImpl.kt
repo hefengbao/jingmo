@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -17,12 +18,12 @@ class WritingRepositoryImpl @Inject constructor(
         pagingSourceFactory = { database.writingDao().list() }
     ).flow
 
-    override fun search(query: String): Flow<PagingData<WritingEntity>> = Pager(
+    override fun search(query: String): Flow<PagingData<SimpleWritingInfo>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = { database.writingDao().search("%$query%") }
     ).flow
 
-    override fun searchByAuthor(author: String): Flow<PagingData<WritingEntity>> = Pager(
+    override fun searchByAuthor(author: String): Flow<PagingData<SimpleWritingInfo>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
             database.writingDao().searchByAuthor(author)
