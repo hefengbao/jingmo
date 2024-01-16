@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+@Deprecated("")
 class SyncRepositoryImpl @Inject constructor(
     private val networkDataSource: FakeNetworkDataSource,
     @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,

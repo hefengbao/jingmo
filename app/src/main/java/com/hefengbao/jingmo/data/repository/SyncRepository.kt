@@ -20,6 +20,7 @@ import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.Writer
 import kotlinx.coroutines.flow.Flow
 
+@Deprecated("")
 interface SyncRepository {
     fun syncPoems(): Flow<List<Poem>>
     fun syncWriters(): Flow<List<Writer>>
