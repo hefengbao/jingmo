@@ -31,6 +31,10 @@ import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
 import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
+import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleGraph
+import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleShowScreen
+import com.hefengbao.jingmo.ui.screen.people.nav.peopleGraph
+import com.hefengbao.jingmo.ui.screen.people.nav.peopleShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCollectionScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCollectionShowScreen
@@ -95,6 +99,7 @@ fun AppNavHost(
             onTongueTwisterClick = { navController.navigateToTongueTwisterGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeGraph() },
             onRiddleClick = { navController.navigateToRiddleGraph() },
+            onPeopleClick = { navController.navigateToPeopleGraph() },
             nestGraph = {
                 poemIndexGraph(
                     onBackClick = navController::navigateUp,
@@ -265,6 +270,20 @@ fun AppNavHost(
                         )
                         riddleSearchScreen(
                             onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                peopleGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemClick = { type: String, query: String ->
+                        navController.navigateToPeopleShowScreen(
+                            type,
+                            query
+                        )
+                    },
+                    nestGraph = {
+                        peopleShowScreen(
+                            onBackClick = navController::navigateUp,
                         )
                     }
                 )

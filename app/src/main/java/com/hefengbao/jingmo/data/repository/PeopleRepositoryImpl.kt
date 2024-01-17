@@ -1,8 +1,18 @@
 package com.hefengbao.jingmo.data.repository
 
+import com.hefengbao.jingmo.data.database.dao.PeopleDao
+import com.hefengbao.jingmo.data.database.entity.PeopleEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class PeopleRepositoryImpl @Inject constructor(): PeopleRepository {
+class PeopleRepositoryImpl @Inject constructor(
+    private val peopleDao: PeopleDao
+) : PeopleRepository {
+    override fun getById(id: Int): Flow<PeopleEntity> = peopleDao.getPeopleById(id)
+    override fun getByName(name: String): Flow<PeopleEntity> = peopleDao.getPeopleByName(name)
+
+    override fun searchList(query: String) = peopleDao.search("%$query%")
+
     override fun getRecommendList(): List<String> {
         return listOf(
             "诗经",
