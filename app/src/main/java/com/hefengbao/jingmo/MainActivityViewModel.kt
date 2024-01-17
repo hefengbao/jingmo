@@ -1,6 +1,5 @@
 package com.hefengbao.jingmo
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
@@ -19,9 +18,9 @@ class MainActivityViewModel @Inject constructor(
     init {
         // 只是为了把 preference 数据加载到内存
         viewModelScope.launch {
-            preferenceRepository.getAppStatus().collectLatest {  }
-            preferenceRepository.getDatasetStatus().collectLatest {  }
-            preferenceRepository.getReadStatus().collectLatest {  }
+            preferenceRepository.getAppStatus().collectLatest { }
+            preferenceRepository.getDatasetStatus().collectLatest { }
+            preferenceRepository.getReadStatus().collectLatest { }
         }
     }
 
