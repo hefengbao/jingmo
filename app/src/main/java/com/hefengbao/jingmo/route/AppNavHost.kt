@@ -32,13 +32,19 @@ import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
 import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCollectionScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCollectionShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemIndexGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemCollectionScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemCollectionShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemIndexGraph
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSearchScreen
@@ -97,22 +103,34 @@ fun AppNavHost(
                         navController.navigateToPoemSearchScreen("search", "search")
                     },
                     onAuthorClick = { navController.navigateToPoemSearchScreen("author", it) },
-                    onCollectClick = {},
+                    onCollectClick = { navController.navigateToPoemCollectionScreen() },
                     onReadMoreClick = {
-                        // read 补位用，不产生任何作用
-                        navController.navigateToPoemGraph("0", "read", "read")
+                        navController.navigateToPoemShowScreen()
                     },
                     nestGraph = {
+                        poemCollectionScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = {
+                                navController.navigateToPoemCollectionShowScreen(it.toString())
+                            }
+                        )
+                        poemCollectionShowScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) }
+                        )
                         poemSearchScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { id: String, type: String, query: String ->
-                                navController.navigateToPoemGraph(id, type, query)
+                                navController.navigateToPoemSearchShowScreen(id, type, query)
                             },
                         )
-                        poemGraph(
+                        poemSearchShowScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) }
+                        )
+                        poemShowScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
-                            nestGraph = {}
                         )
                         poemCaptureScreen(
                             onBackClick = navController::navigateUp

@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.database.model.WritingWithCollection
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -42,7 +42,7 @@ private fun PoemCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    poem: WritingEntity?,
+    poem: WritingWithCollection?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

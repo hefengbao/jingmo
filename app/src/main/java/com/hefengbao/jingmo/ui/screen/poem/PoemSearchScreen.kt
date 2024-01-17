@@ -20,6 +20,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
@@ -30,12 +31,22 @@ fun PoemSearchRoute(
 ) {
     val writings = viewModel.writings.collectAsLazyPagingItems()
 
+    var query: String by rememberSaveable {
+        if (viewModel.type == "author") {
+            mutableStateOf(viewModel.query)
+        } else {
+            mutableStateOf("")
+        }
+    }
+
     PoemSearchScreen(
         onBackClick = onBackClick,
         writings = writings,
         onItemClick = onItemClick,
         type = viewModel.type,
-        onSearch = {
+        query = query,
+        onQueryChange = {
+            query = it
             viewModel.search(it)
         }
     )
@@ -43,48 +54,64 @@ fun PoemSearchRoute(
 
 @Composable
 private fun PoemSearchScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     writings: LazyPagingItems<SimpleWritingInfo>,
     onItemClick: (id: String, type: String, query: String) -> Unit,
     type: String,
-    onSearch: (String) -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit,
 ) {
-    var query by rememberSaveable {
-        mutableStateOf("")
+    if (type == "author") {
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = query
+        ) {
+            List(writings = writings, onItemClick = onItemClick, type = type, query = query)
+        }
+    } else {
+        SimpleSearchScaffold(
+            onBackClick = onBackClick,
+            value = query,
+            onValueChange = {
+                onQueryChange(it)
+            },
+            onSearch = { /*TODO*/ }
+        ) {
+            List(writings = writings, onItemClick = onItemClick, type = type, query = query)
+        }
     }
-    SimpleSearchScaffold(
-        onBackClick = onBackClick,
-        value = query,
-        onValueChange = {
-            query = it
-            onSearch(it)
-        },
-        onSearch = { /*TODO*/ }
-    ) {
-        LazyColumn {
-            items(
-                items = writings
-            ) {
-                it?.let { entity ->
-                    Column(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                onItemClick(entity.id.toString(), type, query)
-                            }
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                    ) {
-                        Text(
-                            text = entity.title,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                            text = "${entity.type} ${entity.dynasty}·${entity.author}",
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    }
+}
+
+@Composable
+private fun List(
+    modifier: Modifier = Modifier,
+    writings: LazyPagingItems<SimpleWritingInfo>,
+    onItemClick: (id: String, type: String, query: String) -> Unit,
+    type: String,
+    query: String
+) {
+    LazyColumn {
+        items(
+            items = writings
+        ) {
+            it?.let { entity ->
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            onItemClick(entity.id.toString(), type, query)
+                        }
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Text(
+                        text = entity.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = "${entity.type} ${entity.dynasty}·${entity.author}",
+                        style = MaterialTheme.typography.titleSmall
+                    )
                 }
             }
         }

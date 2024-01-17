@@ -5,8 +5,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
+import com.hefengbao.jingmo.data.database.model.WritingCollectionInfo
+import com.hefengbao.jingmo.data.database.model.WritingWithCollection
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,8 +17,8 @@ interface WritingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: WritingEntity)
 
-    @Query("select rowid, w.* from writings w where rowid = :id limit 1")
-    fun get(id: Int): Flow<WritingEntity>
+    @Query("select w.rowid, w.*, c.collected_at from writings w left join writing_collections c on w.rowid = c.id where  w.rowid = :id limit 1")
+    fun get(id: Int): Flow<WritingWithCollection>
 
     @Query("select rowid, w.* from writings w order by rowid asc")
     fun list(): PagingSource<Int, WritingEntity>
@@ -27,21 +30,39 @@ interface WritingDao {
     fun searchByAuthor(author: String): PagingSource<Int, SimpleWritingInfo>
 
     @Query("select rowid from writings where author = :author and rowid > :id order by rowid asc limit 1")
-    suspend fun getNextId(id: Int, author: String): Int
+    fun getNextId(id: Int, author: String): Flow<Int?>
 
     @Query("select rowid from writings where author = :author and rowid < :id order by rowid desc limit 1")
-    suspend fun getPrevId(id: Int, author: String): Int
+    fun getPrevId(id: Int, author: String): Flow<Int?>
 
     @Query("select rowid from writings where rowid > :id order by rowid asc limit 1")
-    suspend fun getNextId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
 
     @Query("select rowid from writings where rowid < :id order by rowid desc limit 1")
-    suspend fun getPrevId(id: Int): Int
+    fun getPrevId(id: Int): Flow<Int?>
 
 
     @Query("select rowid from writings where (author like :query or title_content like :query or content like :query) and rowid > :id order by rowid asc limit 1")
-    suspend fun getSearchNextId(id: Int, query: String): Int
+    fun getSearchNextId(id: Int, query: String): Flow<Int?>
 
     @Query("select rowid from writings where (author like :query or title_content like :query or content like :query) and rowid < :id order by rowid desc limit 1")
-    suspend fun getSearchPrevId(id: Int, query: String): Int
+    fun getSearchPrevId(id: Int, query: String): Flow<Int?>
+
+    @Query("select c.id as id,c.collected_at as collected_at,w.author as author,w.dynasty as dynasty,w.type as type,w.title_content as title from writing_collections c join writings w on c.id = w.rowid order by c.collected_at desc")
+    fun collections(): PagingSource<Int, WritingCollectionInfo>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun collect(entity: WritingCollectionEntity)
+
+    @Query("delete from writing_collections where id = :id")
+    suspend fun uncollect(id: Int)
+
+    @Query("select * from writing_collections where id = :id")
+    fun isCollect(id: Int): Flow<WritingCollectionEntity?>
+
+    @Query("select id from writing_collections where collected_at < :collectedAt order by collected_at desc limit 1")
+    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
+
+    @Query("select id from writing_collections where collected_at > :collectedAt order by collected_at asc limit 1")
+    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "a929a8cc1bd778ec39c7bb727d3dfe1a",
+    "identityHash": "7dd8ca2d7ec7fb348d29f3799eb63e33",
     "entities": [
       {
         "ftsVersion": "FTS4",
@@ -538,6 +538,42 @@
         "foreignKeys": []
       },
       {
+        "tableName": "writing_collections",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `collected_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "collectedAt",
+            "columnName": "collected_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_writing_collections_collected_at",
+            "unique": false,
+            "columnNames": [
+              "collected_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_writing_collections_collected_at` ON `${TABLE_NAME}` (`collected_at`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
         "ftsVersion": "FTS4",
         "ftsOptions": {
           "tokenizer": "simple",
@@ -723,7 +759,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a929a8cc1bd778ec39c7bb727d3dfe1a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7dd8ca2d7ec7fb348d29f3799eb63e33')"
     ]
   }
 }

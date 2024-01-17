@@ -27,6 +27,7 @@ import com.hefengbao.jingmo.data.database.entity.RiddleEntity
 import com.hefengbao.jingmo.data.database.entity.TagEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WriterEntity
+import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
 import com.hefengbao.jingmo.data.database.util.IntListConverter
@@ -52,6 +53,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         TagEntity::class,
         TongueTwisterEntity::class,
         WriterEntity::class,
+        WritingCollectionEntity::class,
         WritingEntity::class,
     ],
     version = 6,
