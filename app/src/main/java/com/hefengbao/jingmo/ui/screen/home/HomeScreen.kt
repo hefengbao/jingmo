@@ -38,6 +38,7 @@ fun HomeRoute(
     onTongueTwisterClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onRiddleClick: () -> Unit,
+    onPeopleClick: () -> Unit,
 ) {
     HomeScreen(
         onLinksClick = onLinksClick,
@@ -52,6 +53,7 @@ fun HomeRoute(
         onTongueTwisterClick = onTongueTwisterClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
         onRiddleClick = onRiddleClick,
+        onPeopleClick = onPeopleClick,
     )
 }
 
@@ -71,6 +73,7 @@ private fun HomeScreen(
     onTongueTwisterClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onRiddleClick: () -> Unit,
+    onPeopleClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -102,71 +105,67 @@ private fun HomeScreen(
                 content = {
                     item {
                         Item(
-                            title = "古诗词文",
-                            subtitle = "10000 首（阙/篇）",
+                            title = "诗文",
                             onClick = onPoemClick
                         )
                     }
                     item {
                         Item(
-                            title = "古诗词文名句",
-                            subtitle = "10000 句",
+                            title = "诗文名句",
                             onClick = onPoemSentenceClick
                         )
                     }
                     item {
                         Item(
                             title = "歇后语",
-                            subtitle = "14026 条",
                             onClick = onChineseWisecrackClick
                         )
                     }
                     item {
                         Item(
                             title = "成语",
-                            subtitle = "30895 条",
                             onClick = onIdiomClick
                         )
                     }
                     item {
                         Item(
                             title = "谜语",
-                            subtitle = "42446 组",
                             onClick = onRiddleClick
                         )
                     }
                     item {
                         Item(
                             title = "绕口令",
-                            subtitle = "45 段",
                             onClick = onTongueTwisterClick
                         )
                     }
                     item {
                         Item(
-                            title = "中国传统节日",
-                            subtitle = "16 个",
+                            title = "传统节日",
                             onClick = onFestivalClick
                         )
                     }
                     item {
                         Item(
                             title = "二十四节气",
-                            subtitle = "24 个",
                             onClick = onSolarTermsClick
                         )
                     }
                     item {
                         Item(
                             title = "知识卡片",
-                            subtitle = "464 组",
                             onClick = onChineseKnowledgeClick
                         )
                     }
                     item {
                         Item(
-                            title = "中国传统色",
-                            subtitle = "161 种",
+                            title = "人物",
+                            onClick = onPeopleClick
+                        )
+                    }
+                    item {
+                        Item(
+                            title = "传统色",
                             onClick = onChineseColorClick
                         )
                     }
@@ -180,7 +179,6 @@ private fun HomeScreen(
 fun Item(
     modifier: Modifier = Modifier,
     title: String,
-    subtitle: String,
     onClick: () -> Unit
 ) {
     Card(
@@ -195,7 +193,6 @@ fun Item(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(text = title, style = MaterialTheme.typography.titleLarge)
-            Text(text = subtitle, style = MaterialTheme.typography.labelMedium)
         }
     }
 }
