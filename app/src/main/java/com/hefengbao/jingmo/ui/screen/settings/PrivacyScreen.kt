@@ -59,7 +59,7 @@ private fun PrivacyScreen(
             val uriHandler = LocalUriHandler.current
 
             val content = """
-                本应用使用腾讯 Bugly 提供的异常上报、运营统计功能，该 SDK 可能收集的信息有：手机型号、手机品牌、Android系统版本、Android系统api等级、厂商系统版本、cpu架构类型、设备是否root、磁盘空间占用大小、sdcard空间占用大小、内存空间占用大小、网络类型等，具体可查看：
+                本应用使用腾讯 Bugly 提供的异常上报、运营统计功能，该 SDK 的隐私政策请查看：
             """.trimIndent()
 
             Text(text = content)
@@ -74,7 +74,7 @@ private fun PrivacyScreen(
                     uriHandler.openUri("https://privacy.qq.com/document/preview/fc748b3d96224fdb825ea79e132c1a56")
                 }
             )
-            Text(text = "除此之外，不收集存储任何用户信息。当然用户也可以在离线状态下使用 APP。")
+            Text(text = "除此之外，不收集存储任何用户信息。")
         }
     }
 }

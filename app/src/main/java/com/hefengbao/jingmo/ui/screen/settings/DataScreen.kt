@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -29,6 +30,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.network.Result
@@ -210,7 +213,7 @@ private fun DataScreen(
                         onClick = { count: Int, version: Int -> syncPeople(count, version) }
                     ),
                     Menu(
-                        title = "诗词名句",
+                        title = "诗文名句",
                         name = "poem_sentences",
                         localVersion = datasetPref.poemSentencesVersion,
                         status = poemSentencesResult,
@@ -246,7 +249,7 @@ private fun DataScreen(
                 LazyColumn {
                     itemsIndexed(
                         items = menus
-                    ) { _: Int, item: Menu ->
+                    ) { index: Int, item: Menu ->
                         val key = nameList.indexOf(item.name)
 
                         if (item.status is SyncStatus.Error) {
@@ -255,6 +258,7 @@ private fun DataScreen(
 
                         Item(
                             title = item.title,
+                            subtitle = countList[key].toString(),
                             onClick = { item.onClick(countList[key], versionList[key]) },
                             enabled = item.localVersion != versionList[key] || item.status == SyncStatus.Loading,
                             showProgressIndicator = item.status == SyncStatus.Loading,
@@ -263,6 +267,9 @@ private fun DataScreen(
                                 item.status.exception?.message
                             } else null
                         )
+                        if (index < menus.size){
+                            Divider(modifier = modifier.padding(horizontal = 16.dp))
+                        }
                     }
                 }
             }
@@ -304,6 +311,7 @@ private fun TipDialog() {
 private fun Item(
     modifier: Modifier = Modifier,
     title: String,
+    subtitle: String,
     onClick: () -> Unit,
     enabled: Boolean,
     showProgressIndicator: Boolean,
@@ -311,7 +319,7 @@ private fun Item(
     error: String?,
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(16.dp,8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Row(
@@ -324,7 +332,12 @@ private fun Item(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(text = title, style = MaterialTheme.typography.titleLarge)
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(text = title, style = MaterialTheme.typography.titleMedium)
+                    Text(text = subtitle, color = Color.Gray)
+                }
                 CircularProgressIndicator(
                     progress = progress,
                     strokeWidth = 2.dp,
