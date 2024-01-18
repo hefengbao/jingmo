@@ -262,35 +262,31 @@ fun CaptureScaffold(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(paddingValues)
-                .padding(16.dp)
                 .verticalScroll(
                     rememberScrollState()
                 )
         ) {
             Column(
                 modifier = modifier
-                    .background(Color(backgroundColor.toColorInt()))
                     .fillMaxWidth()
-                    .padding(32.dp, 64.dp)
+                    .background(Color(backgroundColor.toColorInt()))
+                    .padding(32.dp, 96.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    content(color, backgroundColor)
-                    Image(
-                        modifier = modifier.size(64.dp),
-                        painter = painterResource(
-                            id = if (color == Color.White) {
-                                R.drawable.ic_nowinlife_white
-                            } else {
-                                R.drawable.ic_nowinlife_black
-                            }
-                        ),
-                        contentDescription = null
-                    )
-                }
+                content(color, backgroundColor)
+                Image(
+                    modifier = modifier.padding(16.dp)
+                        .size(64.dp),
+                    painter = painterResource(
+                        id = if (color == Color.White) {
+                            R.drawable.ic_nowinlife_white
+                        } else {
+                            R.drawable.ic_nowinlife_black
+                        }
+                    ),
+                    contentDescription = null
+                )
             }
         }
     }
