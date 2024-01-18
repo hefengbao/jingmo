@@ -33,7 +33,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,13 +90,13 @@ fun SimpleSearchScaffold(
                                 Icon(imageVector = Icons.Default.Search, contentDescription = null)
                                 Box(
                                     modifier = modifier.weight(1f)
-                                ){
-                                    if(value.isEmpty())
+                                ) {
+                                    if (value.isEmpty())
                                         Text(text = hint, color = Color.Gray, style = textStyle)
 
                                     innerTextField()
                                 }
-                                if(value.isNotEmpty()){
+                                if (value.isNotEmpty()) {
                                     Icon(
                                         modifier = modifier
                                             .background(

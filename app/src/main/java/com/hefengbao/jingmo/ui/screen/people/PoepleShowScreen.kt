@@ -1,6 +1,5 @@
 package com.hefengbao.jingmo.ui.screen.people
 
-import android.text.Html
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -98,7 +97,10 @@ private fun PeopleShowScreen(
                         modifier = modifier.padding(16.dp, 8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "生卒年月", style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            text = "\uD83D\uDD3B 生卒年月",
+                            style = MaterialTheme.typography.titleMedium
+                        )
                         Text(text = birthAndDeath)
                     }
                 }
@@ -108,7 +110,10 @@ private fun PeopleShowScreen(
                         modifier = modifier.padding(16.dp, 8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "主要生活朝代", style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            text = "\uD83D\uDD3B 主要生活朝代",
+                            style = MaterialTheme.typography.titleMedium
+                        )
                         Text(text = entity.dynasty)
                     }
                 }
@@ -136,7 +141,10 @@ private fun PeopleShowScreen(
                             modifier = modifier.padding(16.dp, 8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(text = "别称", style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                text = "\uD83D\uDD3B 别称",
+                                style = MaterialTheme.typography.titleMedium
+                            )
                             Text(text = aliases)
                         }
                     }
@@ -148,7 +156,10 @@ private fun PeopleShowScreen(
                             modifier = modifier.padding(16.dp, 8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(text = "标签", style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                text = "\uD83D\uDD3B 标签",
+                                style = MaterialTheme.typography.titleMedium
+                            )
                             Text(text = entity.titles.joinToString("、"))
                         }
                     }
@@ -160,18 +171,22 @@ private fun PeopleShowScreen(
                             modifier = modifier.padding(16.dp, 8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                        Text(text = "家乡", style = MaterialTheme.typography.titleMedium)
-                        Text(text = entity.hometown.map { return@map it.name }.joinToString("、"))
-                            }
+                            Text(
+                                text = "\uD83D\uDD3B 家乡",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(text = entity.hometown.map { return@map it.name }
+                                .joinToString("、"))
+                        }
                     }
                 }
 
                 if (!entity.details.isNullOrEmpty()) {
                     item {
                         Text(
-                            text = "人物资料",
+                            text = "\uD83D\uDD3B 人物资料",
                             style = MaterialTheme.typography.titleMedium,
-                            modifier = modifier.padding(16.dp,8.dp)
+                            modifier = modifier.padding(16.dp, 8.dp)
                         )
                     }
 
@@ -181,13 +196,13 @@ private fun PeopleShowScreen(
                                 modifier = modifier.padding(16.dp, 8.dp),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Text(text = "※ ${it.book}")
+                                Text(text = "📖 ${it.book}")
 
                                 it.content?.let { content ->
                                     Text(
-                                        text = content.replace("<br />","\n")
-                                            .replace("</p>","\n")
-                                            .replace("<[^>]+>".toRegex(),"")
+                                        text = content.replace("<br />", "\n")
+                                            .replace("</p>", "\n")
+                                            .replace("<[^>]+>".toRegex(), "")
                                     )
                                 }
                             }

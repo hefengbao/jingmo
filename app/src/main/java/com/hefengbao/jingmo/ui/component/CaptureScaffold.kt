@@ -276,7 +276,8 @@ fun CaptureScaffold(
             ) {
                 content(color, backgroundColor)
                 Image(
-                    modifier = modifier.padding(16.dp)
+                    modifier = modifier
+                        .padding(16.dp)
                         .size(64.dp),
                     painter = painterResource(
                         id = if (color == Color.White) {

@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,13 +24,11 @@ fun TongueTwisterListRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val lastReadId = viewModel.lastReadId
     val tongueTwisters by viewModel.tongueTwisters.collectAsState(initial = emptyList())
 
     TongueTwisterListScreen(
         onBackClick = onBackClick,
         tongueTwisters = tongueTwisters,
-        lastReadId = lastReadId,
         onItemClick = onItemClick
     )
 }
@@ -42,7 +38,6 @@ private fun TongueTwisterListScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     tongueTwisters: List<SimpleTongueTwister>,
-    lastReadId: Int,
     onItemClick: (Int) -> Unit
 ) {
     var firstLoading by rememberSaveable { mutableStateOf(true) }
@@ -51,36 +46,24 @@ private fun TongueTwisterListScreen(
         onBackClick = onBackClick,
         title = "绕口令"
     ) {
-        if (tongueTwisters.isNotEmpty()) {
-            val state = rememberLazyListState()
-
-            if (firstLoading) {
-                val index = tongueTwisters.indexOfFirst { it.id == lastReadId }
-                LaunchedEffect(Unit) {
-                    state.animateScrollToItem(index)
-                }
+        LazyColumn(
+            modifier = modifier.fillMaxWidth()
+        ) {
+            itemsIndexed(
+                items = tongueTwisters,
+                key = { _: Int, item: SimpleTongueTwister -> item.id }
+            ) { _: Int, item: SimpleTongueTwister ->
+                Text(
+                    text = item.title,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            firstLoading = false
+                            onItemClick(item.id)
+                        }
+                        .padding(16.dp)
+                )
             }
-
-            LazyColumn(
-                state = state,
-                content = {
-                    itemsIndexed(
-                        items = tongueTwisters,
-                        key = { _: Int, item: SimpleTongueTwister -> item.id }
-                    ) { _: Int, item: SimpleTongueTwister ->
-                        Text(
-                            text = item.title,
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    firstLoading = false
-                                    onItemClick(item.id)
-                                }
-                                .padding(16.dp)
-                        )
-                    }
-                }
-            )
         }
     }
 }

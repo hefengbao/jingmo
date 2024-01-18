@@ -69,7 +69,7 @@ private fun PoemCaptureScreen(
                 color = color
             )
             Text(
-                text = "${entity.dynasty}.${entity.author}",
+                text = "${entity.dynasty}·${entity.author}",
                 style = MaterialTheme.typography.titleSmall,
                 color = color
             )

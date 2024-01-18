@@ -10,8 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -58,17 +60,19 @@ private fun PoemCollectionScreen(
                             .clickable {
                                 onItemClick(it.id)
                             }
-                            .padding(16.dp, 8.dp),
+                            .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
                             text = entity.title,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
                             text = "${entity.type} ${entity.dynasty}·${entity.author}",
-                            style = MaterialTheme.typography.titleSmall
+                            color = Color.DarkGray,
+                            fontSize = 12.sp
                         )
                     }
                 }

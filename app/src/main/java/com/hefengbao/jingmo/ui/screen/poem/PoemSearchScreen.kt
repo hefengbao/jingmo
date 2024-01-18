@@ -1,6 +1,7 @@
 package com.hefengbao.jingmo.ui.screen.poem
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,8 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -101,16 +104,19 @@ private fun List(
                         .clickable {
                             onItemClick(entity.id.toString(), type, query)
                         }
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
                         text = entity.title,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
                         text = "${entity.type} ${entity.dynasty}·${entity.author}",
-                        style = MaterialTheme.typography.titleSmall
+                        color = Color.DarkGray,
+                        fontSize = 12.sp
                     )
                 }
             }

@@ -75,7 +75,8 @@ private fun PoemSentenceSearchScreen(
                                 .fillMaxWidth()
                                 .clickable {
                                     onCardClick(entity.id)
-                                }.padding(32.dp),
+                                }
+                                .padding(32.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(

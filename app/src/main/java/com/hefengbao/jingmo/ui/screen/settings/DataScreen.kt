@@ -30,7 +30,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -267,7 +266,7 @@ private fun DataScreen(
                                 item.status.exception?.message
                             } else null
                         )
-                        if (index < menus.size){
+                        if (index < menus.size) {
                             Divider(modifier = modifier.padding(horizontal = 16.dp))
                         }
                     }
@@ -319,7 +318,7 @@ private fun Item(
     error: String?,
 ) {
     Column(
-        modifier = modifier.padding(16.dp,8.dp),
+        modifier = modifier.padding(16.dp, 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Row(

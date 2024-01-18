@@ -31,6 +31,7 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.util.ClipboardUtil
 import com.hefengbao.jingmo.data.model.ChineseColor
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun ChineseColorRoute(
@@ -44,7 +45,6 @@ fun ChineseColorRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChineseColorScreen(
     modifier: Modifier = Modifier,
@@ -52,25 +52,14 @@ private fun ChineseColorScreen(
     chineseColor: ChineseColor?
 ) {
     chineseColor?.let { color ->
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = color.name)
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = onBackClick) {
-                            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                        }
-                    }
-                )
-            },
-        ) { paddingValues ->
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = color.name
+        ){
             val context = LocalContext.current
             Card(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
                     .padding(16.dp)
                     .clickable {
                         ClipboardUtil.textCopyThenPost(context, color.hex)

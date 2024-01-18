@@ -82,9 +82,9 @@ private fun SolarTermItem(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = label,
+            text = "\uD83D\uDD3B $label",
             modifier = modifier.fillMaxWidth(),
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.titleMedium
         )
         Text(text = text, modifier = modifier.fillMaxWidth())
     }

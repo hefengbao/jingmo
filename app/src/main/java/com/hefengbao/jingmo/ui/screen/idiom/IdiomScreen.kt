@@ -79,7 +79,7 @@ private fun IdiomScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = "释义",
+                            text = "\uD83D\uDD3B 释义",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(
@@ -92,7 +92,7 @@ private fun IdiomScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = "示例",
+                            text = "\uD83D\uDD3B 示例",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(
@@ -105,7 +105,7 @@ private fun IdiomScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = "出处",
+                            text = "📖 出处",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(

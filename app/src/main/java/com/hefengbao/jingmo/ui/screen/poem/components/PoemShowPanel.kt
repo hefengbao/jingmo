@@ -9,9 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -62,7 +61,39 @@ fun PoemShowPanel(
         modifier = modifier.fillMaxSize()
     ) {
         SelectionContainer {
-            Column(
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, end = 32.dp, top = 16.dp, bottom = 80.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                item {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Text(
+                            text = writing.title.content,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = "${writing.dynasty}·${writing.author}",
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                        if (writing.preface != null) {
+                            Text(
+                                text = writing.preface.replace("<br />", "\n"),
+                                style = MaterialTheme.typography.bodySmall,
+                                fontStyle = FontStyle.Italic
+                            )
+                        }
+                        Text(text = content, style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+            }
+            /*Column(
                 modifier = modifier
                     .fillMaxWidth()
                     .verticalScroll(
@@ -93,31 +124,31 @@ fun PoemShowPanel(
                         )
                     }
                     Text(text = content, style = MaterialTheme.typography.bodyLarge)
+                }*/
+            /*Column(
+                modifier = modifier
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(text = writing.type)
+                if (writing.note != null) {
+                    Text(text = writing.note)
                 }
-                /*Column(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(text = writing.type)
-                    if (writing.note != null) {
-                        Text(text = writing.note)
-                    }
-                }
-                if (writing.comments != null) {
-                    SelectionContainer {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            writing.comments.map {
-                                it.content?.let { content ->
-                                    Text(text = content)
-                                }
+            }
+            if (writing.comments != null) {
+                SelectionContainer {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        writing.comments.map {
+                            it.content?.let { content ->
+                                Text(text = content)
                             }
                         }
                     }
-                }*/
+                }
             }
+        }*/
         }
         Row(
             modifier = modifier

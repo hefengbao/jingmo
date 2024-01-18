@@ -13,9 +13,11 @@ import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnow
 import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowledgeGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.festival.nav.festivalGraph
 import com.hefengbao.jingmo.ui.screen.festival.nav.festivalScreen
@@ -160,15 +162,19 @@ fun AppNavHost(
                 chineseWisecrackGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
-                    onSearchItemClick = { id, query ->
-                        navController.navigateToChineseWisecrackSearchShowScreen(
-                            id.toString(),
-                            query
-                        )
-                    },
+                    onSearchClick = { navController.navigateToChineseWisecrackSearchScreen()},
                     nestGraph = {
                         chineseWisecrackCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        chineseWisecrackSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { id: Int, query: String ->
+                                navController.navigateToChineseWisecrackSearchShowScreen(
+                                    id.toString(),
+                                    query
+                                )
+                            }
                         )
                         chineseWisecrackSearchShowScreen(
                             onBackClick = navController::navigateUp,

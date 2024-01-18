@@ -32,6 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.components.ShowChineseWisecrackPanel
 
 @Composable
 fun ChineseWisecrackSearchShowRoute(
@@ -72,10 +74,8 @@ fun ChineseWisecrackSearchShowRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChineseWisecrackSearchShowScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     chineseCrack: ChineseWisecrackEntity?,
@@ -87,87 +87,22 @@ private fun ChineseWisecrackSearchShowScreen(
 ) {
 
     chineseCrack?.let { entity ->
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = "搜索：$query")
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = onBackClick) {
-                            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { onCaptureClick(entity.id) }) {
-                            Icon(imageVector = Icons.Default.Photo, contentDescription = null)
-                        }
-                    }
-                )
-            },
-        ) { paddingValues ->
-            Box(
-                modifier = modifier
-                    .padding(paddingValues)
-                    .fillMaxSize()
-            ) {
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(bottom = 56.dp)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Card(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                    ) {
-                        Column(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            SelectionContainer {
-                                Text(
-                                    text = chineseCrack.riddle,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                            }
-                            SelectionContainer {
-                                Text(
-                                    text = "—— ${chineseCrack.answer}",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        }
-                    }
-                }
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .height(48.dp)
-                        .align(
-                            Alignment.BottomCenter
-                        ),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    IconButton(
-                        onClick = onPrevClick,
-                        enabled = prevId != 0
-                    ) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                    }
-
-                    IconButton(
-                        onClick = onNextClick,
-                        enabled = nextId != 0
-                    ) {
-                        Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
-                    }
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = "搜索：$query",
+            actions = {
+                IconButton(onClick = { onCaptureClick(entity.id) }) {
+                    Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                 }
             }
+        ){
+            ShowChineseWisecrackPanel(
+                entity = entity,
+                prevId = prevId,
+                onPrevClick = onPrevClick,
+                nextId = nextId,
+                onNextClick = onNextClick
+            )
         }
     }
 }

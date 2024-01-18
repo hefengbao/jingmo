@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.util.ClipboardUtil
 import com.hefengbao.jingmo.common.util.SystemUtil
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun AboutRoute(
@@ -49,7 +51,6 @@ fun AboutRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
     modifier: Modifier = Modifier,
@@ -57,55 +58,42 @@ fun AboutScreen(
     context: Context,
     version: String
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "关于")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(paddingValues)
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Box(
+    SimpleScaffold(onBackClick = onBackClick, title = "关于"){
+        SelectionContainer {
+            Column(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Column(
-                    modifier = modifier.align(Alignment.Center),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                Box(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                        contentDescription = null,
-                        modifier = modifier
-                            .size(96.dp)
-                    )
-                    Text(
-                        text = "当前版本：$version",
-                        style = MaterialTheme.typography.labelSmall,
-                        textAlign = TextAlign.Center,
-                        modifier = modifier.align(Alignment.CenterHorizontally)
-                    )
+                    Column(
+                        modifier = modifier.align(Alignment.Center),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                            contentDescription = null,
+                            modifier = modifier
+                                .size(96.dp)
+                        )
+                        Text(
+                            text = "当前版本：$version",
+                            style = MaterialTheme.typography.labelSmall,
+                            textAlign = TextAlign.Center,
+                            modifier = modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
                 }
-            }
 
-            Text(text = "❤ 贺丰宝（hefengbao）设计和编码 ❤")
+                Text(text = "❤ 贺丰宝（hefengbao）设计和编码 ❤")
 
-            val desc = """
+                val desc = """
                 『京墨』是开源、免费、公益性 APP。献给喜欢中华文字、文学、文化的人。
                 
                 本应用使用的数据来自网络（主要是 Github 开源的仓库），可在项目仓库查看 README.md 中的说明。
@@ -123,21 +111,23 @@ fun AboutScreen(
                 如果有人想要♥赞助♥本项目，可在公众号文章中打赏👍。
             """.trimIndent()
 
-            Text(text = desc)
+                Text(text = desc)
 
-            val copyText = "NowInLife"
+                val copyText = "NowInLife"
 
-            Row(
-                modifier = modifier.padding(bottom = 48.dp)
-            ) {
-                Text(text = "公众号：$copyText")
-                Icon(
-                    imageVector = Icons.Default.ContentCopy,
-                    contentDescription = null,
-                    modifier = modifier.clickable {
-                        ClipboardUtil.textCopyThenPost(context, copyText)
-                    }
-                )
+                Row(
+                    modifier = modifier.padding(bottom = 48.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "公众号：$copyText")
+                    Icon(
+                        imageVector = Icons.Default.ContentCopy,
+                        contentDescription = null,
+                        modifier = modifier.clickable {
+                            ClipboardUtil.textCopyThenPost(context, copyText)
+                        }.padding(8.dp)
+                    )
+                }
             }
         }
     }

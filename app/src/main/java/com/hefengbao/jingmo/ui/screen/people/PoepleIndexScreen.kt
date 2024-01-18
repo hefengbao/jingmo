@@ -64,7 +64,9 @@ private fun PeopleIndexScreen(
         }
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            modifier = modifier.fillMaxWidth().padding(16.dp)
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             item(
                 span = {

@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -94,7 +96,7 @@ private fun RiddleScreen(
                 Icon(imageVector = Icons.Default.Search, contentDescription = "搜素")
             }
             IconButton(onClick = onInfoClick) {
-                Icon(imageVector = Icons.Default.Info, contentDescription = "点击查看谜语知识")
+                Icon(imageVector = Icons.Outlined.Info, contentDescription = "点击查看谜语知识")
             }
         }
     ) {
@@ -112,11 +114,9 @@ private fun RiddleScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
-                        .padding(bottom = 80.dp)
+                        .padding(16.dp,16.dp,16.dp,96.dp)
                 ) {
                     Column(
-                        modifier = modifier
-                            .padding(32.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(text = entity.puzzle)
@@ -129,7 +129,7 @@ private fun RiddleScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
-                        .height(64.dp)
+                        .height(80.dp)
                         .align(
                             Alignment.BottomCenter
                         ),
@@ -151,7 +151,7 @@ private fun RiddleScreen(
                         modifier = modifier.padding(16.dp),
                     ) {
                         Icon(
-                            imageVector = if (showAnswer) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            imageVector = if (showAnswer) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
                             contentDescription = null
                         )
                     }

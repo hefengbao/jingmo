@@ -15,7 +15,7 @@ fun NavController.navigateToPeopleGraph() {
 
 fun NavGraphBuilder.peopleGraph(
     onBackClick: () -> Unit,
-    onItemClick: (type:String, query:String) -> Unit,
+    onItemClick: (type: String, query: String) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(

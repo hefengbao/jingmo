@@ -64,7 +64,7 @@ private fun ChineseWisecrackCaptureScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 48.dp, horizontal = 8.dp),
+                    .padding(vertical = 96.dp, horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(

@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,7 +63,6 @@ private fun IdiomListScreen(
         LazyColumn(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(16.dp)
         ) {
             items(
                 items = idioms
@@ -74,8 +74,9 @@ private fun IdiomListScreen(
                             .clickable {
                                 onItemClick(it.id)
                             }
-                            .padding(16.dp, 8.dp),
-                        text = entity.word
+                            .padding(16.dp),
+                        text = entity.word,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }

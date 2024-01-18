@@ -78,7 +78,7 @@ private fun TextItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = title, style = MaterialTheme.typography.headlineSmall)
+        Text(text = "\uD83D\uDD3B $title", style = MaterialTheme.typography.titleMedium)
         Text(text = content)
     }
 }
@@ -91,7 +91,7 @@ fun CommentItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = title, style = MaterialTheme.typography.headlineSmall)
+        Text(text = "\uD83D\uDD3B $title", style = MaterialTheme.typography.titleMedium)
         for (comment in comments) {
             Text(text = comment)
         }

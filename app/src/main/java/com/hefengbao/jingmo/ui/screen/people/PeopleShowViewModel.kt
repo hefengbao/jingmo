@@ -7,7 +7,6 @@ import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.repository.PeopleRepository
 import com.hefengbao.jingmo.ui.screen.people.nav.PeopleShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.DEBUG_PROPERTY_VALUE_ON
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest

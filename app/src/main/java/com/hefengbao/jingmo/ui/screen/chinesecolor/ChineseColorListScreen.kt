@@ -18,11 +18,13 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -33,12 +35,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.ChineseColor
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun ChineseColorRoute(
@@ -62,7 +67,7 @@ fun ChineseColorRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun ChineseColorScreen(
     modifier: Modifier = Modifier,
@@ -78,103 +83,71 @@ private fun ChineseColorScreen(
         showSearchBar = false
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "中国传统色")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { showSearchBar = true }) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                    }
-                }
-            )
+    var query by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val state = rememberLazyListState()
+
+    LaunchedEffect(showSearchBar) {
+        if (showSearchBar){
+            state.animateScrollToItem(0)
         }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = modifier.padding(paddingValues),
-            content = {
-                itemsIndexed(
-                    items = chineseColors,
-                    key = { _, item -> item.id },
-                ) { _, item ->
-                    Item(item = item, onItemClick = onItemClick)
+    }
+
+    val keyboard = LocalSoftwareKeyboardController.current
+    
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "传统色",
+        actions = {
+            if (showSearchBar){
+                IconButton(
+                    onClick = {
+                        showSearchBar = false
+                        query = ""
+                    }
+                ) {
+                    Icon(imageVector = Icons.Default.SearchOff, contentDescription = null)
+                }
+            }else{
+                IconButton(
+                    onClick = { showSearchBar = true }
+                ) {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
                 }
             }
-        )
-    }
-
-    if (showSearchBar) {
-        SearchBar(
-            showSearchBarStatusChange = { showSearchBar = it },
-            onSearch = onSearch,
-            searchColors = searchColors,
-            onItemClick = onItemClick
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-    showSearchBarStatusChange: (Boolean) -> Unit,
-    onSearch: (String) -> Unit,
-    searchColors: List<ChineseColor>,
-    onItemClick: (String) -> Unit
-) {
-    var text by rememberSaveable { mutableStateOf("") }
-    var active by rememberSaveable { mutableStateOf(true) }
-
-    Box(Modifier.fillMaxSize()) {
-        androidx.compose.material3.SearchBar(
-            modifier = Modifier
-                .align(Alignment.TopCenter),
-            query = text,
-            onQueryChange = { text = it },
-            onSearch = {
-                active = true
-                if (text.isNotEmpty()) {
-                    onSearch(text)
-                }
-            },
-            active = active,
-            onActiveChange = {
-                active = it
-                showSearchBarStatusChange(it)
-            },
-            placeholder = { Text("请输入") },
-            leadingIcon = {
-                IconButton(onClick = { showSearchBarStatusChange(false) }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = null)
-                }
-            },
-            trailingIcon = {
-                IconButton(onClick = { text = "" }) {
-                    Icon(Icons.Default.Clear, contentDescription = null)
-                }
-            },
-        ) {
-            if (searchColors.isNotEmpty()) {
-                val state = rememberLazyListState()
-
-                LazyColumn(
-                    modifier = modifier.fillMaxWidth(),
-                    state = state,
-                    content = {
-                        itemsIndexed(
-                            items = searchColors,
-                        ) { _, item ->
-                            Item(item = item, onItemClick = onItemClick)
+        }
+    ){
+        LazyColumn(
+            modifier = modifier.fillMaxWidth(),
+            state = state
+        ){
+            item {
+                if (showSearchBar){
+                    SearchBar(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        query = query,
+                        onQueryChange = { query = it },
+                        onSearch = {
+                            onSearch(query)
+                            keyboard?.hide()
+                        },
+                        active = false,
+                        onActiveChange = {},
+                        placeholder = {
+                            Text(text = "请输入")
                         }
-                    }
-                )
+                    ) {}
+                }
+            }
+            itemsIndexed(
+                items = if (query.isNotEmpty()) searchColors else chineseColors,
+                key = { _, item -> item.id },
+            ) { _, item ->
+                Item(item = item, onItemClick = onItemClick)
             }
         }
     }
