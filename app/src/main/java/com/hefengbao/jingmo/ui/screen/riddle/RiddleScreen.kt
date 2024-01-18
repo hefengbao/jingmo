@@ -12,8 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -114,7 +112,7 @@ private fun RiddleScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
-                        .padding(16.dp,16.dp,16.dp,96.dp)
+                        .padding(16.dp, 16.dp, 16.dp, 96.dp)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(16.dp)

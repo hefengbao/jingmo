@@ -14,7 +14,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,7 +40,7 @@ fun ShowChineseWisecrackPanel(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(16.dp, 16.dp,16.dp,96.dp)
+                .padding(16.dp, 16.dp, 16.dp, 96.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
             SelectionContainer {

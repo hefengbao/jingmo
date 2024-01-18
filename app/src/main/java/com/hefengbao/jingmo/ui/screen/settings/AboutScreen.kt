@@ -15,15 +15,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,7 +53,7 @@ fun AboutScreen(
     context: Context,
     version: String
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "关于"){
+    SimpleScaffold(onBackClick = onBackClick, title = "关于") {
         SelectionContainer {
             Column(
                 modifier = modifier
@@ -80,7 +75,7 @@ fun AboutScreen(
                             painter = painterResource(id = R.drawable.ic_launcher_foreground),
                             contentDescription = null,
                             modifier = modifier
-                                .size(96.dp)
+                                .size(108.dp)
                         )
                         Text(
                             text = "当前版本：$version",
@@ -123,9 +118,11 @@ fun AboutScreen(
                     Icon(
                         imageVector = Icons.Default.ContentCopy,
                         contentDescription = null,
-                        modifier = modifier.clickable {
-                            ClipboardUtil.textCopyThenPost(context, copyText)
-                        }.padding(8.dp)
+                        modifier = modifier
+                            .clickable {
+                                ClipboardUtil.textCopyThenPost(context, copyText)
+                            }
+                            .padding(8.dp)
                     )
                 }
             }

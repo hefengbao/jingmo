@@ -162,7 +162,7 @@ fun AppNavHost(
                 chineseWisecrackGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
-                    onSearchClick = { navController.navigateToChineseWisecrackSearchScreen()},
+                    onSearchClick = { navController.navigateToChineseWisecrackSearchScreen() },
                     nestGraph = {
                         chineseWisecrackCaptureScreen(
                             onBackClick = navController::navigateUp
