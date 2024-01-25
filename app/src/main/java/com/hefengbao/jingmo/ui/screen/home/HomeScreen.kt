@@ -127,12 +127,12 @@ private fun HomeScreen(
                             onClick = onIdiomClick
                         )
                     }
-                    item {
+                    /*item {
                         Item(
                             title = "谜语",
                             onClick = onRiddleClick
                         )
-                    }
+                    }*/
                     item {
                         Item(
                             title = "绕口令",
