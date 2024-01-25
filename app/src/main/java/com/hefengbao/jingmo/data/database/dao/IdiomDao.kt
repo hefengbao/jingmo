@@ -18,10 +18,10 @@ interface IdiomDao {
     fun getIdiom(id: Int): Flow<IdiomEntity>
 
     @Query("select id from idioms where id > :id order by id asc limit 1")
-    suspend fun getNextId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
 
     @Query("select id from idioms where id < :id order by id desc limit 1")
-    suspend fun getPrevId(id: Int): Int
+    fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select id, word from idioms order by id asc")
     fun getSimpleIdiomInfoList(): PagingSource<Int, SimpleIdiomInfo>

@@ -30,7 +30,8 @@ fun PoemShowRoute(
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
         setCollect = { viewModel.setCollect(it) },
-        setUncollect = { viewModel.setUncollect(it) }
+        setUncollect = { viewModel.setUncollect(it) },
+        setLastReadId = { viewModel.setLastReadId(it) }
     )
 }
 
@@ -43,9 +44,11 @@ private fun PoemShowScreen(
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
     setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit
+    setUncollect: (Int) -> Unit,
+    setLastReadId: (Int) -> Unit,
 ) {
     writing?.let {
+        setLastReadId(it.id)
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文",

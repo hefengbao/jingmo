@@ -13,8 +13,8 @@ class IdiomRepositoryImpl @Inject constructor(
     private val idiomDao: IdiomDao
 ) : IdiomRepository {
     override fun getIdiom(id: Int): Flow<IdiomEntity> = idiomDao.getIdiom(id)
-    override suspend fun getNextId(id: Int): Int = idiomDao.getNextId(id)
-    override suspend fun getPrevId(id: Int): Int = idiomDao.getPrevId(id)
+    override fun getNextId(id: Int): Flow<Int?> = idiomDao.getNextId(id)
+    override fun getPrevId(id: Int): Flow<Int?> = idiomDao.getPrevId(id)
     override fun getSimpleIdiomInfoList(): Flow<PagingData<SimpleIdiomInfo>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {

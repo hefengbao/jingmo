@@ -26,11 +26,13 @@ import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalGraph
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomCaptureScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomListGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomReadScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomCaptureScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomReadScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
 import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
 import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleGraph
@@ -188,16 +190,19 @@ fun AppNavHost(
                 )
                 idiomListGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToIdiomGraph(it.toString()) },
+                    onItemClick = { navController.navigateToIdiomScreen(it.toString()) },
+                    onReadMoreClick = { navController.navigateToIdiomReadScreen() },
                     nestGraph = {
-                        idiomGraph(
+                        idiomScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToIdiomCaptureScreen(it.toString()) },
-                            nestGraph = {
-                                idiomCaptureScreen(
-                                    onBackClick = navController::navigateUp
-                                )
-                            }
+                        )
+                        idiomReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = { navController.navigateToIdiomCaptureScreen(it.toString()) }
+                        )
+                        idiomCaptureScreen(
+                            onBackClick = navController::navigateUp
                         )
                     }
                 )

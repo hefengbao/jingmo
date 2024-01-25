@@ -219,14 +219,14 @@ private fun DataScreen(
                         progress = poemSentencesResultProgress,
                         onClick = { count: Int, version: Int -> syncPoemSentences(count, version) }
                     ),
-                    Menu(
+                    /*Menu(
                         title = "谜语",
                         name = "riddles",
                         localVersion = datasetPref.riddlesVersion,
                         status = riddlesResult,
                         progress = riddlesResultProgress,
                         onClick = { count: Int, version: Int -> syncRiddles(count, version) }
-                    ),
+                    ),*/
                     Menu(
                         title = "绕口令",
                         name = "tongue_twisters",

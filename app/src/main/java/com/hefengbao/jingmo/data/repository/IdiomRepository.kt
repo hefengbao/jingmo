@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IdiomRepository {
     fun getIdiom(id: Int): Flow<IdiomEntity>
-    suspend fun getNextId(id: Int): Int
-    suspend fun getPrevId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
+    fun getPrevId(id: Int): Flow<Int?>
     fun getSimpleIdiomInfoList(): Flow<PagingData<SimpleIdiomInfo>>
     fun searchSimpleIdiomInfoList(query: String): Flow<PagingData<SimpleIdiomInfo>>
     suspend fun getSearchNextId(id: Int, query: String): Int

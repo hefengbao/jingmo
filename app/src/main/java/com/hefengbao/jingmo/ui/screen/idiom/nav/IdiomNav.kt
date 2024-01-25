@@ -7,7 +7,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import androidx.navigation.navigation
 import com.hefengbao.jingmo.ui.screen.idiom.IdiomRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -16,7 +15,6 @@ import java.net.URLEncoder
 internal const val idiomIdArg = "idiomId"
 
 private const val ROUTE_IDIOM = "idiom/{$idiomIdArg}"
-private const val ROUTE_IDIOM_GRAPH = "idiom_graph/{$idiomIdArg}"
 
 internal class IdiomArgs(val idiomId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
@@ -28,33 +26,26 @@ internal class IdiomArgs(val idiomId: String) {
             )
 }
 
-fun NavController.navigateToIdiomGraph(id: String) {
+fun NavController.navigateToIdiomScreen(id: String) {
     val encodedId = URLEncoder.encode(id, Charsets.UTF_8.name())
     this.navigate("idiom/$encodedId") {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.idiomGraph(
+fun NavGraphBuilder.idiomScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    nestGraph: NavGraphBuilder.() -> Unit
 ) {
-    navigation(
-        startDestination = ROUTE_IDIOM,
-        route = ROUTE_IDIOM_GRAPH
+    composable(
+        route = ROUTE_IDIOM,
+        arguments = listOf(
+            navArgument(idiomIdArg) { type = NavType.StringType }
+        )
     ) {
-        composable(
-            route = ROUTE_IDIOM,
-            arguments = listOf(
-                navArgument(idiomIdArg) { type = NavType.StringType }
-            )
-        ) {
-            IdiomRoute(
-                onBackClick = onBackClick,
-                onCaptureClick = onCaptureClick,
-            )
-        }
-        nestGraph()
+        IdiomRoute(
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick,
+        )
     }
 }

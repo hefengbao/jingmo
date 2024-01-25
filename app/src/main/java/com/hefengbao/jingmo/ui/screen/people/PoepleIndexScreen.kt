@@ -83,7 +83,10 @@ private fun PeopleIndexScreen(
                         }
                     },
                     active = false,
-                    onActiveChange = {}
+                    onActiveChange = {},
+                    placeholder = {
+                        Text(text = "请输入")
+                    }
                 ) {}
             }
 
