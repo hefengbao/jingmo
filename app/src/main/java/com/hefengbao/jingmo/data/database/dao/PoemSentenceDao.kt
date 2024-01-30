@@ -17,10 +17,10 @@ interface PoemSentenceDao {
     fun getSentence(id: Int): Flow<PoemSentenceEntity>
 
     @Query("select id from poem_sentences where id > :id order by id asc limit 1")
-    suspend fun getNextId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
 
     @Query("select id from poem_sentences where id < :id order by id desc limit 1")
-    suspend fun getPrevId(id: Int): Int
+    fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select * from poem_sentences where content like :query")
     fun searchSentencesList(query: String): PagingSource<Int, PoemSentenceEntity>

@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -38,16 +37,9 @@ fun PoemSentenceRoute(
     onCaptureClick: (Int) -> Unit,
     onSearchItemClick: () -> Unit
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getSentence(viewModel.id)
-        viewModel.getPrevId(viewModel.id)
-        viewModel.getNextId(viewModel.id)
-    }
 
     val prevId by viewModel.prevId.collectAsState(initial = null)
-
     val nextId by viewModel.nextId.collectAsState(initial = null)
-
     val sentence by viewModel.sentence.collectAsState(initial = null)
 
     PoemSentenceScreen(
@@ -57,19 +49,8 @@ fun PoemSentenceRoute(
         sentence = sentence,
         prevId = prevId,
         nextId = nextId,
-        onPrevClick = {
-            viewModel.getSentence(prevId!!)
-            viewModel.getPrevId(prevId!!)
-            viewModel.getNextId(prevId!!)
-        },
-        onNextClick = {
-            viewModel.getSentence(nextId!!)
-            viewModel.getPrevId(nextId!!)
-            viewModel.getNextId(nextId!!)
-        },
-        setLastReadId = {
-            viewModel.setLastReadId(it)
-        },
+        setCurrentId = { viewModel.setCurrentId(it) },
+        setLastReadId = { viewModel.setLastReadId(it) },
     )
 }
 
@@ -82,16 +63,12 @@ private fun PoemSentenceScreen(
     sentence: PoemSentenceEntity?,
     prevId: Int?,
     nextId: Int?,
-    onPrevClick: () -> Unit,
-    onNextClick: () -> Unit,
+    setCurrentId: (Int) -> Unit,
     setLastReadId: (Int) -> Unit,
 ) {
 
     sentence?.let {
-        LaunchedEffect(sentence) {
-            setLastReadId(sentence.id)
-        }
-
+        setLastReadId(sentence.id)
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文名句",
@@ -111,7 +88,7 @@ private fun PoemSentenceScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
-                        .padding(bottom = 56.dp)
+                        .padding(bottom = 80.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
                     Row(
@@ -150,22 +127,24 @@ private fun PoemSentenceScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
-                        .height(48.dp)
+                        .height(64.dp)
                         .align(
                             Alignment.BottomCenter
                         ),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(
-                        onClick = onPrevClick,
-                        enabled = prevId != 0
+                        modifier = modifier.padding(8.dp),
+                        onClick = { setCurrentId(prevId!!) },
+                        enabled = prevId != null
                     ) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
 
                     IconButton(
-                        onClick = onNextClick,
-                        enabled = nextId != 0
+                        modifier = modifier.padding(8.dp),
+                        onClick = { setCurrentId(nextId!!) },
+                        enabled = nextId != null
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }

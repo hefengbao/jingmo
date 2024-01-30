@@ -11,8 +11,8 @@ import javax.inject.Inject
 class PoemSentenceRepositoryImpl @Inject constructor(
     private val poemSentenceDao: PoemSentenceDao
 ) : PoemSentenceRepository {
-    override suspend fun getNextId(id: Int): Int = poemSentenceDao.getNextId(id)
-    override suspend fun getPrevId(id: Int): Int = poemSentenceDao.getPrevId(id)
+    override fun getNextId(id: Int): Flow<Int?> = poemSentenceDao.getNextId(id)
+    override fun getPrevId(id: Int): Flow<Int?> = poemSentenceDao.getPrevId(id)
     override fun searchSentencesList(query: String): Flow<PagingData<PoemSentenceEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = { poemSentenceDao.searchSentencesList("%$query%") }

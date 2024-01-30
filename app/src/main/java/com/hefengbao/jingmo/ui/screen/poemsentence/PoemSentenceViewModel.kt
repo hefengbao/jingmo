@@ -2,29 +2,36 @@ package com.hefengbao.jingmo.ui.screen.poemsentence
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PoemSentenceViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val poemSentenceRepository: PoemSentenceRepository
 ) : ViewModel() {
-    var id = 1
+    private var id = MutableStateFlow(1)
 
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id = it.poemSentencesLastReadId
+                id.value = it.poemSentencesLastReadId
             }
         }
+    }
+
+    fun setCurrentId(id: Int) {
+        this.id.value = id
     }
 
     fun setLastReadId(id: Int) {
@@ -33,29 +40,27 @@ class PoemSentenceViewModel @Inject constructor(
         }
     }
 
-    private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Int?> = _nextId
-    fun getNextId(id: Int) {
-        viewModelScope.launch {
-            _nextId.value = poemSentenceRepository.getNextId(id)
-        }
-    }
+    val sentence = id.flatMapLatest {
+        poemSentenceRepository.getSentence(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
 
-    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Int?> = _prevId
-    fun getPrevId(id: Int) {
-        viewModelScope.launch {
-            _prevId.value = poemSentenceRepository.getPrevId(id)
-        }
-    }
+    val prevId = id.flatMapLatest {
+        poemSentenceRepository.getPrevId(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
 
-    private val _sentence: MutableStateFlow<PoemSentenceEntity?> = MutableStateFlow(null)
-    val sentence: SharedFlow<PoemSentenceEntity?> = _sentence
-    fun getSentence(id: Int) {
-        viewModelScope.launch {
-            poemSentenceRepository.getSentence(id).collectLatest {
-                _sentence.value = it
-            }
-        }
-    }
+    val nextId = id.flatMapLatest {
+        poemSentenceRepository.getNextId(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
 }
