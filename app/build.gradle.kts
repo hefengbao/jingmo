@@ -149,7 +149,7 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    implementation("com.tencent.bugly:crashreport:latest.release")
+    implementation(libs.bugly)
 }
 
 class RoomSchemaArgProvider(
