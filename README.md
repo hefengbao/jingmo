@@ -86,7 +86,9 @@ Android 8.0 及以上
 
 [https://github.com/imoyao/GUSCSS/](https://github.com/imoyao/GUSCSS/)
 
-**本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀**
+~本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀~
+
+1.6.0 及之前，本项目使用的数据位于 `app/src/main/assets` 目录下，1.6.1 及以后，放在如下仓库里: `hefengbao/jingmo-data`、`hefengbao/jingmo-data2`, 具体在 `gh-pages` 分支。
 
 ## Github Star History
 
