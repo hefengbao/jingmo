@@ -14,6 +14,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.People
+import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.TongueTwister
@@ -28,7 +29,7 @@ interface NetworkDatasourceRepository {
     suspend fun insertChineseWisecrack(entity: ChineseWisecrackEntity)
     suspend fun syncIdioms(): Result<List<Idiom>>
     suspend fun insertIdiom(entity: IdiomEntity)
-    suspend fun syncPeople(): Result<List<People>>
+    suspend fun syncPeople(page: Int): Result<PeopleWrapper>
     suspend fun insertPeople(entity: PeopleEntity)
     suspend fun syncPoemSentences(): Result<List<PoemSentence>>
     suspend fun insertPoemSentence(entity: PoemSentenceEntity)

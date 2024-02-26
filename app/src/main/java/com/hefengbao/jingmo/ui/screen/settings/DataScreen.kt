@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowCircleDown
+import androidx.compose.material.icons.filled.CheckCircleOutline
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -346,16 +348,32 @@ private fun Item(
                     Text(text = title, style = MaterialTheme.typography.titleMedium)
                     Text(text = subtitle, color = Color.Gray)
                 }
-                CircularProgressIndicator(
-                    progress = progress,
-                    strokeWidth = 2.dp,
-                    modifier = modifier.size(24.dp)
-                )
+
+                if (enabled) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowCircleDown,
+                        contentDescription = null,
+                        tint = Color.Red
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircleOutline,
+                        contentDescription = null,
+                        tint = Color.Green
+                    )
+                }
+
+                if (progress != 100f) {
+                    CircularProgressIndicator(
+                        progress = progress,
+                        strokeWidth = 2.dp,
+                        modifier = modifier.size(24.dp)
+                    )
+                }
             }
             Spacer(modifier = modifier.width(16.dp))
             IconButton(
                 onClick = onClick,
-                enabled = enabled
             ) {
                 if (showProgressIndicator) {
                     CircularProgressIndicator()

@@ -16,6 +16,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.People
+import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.TongueTwister
@@ -55,8 +56,8 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         database.idiomDao().insert(entity)
     }
 
-    override suspend fun syncPeople(): Result<List<People>> = safeApiCall {
-        network.people()
+    override suspend fun syncPeople(page: Int): Result<PeopleWrapper> = safeApiCall {
+        network.people(page)
     }
 
     override suspend fun insertPeople(entity: PeopleEntity) {

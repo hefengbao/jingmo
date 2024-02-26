@@ -1,6 +1,5 @@
 package com.hefengbao.jingmo.ui.screen.settings
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
@@ -103,7 +102,6 @@ class DataViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = repository.syncIdioms()) {
                 is Result.Error -> {
-                    Log.e("DataViewModel", "${response.exception?.message}")
                     _idiomsResult.value = SyncStatus.Error(response.exception)
                 }
 
@@ -130,18 +128,27 @@ class DataViewModel @Inject constructor(
     fun syncPeople(total: Int, version: Int) {
         _peopleResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncPeople()) {
-                is Result.Error -> _peopleResult.value = SyncStatus.Error(response.exception)
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertPeople(it.asPeopleEntity())
-                        count++
-                        _peopleResultProgress.value = count.toFloat() / total
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncPeople(page)) {
+                    is Result.Error -> _peopleResult.value = SyncStatus.Error(response.exception)
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        if (response.data.nextPage != null) {
+                            page++
+                        } else {
+                            page = null
+                        }
+                        response.data.data.map {
+                            repository.insertPeople(it.asPeopleEntity())
+                            count++
+                            _peopleResultProgress.value = count.toFloat() / total
+                        }
                     }
                 }
             }
+
             preference.setPeopleVersion(version)
             _peopleResult.value = SyncStatus.Success
         }
@@ -157,7 +164,6 @@ class DataViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = repository.syncPoemSentences()) {
                 is Result.Error -> {
-                    Log.e("DataViewModel", "${response.exception?.message}")
                     _poemSentencesResult.value = SyncStatus.Error(response.exception)
                 }
 
@@ -241,7 +247,7 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncWritings(page)) {
-                    is Result.Error -> _writingsResult.value == response.exception
+                    is Result.Error -> _writingsResult.value == SyncStatus.Error(response.exception)
                     Result.Loading -> {}
                     is Result.Success -> {
                         if (response.data.nextPage != null) {

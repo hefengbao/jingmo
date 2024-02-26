@@ -5,6 +5,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.People
+import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.TongueTwister
@@ -58,7 +59,7 @@ class NetworkImpl @Inject constructor(
         networkApi.chineseWisecracks()
 
     override suspend fun idioms(): List<Idiom> = networkApi.idioms()
-    override suspend fun people(): List<People> = networkApi.people()
+    override suspend fun people(page: Int): PeopleWrapper = networkApi.people(page)
     override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()
     override suspend fun tongueTwisters(): List<TongueTwister> = networkApi.tongueTwisters()
