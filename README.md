@@ -44,7 +44,7 @@ Android 8.0 及以上
 
 ## 获取更新消息
 
-1. 经常使用 Github 或 Gitee 的人，可点个 "Star"。
+1. 经常使用 Github 或 Gitee 的同学，可点个 "Star"。
 
 2. 关注微信公众号『NowInLife』或者 B 站『NowInLife』获取最新更新，一般会在公众号发布一篇更新说明，在 B 站发布新功能演示视频。
 
