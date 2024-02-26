@@ -97,6 +97,7 @@ android {
         buildConfig = true
     }
     composeOptions {
+        // 参考 https://developer.android.google.cn/jetpack/androidx/releases/compose-kotlin
         kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
