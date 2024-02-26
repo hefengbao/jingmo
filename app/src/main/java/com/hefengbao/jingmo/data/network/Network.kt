@@ -20,5 +20,4 @@ interface Network {
     suspend fun riddles(): List<Riddle>
     suspend fun tongueTwisters(): List<TongueTwister>
     suspend fun writings(page: Int): WritingWrapper
-    suspend fun writings2(page: Int): WritingWrapper
 }

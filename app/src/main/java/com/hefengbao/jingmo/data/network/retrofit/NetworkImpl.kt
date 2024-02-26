@@ -20,6 +20,7 @@ import javax.inject.Singleton
 
 private val baseUrl = "https://hefengbao.github.io/jingmo-data/api/"
 private val baseUrl2 = "https://hefengbao.github.io/jingmo-data2/api/"
+private val baseUrl3 = "https://hefengbao.github.io/jingmo-data3/api/"
 
 @Singleton
 class NetworkImpl @Inject constructor(
@@ -43,6 +44,14 @@ class NetworkImpl @Inject constructor(
         ).build()
         .create(Api::class.java)
 
+    private val networkApi3 = Retrofit.Builder()
+        .baseUrl(baseUrl3)
+        .callFactory(okhttpCallFactory)
+        .addConverterFactory(
+            networkJson.asConverterFactory("application/json".toMediaType())
+        ).build()
+        .create(Api::class.java)
+
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
     override suspend fun chineseKnowledge(): List<ChineseKnowledge> = networkApi.chineseKnowledge()
     override suspend fun chineseWisecracks(): List<ChineseWisecrack> =
@@ -53,6 +62,5 @@ class NetworkImpl @Inject constructor(
     override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()
     override suspend fun tongueTwisters(): List<TongueTwister> = networkApi.tongueTwisters()
-    override suspend fun writings(page: Int): WritingWrapper = networkApi.writings(page)
-    override suspend fun writings2(page: Int): WritingWrapper = networkApi2.writings(page)
+    override suspend fun writings(page: Int): WritingWrapper = networkApi3.writings(page)
 }

@@ -150,6 +150,9 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     implementation(libs.bugly)
+
+    // 暂时使用，修复 LinearProgressIndicator 调用时的 NoSuchMethodError: No virtual method androidx/compose/animation/core/KeyframesSpec  错误
+    implementation("androidx.compose.foundation:foundation:1.7.0-alpha02")
 }
 
 class RoomSchemaArgProvider(

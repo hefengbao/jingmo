@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.ui.screen.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.network.Result
@@ -156,7 +158,14 @@ private fun DataScreen(
         title = "同步数据"
     ) {
         when (datasetResult) {
-            is Result.Error -> {}
+            is Result.Error -> {
+                Toast.makeText(
+                    LocalContext.current,
+                    "${datasetResult.exception?.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
             Result.Loading -> {
                 LinearProgressIndicator(modifier = modifier.fillMaxWidth())
             }

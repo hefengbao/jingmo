@@ -91,10 +91,6 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         network.writings(page)
     }
 
-    override suspend fun syncWritings2(page: Int): Result<WritingWrapper> = safeApiCall {
-        network.writings2(page)
-    }
-
     override suspend fun insertWriting(entity: WritingEntity) {
         database.writingDao().insert(entity)
     }

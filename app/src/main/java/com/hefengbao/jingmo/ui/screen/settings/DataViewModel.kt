@@ -240,12 +240,7 @@ class DataViewModel @Inject constructor(
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                val response = if (page <= 20) {
-                    repository.syncWritings(page)
-                } else {
-                    repository.syncWritings2(page)
-                }
-                when (response) {
+                when (val response = repository.syncWritings(page)) {
                     is Result.Error -> _writingsResult.value == response.exception
                     Result.Loading -> {}
                     is Result.Success -> {

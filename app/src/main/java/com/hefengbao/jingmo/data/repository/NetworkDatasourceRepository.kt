@@ -37,6 +37,5 @@ interface NetworkDatasourceRepository {
     suspend fun syncTongueTwisters(): Result<List<TongueTwister>>
     suspend fun insertTongueTwister(entity: TongueTwisterEntity)
     suspend fun syncWritings(page: Int): Result<WritingWrapper>
-    suspend fun syncWritings2(page: Int): Result<WritingWrapper>
     suspend fun insertWriting(entity: WritingEntity)
 }
