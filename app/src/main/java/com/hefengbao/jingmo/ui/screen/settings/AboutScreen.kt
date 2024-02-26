@@ -89,7 +89,7 @@ fun AboutScreen(
                 Text(text = "❤ 贺丰宝（hefengbao）设计和编码 ❤")
 
                 val desc = """
-                『京墨』是开源、免费、公益性 APP。献给喜欢中华文字、文学、文化的人。
+                『京墨』是开源、公益性 APP。献给喜欢中华文字、文学、文化的人。
                 
                 本应用使用的数据来自网络（主要是 Github 开源的仓库），可在项目仓库查看 README.md 中的说明。
                 
@@ -99,7 +99,7 @@ fun AboutScreen(
                 
                 https://gitee.com/hefengbao/jingmo
                 
-                懂技术的用户可以通过上述仓库获取最新版本。如果不懂技术，可以关注微信公众号『NowInLife』,发送“京墨”，获取最新的下载地址。
+                关注公众号『NowInLife』获取更新消息。
                 
                 如果在使用过程中，遇到内容错误，欢迎在公众号留言说明，我们共同改进。
                 
