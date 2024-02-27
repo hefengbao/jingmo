@@ -3,36 +3,31 @@ package com.hefengbao.jingmo.ui.screen.chinesewisecrack.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
+import com.hefengbao.jingmo.ui.component.BottomActionBar
 
 @Composable
 fun ShowChineseWisecrackPanel(
     modifier: Modifier = Modifier,
-    entity: ChineseWisecrackEntity,
+    entity: ChineseWisecrackWithBookmark,
     prevId: Int?,
-    onPrevClick: () -> Unit,
     nextId: Int?,
-    onNextClick: () -> Unit
+    setCurrentId: (Int) -> Unit,
+    setUncollect: (Int) -> Unit,
+    setCollect: (Int) -> Unit
 ) {
+    //var isCollect = entity.collectedAt != null
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -58,31 +53,68 @@ fun ShowChineseWisecrackPanel(
                 }
             }
         }
-        Row(
+        BottomActionBar(
+            modifier = modifier.align(Alignment.BottomCenter),
+            id = entity.id,
+            prevId = prevId,
+            nextId = nextId,
+            setCurrentId = { setCurrentId(it) },
+            setUncollect = { setUncollect(it) },
+            setCollect = { setCollect(it) },
+            collectedAt = entity.collectedAt
+        )
+        /*Row(
             modifier = modifier
                 .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
                 .padding(horizontal = 16.dp)
-                .height(80.dp)
+                .height(64.dp)
                 .align(
                     Alignment.BottomCenter
                 ),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = onPrevClick,
-                enabled = prevId != 0,
-                modifier = modifier.padding(16.dp)
+                onClick = { setCurrentId(prevId!!) },
+                enabled = prevId != null
             ) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                Icon(
+                    modifier = modifier.padding(8.dp),
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null
+                )
             }
-
             IconButton(
-                onClick = onNextClick,
-                enabled = nextId != 0,
-                modifier = modifier.padding(16.dp)
+                onClick = {
+                    if (isCollect) {
+                        setUncollect(entity.id)
+                    } else {
+                        setCollect(entity.id)
+                    }
+                    isCollect = !isCollect
+                }
+            ) {
+                if (isCollect) {
+                    Icon(
+                        imageVector = Icons.Default.Bookmark,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.BookmarkBorder,
+                        contentDescription = null
+                    )
+                }
+            }
+            IconButton(
+                modifier = modifier.padding(8.dp),
+                onClick = { setCurrentId(nextId!!) },
+                enabled = nextId != null
             ) {
                 Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
             }
-        }
+        }*/
     }
 }

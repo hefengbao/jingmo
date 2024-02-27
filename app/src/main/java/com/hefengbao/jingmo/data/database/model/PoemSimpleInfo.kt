@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.database.model
 
 import androidx.room.ColumnInfo
 
+@Deprecated("")
 data class PoemSimpleInfo(
     val id: Long,
     @ColumnInfo(name = "writer_name")

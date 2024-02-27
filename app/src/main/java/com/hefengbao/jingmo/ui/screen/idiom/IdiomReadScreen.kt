@@ -1,28 +1,19 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
+import com.hefengbao.jingmo.ui.component.BottomActionBar
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.idiom.components.IdiomShowPanel
 
@@ -43,8 +34,8 @@ fun IdiomReadRoute(
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
-        setCollect = {},
-        setUncollect = {},
+        setCollect = { viewModel.setCollect(it) },
+        setUncollect = { viewModel.setUncollect(it) },
         setLastReadId = { viewModel.setLastReadId(it) }
     )
 }
@@ -54,7 +45,7 @@ private fun IdiomReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    idiom: IdiomEntity?,
+    idiom: IdiomWithBookmark?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
@@ -77,7 +68,17 @@ private fun IdiomReadScreen(
                 modifier = modifier.fillMaxSize()
             ) {
                 IdiomShowPanel(idiom = entity)
-                Row(
+                BottomActionBar(
+                    modifier = modifier.align(Alignment.BottomCenter),
+                    id = entity.id,
+                    prevId = prevId,
+                    nextId = nextId,
+                    setCurrentId = setCurrentId,
+                    setUncollect = setUncollect,
+                    setCollect = setCollect,
+                    collectedAt = entity.collectedAt
+                )
+                /*Row(
                     modifier = modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.background)
@@ -106,7 +107,7 @@ private fun IdiomReadScreen(
                     ) {
                         Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                     }
-                }
+                }*/
             }
         }
     }

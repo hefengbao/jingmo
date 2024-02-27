@@ -8,8 +8,8 @@ import androidx.room.Query
 import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
-import com.hefengbao.jingmo.data.database.model.WritingCollectionInfo
-import com.hefengbao.jingmo.data.database.model.WritingWithCollection
+import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
+import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,7 +18,7 @@ interface WritingDao {
     suspend fun insert(entity: WritingEntity)
 
     @Query("select w.rowid, w.*, c.collected_at from writings w left join writing_collections c on w.rowid = c.id where  w.rowid = :id limit 1")
-    fun get(id: Int): Flow<WritingWithCollection>
+    fun get(id: Int): Flow<WritingWithBookmark>
 
     @Query("select rowid, w.* from writings w order by rowid asc")
     fun list(): PagingSource<Int, WritingEntity>
@@ -49,7 +49,7 @@ interface WritingDao {
     fun getSearchPrevId(id: Int, query: String): Flow<Int?>
 
     @Query("select c.id as id,c.collected_at as collected_at,w.author as author,w.dynasty as dynasty,w.type as type,w.title_content as title from writing_collections c join writings w on c.id = w.rowid order by c.collected_at desc")
-    fun collections(): PagingSource<Int, WritingCollectionInfo>
+    fun collections(): PagingSource<Int, WritingBookmarkSimpleInfo>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun collect(entity: WritingCollectionEntity)

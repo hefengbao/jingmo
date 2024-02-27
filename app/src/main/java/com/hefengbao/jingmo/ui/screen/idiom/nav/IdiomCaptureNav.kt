@@ -14,6 +14,8 @@ import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
 internal const val idiomCaptureIdArg = "idiomId"
+private const val base = "idiom_capture"
+private const val ROUTE = "$base/{$idiomCaptureIdArg}"
 
 internal class IdiomCaptureArgs(val idiomId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
@@ -22,7 +24,7 @@ internal class IdiomCaptureArgs(val idiomId: String) {
 
 fun NavController.navigateToIdiomCaptureScreen(id: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
-    this.navigate("idiom_capture/$encodedId") {
+    this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
 }
@@ -31,7 +33,7 @@ fun NavGraphBuilder.idiomCaptureScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = "idiom_capture/{$idiomCaptureIdArg}",
+        route = ROUTE,
         arguments = listOf(
             navArgument(idiomCaptureIdArg) { type = NavType.StringType }
         )

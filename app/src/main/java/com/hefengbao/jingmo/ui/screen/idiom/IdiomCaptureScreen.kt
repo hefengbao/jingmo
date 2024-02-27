@@ -1,6 +1,5 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -26,7 +25,6 @@ fun IdiomCaptureRoute(
 ) {
     val idiom by viewModel.idiom.collectAsState(initial = null)
     val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
-    Log.i("IdiomCaptureRoute", "before viewModel.appStatus")
     val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {
@@ -52,7 +50,7 @@ private fun IdiomCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    idiom: IdiomEntity?,
+    idiom: IdiomWithBookmark?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

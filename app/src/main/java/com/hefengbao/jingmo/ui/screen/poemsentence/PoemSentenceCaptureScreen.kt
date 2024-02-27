@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
+import com.hefengbao.jingmo.data.database.model.PoemSentenceWithBookmark
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -52,7 +52,7 @@ private fun PoemSentenceCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    poemSentence: PoemSentenceEntity?,
+    poemSentence: PoemSentenceWithBookmark?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

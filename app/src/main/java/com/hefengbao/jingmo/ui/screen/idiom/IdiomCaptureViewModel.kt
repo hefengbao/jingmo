@@ -1,6 +1,5 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,7 +32,6 @@ class IdiomCaptureViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             appStatus = preferenceRepository.getAppStatus().first()
-            Log.i("IdiomCaptureViewModel", "init appStatus")
         }
     }
 

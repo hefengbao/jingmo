@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -69,6 +70,9 @@ private fun PoemSearchScreen(
             onBackClick = onBackClick,
             title = query
         ) {
+            if (writings.itemCount == 0) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            }
             List(writings = writings, onItemClick = onItemClick, type = type, query = query)
         }
     } else {
@@ -80,6 +84,9 @@ private fun PoemSearchScreen(
             },
             onSearch = { /*TODO*/ }
         ) {
+            if (query.isNotEmpty() && writings.itemCount == 0) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            }
             List(writings = writings, onItemClick = onItemClick, type = type, query = query)
         }
     }

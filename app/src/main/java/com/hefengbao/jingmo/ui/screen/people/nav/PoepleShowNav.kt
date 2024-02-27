@@ -13,8 +13,8 @@ import kotlin.text.Charsets.UTF_8
 
 internal const val peopleShowTypeArg = "type"
 internal const val peopleShowQueryArg = "id"
-
-private const val ROUTE = "people_show/{$peopleShowTypeArg}/{$peopleShowQueryArg}"
+private const val base = "people_show"
+private const val ROUTE = "$base/{$peopleShowTypeArg}/{$peopleShowQueryArg}"
 
 internal class PeopleShowArgs(val type: String, val query: String) {
     constructor(savedStateHandle: SavedStateHandle) :
@@ -27,7 +27,7 @@ internal class PeopleShowArgs(val type: String, val query: String) {
 fun NavController.navigateToPeopleShowScreen(type: String, query: String) {
     val encodeType = URLEncoder.encode(type, UTF_8.name())
     val encodeQuery = URLEncoder.encode(query, UTF_8.name())
-    this.navigate("people_show/$encodeType/$encodeQuery") {
+    this.navigate("$base/$encodeType/$encodeQuery") {
         launchSingleTop = true
     }
 }

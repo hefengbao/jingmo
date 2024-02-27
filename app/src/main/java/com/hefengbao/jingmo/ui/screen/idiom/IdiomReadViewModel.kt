@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.ui.screen.idiom
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,6 +59,18 @@ class IdiomReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
+
+    fun setUncollect(id: Int) {
+        viewModelScope.launch {
+            idiomRepository.uncollect(id)
+        }
+    }
+
+    fun setCollect(id: Int) {
+        viewModelScope.launch {
+            idiomRepository.collect(IdiomCollectionEntity(id))
+        }
+    }
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {

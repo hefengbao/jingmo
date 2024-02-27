@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -49,7 +49,7 @@ private fun ChineseWisecrackCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    chineseWisecrack: ChineseWisecrackEntity?,
+    chineseWisecrack: ChineseWisecrackWithBookmark?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

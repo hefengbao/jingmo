@@ -13,6 +13,9 @@ import kotlin.text.Charsets.UTF_8
 
 internal const val chineseWisecrackSearchShowIdArg = "id"
 internal const val chineseWisecrackSearchShowQueryArg = "query"
+private const val base = "chinese_wisecrack_search_show"
+private const val ROUTE =
+    "$base/{$chineseWisecrackSearchShowIdArg}/{$chineseWisecrackSearchShowQueryArg}"
 
 internal class ChineseWisecrackSearchShowArgs(val id: String, val query: String) {
     constructor(savedStateHandle: SavedStateHandle) :
@@ -32,7 +35,7 @@ internal class ChineseWisecrackSearchShowArgs(val id: String, val query: String)
 fun NavController.navigateToChineseWisecrackSearchShowScreen(id: String, query: String) {
     val encodeId = URLEncoder.encode(id, UTF_8.name())
     val encodeQuery = URLDecoder.decode(query, UTF_8.name())
-    this.navigate("chinese_wisecrack_search_show/$encodeId/$encodeQuery")
+    this.navigate("$base/$encodeId/$encodeQuery")
 }
 
 fun NavGraphBuilder.chineseWisecrackSearchShowScreen(
@@ -40,7 +43,7 @@ fun NavGraphBuilder.chineseWisecrackSearchShowScreen(
     onCaptureClick: (Int) -> Unit,
 ) {
     composable(
-        route = "chinese_wisecrack_search_show/{$chineseWisecrackSearchShowIdArg}/{$chineseWisecrackSearchShowQueryArg}",
+        route = ROUTE,
         arguments = listOf(
             navArgument(chineseWisecrackSearchShowIdArg) { type = NavType.StringType },
             navArgument(chineseWisecrackSearchShowQueryArg) { type = NavType.StringType },

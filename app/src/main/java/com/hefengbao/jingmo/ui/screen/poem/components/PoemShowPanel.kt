@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material3.Icon
@@ -25,12 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.model.WritingWithCollection
+import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 
 @Composable
 fun PoemShowPanel(
     modifier: Modifier = Modifier,
-    writing: WritingWithCollection,
+    writing: WritingWithBookmark,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
@@ -168,7 +166,7 @@ fun PoemShowPanel(
             ) {
                 Icon(
                     modifier = modifier.padding(8.dp),
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null
                 )
             }
@@ -200,7 +198,7 @@ fun PoemShowPanel(
                 onClick = { setCurrentId(nextId!!) },
                 enabled = nextId != null
             ) {
-                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
             }
         }
     }

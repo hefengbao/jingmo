@@ -14,6 +14,8 @@ import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
 internal const val poemSentenceCaptureIdArg = "poemSentenceId"
+private const val base = "poem_sentence_capture"
+private const val ROUTE = "$base/{$poemSentenceCaptureIdArg}"
 
 internal class PoemSentenceCaptureArgs(val poemSentenceId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
@@ -27,7 +29,7 @@ internal class PoemSentenceCaptureArgs(val poemSentenceId: String) {
 
 fun NavController.navigateToPoemSentenceCaptureScreen(id: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
-    this.navigate("poem_sentence_capture/$encodedId") {
+    this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
 }
@@ -36,7 +38,7 @@ fun NavGraphBuilder.poemSentenceCaptureScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = "poem_sentence_capture/{$poemSentenceCaptureIdArg}",
+        route = ROUTE,
         arguments = listOf(
             navArgument(poemSentenceCaptureIdArg) { type = NavType.StringType }
         )

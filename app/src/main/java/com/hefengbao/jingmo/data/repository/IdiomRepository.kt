@@ -1,16 +1,23 @@
 package com.hefengbao.jingmo.data.repository
 
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
 import com.hefengbao.jingmo.data.database.model.SimpleIdiomInfo
 import kotlinx.coroutines.flow.Flow
 
 interface IdiomRepository {
-    fun getIdiom(id: Int): Flow<IdiomEntity>
+    fun getIdiom(id: Int): Flow<IdiomWithBookmark>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
     fun getSimpleIdiomInfoList(): Flow<PagingData<SimpleIdiomInfo>>
     fun searchSimpleIdiomInfoList(query: String): Flow<PagingData<SimpleIdiomInfo>>
     suspend fun getSearchNextId(id: Int, query: String): Int
     suspend fun getSearchPrevId(id: Int, query: String): Int
+    fun collections(): Flow<PagingData<IdiomWithBookmark>>
+    suspend fun collect(entity: IdiomCollectionEntity)
+    suspend fun uncollect(id: Int)
+    fun isCollect(id: Int): Flow<IdiomCollectionEntity?>
+    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
+    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 }

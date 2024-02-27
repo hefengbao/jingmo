@@ -11,10 +11,10 @@ class ChineseKnowledgeRepositoryImpl @Inject constructor(
     override fun getChineseKnowledge(id: Int): Flow<ChineseKnowledgeEntity> =
         chineseKnowledgeDao.getChineseKnowledge(id)
 
-    override suspend fun getPrevId(id: Int): Int =
+    override fun getPrevId(id: Int): Flow<Int?> =
         chineseKnowledgeDao.getPrevId(id)
 
-    override suspend fun getNextId(id: Int): Int =
+    override fun getNextId(id: Int): Flow<Int?> =
         chineseKnowledgeDao.getNestId(id)
 
     override fun getSearchChineseKnowledgeList(query: String): Flow<List<ChineseKnowledgeEntity>> =

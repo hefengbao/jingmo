@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ReadMore
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.Icon
@@ -28,7 +27,7 @@ fun PoemIndexRoute(
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
     onAuthorClick: (String) -> Unit,
-    onCollectClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
 ) {
     val recommendList by viewModel.recommendList.collectAsState(initial = emptyList())
@@ -37,7 +36,7 @@ fun PoemIndexRoute(
         onBackClick = onBackClick,
         onAuthorClick = onAuthorClick,
         onSearchClick = onSearchClick,
-        onCollectClick = onCollectClick,
+        onBookmarksClick = onBookmarksClick,
         onReadMoreClick = onReadMoreClick,
         recommendList = recommendList,
     )
@@ -49,7 +48,7 @@ private fun PoemIndexScreen(
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
     onAuthorClick: (String) -> Unit,
-    onCollectClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
     recommendList: List<String>,
 ) {
@@ -57,11 +56,11 @@ private fun PoemIndexScreen(
         onBackClick = onBackClick,
         title = "诗文",
         actions = {
-            IconButton(onClick = onCollectClick) {
+            IconButton(onClick = onBookmarksClick) {
                 Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
             }
             IconButton(onClick = onReadMoreClick) {
-                Icon(imageVector = Icons.Default.ReadMore, contentDescription = "阅读")
+                Icon(imageVector = Icons.AutoMirrored.Filled.ReadMore, contentDescription = "阅读")
             }
             IconButton(onClick = onSearchClick) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "查找")

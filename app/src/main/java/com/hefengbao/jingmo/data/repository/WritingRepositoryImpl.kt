@@ -7,15 +7,15 @@ import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
-import com.hefengbao.jingmo.data.database.model.WritingCollectionInfo
-import com.hefengbao.jingmo.data.database.model.WritingWithCollection
+import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
+import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class WritingRepositoryImpl @Inject constructor(
     private val database: AppDatabase
 ) : WritingRepository {
-    override fun get(id: Int): Flow<WritingWithCollection> = database.writingDao().get(id)
+    override fun get(id: Int): Flow<WritingWithBookmark> = database.writingDao().get(id)
     override fun list(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = { database.writingDao().list() }
@@ -49,7 +49,7 @@ class WritingRepositoryImpl @Inject constructor(
     override fun getSearchPrevId(id: Int, query: String): Flow<Int?> =
         database.writingDao().getSearchPrevId(id, "%$query%")
 
-    override fun collections(): Flow<PagingData<WritingCollectionInfo>> = Pager(
+    override fun collections(): Flow<PagingData<WritingBookmarkSimpleInfo>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
             database.writingDao().collections()

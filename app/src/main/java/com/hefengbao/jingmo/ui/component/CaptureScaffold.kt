@@ -25,7 +25,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TextFormat
@@ -44,6 +43,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -73,7 +73,10 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class,
+    ExperimentalComposeApi::class
+)
 @Composable
 fun CaptureScaffold(
     modifier: Modifier = Modifier,
@@ -124,7 +127,7 @@ fun CaptureScaffold(
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null
                         )
                     }
@@ -134,7 +137,7 @@ fun CaptureScaffold(
                         // Android 10 以下需要存储权限
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                             if (writeStoragePermissionState.status.isGranted) {
-                                captureController.capture()
+                                captureController.captureAsync()
                             } else {
                                 if (writeStoragePermissionState.status.shouldShowRationale) {
                                     shouldShowRationale = true
@@ -143,7 +146,7 @@ fun CaptureScaffold(
                                 }
                             }
                         } else {
-                            captureController.capture()
+                            captureController.captureAsync()
                         }
                     }) {
                         Icon(imageVector = Icons.Default.SaveAlt, contentDescription = null)

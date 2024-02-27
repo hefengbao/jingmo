@@ -3,66 +3,74 @@ package com.hefengbao.jingmo.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorListGraph
-import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorScreen
-import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorListGraph
-import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorScreen
-import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeGraph
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorShowScreen
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorShowScreen
+import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeIndexGraph
 import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeSearchScreen
 import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowSearchScreen
-import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowledgeGraph
+import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowledgeIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptureScreen
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackCaptureScreen
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackGraph
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchShowScreen
-import com.hefengbao.jingmo.ui.screen.festival.nav.festivalGraph
-import com.hefengbao.jingmo.ui.screen.festival.nav.festivalScreen
-import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestival
-import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalGraph
+import com.hefengbao.jingmo.ui.screen.festival.nav.festivalIndexGraph
+import com.hefengbao.jingmo.ui.screen.festival.nav.festivalShowScreen
+import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalIndexGraph
+import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalShowScreen
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomCaptureScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomListGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomIndexGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomReadScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomShowScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomCaptureScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomListGraph
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomIndexGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomReadScreen
-import com.hefengbao.jingmo.ui.screen.links.nav.linksScreen
-import com.hefengbao.jingmo.ui.screen.links.nav.navigateToLinksScreen
+import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomShowScreen
+import com.hefengbao.jingmo.ui.screen.link.nav.linkIndexScreen
+import com.hefengbao.jingmo.ui.screen.link.nav.navigateToLinkIndexScreen
 import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleGraph
 import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleShowScreen
 import com.hefengbao.jingmo.ui.screen.people.nav.peopleGraph
 import com.hefengbao.jingmo.ui.screen.people.nav.peopleShowScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCollectionScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCollectionShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemIndexGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemReadScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchShowScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemShowScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemCollectionScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemCollectionShowScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemIndexGraph
+import com.hefengbao.jingmo.ui.screen.poem.nav.poemReadScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchScreen
 import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemShowScreen
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceGraph
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceIndexGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceSearchScreen
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceGraph
+import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceIndexGraph
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.poemSentenceSearchScreen
-import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleGraph
+import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.riddle.nav.navigateToRiddleSearchScreen
-import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleGraph
+import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
@@ -73,14 +81,14 @@ import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsGraph
 import com.hefengbao.jingmo.ui.screen.settings.nav.privacyScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsDataScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsGraph
-import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTerm
-import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermGraph
-import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermGraph
-import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermScreen
-import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterGraph
-import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterScreen
-import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterGraph
-import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterScreen
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermIndexGraph
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.navigateToSolarTermShowScreen
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermIndexGraph
+import com.hefengbao.jingmo.ui.screen.solarterm.nav.solarTermShowScreen
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterIndexGraph
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterShowScreen
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterIndexGraph
+import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterShowScreen
 
 @Composable
 fun AppNavHost(
@@ -91,18 +99,18 @@ fun AppNavHost(
         startDestination = ROUTE_HOME_GRAPH
     ) {
         homeGraph(
-            onLinksClick = { navController.navigateToLinksScreen() },
+            onLinksClick = { navController.navigateToLinkIndexScreen() },
             onSettingsClick = { navController.navigateToSettingsGraph() },
             onPoemClick = { navController.navigateToPoemIndexGraph() },
-            onPoemSentenceClick = { navController.navigateToPoemSentenceGraph() },
-            onChineseWisecrackClick = { navController.navigateToChineseWisecrackGraph() },
-            onIdiomClick = { navController.navigateToIdiomListGraph() },
-            onChineseColorClick = { navController.navigateToChineseColorListGraph() },
-            onFestivalClick = { navController.navigateToFestivalGraph() },
-            onSolarTermsClick = { navController.navigateToSolarTermGraph() },
-            onTongueTwisterClick = { navController.navigateToTongueTwisterGraph() },
-            onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeGraph() },
-            onRiddleClick = { navController.navigateToRiddleGraph() },
+            onPoemSentenceClick = { navController.navigateToPoemSentenceIndexGraph() },
+            onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
+            onIdiomClick = { navController.navigateToIdiomIndexGraph() },
+            onChineseColorClick = { navController.navigateToChineseColorIndexGraph() },
+            onFestivalClick = { navController.navigateToFestivalIndexGraph() },
+            onSolarTermsClick = { navController.navigateToSolarTermIndexGraph() },
+            onTongueTwisterClick = { navController.navigateToTongueTwisterIndexGraph() },
+            onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
+            onRiddleClick = { navController.navigateToRiddleIndexGraph() },
             onPeopleClick = { navController.navigateToPeopleGraph() },
             nestGraph = {
                 poemIndexGraph(
@@ -112,18 +120,18 @@ fun AppNavHost(
                         navController.navigateToPoemSearchScreen("search", "search")
                     },
                     onAuthorClick = { navController.navigateToPoemSearchScreen("author", it) },
-                    onCollectClick = { navController.navigateToPoemCollectionScreen() },
+                    onBookmarksClick = { navController.navigateToPoemBookmarksScreen() },
                     onReadMoreClick = {
-                        navController.navigateToPoemShowScreen()
+                        navController.navigateToPoemReadScreen()
                     },
                     nestGraph = {
-                        poemCollectionScreen(
+                        poemBookmarksScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = {
-                                navController.navigateToPoemCollectionShowScreen(it.toString())
+                                navController.navigateToPoemBookmarksReadScreen(it.toString())
                             }
                         )
-                        poemCollectionShowScreen(
+                        poemBookmarksReadScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) }
                         )
@@ -137,7 +145,7 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) }
                         )
-                        poemShowScreen(
+                        poemReadScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
                         )
@@ -146,11 +154,11 @@ fun AppNavHost(
                         )
                     }
                 )
-
-                poemSentenceGraph(
+                poemSentenceIndexGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
                     onSearchClick = { navController.navigateToPoemSentenceSearchScreen() },
+                    onBookmarksClick = { navController.navigateToPoemSentenceBookmarksScreen() },
                     nestGraph = {
                         poemSentenceCaptureScreen(
                             onBackClick = navController::navigateUp
@@ -159,12 +167,16 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToPoemSentenceCaptureScreen(it.toString()) },
                         )
+                        poemSentenceBookmarksScreen(
+                            onBackClick = navController::navigateUp
+                        )
                     }
                 )
-                chineseWisecrackGraph(
+                chineseWisecrackIndexGraph(
                     onBackClick = navController::navigateUp,
                     onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
                     onSearchClick = { navController.navigateToChineseWisecrackSearchScreen() },
+                    onBookmarksClick = { navController.navigateToChineseWisecrackBookmarksScreen() },
                     nestGraph = {
                         chineseWisecrackCaptureScreen(
                             onBackClick = navController::navigateUp
@@ -186,14 +198,18 @@ fun AppNavHost(
                                 )
                             },
                         )
+                        chineseWisecrackBookmarksScreen(
+                            onBackClick = navController::navigateUp
+                        )
                     }
                 )
-                idiomListGraph(
+                idiomIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToIdiomScreen(it.toString()) },
+                    onItemClick = { navController.navigateToIdiomShowScreen(it.toString()) },
                     onReadMoreClick = { navController.navigateToIdiomReadScreen() },
+                    onBookmarksClick = { navController.navigateToIdiomBookmarksScreen() },
                     nestGraph = {
-                        idiomScreen(
+                        idiomShowScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToIdiomCaptureScreen(it.toString()) },
                         )
@@ -204,45 +220,52 @@ fun AppNavHost(
                         idiomCaptureScreen(
                             onBackClick = navController::navigateUp
                         )
-                    }
-                )
-                chineseColorListGraph(
-                    onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToChineseColorScreen(it) },
-                    nestGraph = {
-                        chineseColorScreen(
+                        idiomBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToIdiomBookmarksReadScreen(it.toString()) }
+                        )
+                        idiomBookmarksReadScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
                 )
-                festivalGraph(
+                chineseColorIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToFestival(it.toString()) },
+                    onItemClick = { navController.navigateToChineseColorShowScreen(it) },
                     nestGraph = {
-                        festivalScreen(
+                        chineseColorShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
                 )
-                solarTermGraph(
+                festivalIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToSolarTerm(it.toString()) },
+                    onItemClick = { navController.navigateToFestivalShowScreen(it.toString()) },
                     nestGraph = {
-                        solarTermScreen(
+                        festivalShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
                 )
-                tongueTwisterGraph(
+                solarTermIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemsClick = { navController.navigateToTongueTwisterScreen(it.toString()) },
+                    onItemClick = { navController.navigateToSolarTermShowScreen(it.toString()) },
                     nestGraph = {
-                        tongueTwisterScreen(
+                        solarTermShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
                 )
-                chineseKnowledgeGraph(
+                tongueTwisterIndexGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemsClick = { navController.navigateToTongueTwisterShowScreen(it.toString()) },
+                    nestGraph = {
+                        tongueTwisterShowScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                chineseKnowledgeIndexGraph(
                     onBackClick = navController::navigateUp,
                     onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
                     nestGraph = {
@@ -251,7 +274,7 @@ fun AppNavHost(
                         )
                     }
                 )
-                linksScreen(
+                linkIndexScreen(
                     onBackClick = navController::navigateUp
                 )
                 settingsGraph(
@@ -271,7 +294,7 @@ fun AppNavHost(
                         )
                     }
                 )
-                riddleGraph(
+                riddleIndexGraph(
                     onBackClick = navController::navigateUp,
                     onInfoClick = { navController.navigateToRiddleInfoScreen() },
                     onSearchClick = { navController.navigateToRiddleSearchScreen() },

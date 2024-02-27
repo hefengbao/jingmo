@@ -14,6 +14,10 @@ import kotlin.text.Charsets.UTF_8
 internal const val poemSearchQueryArg = "query"
 internal const val poemSearchTypeArg = "type"
 
+private const val base = "poem_search"
+
+private const val ROUTE = "$base/{$poemSearchTypeArg}/{$poemSearchQueryArg}"
+
 internal class PoemSearchArgs(val type: String, val query: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
@@ -31,7 +35,7 @@ internal class PoemSearchArgs(val type: String, val query: String) {
 fun NavController.navigateToPoemSearchScreen(type: String, query: String) {
     val encodedQuery = URLEncoder.encode(query, UTF_8.name())
     val encodedType = URLEncoder.encode(type, UTF_8.name())
-    this.navigate("poem_search/$encodedType/$encodedQuery") {
+    this.navigate("$base/$encodedType/$encodedQuery") {
         launchSingleTop = true
     }
 }
@@ -41,7 +45,7 @@ fun NavGraphBuilder.poemSearchScreen(
     onItemClick: (id: String, type: String, query: String) -> Unit,
 ) {
     composable(
-        route = "poem_search/{$poemSearchTypeArg}/{$poemSearchQueryArg}",
+        route = ROUTE,
         arguments = listOf(
             navArgument(poemSearchTypeArg) { type = NavType.StringType },
             navArgument(poemSearchQueryArg) { type = NavType.StringType },

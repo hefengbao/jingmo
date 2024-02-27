@@ -16,10 +16,10 @@ interface ChineseKnowledgeDao {
     fun getChineseKnowledge(id: Int): Flow<ChineseKnowledgeEntity>
 
     @Query("select id from chinese_knowledge where id <:id order by id desc limit 1")
-    suspend fun getPrevId(id: Int): Int
+    fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select id from chinese_knowledge where id > :id order by id asc limit 1")
-    suspend fun getNestId(id: Int): Int
+    fun getNestId(id: Int): Flow<Int?>
 
     @Query("select * from chinese_knowledge where content like :query")
     fun getSearchChineseKnowledgeList(query: String): Flow<List<ChineseKnowledgeEntity>>

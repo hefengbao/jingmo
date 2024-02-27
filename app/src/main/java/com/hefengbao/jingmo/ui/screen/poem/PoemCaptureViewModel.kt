@@ -3,7 +3,7 @@ package com.hefengbao.jingmo.ui.screen.poem
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.model.WritingWithCollection
+import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
@@ -26,8 +26,8 @@ class PoemCaptureViewModel @Inject constructor(
 ) : ViewModel() {
     private val args: PoemCaptureArgs = PoemCaptureArgs(savedStateHandle)
 
-    private val _poem: MutableStateFlow<WritingWithCollection?> = MutableStateFlow(null)
-    val poem: SharedFlow<WritingWithCollection?> = _poem
+    private val _poem: MutableStateFlow<WritingWithBookmark?> = MutableStateFlow(null)
+    val poem: SharedFlow<WritingWithBookmark?> = _poem
 
     lateinit var appStatus: AppStatus
 

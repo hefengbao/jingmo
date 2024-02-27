@@ -7,15 +7,15 @@ import com.hefengbao.jingmo.ui.screen.idiom.IdiomReadRoute
 
 private const val ROUTE = "idiom_read"
 
-fun NavController.navigateToIdiomReadScreen(){
+fun NavController.navigateToIdiomReadScreen() {
     this.navigate(ROUTE)
 }
 
 fun NavGraphBuilder.idiomReadScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit
-){
-    composable(ROUTE){
+) {
+    composable(ROUTE) {
         IdiomReadRoute(
             onBackClick = onBackClick,
             onCaptureClick = onCaptureClick
