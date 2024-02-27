@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ReadMore
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.Icon
@@ -60,7 +61,7 @@ private fun PoemIndexScreen(
                 Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
             }
             IconButton(onClick = onReadMoreClick) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ReadMore, contentDescription = "阅读")
+                Icon(imageVector = Icons.Default.ReadMore, contentDescription = "阅读")
             }
             IconButton(onClick = onSearchClick) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
