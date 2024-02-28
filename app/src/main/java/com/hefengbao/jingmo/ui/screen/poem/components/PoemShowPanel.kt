@@ -61,7 +61,7 @@ fun PoemShowPanel(
             append(clause.content)
 
             if (clause.breakAfter != null) {
-                append("\n")
+                append("\n\n")
             }
         }
     }
@@ -98,20 +98,20 @@ fun PoemShowPanel(
                         modifier = modifier
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         Text(
                             text = writing.title.content,
-                            style = MaterialTheme.typography.titleMedium
+                            style = MaterialTheme.typography.titleLarge
                         )
                         Text(
                             text = "${writing.dynasty}·${writing.author}",
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.labelLarge
                         )
                         if (writing.preface != null) {
                             Text(
                                 text = writing.preface.replace("<br />", "\n"),
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.labelLarge,
                                 fontStyle = FontStyle.Italic
                             )
                         }

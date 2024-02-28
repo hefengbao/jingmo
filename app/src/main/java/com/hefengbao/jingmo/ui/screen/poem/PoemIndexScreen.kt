@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReadMore
 import androidx.compose.material.icons.filled.Search
@@ -70,7 +71,7 @@ private fun PoemIndexScreen(
     ) {
         LazyVerticalGrid(
             modifier = modifier.padding(16.dp),
-            columns = GridCells.Fixed(3)
+            columns = GridCells.Fixed(3),
         ) {
             item(
                 span = {
