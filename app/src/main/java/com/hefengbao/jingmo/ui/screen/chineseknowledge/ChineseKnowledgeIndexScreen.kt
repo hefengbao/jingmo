@@ -1,5 +1,8 @@
 package com.hefengbao.jingmo.ui.screen.chineseknowledge
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import kotlin.math.abs
 
 @Composable
 fun ChineseKnowledgeIndexRoute(
@@ -85,6 +89,22 @@ private fun ChineseKnowledgeIndexScreen(
             Box(
                 modifier = modifier
                     .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = {
+                            if (it < 0 && abs(it) > 500f) {
+                                nextId?.let {
+                                    setCurrentId(nextId)
+                                }
+                            } else if (it > 0 && abs(it) > 500f) {
+                                prevId?.let {
+                                    setCurrentId(prevId)
+                                }
+                            }
+                        }
+                    )
             ) {
                 Column(
                     modifier = modifier
@@ -148,13 +168,19 @@ private fun ChineseKnowledgeIndexScreen(
                         onClick = { setCurrentId(prevId!!) },
                         enabled = prevId != null
                     ) {
-                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
+                        )
                     }
                     IconButton(
                         onClick = { setCurrentId(nextId!!) },
                         enabled = nextId != null
                     ) {
-                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = null
+                        )
                     }
                 }
             }

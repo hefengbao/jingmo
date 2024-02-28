@@ -1,5 +1,8 @@
 package com.hefengbao.jingmo.ui.screen.idiom
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -16,6 +19,7 @@ import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
 import com.hefengbao.jingmo.ui.component.BottomActionBar
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.idiom.components.IdiomShowPanel
+import kotlin.math.abs
 
 @Composable
 fun IdiomReadRoute(
@@ -65,7 +69,24 @@ private fun IdiomReadScreen(
             }
         ) {
             Box(
-                modifier = modifier.fillMaxSize()
+                modifier = modifier
+                    .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = {
+                            if (it < 0 && abs(it) > 500f) {
+                                nextId?.let {
+                                    setCurrentId(nextId)
+                                }
+                            } else if (it > 0 && abs(it) > 500f) {
+                                prevId?.let {
+                                    setCurrentId(prevId)
+                                }
+                            }
+                        }
+                    )
             ) {
                 IdiomShowPanel(idiom = entity)
                 BottomActionBar(

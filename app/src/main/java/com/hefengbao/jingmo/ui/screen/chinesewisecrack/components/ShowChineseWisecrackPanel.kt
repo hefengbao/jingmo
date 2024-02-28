@@ -1,5 +1,8 @@
 package com.hefengbao.jingmo.ui.screen.chinesewisecrack.components
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
 import com.hefengbao.jingmo.ui.component.BottomActionBar
+import kotlin.math.abs
 
 @Composable
 fun ShowChineseWisecrackPanel(
@@ -31,6 +35,22 @@ fun ShowChineseWisecrackPanel(
     Box(
         modifier = modifier
             .fillMaxSize()
+            .draggable(
+                state = rememberDraggableState {},
+                orientation = Orientation.Horizontal,
+                onDragStarted = {},
+                onDragStopped = {
+                    if (it < 0 && abs(it) > 500f) {
+                        nextId?.let {
+                            setCurrentId(nextId)
+                        }
+                    } else if (it > 0 && abs(it) > 500f) {
+                        prevId?.let {
+                            setCurrentId(prevId)
+                        }
+                    }
+                }
+            )
     ) {
         Column(
             modifier = modifier

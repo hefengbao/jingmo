@@ -1,7 +1,11 @@
 package com.hefengbao.jingmo.ui.screen.poem.components
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,11 +28,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
+import kotlin.math.abs
 
+@SuppressLint("RememberReturnType")
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PoemShowPanel(
     modifier: Modifier = Modifier,
@@ -59,8 +65,26 @@ fun PoemShowPanel(
             }
         }
     }
+
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .draggable(
+                state = rememberDraggableState {},
+                orientation = Orientation.Horizontal,
+                onDragStarted = {},
+                onDragStopped = {
+                    if (it < 0 && abs(it) > 500f) {
+                        nextId?.let {
+                            setCurrentId(nextId)
+                        }
+                    } else if (it > 0 && abs(it) > 500f) {
+                        prevId?.let {
+                            setCurrentId(prevId)
+                        }
+                    }
+                }
+            )
     ) {
         SelectionContainer {
             LazyColumn(
@@ -202,7 +226,10 @@ fun PoemShowPanel(
                 onClick = { setCurrentId(nextId!!) },
                 enabled = nextId != null
             ) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = null
+                )
             }
         }
     }
