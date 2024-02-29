@@ -79,14 +79,6 @@ private fun ChineseColorIndexScreen(
         mutableStateOf("")
     }
 
-    val state = rememberLazyListState()
-
-    LaunchedEffect(showSearchBar) {
-        if (showSearchBar) {
-            state.animateScrollToItem(0)
-        }
-    }
-
     val keyboard = LocalSoftwareKeyboardController.current
 
     SimpleScaffold(
@@ -111,35 +103,49 @@ private fun ChineseColorIndexScreen(
             }
         }
     ) {
-        LazyColumn(
-            modifier = modifier.fillMaxWidth(),
-            state = state
-        ) {
-            item {
-                if (showSearchBar) {
-                    SearchBar(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        query = query,
-                        onQueryChange = { query = it },
-                        onSearch = {
-                            onSearch(query)
-                            keyboard?.hide()
-                        },
-                        active = false,
-                        onActiveChange = {},
-                        placeholder = {
-                            Text(text = "请输入")
-                        }
-                    ) {}
+        if (showSearchBar) {
+            LazyColumn(
+                modifier = modifier.fillMaxWidth(),
+                state = rememberLazyListState()
+            ) {
+                item {
+                    if (showSearchBar) {
+                        SearchBar(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            query = query,
+                            onQueryChange = { query = it },
+                            onSearch = {
+                                onSearch(query)
+                                keyboard?.hide()
+                            },
+                            active = false,
+                            onActiveChange = {},
+                            placeholder = {
+                                Text(text = "请输入")
+                            }
+                        ) {}
+                    }
+                }
+                itemsIndexed(
+                    items = searchColors,
+                    key = { _, item -> item.id },
+                ) { _, item ->
+                    Item(item = item, onItemClick = onItemClick)
                 }
             }
-            itemsIndexed(
-                items = if (query.isNotEmpty()) searchColors else chineseColors,
-                key = { _, item -> item.id },
-            ) { _, item ->
-                Item(item = item, onItemClick = onItemClick)
+        } else {
+            LazyColumn(
+                modifier = modifier.fillMaxWidth(),
+                state = rememberLazyListState()
+            ) {
+                itemsIndexed(
+                    items = chineseColors,
+                    key = { _, item -> item.id },
+                ) { _, item ->
+                    Item(item = item, onItemClick = onItemClick)
+                }
             }
         }
     }

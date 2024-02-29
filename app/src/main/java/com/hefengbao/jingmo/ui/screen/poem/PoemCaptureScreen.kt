@@ -55,8 +55,24 @@ private fun PoemCaptureScreen(
     ) { color, _ ->
         poem?.let { entity ->
             val content = buildString {
-                entity.clauses.mapIndexed { _, clause ->
-                    append(clause.content)
+                entity.clauses.mapIndexed { index, clause ->
+                    /*if (clause.comments != null){
+                        clause.comments.map {comment ->
+                            if (comment.type == CommentType.Text.name){
+                                val length = clause.content.length
+
+                            }
+                        }
+                    }else{
+                        append(clause.content)
+                    }*/
+
+                    if (entity.type != "文") {
+                        append(clause.content)
+                        append("\n")
+                    } else {
+                        append(clause.content)
+                    }
 
                     if (clause.breakAfter != null) {
                         append("\n")

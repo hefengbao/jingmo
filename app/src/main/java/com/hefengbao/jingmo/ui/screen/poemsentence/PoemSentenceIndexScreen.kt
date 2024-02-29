@@ -129,7 +129,7 @@ private fun PoemSentenceIndexScreen(
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
-                            sentence.content.split("，", "。", "？", "！").map {
+                            sentence.content.split("，", "。", "？", "！", "、").map {
 
                                 Column {
                                     it.toCharArray().map { char ->

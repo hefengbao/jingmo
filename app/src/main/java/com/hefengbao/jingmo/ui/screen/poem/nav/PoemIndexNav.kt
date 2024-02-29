@@ -10,7 +10,7 @@ private const val ROUTE = "poem_index"
 private const val ROUTE_GRAPH = "poem_index_graph"
 
 fun NavController.navigateToPoemIndexGraph() {
-    this.navigate(ROUTE_GRAPH){
+    this.navigate(ROUTE_GRAPH) {
         launchSingleTop = true
     }
 }

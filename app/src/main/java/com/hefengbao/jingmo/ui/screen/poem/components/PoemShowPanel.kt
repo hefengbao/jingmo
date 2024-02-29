@@ -58,10 +58,16 @@ fun PoemShowPanel(
             }else{
                 append(clause.content)
             }*/
-            append(clause.content)
+
+            if (writing.type != "文") {
+                append(clause.content)
+                append("\n")
+            } else {
+                append(clause.content)
+            }
 
             if (clause.breakAfter != null) {
-                append("\n\n")
+                append("\n")
             }
         }
     }
