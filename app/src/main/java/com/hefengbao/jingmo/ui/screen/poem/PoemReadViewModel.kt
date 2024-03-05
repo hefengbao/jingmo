@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class PoemReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val writingRepository: WritingRepository,
+    val json: Json
 ) : ViewModel() {
 
     private var id = MutableStateFlow(1)

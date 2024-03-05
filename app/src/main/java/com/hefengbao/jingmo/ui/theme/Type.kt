@@ -64,8 +64,8 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.6.sp
+        lineHeight = 30.sp,
+        letterSpacing = 1.sp
     ),
     bodyMedium = TextStyle(
         fontWeight = FontWeight.Normal,

@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.poem.components.PoemShowPanel
+import kotlinx.serialization.json.Json
 
 
 @Composable
@@ -23,6 +24,7 @@ fun PoemBookmarksReadRoute(
     val writing by viewModel.writing.collectAsState(initial = null)
     val prevId by viewModel.prevId.collectAsState(initial = null)
     val nextId by viewModel.nextId.collectAsState(initial = null)
+    val json = viewModel.json
 
     PoemBookmarksReadScreen(
         onBackClick = onBackClick,
@@ -34,7 +36,8 @@ fun PoemBookmarksReadRoute(
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
         setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) }
+        setCollect = { viewModel.setCollect(it) },
+        json = json,
     )
 }
 
@@ -49,7 +52,8 @@ private fun PoemBookmarksReadScreen(
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit
+    setCollect: (Int) -> Unit,
+    json: Json
 ) {
     writing?.let {
         LaunchedEffect(writing) {
@@ -73,7 +77,8 @@ private fun PoemBookmarksReadScreen(
                 nextId = nextId,
                 setCurrentId = setCurrentId,
                 setUncollect = setUncollect,
-                setCollect = setCollect
+                setCollect = setCollect,
+                json = json
             )
         }
     }

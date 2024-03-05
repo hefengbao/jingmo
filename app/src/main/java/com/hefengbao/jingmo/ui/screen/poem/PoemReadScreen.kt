@@ -11,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.poem.components.PoemShowPanel
+import kotlinx.serialization.json.Json
 
 @Composable
 fun PoemReadRoute(
@@ -31,7 +32,8 @@ fun PoemReadRoute(
         setCurrentId = { viewModel.setCurrentId(it) },
         setCollect = { viewModel.setCollect(it) },
         setUncollect = { viewModel.setUncollect(it) },
-        setLastReadId = { viewModel.setLastReadId(it) }
+        setLastReadId = { viewModel.setLastReadId(it) },
+        json = viewModel.json
     )
 }
 
@@ -46,6 +48,7 @@ private fun PoemReadScreen(
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
     setLastReadId: (Int) -> Unit,
+    json: Json
 ) {
     writing?.let {
         setLastReadId(it.id)
@@ -64,7 +67,8 @@ private fun PoemReadScreen(
                 nextId = nextId,
                 setCurrentId = setCurrentId,
                 setUncollect = setUncollect,
-                setCollect = setCollect
+                setCollect = setCollect,
+                json = json
             )
         }
     }

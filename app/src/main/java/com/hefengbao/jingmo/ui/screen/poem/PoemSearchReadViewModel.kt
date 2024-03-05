@@ -13,13 +13,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PoemSearchReadViewModel @Inject constructor(
     private val writingRepository: WritingRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    val json: Json
 ) : ViewModel() {
     private val args = PoemSearchReadArgs(savedStateHandle)
     private var id = MutableStateFlow(args.poemId.toInt())
