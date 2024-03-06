@@ -19,14 +19,14 @@ interface WritingDao {
 
     @Query("select w.rowid, w.*, c.collected_at from writings w left join writing_collections c on w.rowid = c.id where  w.rowid = :id limit 1")
     fun get(id: Int): Flow<WritingWithBookmark>
-
+    
     @Query("select rowid, w.* from writings w order by rowid asc")
     fun list(): PagingSource<Int, WritingEntity>
 
-    @Query("select rowid,w.dynasty,w.author,w.type,w.title_content as title,w.content from writings w where w.author like :query or w.title_content like :query or w.content like :query order by rowid asc")
+    @Query("select rowid,w.dynasty,w.author,w.type,w.title_content as title,w.content from writings w where w.author match :query or w.title_content match :query or w.content match :query order by rowid asc")
     fun search(query: String): PagingSource<Int, SimpleWritingInfo>
 
-    @Query("select rowid,w.dynasty,w.author,w.type,w.title_content as title,w.content from writings w where w.author = :author order by rowid asc")
+    @Query("select rowid,w.dynasty,w.author,w.type,w.title_content as title,w.content from writings w where w.author match :author order by rowid asc")
     fun searchByAuthor(author: String): PagingSource<Int, SimpleWritingInfo>
 
     @Query("select rowid from writings where author = :author and rowid > :id order by rowid asc limit 1")
