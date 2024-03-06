@@ -21,6 +21,9 @@ import androidx.navigation.compose.rememberNavController
 import com.hefengbao.jingmo.route.AppNavHost
 import com.hefengbao.jingmo.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,6 +32,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel by viewModels<MainActivityViewModel>()
+
+        val destination = intent?.getStringExtra("destination")
 
         setContent {
             val appNavController = rememberNavController()
@@ -48,6 +53,11 @@ class MainActivity : ComponentActivity() {
                         AppNavHost(navController = appNavController)
                     }
                 }
+            }
+
+            destination?.let {
+                Log.i("MainActivity", "destination")
+                appNavController.navigate(it)
             }
         }
     }

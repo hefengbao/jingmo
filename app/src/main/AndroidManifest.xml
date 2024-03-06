@@ -39,6 +39,39 @@
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
             android:value="web" />
-    </application>
 
+        <receiver
+            android:name=".widgets.IdiomWidgetReceiver"
+            android:label="@string/widget_idiom"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/idiom_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.PoemWidgetReceiver"
+            android:label="@string/widget_poem"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/poem_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.PoemSentenceWidgetReceiver"
+            android:label="@string/widget_poem_sentence"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/poem_sentence_widget_info" />
+        </receiver>
+    </application>
 </manifest>

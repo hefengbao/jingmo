@@ -19,6 +19,9 @@ interface IdiomDao {
     @Query("select i.*,c.collected_at from idioms i left join idiom_collections c on i.id = c.id where i.id = :id")
     fun getIdiom(id: Int): Flow<IdiomWithBookmark>
 
+    @Query("select i.*,c.collected_at from idioms i left join idiom_collections c on i.id = c.id where i.id = (select id from idioms order by random() limit 1)")
+    fun random(): Flow<IdiomWithBookmark>
+
     @Query("select id from idioms where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
 

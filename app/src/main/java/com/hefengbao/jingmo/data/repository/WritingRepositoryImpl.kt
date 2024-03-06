@@ -16,6 +16,8 @@ class WritingRepositoryImpl @Inject constructor(
     private val database: AppDatabase
 ) : WritingRepository {
     override fun get(id: Int): Flow<WritingWithBookmark> = database.writingDao().get(id)
+    override fun random(): Flow<WritingWithBookmark> = database.writingDao().random()
+
     override fun list(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = { database.writingDao().list() }

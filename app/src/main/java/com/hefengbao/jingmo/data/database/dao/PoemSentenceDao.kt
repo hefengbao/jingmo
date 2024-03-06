@@ -18,6 +18,9 @@ interface PoemSentenceDao {
     @Query("select p.*,c.collected_at from poem_sentences p left join poem_sentence_collections c on p.id = c.id where p.id = :id")
     fun getSentence(id: Int): Flow<PoemSentenceWithBookmark>
 
+    @Query("select p.*,c.collected_at from poem_sentences p left join poem_sentence_collections c on p.id = c.id where p.id = (select id from poem_sentences order by random() limit 1)")
+    fun random(): Flow<PoemSentenceWithBookmark>
+
     @Query("select id from poem_sentences where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
 

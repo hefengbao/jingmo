@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IdiomRepository {
     fun getIdiom(id: Int): Flow<IdiomWithBookmark>
+    fun random(): Flow<IdiomWithBookmark>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
     fun getSimpleIdiomInfoList(): Flow<PagingData<SimpleIdiomInfo>>

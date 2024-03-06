@@ -11,6 +11,7 @@ interface PoemSentenceRepository {
     fun getPrevId(id: Int): Flow<Int?>
     fun searchSentencesList(query: String): Flow<PagingData<PoemSentenceEntity>>
     fun getSentence(id: Int): Flow<PoemSentenceWithBookmark>
+    fun random(): Flow<PoemSentenceWithBookmark>
     suspend fun getSearchNextId(id: Int, query: String): Int
     suspend fun getSearchPrevId(id: Int, query: String): Int
     fun collections(): Flow<PagingData<PoemSentenceWithBookmark>>

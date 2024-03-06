@@ -24,6 +24,8 @@ class PoemSentenceRepositoryImpl @Inject constructor(
     override fun getSentence(id: Int): Flow<PoemSentenceWithBookmark> =
         poemSentenceDao.getSentence(id)
 
+    override fun random(): Flow<PoemSentenceWithBookmark> = poemSentenceDao.random()
+
     override suspend fun getSearchNextId(id: Int, query: String): Int =
         poemSentenceDao.getSearchNextId(id, "%$query%")
 

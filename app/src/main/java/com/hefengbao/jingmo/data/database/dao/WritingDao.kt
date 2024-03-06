@@ -19,7 +19,10 @@ interface WritingDao {
 
     @Query("select w.rowid, w.*, c.collected_at from writings w left join writing_collections c on w.rowid = c.id where  w.rowid = :id limit 1")
     fun get(id: Int): Flow<WritingWithBookmark>
-    
+
+    @Query("select w.rowid, w.*, c.collected_at from writings w left join writing_collections c on w.rowid = c.id where w.rowid = (select rowid from writings where type match  '词' or type match '律诗' or type match  '绝句' order by random() limit 1) limit 1")
+    fun random(): Flow<WritingWithBookmark>
+
     @Query("select rowid, w.* from writings w order by rowid asc")
     fun list(): PagingSource<Int, WritingEntity>
 
