@@ -6,6 +6,7 @@ androidx-test-ext-junit = "1.1.5"
 androidx-core-splashscreen = "1.0.1"
 androidx-datastore-preferences = "1.0.0"
 androidx-datastore = "1.0.0"
+androidx-glance = "1.0.0"
 androidx-navigation = "2.6.0"
 androidx-hilt-navigation-compose = "1.0.0"
 bugly = "4.1.9.3"
@@ -55,6 +56,9 @@ material-iconsExtended = { group = "androidx.compose.material", name = "material
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidx-datastore-preferences" }
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
+androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidx-glance" }
+androidx-glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "androidx-glance" }
+androidx-glance-wear-tiles = { group = "androidx.glance", name = "glance-wear-tiles", version.ref = "androidx-glance" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidx-navigation" }
