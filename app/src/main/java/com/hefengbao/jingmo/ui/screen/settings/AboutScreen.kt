@@ -72,7 +72,7 @@ fun AboutScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                            painter = painterResource(id = R.drawable.ic_logo),
                             contentDescription = null,
                             modifier = modifier
                                 .size(108.dp)
@@ -86,7 +86,7 @@ fun AboutScreen(
                     }
                 }
 
-                Text(text = "❤ 贺丰宝（hefengbao）设计和编码 ❤")
+                Text(text = "❤贺丰宝（hefengbao）设计和编码❤")
 
                 val desc = """
                 『京墨』是开源、公益性 APP。献给喜欢中华文字、文学、文化的人。
