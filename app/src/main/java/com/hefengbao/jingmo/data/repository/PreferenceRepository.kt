@@ -15,6 +15,8 @@ interface PreferenceRepository {
     suspend fun setRiddlesVersion(version: Int)
     suspend fun setTongueTwistersVersion(version: Int)
     suspend fun setWritingsVersion(version: Int)
+    suspend fun setWritingsCurrentPage(page: Int)
+    suspend fun setWritingsCurrentCount(count: Int)
 
     fun getReadStatus(): Flow<ReadStatus>
     suspend fun setChineseKnowledgeLastReadId(id: Int)

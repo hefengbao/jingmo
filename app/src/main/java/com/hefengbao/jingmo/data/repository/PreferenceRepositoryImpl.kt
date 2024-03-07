@@ -31,6 +31,10 @@ class PreferenceRepositoryImpl @Inject constructor(
         dataset.setTongueTwistersVersion(version)
 
     override suspend fun setWritingsVersion(version: Int) = dataset.setWritingsVersion(version)
+    override suspend fun setWritingsCurrentPage(page: Int) = dataset.setWritingsCurrentPage(page)
+
+    override suspend fun setWritingsCurrentCount(count: Int) =
+        dataset.setWritingsCurrentCount(count)
 
     override fun getReadStatus(): Flow<ReadStatus> = readStatus.readStatus
 

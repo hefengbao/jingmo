@@ -9,4 +9,6 @@ data class DatasetVersion(
     val riddlesVersion: Int = 0,
     val tongueTwistersVersion: Int = 0,
     val writingsVersion: Int = 0,
+    val writingsCurrentPage: Int = 1,
+    val writingsCurrentCount: Int = 0,
 )

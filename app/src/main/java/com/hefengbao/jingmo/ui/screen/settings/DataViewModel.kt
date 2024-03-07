@@ -239,32 +239,51 @@ class DataViewModel @Inject constructor(
     val writingsResult: SharedFlow<SyncStatus<Any>> = _writingsResult
     private val _writingsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val writingsResultProgress: SharedFlow<Float> = _writingsResultProgress
+
+    private var writingCurrentPage: MutableStateFlow<Int> = MutableStateFlow(1)
+    private var writingCurrentCount: MutableStateFlow<Int> = MutableStateFlow(0)
+    fun setWritingsPreviousPage(page: Int) {
+        writingCurrentPage.value = page
+    }
+
+    fun setWritingsPreviousCount(count: Int, total: Int) {
+        writingCurrentCount.value = count
+        _writingsResultProgress.value =
+            writingCurrentCount.value.toFloat() / total
+    }
+
     fun syncWritings(total: Int, version: Int) {
         _writingsResult.value = SyncStatus.Loading
 
         viewModelScope.launch {
-            var page: Int? = 1
-            var count = 0
-            while (page != null) {
-                when (val response = repository.syncWritings(page)) {
+
+            while (writingCurrentPage.value != 0) {
+                when (val response = repository.syncWritings(writingCurrentPage.value)) {
                     is Result.Error -> _writingsResult.value == SyncStatus.Error(response.exception)
                     Result.Loading -> {}
                     is Result.Success -> {
-                        if (response.data.nextPage != null) {
-                            page++
-                        } else {
-                            page = null
-                        }
-
                         response.data.data.map {
                             repository.insertWriting(it.asWritingEntity())
-                            count++
-                            _writingsResultProgress.value = count.toFloat() / total
+                            writingCurrentCount.value++
+                            _writingsResultProgress.value =
+                                writingCurrentCount.value.toFloat() / total
                         }
+                        // 记录进度
+                        preference.setWritingsCurrentPage(writingCurrentPage.value)
+                        preference.setWritingsCurrentCount(writingCurrentCount.value)
+
+                        if (response.data.nextPage != null) {
+                            writingCurrentPage.value++
+                        } else {
+                            writingCurrentPage.value = 0
+                        }
+
                     }
                 }
             }
             preference.setWritingsVersion(version)
+            preference.setWritingsCurrentPage(1)
+            preference.setWritingsCurrentCount(0)
             _writingsResult.value = SyncStatus.Success
         }
     }

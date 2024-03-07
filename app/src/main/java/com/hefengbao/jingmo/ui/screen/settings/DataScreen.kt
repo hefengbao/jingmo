@@ -120,7 +120,14 @@ fun DataRoute(
         tongueTwistersResultProgress = tongueTwistersResultProgress,
         syncWritings = { total: Int, version: Int -> viewModel.syncWritings(total, version) },
         writingsResult = writingsResult,
-        writingsResultProgress = writingsResultProgress
+        writingsResultProgress = writingsResultProgress,
+        setWritingsPreviousPage = { viewModel.setWritingsPreviousPage(it) },
+        setWritingsPreviousCount = { count: Int, total: Int ->
+            viewModel.setWritingsPreviousCount(
+                count,
+                total
+            )
+        }
     )
 }
 
@@ -154,6 +161,8 @@ private fun DataScreen(
     syncWritings: (total: Int, version: Int) -> Unit,
     writingsResult: SyncStatus<Any>,
     writingsResultProgress: Float,
+    setWritingsPreviousPage: (Int) -> Unit,
+    setWritingsPreviousCount: (count: Int, total: Int) -> Unit
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
@@ -230,14 +239,14 @@ private fun DataScreen(
                         progress = poemSentencesResultProgress,
                         onClick = { count: Int, version: Int -> syncPoemSentences(count, version) }
                     ),
-                    /*Menu(
+                    Menu(
                         title = "谜语",
                         name = "riddles",
                         localVersion = datasetPref.riddlesVersion,
                         status = riddlesResult,
                         progress = riddlesResultProgress,
                         onClick = { count: Int, version: Int -> syncRiddles(count, version) }
-                    ),*/
+                    ),
                     Menu(
                         title = "绕口令",
                         name = "tongue_twisters",
@@ -256,6 +265,20 @@ private fun DataScreen(
                     ),
                 )
 
+                LaunchedEffect(datasetPref.writingsVersion) {
+                    val writingsIndex = menus.indexOfFirst { it.name == "writings" }
+                    // 诗文续传逻辑,设为上次的进度
+                    if (datasetPref.writingsVersion != versionList[writingsIndex]) {
+                        if (datasetPref.writingsCurrentCount != countList[writingsIndex]) {
+                            setWritingsPreviousPage(datasetPref.writingsCurrentPage)
+                            setWritingsPreviousCount(
+                                datasetPref.writingsCurrentCount,
+                                countList[writingsIndex]
+                            )
+                        }
+                    }
+                }
+
                 LazyColumn {
                     itemsIndexed(
                         items = menus
@@ -266,20 +289,21 @@ private fun DataScreen(
                             item.status.exception?.message
                         }
 
-                        Item(
-                            title = item.title,
-                            subtitle = countList[key].toString(),
-                            onClick = { item.onClick(countList[key], versionList[key]) },
-                            enabled = item.localVersion != versionList[key] || item.status == SyncStatus.Loading,
-                            showProgressIndicator = item.status == SyncStatus.Loading,
-                            progress = item.progress,
-                            error = if (item.status is SyncStatus.Error) {
-                                item.status.exception?.message
-                            } else null
-                        )
-                        if (index < menus.size) {
-                            Divider(modifier = modifier.padding(horizontal = 16.dp))
+                        if (item.name != "riddles") {
+                            Item(
+                                title = item.title,
+                                subtitle = countList[key].toString(),
+                                onClick = { item.onClick(countList[key], versionList[key]) },
+                                enabled = item.localVersion != versionList[key] || item.status == SyncStatus.Loading,
+                                showProgressIndicator = item.status == SyncStatus.Loading,
+                                progress = item.progress,
+                                error = if (item.status is SyncStatus.Error) {
+                                    item.status.exception?.message
+                                } else null
+                            )
                         }
+
+                        Divider(modifier = modifier.padding(horizontal = 16.dp))
                     }
                 }
             }
