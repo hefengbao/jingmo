@@ -56,6 +56,22 @@ Android 8.0 及以上
 支付宝：
 ![](screenshot/alipay.jpg)
 
+## 运行项目
+
+```shell
+git clone https://github.com/hefengbao/jingmo.git
+```
+在项目根目录下新建 `keystore.properties` 文件， 添加的参数
+
+```
+storeFile=
+storePassword=
+keyAlias=
+keyPassword=
+```
+
+运行项目即可。
+
 ## 参考数据源：
 
 ### 古诗词等
