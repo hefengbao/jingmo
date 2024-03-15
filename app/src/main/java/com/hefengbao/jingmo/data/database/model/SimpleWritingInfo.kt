@@ -8,6 +8,5 @@ data class SimpleWritingInfo(
     val author: String,
     val dynasty: String,
     val type: String,
-    val title: String,
-    val content: String
+    val title: String
 )

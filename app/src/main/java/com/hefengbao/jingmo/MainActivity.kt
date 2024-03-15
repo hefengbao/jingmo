@@ -1,6 +1,7 @@
 package com.hefengbao.jingmo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -21,9 +22,6 @@ import androidx.navigation.compose.rememberNavController
 import com.hefengbao.jingmo.route.AppNavHost
 import com.hefengbao.jingmo.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

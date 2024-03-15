@@ -37,18 +37,25 @@ class DatasetPreference(
 
     suspend fun setChineseKnowledgeVersion(version: Int) =
         setInt(context, PREF_CHINESE_KNOWLEDGE, version)
+
     suspend fun setChineseWisecracksVersion(version: Int) =
         setInt(context, PREF_CHINESE_WISECRACKS, version)
+
     suspend fun setIdiomsVersion(version: Int) = setInt(context, PREF_IDIOMS, version)
     suspend fun setPeopleVersion(version: Int) = setInt(context, PREF_PEOPLE, version)
     suspend fun setPoemSentencesVersion(version: Int) =
         setInt(context, PREF_POEM_SENTENCES, version)
+
     suspend fun setRiddlesVersion(version: Int) = setInt(context, PREF_RIDDLES, version)
     suspend fun setTongueTwistersVersion(version: Int) =
         setInt(context, PREF_TONGUE_TWISTERS, version)
+
     suspend fun setWritingsVersion(version: Int) = setInt(context, PREF_WRITINGS, version)
-    suspend fun setWritingsCurrentPage(page: Int) = setInt(context, PREF_WRITINGS_CURRENT_PAGE, page)
-    suspend fun setWritingsCurrentCount(count: Int) = setInt(context, PREF_WRITINGS_CURRENT_COUNT, count)
+    suspend fun setWritingsCurrentPage(page: Int) =
+        setInt(context, PREF_WRITINGS_CURRENT_PAGE, page)
+
+    suspend fun setWritingsCurrentCount(count: Int) =
+        setInt(context, PREF_WRITINGS_CURRENT_COUNT, count)
 
     companion object {
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
@@ -59,6 +66,7 @@ class DatasetPreference(
         private val PREF_RIDDLES = intPreferencesKey("key_riddles")
         private val PREF_TONGUE_TWISTERS = intPreferencesKey("key_tongue_twisters")
         private val PREF_WRITINGS = intPreferencesKey("key_writings")
+
         // 用于实现诗文同步 续传
         private val PREF_WRITINGS_CURRENT_PAGE = intPreferencesKey("key_writings_current_page")
         private val PREF_WRITINGS_CURRENT_COUNT = intPreferencesKey("key_writings_current_count")

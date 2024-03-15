@@ -8,13 +8,9 @@ import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
-import com.hefengbao.jingmo.data.database.dao.PoemDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
-import com.hefengbao.jingmo.data.database.dao.PoemTagDao
 import com.hefengbao.jingmo.data.database.dao.RiddleDao
-import com.hefengbao.jingmo.data.database.dao.TagDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
-import com.hefengbao.jingmo.data.database.dao.WriterDao
 import com.hefengbao.jingmo.data.database.dao.WritingDao
 import dagger.Module
 import dagger.Provides
@@ -35,27 +31,6 @@ object DatabaseModule {
         AppDatabase::class.java,
         Constant.DB_NAME,
     ).build()
-
-
-    @Provides
-    fun providesPoemDao(
-        database: AppDatabase
-    ): PoemDao = database.poemDao()
-
-    @Provides
-    fun providesTagDao(
-        database: AppDatabase
-    ): TagDao = database.tagDao()
-
-    @Provides
-    fun providesPoemTagDao(
-        database: AppDatabase
-    ): PoemTagDao = database.poemTagDao()
-
-    @Provides
-    fun providesWriterDao(
-        database: AppDatabase
-    ): WriterDao = database.writerDao()
 
     @Provides
     fun providesPoemSentenceDao(
