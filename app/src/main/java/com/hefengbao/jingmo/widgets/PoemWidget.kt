@@ -1,7 +1,6 @@
 package com.hefengbao.jingmo.widgets
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,10 +9,6 @@ import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
-import androidx.glance.action.ActionParameters
-import androidx.glance.action.actionParametersOf
-import androidx.glance.action.actionStartActivity
-import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.lazy.LazyColumn
@@ -26,7 +21,6 @@ import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.hefengbao.jingmo.MainActivity
 import com.hefengbao.jingmo.data.repository.WritingRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -62,19 +56,21 @@ class PoemWidget(
             modifier = modifier.fillMaxSize()
                 .background(GlanceTheme.colors.background)
                 .padding(16.dp),
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.CenterVertically,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             poem?.let {
                 val content = buildString {
                     it.clauses.mapIndexed { index, clause ->
-                        if (it.type != "文") {
+                        if (it.type == "词") {// 词
                             append(clause.content)
-                            append("\n")
-                        } else {
+                        } else { //律诗 绝句
                             append(clause.content)
-                        }
 
+                            if (index % 2 == 1) {
+                                append("\n")
+                            }
+                        }
                         if (clause.breakAfter != null) {
                             append("\n")
                         }

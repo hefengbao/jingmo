@@ -11,6 +11,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -54,20 +55,37 @@ class IdiomWidget(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             idiom?.let { entity ->
-                Text(
-                    style = TextStyle(fontSize = 14.sp, color = GlanceTheme.colors.onBackground),
-                    text = entity.pinyin
-                )
-                Text(
-                    modifier = modifier.padding(4.dp),
-                    style = TextStyle(fontSize = 18.sp, color = GlanceTheme.colors.onBackground),
-                    text = entity.word
-                )
-                Text(
-                    modifier = modifier.padding(top = 8.dp),
-                    style = TextStyle(fontSize = 16.sp, color = GlanceTheme.colors.onBackground),
-                    text = entity.explanation
-                )
+                LazyColumn {
+                    item {
+                        Text(
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                color = GlanceTheme.colors.onBackground
+                            ),
+                            text = entity.pinyin
+                        )
+                    }
+                    item {
+                        Text(
+                            modifier = modifier.padding(4.dp),
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                color = GlanceTheme.colors.onBackground
+                            ),
+                            text = entity.word
+                        )
+                    }
+                    item {
+                        Text(
+                            modifier = modifier.padding(top = 8.dp),
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                color = GlanceTheme.colors.onBackground
+                            ),
+                            text = entity.explanation
+                        )
+                    }
+                }
             }
         }
     }

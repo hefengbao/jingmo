@@ -2,11 +2,12 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/widget_poem"
     android:initialLayout="@layout/glance_default_loading_layout"
-    android:minWidth="200dp"
-    android:minHeight="100dp"
+    android:minWidth="276dp"
+    android:minHeight="102dp"
     android:previewImage="@drawable/widget_poem_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="4"
-    android:targetCellHeight="2"
-    android:updatePeriodMillis="300000"
-    android:widgetCategory="home_screen" />
+    android:targetCellHeight="1"
+    android:updatePeriodMillis="1800000"
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="reconfigurable" />

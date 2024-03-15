@@ -11,6 +11,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -55,18 +56,30 @@ class PoemSentenceWidget(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             sentence?.let { entity ->
-                Text(
-                    style = TextStyle(fontSize = 18.sp, color = GlanceTheme.colors.onBackground),
-                    text = entity.content
-                        .replace("，", "\n")
-                        .replace("。", "\n")
-                        .replace("？", "\n")
-                        .replace("！", "\n")
-                )
-                Text(
-                    style = TextStyle(fontSize = 12.sp, color = GlanceTheme.colors.onBackground),
-                    text = entity.from
-                )
+                LazyColumn {
+                    item {
+                        Text(
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                color = GlanceTheme.colors.onBackground
+                            ),
+                            text = entity.content
+                                .replace("，", "\n")
+                                .replace("。", "\n")
+                                .replace("？", "\n")
+                                .replace("！", "\n")
+                        )
+                    }
+                    item {
+                        Text(
+                            style = TextStyle(
+                                fontSize = 12.sp,
+                                color = GlanceTheme.colors.onBackground
+                            ),
+                            text = entity.from
+                        )
+                    }
+                }
             }
         }
     }
