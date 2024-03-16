@@ -243,7 +243,9 @@ fun PoemShowPanel(
                         //Text(text = content, style = MaterialTheme.typography.bodyLarge)
                         ClickableText(
                             text = content,
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                color = MaterialTheme.colorScheme.onBackground
+                            ),
                         ) {
                             content.getStringAnnotations(tag, it, it).map { string ->
                                 val arr = string.item.split("_")
