@@ -10,6 +10,6 @@ data class WordDict(
     val Traditional: String? = null,
     val Explains: List<String>,
     val Categories: List<String>? = null,
-    val Spells: String,
+    val Spells: String? = null,
     val ContainsUnknownSpell: Boolean
 )
