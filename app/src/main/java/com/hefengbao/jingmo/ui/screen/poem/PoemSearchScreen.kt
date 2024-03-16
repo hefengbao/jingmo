@@ -122,8 +122,10 @@ private fun List(
                     )
                     Text(
                         text = "${entity.type} ${entity.dynasty}·${entity.author}",
-                        color = Color.DarkGray,
-                        fontSize = 12.sp
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            brush = null,
+                            alpha = .5f
+                        )
                     )
                 }
             }
