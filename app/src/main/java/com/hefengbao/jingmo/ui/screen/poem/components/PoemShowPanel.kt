@@ -99,7 +99,7 @@ fun PoemShowPanel(
 
                             withStyle(
                                 style = SpanStyle(
-                                    textDecoration = TextDecoration.Underline
+                                    textDecoration = TextDecoration.Underline,
                                 )
                             ) {
                                 append(char.OriginalChar)
@@ -127,7 +127,7 @@ fun PoemShowPanel(
 
                             withStyle(
                                 style = SpanStyle(
-                                    textDecoration = TextDecoration.Underline
+                                    textDecoration = TextDecoration.Underline,
                                 )
                             ) {
                                 append(word.Text)
@@ -259,7 +259,6 @@ fun PoemShowPanel(
                                     "char" -> {
                                         showChar = charDicts[arr[1].toInt()]
                                         showCharDialog = true
-                                        Log.i("PoemShowPanel", "char click")
                                     }
 
                                     else -> {}

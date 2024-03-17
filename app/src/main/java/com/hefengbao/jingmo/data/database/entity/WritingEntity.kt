@@ -11,10 +11,7 @@ import com.hefengbao.jingmo.data.model.writing.Clause
 import com.hefengbao.jingmo.data.model.writing.Quote
 import com.hefengbao.jingmo.data.model.writing.Tune
 
-@Fts4(
-    tokenizer = FtsOptions.TOKENIZER_SIMPLE,
-    notIndexed = ["classes", "froms", "allusions", "pictures", "rhyme", "preface", "clauses", "note", "comments"]
-)
+@Fts4
 @Entity(tableName = "writings")
 data class WritingEntity(
     @PrimaryKey
@@ -50,5 +47,4 @@ data class WritingEntity(
     val comments: List<Quote>?
 ) {
     var content: String? = clauses.joinToString("") { it.content }
-    //var iid: Int = id
 }
