@@ -25,7 +25,7 @@ class WritingRepositoryImpl @Inject constructor(
 
     override fun search(query: String): Flow<PagingData<SimpleWritingInfo>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { database.writingDao().search("%$query%") }
+        pagingSourceFactory = { database.writingDao().search("*$query*") }
     ).flow
 
     override fun searchByAuthor(author: String): Flow<PagingData<SimpleWritingInfo>> = Pager(
@@ -46,10 +46,10 @@ class WritingRepositoryImpl @Inject constructor(
         database.writingDao().getPrevId(id, author)
 
     override fun getSearchNextId(id: Int, query: String): Flow<Int?> =
-        database.writingDao().getSearchNextId(id, "%$query%")
+        database.writingDao().getSearchNextId(id, "*$query*")
 
     override fun getSearchPrevId(id: Int, query: String): Flow<Int?> =
-        database.writingDao().getSearchPrevId(id, "%$query%")
+        database.writingDao().getSearchPrevId(id, "*$query*")
 
     override fun collections(): Flow<PagingData<WritingBookmarkSimpleInfo>> = Pager(
         config = PagingConfig(pageSize = 30),

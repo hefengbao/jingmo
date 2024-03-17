@@ -8,7 +8,7 @@ import com.hefengbao.jingmo.data.model.writing.Quote
 import com.hefengbao.jingmo.data.model.writing.Tune
 
 data class WritingWithBookmark(
-    @ColumnInfo("rowid")
+    @ColumnInfo(name = "rowid")
     val id: Int,
     @ColumnInfo(name = "group_index")
     val groupIndex: Int?,

@@ -4,17 +4,21 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Fts4
+import androidx.room.FtsOptions
 import androidx.room.PrimaryKey
 import com.hefengbao.jingmo.data.model.writing.Allusion
 import com.hefengbao.jingmo.data.model.writing.Clause
 import com.hefengbao.jingmo.data.model.writing.Quote
 import com.hefengbao.jingmo.data.model.writing.Tune
 
-@Fts4
+@Fts4(
+    tokenizer = FtsOptions.TOKENIZER_SIMPLE,
+    notIndexed = ["classes", "froms", "allusions", "pictures", "rhyme", "preface", "clauses", "note", "comments"]
+)
 @Entity(tableName = "writings")
 data class WritingEntity(
     @PrimaryKey
-    @ColumnInfo("rowid")
+    @ColumnInfo(name = "rowid")
     val id: Int,
     @ColumnInfo(name = "group_index")
     val groupIndex: Int?,
@@ -46,4 +50,5 @@ data class WritingEntity(
     val comments: List<Quote>?
 ) {
     var content: String? = clauses.joinToString("") { it.content }
+    //var iid: Int = id
 }
