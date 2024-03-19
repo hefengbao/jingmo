@@ -1,7 +1,6 @@
 package com.hefengbao.jingmo.ui.screen.poem.components
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation

@@ -15,6 +15,4 @@ class FakeNetworkDataSource @Inject constructor(
     @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val networkJson: Json,
     private val assets: FakeAssetManager = JvmUnitTestFakeAssetManager,
-) : NetworkDataSource {
-    // 暂时不用
-}
+) : NetworkDataSource

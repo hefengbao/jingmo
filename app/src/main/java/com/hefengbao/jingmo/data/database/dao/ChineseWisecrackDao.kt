@@ -50,4 +50,7 @@ interface ChineseWisecrackDao {
 
     @Query("select id from chinese_wisecrack_collections where collected_at > :collectedAt order by collected_at asc limit 1")
     fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
+
+    @Query("select count(*) from chinese_wisecracks")
+    fun total(): Flow<Int>
 }

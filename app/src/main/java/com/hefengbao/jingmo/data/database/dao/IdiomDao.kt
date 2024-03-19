@@ -57,4 +57,7 @@ interface IdiomDao {
 
     @Query("select id from idiom_collections where collected_at > :collectedAt order by collected_at asc limit 1")
     fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
+
+    @Query("select count(*) from idioms")
+    fun total(): Flow<Int>
 }

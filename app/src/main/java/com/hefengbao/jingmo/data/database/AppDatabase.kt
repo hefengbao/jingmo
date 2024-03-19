@@ -57,7 +57,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 8,
+    version = 9,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -66,6 +66,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 5, to = 6),
         AutoMigration(from = 6, to = 7),
         AutoMigration(from = 7, to = 8, spec = AppDatabase.AutoMigration7To8::class),
+        AutoMigration(from = 8, to = 9, spec = AppDatabase.AutoMigration8To9::class),
     ],
     exportSchema = true
 )
@@ -104,4 +105,11 @@ abstract class AppDatabase : RoomDatabase() {
         tableName = "writers"
     )
     class AutoMigration7To8 : AutoMigrationSpec
+
+    @RenameColumn(
+        tableName = "chinese_knowledge",
+        fromColumnName = "id",
+        toColumnName = "rowid"
+    )
+    class AutoMigration8To9 : AutoMigrationSpec
 }

@@ -53,4 +53,7 @@ interface PoemSentenceDao {
 
     @Query("select id from poem_sentence_collections where collected_at > :collectedAt order by collected_at asc limit 1")
     fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
+
+    @Query("select count(*) from poem_sentences")
+    fun total(): Flow<Int>
 }

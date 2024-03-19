@@ -1,6 +1,7 @@
 package com.hefengbao.jingmo.di
 
 import android.content.Context
+import com.hefengbao.jingmo.App
 import com.hefengbao.jingmo.data.datastore.AppPreference
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
@@ -16,6 +17,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideApp(): App = App()
+
     @Provides
     @Singleton
     fun providesNetworkJson(): Json = Json {

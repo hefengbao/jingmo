@@ -71,4 +71,7 @@ interface WritingDao {
 
     @Query("select id from writing_collections where collected_at > :collectedAt order by collected_at asc limit 1")
     fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
+
+    @Query("select count(w.rowid) from writings w")
+    fun total(): Flow<Int>
 }

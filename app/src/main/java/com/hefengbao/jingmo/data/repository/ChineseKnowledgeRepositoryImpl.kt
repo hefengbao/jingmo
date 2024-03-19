@@ -18,5 +18,5 @@ class ChineseKnowledgeRepositoryImpl @Inject constructor(
         chineseKnowledgeDao.getNestId(id)
 
     override fun getSearchChineseKnowledgeList(query: String): Flow<List<ChineseKnowledgeEntity>> =
-        chineseKnowledgeDao.getSearchChineseKnowledgeList("%$query%")
+        chineseKnowledgeDao.getSearchChineseKnowledgeList("*$query*")
 }

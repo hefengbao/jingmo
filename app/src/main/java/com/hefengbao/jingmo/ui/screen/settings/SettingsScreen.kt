@@ -30,12 +30,14 @@ fun SettingsRoute(
     onAboutClick: () -> Unit,
     onPrivacyClick: () -> Unit,
     onDataClick: () -> Unit,
+    onImportClick: () -> Unit,
 ) {
     SettingsScreen(
         onBackClick = onBackClick,
         onAboutClick = onAboutClick,
         onPrivacyClick = onPrivacyClick,
         onDataClick = onDataClick,
+        onImportClick = onImportClick
     )
 }
 
@@ -47,6 +49,7 @@ fun SettingsScreen(
     onAboutClick: () -> Unit,
     onPrivacyClick: () -> Unit,
     onDataClick: () -> Unit,
+    onImportClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -72,6 +75,7 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState()),
         ) {
             Item(title = "同步数据", onClick = onDataClick, showBadge = false)
+            Item(title = "导入数据", onClick = onImportClick, showBadge = false)
             Item(title = "隐私政策", onClick = onPrivacyClick, showBadge = false)
             Item(title = "关于", onClick = onAboutClick, showBadge = false)
         }

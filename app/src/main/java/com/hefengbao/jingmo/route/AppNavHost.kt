@@ -74,7 +74,9 @@ import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.importScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToImportScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsDataScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsGraph
@@ -282,6 +284,7 @@ fun AppNavHost(
                     onAboutClick = { navController.navigateToAboutScreen() },
                     onPrivacyClick = { navController.navigateToPrivacyScreen() },
                     onDataClick = { navController.navigateToSettingsDataScreen() },
+                    onImportClick = { navController.navigateToImportScreen() },
                     nestGraph = {
                         aboutScreen(
                             onBackClick = navController::navigateUp
@@ -290,6 +293,9 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp
                         )
                         settingsDataScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        importScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

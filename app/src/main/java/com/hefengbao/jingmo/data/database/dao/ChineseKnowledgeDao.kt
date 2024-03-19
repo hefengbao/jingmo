@@ -12,18 +12,21 @@ interface ChineseKnowledgeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ChineseKnowledgeEntity)
 
-    @Query("select * from chinese_knowledge where id = :id limit 1")
+    @Query("select k.rowid, k.* from chinese_knowledge k where k.rowid = :id limit 1")
     fun getChineseKnowledge(id: Int): Flow<ChineseKnowledgeEntity>
 
-    @Query("select id from chinese_knowledge where id <:id order by id desc limit 1")
+    @Query("select rowid from chinese_knowledge where rowid <:id order by rowid desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Query("select id from chinese_knowledge where id > :id order by id asc limit 1")
+    @Query("select rowid from chinese_knowledge where rowid > :id order by rowid asc limit 1")
     fun getNestId(id: Int): Flow<Int?>
 
-    @Query("select * from chinese_knowledge where content like :query")
+    @Query("select k.rowid, k.* from chinese_knowledge k where k.content match :query")
     fun getSearchChineseKnowledgeList(query: String): Flow<List<ChineseKnowledgeEntity>>
 
     @Query("delete from chinese_knowledge")
     suspend fun clear()
+
+    @Query("select count(*) from chinese_knowledge")
+    fun total(): Flow<Int>
 }

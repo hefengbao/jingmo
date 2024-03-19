@@ -10,6 +10,8 @@ import com.hefengbao.jingmo.data.repository.FestivalRepository
 import com.hefengbao.jingmo.data.repository.FestivalRepositoryImpl
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepositoryImpl
+import com.hefengbao.jingmo.data.repository.ImportRepository
+import com.hefengbao.jingmo.data.repository.ImportRepositoryImpl
 import com.hefengbao.jingmo.data.repository.LinksRepository
 import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
 import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepository
@@ -105,4 +107,9 @@ interface DataModule {
     fun bindsPeopleRepository(
         peopleRepositoryImpl: PeopleRepositoryImpl
     ): PeopleRepository
+
+    @Binds
+    fun bindsImportRepository(
+        importRepositoryImpl: ImportRepositoryImpl
+    ): ImportRepository
 }

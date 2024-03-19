@@ -18,6 +18,7 @@ fun NavGraphBuilder.settingsGraph(
     onAboutClick: () -> Unit,
     onPrivacyClick: () -> Unit,
     onDataClick: () -> Unit,
+    onImportClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -30,6 +31,7 @@ fun NavGraphBuilder.settingsGraph(
                 onAboutClick = onAboutClick,
                 onPrivacyClick = onPrivacyClick,
                 onDataClick = onDataClick,
+                onImportClick = onImportClick
             )
         }
         nestGraph()

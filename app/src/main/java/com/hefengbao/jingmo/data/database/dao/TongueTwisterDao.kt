@@ -24,4 +24,7 @@ interface TongueTwisterDao {
 
     @Query("select id,title from tongue_twisters order by id asc")
     fun getTongueTwisterList(): Flow<List<SimpleTongueTwister>>
+
+    @Query("select count(*) from tongue_twisters")
+    fun total(): Flow<Int>
 }

@@ -21,4 +21,7 @@ interface PeopleDao {
 
     @Query("select id,name,dynasty from people where name like :query")
     fun search(query: String): Flow<List<SimplePeopleInfo>>
+
+    @Query("select count(*) from people")
+    fun total(): Flow<Int>
 }
