@@ -73,7 +73,9 @@ fun SimpleSearchScaffold(
                             }
                         ),
                         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                        textStyle = textStyle,
+                        textStyle = textStyle.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
                         decorationBox = { innerTextField ->
                             Row(
                                 modifier = modifier
@@ -92,7 +94,13 @@ fun SimpleSearchScaffold(
                                     modifier = modifier.weight(1f)
                                 ) {
                                     if (value.isEmpty())
-                                        Text(text = hint, color = Color.Gray, style = textStyle)
+                                        Text(
+                                            text = hint,
+                                            color = MaterialTheme.colorScheme.onBackground.copy(
+                                                alpha = .5f
+                                            ),
+                                            style = textStyle
+                                        )
 
                                     innerTextField()
                                 }

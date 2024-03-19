@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.ui.screen.settings
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -303,7 +303,9 @@ private fun DataScreen(
                             )
                         }
 
-                        Divider(modifier = modifier.padding(horizontal = 16.dp))
+                        if (index != menus.lastIndex) {
+                            Divider(modifier = modifier.padding(horizontal = 16.dp))
+                        }
                     }
                 }
             }
@@ -341,6 +343,7 @@ private fun TipDialog() {
     }
 }
 
+@SuppressLint("DefaultLocale")
 @Composable
 private fun Item(
     modifier: Modifier = Modifier,
@@ -387,12 +390,8 @@ private fun Item(
                     )
                 }
 
-                if (progress != 100f) {
-                    CircularProgressIndicator(
-                        progress = progress,
-                        strokeWidth = 2.dp,
-                        modifier = modifier.size(24.dp)
-                    )
+                if (progress > 0 && progress != 100f) {
+                    Text(text = "${String.format("%.2f", progress * 100)}%")
                 }
             }
             Spacer(modifier = modifier.width(16.dp))

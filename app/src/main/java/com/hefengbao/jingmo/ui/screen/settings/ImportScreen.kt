@@ -137,7 +137,7 @@ private fun ImportScreen(
         onBackClick = onBackClick,
         title = "导入数据",
         actions = {
-            IconButton(onClick = { uriHandler.openUri("https://www.baidu.com") }) {
+            IconButton(onClick = { uriHandler.openUri("https://mp.weixin.qq.com/s/VT4zx-2vnrwuVZ2Eq5yGCg") }) {
                 Icon(imageVector = Icons.AutoMirrored.Filled.HelpOutline, contentDescription = "")
             }
         }
