@@ -421,7 +421,11 @@ private fun WordDialog(
                 modifier = modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(text = "${wordDict.Text}（${wordDict.Spells}）")
+                if (wordDict.Spells != null){
+                    Text(text = "${wordDict.Text}（${wordDict.Spells}）")
+                }else{
+                    Text(text = wordDict.Text)
+                }
                 wordDict.Explains.map {
                     Text(text = it.replace("<[^>]+>".toRegex(), ""))
                 }
