@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -23,8 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
-fun PoemIndexRoute(
-    viewModel: PoemIndexViewModel = hiltViewModel(),
+fun WritingIndexRoute(
+    viewModel: WritingIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
     onAuthorClick: (String) -> Unit,
@@ -33,7 +33,7 @@ fun PoemIndexRoute(
 ) {
     val recommendList by viewModel.recommendList.collectAsState(initial = emptyList())
 
-    PoemIndexScreen(
+    WritingIndexScreen(
         onBackClick = onBackClick,
         onAuthorClick = onAuthorClick,
         onSearchClick = onSearchClick,
@@ -44,7 +44,7 @@ fun PoemIndexRoute(
 }
 
 @Composable
-private fun PoemIndexScreen(
+private fun WritingIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,

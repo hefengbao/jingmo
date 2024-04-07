@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem.nav
+package com.hefengbao.jingmo.ui.screen.writing.nav
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
@@ -7,44 +7,44 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.hefengbao.jingmo.ui.screen.poem.PoemBookmarksReadRoute
+import com.hefengbao.jingmo.ui.screen.writing.WritingBookmarksReadRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val poemBookmarksReadIdArg = "poemId"
-private const val base = "poem_bookmarks_read"
-private const val ROUTE = "$base/{$poemBookmarksReadIdArg}"
+internal const val writingBookmarksReadIdArg = "writingId"
+private const val base = "writing_bookmarks_read"
+private const val ROUTE = "$base/{$writingBookmarksReadIdArg}"
 
-internal class PoemBookmarksReadArgs(val poemId: String) {
+internal class WritingBookmarksReadArgs(val writingId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[poemBookmarksReadIdArg]),
+                    checkNotNull(savedStateHandle[writingBookmarksReadIdArg]),
                     UTF_8.name()
                 ),
             )
 }
 
-fun NavController.navigateToPoemBookmarksReadScreen(id: String) {
+fun NavController.navigateToWritingBookmarksReadScreen(id: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.poemBookmarksReadScreen(
+fun NavGraphBuilder.writingBookmarksReadScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(poemBookmarksReadIdArg) { type = NavType.StringType },
+            navArgument(writingBookmarksReadIdArg) { type = NavType.StringType },
         )
     ) {
-        PoemBookmarksReadRoute(
+        WritingBookmarksReadRoute(
             onBackClick = onBackClick,
             onCaptureClick = onCaptureClick
         )

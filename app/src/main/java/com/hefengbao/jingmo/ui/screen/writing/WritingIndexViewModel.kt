@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.lifecycle.ViewModel
 import com.hefengbao.jingmo.data.repository.PeopleRepository
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class PoemIndexViewModel @Inject constructor(
+class WritingIndexViewModel @Inject constructor(
     peopleRepository: PeopleRepository
 ) : ViewModel() {
     private val _recommendList: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())

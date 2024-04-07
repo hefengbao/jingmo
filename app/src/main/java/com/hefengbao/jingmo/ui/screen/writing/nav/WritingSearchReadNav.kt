@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem.nav
+package com.hefengbao.jingmo.ui.screen.writing.nav
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
@@ -7,40 +7,40 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.hefengbao.jingmo.ui.screen.poem.PoemSearchReadRoute
+import com.hefengbao.jingmo.ui.screen.writing.WritingSearchReadRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val poemSearchReadIdArg = "poemId"
-internal const val poemSearchReadTypeArg = "type"
-internal const val poemSearchReadQueryArg = "query"
+internal const val writingSearchReadIdArg = "writingId"
+internal const val writingSearchReadTypeArg = "type"
+internal const val writingSearchReadQueryArg = "query"
 
-private const val base = "poem_search_read"
+private const val base = "writing_search_read"
 
 private const val ROUTE =
-    "$base/{$poemSearchReadIdArg}/{$poemSearchReadTypeArg}/{$poemSearchReadQueryArg}"
+    "$base/{$writingSearchReadIdArg}/{$writingSearchReadTypeArg}/{$writingSearchReadQueryArg}"
 
-internal class PoemSearchReadArgs(val poemId: String, val type: String, val query: String) {
+internal class WritingSearchReadArgs(val poemId: String, val type: String, val query: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[poemSearchReadIdArg]),
+                    checkNotNull(savedStateHandle[writingSearchReadIdArg]),
                     UTF_8.name()
                 ),
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[poemSearchReadTypeArg]),
+                    checkNotNull(savedStateHandle[writingSearchReadTypeArg]),
                     UTF_8.name()
                 ),
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[poemSearchReadQueryArg]),
+                    checkNotNull(savedStateHandle[writingSearchReadQueryArg]),
                     UTF_8.name()
                 ),
             )
 }
 
-fun NavController.navigateToPoemSearchShowScreen(id: String, type: String, query: String) {
+fun NavController.navigateToWritingSearchShowScreen(id: String, type: String, query: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
     val encodedType = URLEncoder.encode(type, UTF_8.name())
     val encodedQuery = URLEncoder.encode(query, UTF_8.name())
@@ -49,19 +49,19 @@ fun NavController.navigateToPoemSearchShowScreen(id: String, type: String, query
     }
 }
 
-fun NavGraphBuilder.poemSearchShowScreen(
+fun NavGraphBuilder.writingSearchShowScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(poemSearchReadIdArg) { type = NavType.StringType },
-            navArgument(poemSearchReadTypeArg) { type = NavType.StringType },
-            navArgument(poemSearchReadQueryArg) { type = NavType.StringType },
+            navArgument(writingSearchReadIdArg) { type = NavType.StringType },
+            navArgument(writingSearchReadTypeArg) { type = NavType.StringType },
+            navArgument(writingSearchReadQueryArg) { type = NavType.StringType },
         )
     ) {
-        PoemSearchReadRoute(
+        WritingSearchReadRoute(
             onBackClick = onBackClick,
             onCaptureClick = onCaptureClick
         )

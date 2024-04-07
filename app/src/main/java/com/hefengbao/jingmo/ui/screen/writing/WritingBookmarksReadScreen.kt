@@ -1,59 +1,67 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.poem.components.PoemShowPanel
+import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel
 import kotlinx.serialization.json.Json
 
-@Composable
-fun PoemSearchReadRoute(
-    viewModel: PoemSearchReadViewModel = hiltViewModel(),
-    onBackClick: () -> Unit,
-    onCaptureClick: (Int) -> Unit
-) {
 
+@Composable
+fun WritingBookmarksReadRoute(
+    viewModel: WritingBookmarksReadViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+) {
     val writing by viewModel.writing.collectAsState(initial = null)
     val prevId by viewModel.prevId.collectAsState(initial = null)
     val nextId by viewModel.nextId.collectAsState(initial = null)
+    val json = viewModel.json
 
-    PoemSearchReadScreen(
+    WritingBookmarksReadScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         writing = writing,
+        getPrevId = { viewModel.getPrevId(it) },
         prevId = prevId,
+        getNextId = { viewModel.getNextId(it) },
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
-        setCollect = {
-            viewModel.setCollect(it)
-        },
-        setUncollect = {
-            viewModel.setUncollect(it)
-        },
-        json = viewModel.json
+        setUncollect = { viewModel.setUncollect(it) },
+        setCollect = { viewModel.setCollect(it) },
+        json = json,
     )
 }
 
 @Composable
-private fun PoemSearchReadScreen(
+private fun WritingBookmarksReadScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     writing: WritingWithBookmark?,
+    getPrevId: (Long) -> Unit,
     prevId: Int?,
+    getNextId: (Long) -> Unit,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
+    setCollect: (Int) -> Unit,
     json: Json
 ) {
     writing?.let {
+        LaunchedEffect(writing) {
+            it.collectedAt?.let { collectedAt ->
+                getNextId(collectedAt)
+                getPrevId(collectedAt)
+            }
+        }
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文",
@@ -63,7 +71,7 @@ private fun PoemSearchReadScreen(
                 }
             }
         ) {
-            PoemShowPanel(
+            WritingShowPanel(
                 writing = it,
                 prevId = prevId,
                 nextId = nextId,

@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,8 +26,8 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
-fun PoemSearchRoute(
-    viewModel: PoemSearchViewModel = hiltViewModel(),
+fun WritingSearchRoute(
+    viewModel: WritingSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (id: String, type: String, query: String) -> Unit,
 ) {
@@ -41,7 +41,7 @@ fun PoemSearchRoute(
         }
     }
 
-    PoemSearchScreen(
+    WritingSearchScreen(
         onBackClick = onBackClick,
         writings = writings,
         onItemClick = onItemClick,
@@ -55,7 +55,7 @@ fun PoemSearchRoute(
 }
 
 @Composable
-private fun PoemSearchScreen(
+private fun WritingSearchScreen(
     onBackClick: () -> Unit,
     writings: LazyPagingItems<SimpleWritingInfo>,
     onItemClick: (id: String, type: String, query: String) -> Unit,

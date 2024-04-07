@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,25 +22,25 @@ import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
-fun PoemBookmarksRoute(
-    viewModel: PoemBookmarksViewModel = hiltViewModel(),
+fun WritingBookmarksRoute(
+    viewModel: WritingBookmarksViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (id: Int) -> Unit
 ) {
-    val poems = viewModel.poems.collectAsLazyPagingItems()
+    val writings = viewModel.writings.collectAsLazyPagingItems()
 
-    PoemBookmarksScreen(
+    WritingBookmarksScreen(
         onBackClick = onBackClick,
-        poems = poems,
+        writings = writings,
         onItemClick = onItemClick
     )
 }
 
 @Composable
-private fun PoemBookmarksScreen(
+private fun WritingBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    poems: LazyPagingItems<WritingBookmarkSimpleInfo>,
+    writings: LazyPagingItems<WritingBookmarkSimpleInfo>,
     onItemClick: (id: Int) -> Unit
 ) {
     SimpleScaffold(
@@ -51,7 +51,7 @@ private fun PoemBookmarksScreen(
             modifier = modifier.fillMaxWidth()
         ) {
             items(
-                items = poems
+                items = writings
             ) {
                 it?.let { entity ->
                     Column(

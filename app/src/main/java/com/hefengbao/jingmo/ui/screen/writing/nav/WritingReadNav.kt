@@ -1,24 +1,24 @@
-package com.hefengbao.jingmo.ui.screen.poem.nav
+package com.hefengbao.jingmo.ui.screen.writing.nav
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.hefengbao.jingmo.ui.screen.poem.PoemReadRoute
+import com.hefengbao.jingmo.ui.screen.writing.WritingReadRoute
 
-private const val ROUTE = "poem_read"
+private const val ROUTE = "writing_read"
 
-fun NavController.navigateToPoemReadScreen() {
+fun NavController.navigateToWritingReadScreen() {
     this.navigate(ROUTE) {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.poemReadScreen(
+fun NavGraphBuilder.writingReadScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
 ) {
     composable(ROUTE) {
-        PoemReadRoute(
+        WritingReadRoute(
             onBackClick = onBackClick,
             onCaptureClick = onCaptureClick
         )

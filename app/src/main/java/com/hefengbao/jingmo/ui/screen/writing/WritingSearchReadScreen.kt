@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Photo
@@ -10,35 +10,39 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.poem.components.PoemShowPanel
+import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel
 import kotlinx.serialization.json.Json
 
 @Composable
-fun PoemReadRoute(
-    viewModel: PoemReadViewModel = hiltViewModel(),
+fun WritingSearchReadRoute(
+    viewModel: WritingSearchReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onCaptureClick: (Int) -> Unit,
+    onCaptureClick: (Int) -> Unit
 ) {
+
     val writing by viewModel.writing.collectAsState(initial = null)
     val prevId by viewModel.prevId.collectAsState(initial = null)
     val nextId by viewModel.nextId.collectAsState(initial = null)
 
-    PoemReadScreen(
+    WritingSearchReadScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         writing = writing,
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
-        setCollect = { viewModel.setCollect(it) },
-        setUncollect = { viewModel.setUncollect(it) },
-        setLastReadId = { viewModel.setLastReadId(it) },
+        setCollect = {
+            viewModel.setCollect(it)
+        },
+        setUncollect = {
+            viewModel.setUncollect(it)
+        },
         json = viewModel.json
     )
 }
 
 @Composable
-private fun PoemReadScreen(
+private fun WritingSearchReadScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     writing: WritingWithBookmark?,
@@ -47,11 +51,9 @@ private fun PoemReadScreen(
     setCurrentId: (Int) -> Unit,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
-    setLastReadId: (Int) -> Unit,
     json: Json
 ) {
     writing?.let {
-        setLastReadId(it.id)
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文",
@@ -61,7 +63,7 @@ private fun PoemReadScreen(
                 }
             }
         ) {
-            PoemShowPanel(
+            WritingShowPanel(
                 writing = it,
                 prevId = prevId,
                 nextId = nextId,

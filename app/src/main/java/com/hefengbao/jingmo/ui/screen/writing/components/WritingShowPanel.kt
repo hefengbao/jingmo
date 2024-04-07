@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem.components
+package com.hefengbao.jingmo.ui.screen.writing.components
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
@@ -50,7 +50,7 @@ import kotlin.math.abs
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun PoemShowPanel(
+fun WritingShowPanel(
     modifier: Modifier = Modifier,
     writing: WritingWithBookmark,
     prevId: Int?,

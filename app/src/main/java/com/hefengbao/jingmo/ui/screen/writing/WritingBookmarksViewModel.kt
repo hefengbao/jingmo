@@ -1,4 +1,4 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
 import androidx.lifecycle.ViewModel
 import com.hefengbao.jingmo.data.repository.WritingRepository
@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PoemBookmarksViewModel @Inject constructor(
+class WritingBookmarksViewModel @Inject constructor(
     writingRepository: WritingRepository
 ) : ViewModel() {
-    val poems = writingRepository.collections()
+    val writings = writingRepository.collections()
 }

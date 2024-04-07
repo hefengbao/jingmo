@@ -1,15 +1,15 @@
-package com.hefengbao.jingmo.ui.screen.poem
+package com.hefengbao.jingmo.ui.screen.writing
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
+import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.WritingRepository
-import com.hefengbao.jingmo.ui.screen.poem.nav.PoemSearchReadArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -18,15 +18,21 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class PoemSearchReadViewModel @Inject constructor(
+class WritingReadViewModel @Inject constructor(
+    private val preferenceRepository: PreferenceRepository,
     private val writingRepository: WritingRepository,
-    savedStateHandle: SavedStateHandle,
     val json: Json
 ) : ViewModel() {
-    private val args = PoemSearchReadArgs(savedStateHandle)
-    private var id = MutableStateFlow(args.poemId.toInt())
-    val type = args.type
-    val query = args.query
+
+    private var id = MutableStateFlow(1)
+
+    init {
+        viewModelScope.launch {
+            preferenceRepository.getReadStatus().collectLatest {
+                id.value = it.writingsLastReadId
+            }
+        }
+    }
 
     fun setCurrentId(id: Int) {
         this.id.value = id
@@ -36,31 +42,23 @@ class PoemSearchReadViewModel @Inject constructor(
         writingRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val nextId = id.flatMapLatest {
-        if (type == "author") {
-            writingRepository.getNextId(it, query)
-        } else {
-            writingRepository.getSearchNextId(it, query)
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
+        started = WhileSubscribed(5_000),
         initialValue = null
     )
 
     val prevId = id.flatMapLatest {
-        if (type == "author") {
-            writingRepository.getPrevId(it, query)
-        } else {
-            writingRepository.getSearchPrevId(it, query)
-        }
+        writingRepository.getPrevId(it)
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
+        started = WhileSubscribed(5_000),
+        initialValue = null
+    )
+
+    val nextId = id.flatMapLatest {
+        writingRepository.getNextId(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(5_000),
         initialValue = null
     )
 
@@ -73,6 +71,12 @@ class PoemSearchReadViewModel @Inject constructor(
     fun setCollect(id: Int) {
         viewModelScope.launch {
             writingRepository.collect(WritingCollectionEntity(id))
+        }
+    }
+
+    fun setLastReadId(id: Int) {
+        viewModelScope.launch {
+            preferenceRepository.setWritingsLastReadId(id)
         }
     }
 }

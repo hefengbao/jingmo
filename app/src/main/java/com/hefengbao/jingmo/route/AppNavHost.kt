@@ -45,20 +45,20 @@ import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleGraph
 import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleShowScreen
 import com.hefengbao.jingmo.ui.screen.people.nav.peopleGraph
 import com.hefengbao.jingmo.ui.screen.people.nav.peopleShowScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemBookmarksReadScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemBookmarksScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemIndexGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemReadScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.navigateToPoemSearchShowScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemBookmarksReadScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemBookmarksScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemCaptureScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemIndexGraph
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemReadScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchScreen
-import com.hefengbao.jingmo.ui.screen.poem.nav.poemSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingCaptureScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingIndexGraph
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingReadScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingSearchScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingCaptureScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingIndexGraph
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingReadScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingSearchScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingSearchShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceIndexGraph
@@ -103,7 +103,7 @@ fun AppNavHost(
         homeGraph(
             onLinksClick = { navController.navigateToLinkIndexScreen() },
             onSettingsClick = { navController.navigateToSettingsGraph() },
-            onPoemClick = { navController.navigateToPoemIndexGraph() },
+            onPoemClick = { navController.navigateToWritingIndexGraph() },
             onPoemSentenceClick = { navController.navigateToPoemSentenceIndexGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
             onIdiomClick = { navController.navigateToIdiomIndexGraph() },
@@ -115,43 +115,43 @@ fun AppNavHost(
             onRiddleClick = { navController.navigateToRiddleIndexGraph() },
             onPeopleClick = { navController.navigateToPeopleGraph() },
             nestGraph = {
-                poemIndexGraph(
+                writingIndexGraph(
                     onBackClick = navController::navigateUp,
                     onSearchClick = {
                         // search 补位用，不产生任何作用
-                        navController.navigateToPoemSearchScreen("search", "search")
+                        navController.navigateToWritingSearchScreen("search", "search")
                     },
-                    onAuthorClick = { navController.navigateToPoemSearchScreen("author", it) },
-                    onBookmarksClick = { navController.navigateToPoemBookmarksScreen() },
+                    onAuthorClick = { navController.navigateToWritingSearchScreen("author", it) },
+                    onBookmarksClick = { navController.navigateToWritingBookmarksScreen() },
                     onReadMoreClick = {
-                        navController.navigateToPoemReadScreen()
+                        navController.navigateToWritingReadScreen()
                     },
                     nestGraph = {
-                        poemBookmarksScreen(
+                        writingBookmarksScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = {
-                                navController.navigateToPoemBookmarksReadScreen(it.toString())
+                                navController.navigateToWritingBookmarksReadScreen(it.toString())
                             }
                         )
-                        poemBookmarksReadScreen(
+                        writingBookmarksReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) }
+                            onCaptureClick = { navController.navigateToWritingCaptureScreen(it.toString()) }
                         )
-                        poemSearchScreen(
+                        writingSearchScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { id: String, type: String, query: String ->
-                                navController.navigateToPoemSearchShowScreen(id, type, query)
+                                navController.navigateToWritingSearchShowScreen(id, type, query)
                             },
                         )
-                        poemSearchShowScreen(
+                        writingSearchShowScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) }
+                            onCaptureClick = { navController.navigateToWritingCaptureScreen(it.toString()) }
                         )
-                        poemReadScreen(
+                        writingReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToPoemCaptureScreen(it.toString()) },
+                            onCaptureClick = { navController.navigateToWritingCaptureScreen(it.toString()) },
                         )
-                        poemCaptureScreen(
+                        writingCaptureScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
