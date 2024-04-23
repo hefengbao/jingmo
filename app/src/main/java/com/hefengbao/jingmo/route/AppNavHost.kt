@@ -44,8 +44,10 @@ import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomShowScreen
 import com.hefengbao.jingmo.ui.screen.link.nav.linkIndexScreen
 import com.hefengbao.jingmo.ui.screen.link.nav.navigateToLinkIndexScreen
 import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleGraph
+import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleSearchGraph
 import com.hefengbao.jingmo.ui.screen.people.nav.navigateToPeopleShowScreen
 import com.hefengbao.jingmo.ui.screen.people.nav.peopleGraph
+import com.hefengbao.jingmo.ui.screen.people.nav.peopleSearchGraph
 import com.hefengbao.jingmo.ui.screen.people.nav.peopleShowScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.poemsentence.nav.navigateToPoemSentenceCaptureScreen
@@ -231,15 +233,21 @@ fun AppNavHost(
                 )
                 peopleGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { type: String, query: String ->
-                        navController.navigateToPeopleShowScreen(
-                            type,
-                            query
-                        )
-                    },
+                    onSearchClick = { navController.navigateToPeopleSearchGraph() },
                     nestGraph = {
-                        peopleShowScreen(
+                        peopleSearchGraph(
                             onBackClick = navController::navigateUp,
+                            onItemClick = { type: String, query: String ->
+                                navController.navigateToPeopleShowScreen(
+                                    type,
+                                    query
+                                )
+                            },
+                            nestGraph = {
+                                peopleShowScreen(
+                                    onBackClick = navController::navigateUp,
+                                )
+                            }
                         )
                     }
                 )

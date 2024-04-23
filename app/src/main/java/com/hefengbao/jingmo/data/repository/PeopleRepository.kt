@@ -5,6 +5,7 @@ import com.hefengbao.jingmo.data.database.model.SimplePeopleInfo
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleRepository {
+    fun getRandom(): Flow<PeopleEntity>
     fun getById(id: Int): Flow<PeopleEntity>
     fun getByName(name: String): Flow<PeopleEntity>
     fun searchList(query: String): Flow<List<SimplePeopleInfo>>

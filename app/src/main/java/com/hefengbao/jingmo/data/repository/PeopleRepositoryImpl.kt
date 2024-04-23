@@ -8,7 +8,10 @@ import javax.inject.Inject
 class PeopleRepositoryImpl @Inject constructor(
     private val peopleDao: PeopleDao
 ) : PeopleRepository {
+    override fun getRandom(): Flow<PeopleEntity> = peopleDao.random()
+
     override fun getById(id: Int): Flow<PeopleEntity> = peopleDao.getPeopleById(id)
+
     override fun getByName(name: String): Flow<PeopleEntity> = peopleDao.getPeopleByName(name)
 
     override fun searchList(query: String) = peopleDao.search("%$query%")

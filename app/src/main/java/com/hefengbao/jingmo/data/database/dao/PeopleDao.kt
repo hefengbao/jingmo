@@ -13,6 +13,9 @@ interface PeopleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: PeopleEntity)
 
+    @Query("select * from people where id = (select p.id from people p order by random() limit 1) limit 1")
+    fun random(): Flow<PeopleEntity>
+
     @Query("select * from people where id = :id limit 1")
     fun getPeopleById(id: Int): Flow<PeopleEntity>
 
