@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
+import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
@@ -13,6 +14,7 @@ import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.WritingWrapper
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
+import com.hefengbao.jingmo.data.model.asClassicPoemEntity
 import com.hefengbao.jingmo.data.model.asIdiomEntity
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
@@ -42,9 +44,9 @@ class ImportViewModel @Inject constructor(
     private val json: Json,
     private val repository: ImportRepository
 ) : ViewModel() {
-
-    private val chineseWisecracksCount = 14026
     private val chineseKnowledgeCount = 464
+    private val chineseWisecracksCount = 14026
+    private val classicPoemCount = 955
     private val idiomsCount = 30895
     private val peopleCount = 85776
     private val poemSentencesCount = 10000
@@ -98,6 +100,28 @@ class ImportViewModel @Inject constructor(
                     }
             }
             _chineseKnowledgeStatus.value = ImportStatus.Finish
+        }
+    }
+
+    val classicPoemsRatio = repository.classicPoemTotal().distinctUntilChanged().flatMapLatest {
+        MutableStateFlow(it.toFloat() / classicPoemCount)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = 0f
+    )
+    private val _classicPoemsStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val classicPoemsStatus: SharedFlow<ImportStatus<Any>> = _classicPoemsStatus
+    fun classicPoems(uris: List<Uri>) {
+        viewModelScope.launch {
+            _classicPoemsStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<List<ClassicPoem>>(readTextFromUri(it)).forEach { poem ->
+                    repository.insertClassicPoem(poem.asClassicPoemEntity())
+                }
+            }
+            _classicPoemsStatus.value = ImportStatus.Finish
         }
     }
 

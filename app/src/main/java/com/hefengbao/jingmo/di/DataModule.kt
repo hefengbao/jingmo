@@ -6,6 +6,8 @@ import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepository
 import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
 import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepositoryImpl
+import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
+import com.hefengbao.jingmo.data.repository.ClassicPoemRepositoryImpl
 import com.hefengbao.jingmo.data.repository.FestivalRepository
 import com.hefengbao.jingmo.data.repository.FestivalRepositoryImpl
 import com.hefengbao.jingmo.data.repository.IdiomRepository
@@ -39,21 +41,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface DataModule {
     @Binds
-    fun bindsPreferenceRepository(
-        preferenceRepository: PreferenceRepositoryImpl
-    ): PreferenceRepository
-
-    @Binds
-    fun bindsPoemSentenceRepository(
-        poemSentenceRepository: PoemSentenceRepositoryImpl
-    ): PoemSentenceRepository
-
-    @Binds
-    fun bindsChineseWisecrackRepository(
-        chineseCrackRepository: ChineseWisecrackRepositoryImpl
-    ): ChineseWisecrackRepository
-
-    @Binds
     fun bindsIdiomRepository(
         idiomRepository: IdiomRepositoryImpl
     ): IdiomRepository
@@ -64,14 +51,59 @@ interface DataModule {
     ): ChineseColorRepository
 
     @Binds
-    fun bindsLinksRepository(
-        linksRepositoryImpl: LinksRepositoryImpl
-    ): LinksRepository
+    fun bindsChineseKnowledgeRepository(
+        chineseKnowledgeRepositoryImpl: ChineseKnowledgeRepositoryImpl
+    ): ChineseKnowledgeRepository
+
+    @Binds
+    fun bindsChineseWisecrackRepository(
+        chineseCrackRepository: ChineseWisecrackRepositoryImpl
+    ): ChineseWisecrackRepository
+
+    @Binds
+    fun bindsClassicPoemRepository(
+        poemRepository: ClassicPoemRepositoryImpl
+    ): ClassicPoemRepository
 
     @Binds
     fun bindsFestivalRepository(
         festivalRepositoryImpl: FestivalRepositoryImpl
     ): FestivalRepository
+
+    @Binds
+    fun bindsImportRepository(
+        importRepositoryImpl: ImportRepositoryImpl
+    ): ImportRepository
+
+    @Binds
+    fun bindsLinksRepository(
+        linksRepositoryImpl: LinksRepositoryImpl
+    ): LinksRepository
+
+    @Binds
+    fun bindsNetworkDatasourceRepository(
+        networkDatasourceRepositoryImpl: NetworkDatasourceRepositoryImpl
+    ): NetworkDatasourceRepository
+
+    @Binds
+    fun bindsPeopleRepository(
+        peopleRepositoryImpl: PeopleRepositoryImpl
+    ): PeopleRepository
+
+    @Binds
+    fun bindsPoemSentenceRepository(
+        poemSentenceRepository: PoemSentenceRepositoryImpl
+    ): PoemSentenceRepository
+
+    @Binds
+    fun bindsPreferenceRepository(
+        preferenceRepository: PreferenceRepositoryImpl
+    ): PreferenceRepository
+
+    @Binds
+    fun bindsRiddleRepository(
+        riddleRepositoryImpl: RiddleRepositoryImpl
+    ): RiddleRepository
 
     @Binds
     fun bindsSolarTermsRepository(
@@ -84,32 +116,7 @@ interface DataModule {
     ): TongueTwisterRepository
 
     @Binds
-    fun bindsChineseKnowledgeRepository(
-        chineseKnowledgeRepositoryImpl: ChineseKnowledgeRepositoryImpl
-    ): ChineseKnowledgeRepository
-
-    @Binds
-    fun bindsRiddleRepository(
-        riddleRepositoryImpl: RiddleRepositoryImpl
-    ): RiddleRepository
-
-    @Binds
-    fun bindsNetworkDatasourceRepository(
-        networkDatasourceRepositoryImpl: NetworkDatasourceRepositoryImpl
-    ): NetworkDatasourceRepository
-
-    @Binds
     fun bindsWritingRepository(
         writingRepositoryImpl: WritingRepositoryImpl
     ): WritingRepository
-
-    @Binds
-    fun bindsPeopleRepository(
-        peopleRepositoryImpl: PeopleRepositoryImpl
-    ): PeopleRepository
-
-    @Binds
-    fun bindsImportRepository(
-        importRepositoryImpl: ImportRepositoryImpl
-    ): ImportRepository
 }

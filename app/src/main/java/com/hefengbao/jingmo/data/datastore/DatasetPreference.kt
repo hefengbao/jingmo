@@ -24,6 +24,7 @@ class DatasetPreference(
         DatasetVersion(
             chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE] ?: 0,
             chineseWisecracksVersion = it[PREF_CHINESE_WISECRACKS] ?: 0,
+            classicPoemsVersion = it[PREF_CLASSIC_POEMS] ?: 0,
             idiomsVersion = it[PREF_IDIOMS] ?: 0,
             peopleVersion = it[PREF_PEOPLE] ?: 0,
             poemSentencesVersion = it[PREF_POEM_SENTENCES] ?: 0,
@@ -41,16 +42,27 @@ class DatasetPreference(
     suspend fun setChineseWisecracksVersion(version: Int) =
         setInt(context, PREF_CHINESE_WISECRACKS, version)
 
-    suspend fun setIdiomsVersion(version: Int) = setInt(context, PREF_IDIOMS, version)
-    suspend fun setPeopleVersion(version: Int) = setInt(context, PREF_PEOPLE, version)
+    suspend fun setClassicPoemsVersion(version: Int) =
+        setInt(context, PREF_CLASSIC_POEMS, version)
+
+    suspend fun setIdiomsVersion(version: Int) =
+        setInt(context, PREF_IDIOMS, version)
+
+    suspend fun setPeopleVersion(version: Int) =
+        setInt(context, PREF_PEOPLE, version)
+
     suspend fun setPoemSentencesVersion(version: Int) =
         setInt(context, PREF_POEM_SENTENCES, version)
 
-    suspend fun setRiddlesVersion(version: Int) = setInt(context, PREF_RIDDLES, version)
+    suspend fun setRiddlesVersion(version: Int) =
+        setInt(context, PREF_RIDDLES, version)
+
     suspend fun setTongueTwistersVersion(version: Int) =
         setInt(context, PREF_TONGUE_TWISTERS, version)
 
-    suspend fun setWritingsVersion(version: Int) = setInt(context, PREF_WRITINGS, version)
+    suspend fun setWritingsVersion(version: Int) =
+        setInt(context, PREF_WRITINGS, version)
+
     suspend fun setWritingsCurrentPage(page: Int) =
         setInt(context, PREF_WRITINGS_CURRENT_PAGE, page)
 
@@ -60,6 +72,7 @@ class DatasetPreference(
     companion object {
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_WISECRACKS = intPreferencesKey("key_chinese_wisecracks")
+        private val PREF_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
         private val PREF_IDIOMS = intPreferencesKey("key_idioms")
         private val PREF_PEOPLE = intPreferencesKey("key_people")
         private val PREF_POEM_SENTENCES = intPreferencesKey("key_poem_sentences")

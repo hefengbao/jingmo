@@ -61,6 +61,8 @@ fun DataRoute(
     val chineseWisecracksResultProgress by viewModel.chineseWisecracksResultProgress.collectAsState(
         initial = 0f
     )
+    val classicPoemsResult by viewModel.classicPoemsResult.collectAsState(initial = SyncStatus.NonStatus)
+    val classicPoemsResultProgress by viewModel.classicPoemsResultProgress.collectAsState(initial = 0f)
     val idiomsResult by viewModel.idiomsResult.collectAsState(initial = SyncStatus.NonStatus)
     val idiomsResultProgress by viewModel.idiomsResultProgress.collectAsState(initial = 0f)
     val peopleResult by viewModel.peopleResult.collectAsState(initial = SyncStatus.NonStatus)
@@ -99,11 +101,16 @@ fun DataRoute(
         syncPeople = { total: Int, version: Int -> viewModel.syncPeople(total, version) },
         peopleResult = peopleResult,
         peopleResultProgress = peopleResultProgress,
-        syncPoemSentences = { total: Int, version: Int ->
-            viewModel.syncPoemSentences(
+        syncClassicPoems = { total: Int, version: Int ->
+            viewModel.syncClassicPoems(
                 total,
                 version
             )
+        },
+        classicPoemsResult = classicPoemsResult,
+        classicPoemsResultProgress = classicPoemsResultProgress,
+        syncPoemSentences = { total: Int, version: Int ->
+            viewModel.syncPoemSentences(total, version)
         },
         poemSentencesResult = poemSentencesResult,
         poemSentencesResultProgress = poemSentencesResultProgress,
@@ -111,10 +118,7 @@ fun DataRoute(
         riddlesResult = riddlesResult,
         riddlesResultProgress = riddlesResultProgress,
         syncTongueTwisters = { total: Int, version: Int ->
-            viewModel.syncTongueTwisters(
-                total,
-                version
-            )
+            viewModel.syncTongueTwisters(total, version)
         },
         tongueTwistersResult = tongueTwistersResult,
         tongueTwistersResultProgress = tongueTwistersResultProgress,
@@ -143,6 +147,9 @@ private fun DataScreen(
     syncChineseWisecracks: (total: Int, version: Int) -> Unit,
     chineseWisecracksResult: SyncStatus<Any>,
     chineseWisecracksResultProgress: Float,
+    syncClassicPoems: (total: Int, version: Int) -> Unit,
+    classicPoemsResult: SyncStatus<Any>,
+    classicPoemsResultProgress: Float,
     syncIdioms: (total: Int, version: Int) -> Unit,
     idiomsResult: SyncStatus<Any>,
     idiomsResultProgress: Float,
@@ -263,6 +270,14 @@ private fun DataScreen(
                         progress = writingsResultProgress,
                         onClick = { count: Int, version: Int -> syncWritings(count, version) }
                     ),
+                    Menu(
+                        title = "经典诗文",
+                        name = "classic_poems",
+                        localVersion = datasetPref.classicPoemsVersion,
+                        status = classicPoemsResult,
+                        progress = classicPoemsResultProgress,
+                        onClick = { count: Int, version: Int -> syncClassicPoems(count, version) }
+                    )
                 )
 
                 LaunchedEffect(datasetPref.writingsVersion) {

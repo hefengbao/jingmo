@@ -37,28 +37,33 @@ fun ImportRoute(
 ) {
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState(initial = 0f)
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState(initial = 0f)
+    val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState(initial = 0f)
     val idiomsRatio by viewModel.idiomsRatio.collectAsState(initial = 0f)
     val peopleRatio by viewModel.peopleRatio.collectAsState(initial = 0f)
     val poemSentenceRatio by viewModel.poemSentencesRatio.collectAsState(initial = 0f)
     val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState(initial = 0f)
     val writingsRatio by viewModel.writingsRatio.collectAsState(initial = 0f)
 
-    val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
+    val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
     val idiomsStatus by viewModel.idiomStatus.collectAsState(initial = ImportStatus.Loading)
-    val peopleStatus by viewModel.peopleStatus.collectAsState(initial = ImportStatus.Loading)
     val poemSentencesStatus by viewModel.poemSentenceStatus.collectAsState(initial = ImportStatus.Loading)
+    val peopleStatus by viewModel.peopleStatus.collectAsState(initial = ImportStatus.Loading)
     val tongueTwistersStatus by viewModel.tongueTwisterStatus.collectAsState(initial = ImportStatus.Loading)
     val writingsStatus by viewModel.writingStatus.collectAsState(initial = ImportStatus.Loading)
 
     ImportScreen(
         onBackClick = onBackClick,
-        chineseWisecracksRatio = chineseWisecrackRatio,
-        chineseWisecracksStatus = chineseWisecracksStatus,
-        chineseWisecracksUris = { viewModel.chineseWisecrack(it) },
         chineseKnowledgeRatio = chineseKnowledgeRatio,
         chineseKnowledgeStatus = chineseKnowledgeStatus,
         chineseKnowledgeUris = { viewModel.chineseKnowledge(it) },
+        chineseWisecracksRatio = chineseWisecrackRatio,
+        chineseWisecracksStatus = chineseWisecracksStatus,
+        chineseWisecracksUris = { viewModel.chineseWisecrack(it) },
+        classicPoemsRatio = classicPoemsRatio,
+        classicPoemsStatus = classicPoemsStatus,
+        classicPoemsUris = { viewModel.classicPoems(it) },
         idiomsRatio = idiomsRatio,
         idiomsStatus = idiomsStatus,
         idiomsUris = { viewModel.idioms(it) },
@@ -81,12 +86,15 @@ fun ImportRoute(
 private fun ImportScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    chineseWisecracksRatio: Float,
-    chineseWisecracksStatus: ImportStatus<Any>,
-    chineseWisecracksUris: (List<Uri>) -> Unit,
     chineseKnowledgeRatio: Float,
     chineseKnowledgeStatus: ImportStatus<Any>,
     chineseKnowledgeUris: (List<Uri>) -> Unit,
+    chineseWisecracksRatio: Float,
+    chineseWisecracksStatus: ImportStatus<Any>,
+    chineseWisecracksUris: (List<Uri>) -> Unit,
+    classicPoemsRatio: Float,
+    classicPoemsStatus: ImportStatus<Any>,
+    classicPoemsUris: (List<Uri>) -> Unit,
     idiomsRatio: Float,
     idiomsStatus: ImportStatus<Any>,
     idiomsUris: (List<Uri>) -> Unit,
@@ -104,13 +112,17 @@ private fun ImportScreen(
     writingsUris: (List<Uri>) -> Unit
 ) {
     val uriHandler = LocalUriHandler.current
+    val chineseKnowledgeLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseKnowledgeUris(it)
+        }
     val chineseWisecracksLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseWisecracksUris(it)
         }
-    val chineseKnowledgeLauncher =
+    val classicPoemsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            chineseKnowledgeUris(it)
+            classicPoemsUris(it)
         }
     val idiomsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -194,6 +206,13 @@ private fun ImportScreen(
                 ratio = writingsRatio,
                 launcher = writingsLauncher,
                 status = writingsStatus
+            )
+            Divider()
+            MenuItem(
+                title = "经典诗文",
+                ratio = classicPoemsRatio,
+                launcher = classicPoemsLauncher,
+                status = classicPoemsStatus
             )
         }
     }

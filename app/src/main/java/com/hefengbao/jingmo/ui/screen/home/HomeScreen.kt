@@ -26,34 +26,36 @@ import com.hefengbao.jingmo.R
 
 @Composable
 fun HomeRoute(
-    onLinksClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onPoemClick: () -> Unit,
-    onPoemSentenceClick: () -> Unit,
-    onChineseWisecrackClick: () -> Unit,
-    onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
+    onChineseKnowledgeClick: () -> Unit,
+    onChineseWisecrackClick: () -> Unit,
+    onClassicPoemClick: () -> Unit,
     onFestivalClick: () -> Unit,
+    onIdiomClick: () -> Unit,
+    onLinksClick: () -> Unit,
+    onPeopleClick: () -> Unit,
+    onPoemSentenceClick: () -> Unit,
+    onRiddleClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
-    onChineseKnowledgeClick: () -> Unit,
-    onRiddleClick: () -> Unit,
-    onPeopleClick: () -> Unit,
+    onWritingClick: () -> Unit
 ) {
     HomeScreen(
-        onLinksClick = onLinksClick,
-        onSettingsClick = onSettingsClick,
-        onPoemClick = onPoemClick,
-        onPoemSentenceClick = onPoemSentenceClick,
-        onChineseWisecrackClick = onChineseWisecrackClick,
-        onIdiomClick = onIdiomClick,
         onChineseColorClick = onChineseColorClick,
+        onChineseKnowledgeClick = onChineseKnowledgeClick,
+        onChineseWisecrackClick = onChineseWisecrackClick,
+        onClassicPoemClick = onClassicPoemClick,
         onFestivalClick = onFestivalClick,
+        onIdiomClick = onIdiomClick,
+        onLinksClick = onLinksClick,
+        onPeopleClick = onPeopleClick,
+        onPoemSentenceClick = onPoemSentenceClick,
+        onRiddleClick = onRiddleClick,
+        onSettingsClick = onSettingsClick,
         onSolarTermsClick = onSolarTermsClick,
         onTongueTwisterClick = onTongueTwisterClick,
-        onChineseKnowledgeClick = onChineseKnowledgeClick,
-        onRiddleClick = onRiddleClick,
-        onPeopleClick = onPeopleClick,
+        onWritingClick = onWritingClick
     )
 }
 
@@ -61,19 +63,20 @@ fun HomeRoute(
 @Composable
 private fun HomeScreen(
     modifier: Modifier = Modifier,
-    onLinksClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onPoemClick: () -> Unit,
-    onPoemSentenceClick: () -> Unit,
-    onChineseWisecrackClick: () -> Unit,
-    onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
+    onChineseKnowledgeClick: () -> Unit,
+    onChineseWisecrackClick: () -> Unit,
+    onClassicPoemClick: () -> Unit,
     onFestivalClick: () -> Unit,
+    onIdiomClick: () -> Unit,
+    onLinksClick: () -> Unit,
+    onPeopleClick: () -> Unit,
+    onPoemSentenceClick: () -> Unit,
+    onRiddleClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
-    onChineseKnowledgeClick: () -> Unit,
-    onRiddleClick: () -> Unit,
-    onPeopleClick: () -> Unit,
+    onWritingClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -105,8 +108,14 @@ private fun HomeScreen(
                 content = {
                     item {
                         Item(
+                            title = "经典诗文",
+                            onClick = onClassicPoemClick
+                        )
+                    }
+                    item {
+                        Item(
                             title = "诗文",
-                            onClick = onPoemClick
+                            onClick = onWritingClick
                         )
                     }
                     item {

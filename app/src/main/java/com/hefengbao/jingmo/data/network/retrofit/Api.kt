@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.network.retrofit
 
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
+import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
@@ -30,6 +31,9 @@ interface Api {
     suspend fun people(
         @Path("page") page: Int
     ): PeopleWrapper
+
+    @GET("classic_poems.json")
+    suspend fun classicPoems(): List<ClassicPoem>
 
     @GET("poem_sentences.json")
     suspend fun poemSentences(): List<PoemSentence>

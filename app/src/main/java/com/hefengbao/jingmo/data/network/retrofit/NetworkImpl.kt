@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.network.retrofit
 
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
+import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
@@ -18,9 +19,9 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private val baseUrl = "https://hefengbao.github.io/jingmo-data/api/"
-private val baseUrl2 = "https://hefengbao.github.io/jingmo-data2/api/"
-private val baseUrl3 = "https://hefengbao.github.io/jingmo-data3/api/"
+private const val baseUrl = "https://hefengbao.github.io/jingmo-data/api/"
+private const val baseUrl2 = "https://hefengbao.github.io/jingmo-data2/api/"
+private const val baseUrl3 = "https://hefengbao.github.io/jingmo-data3/api/"
 
 @Singleton
 class NetworkImpl @Inject constructor(
@@ -57,6 +58,7 @@ class NetworkImpl @Inject constructor(
     override suspend fun chineseWisecracks(): List<ChineseWisecrack> =
         networkApi.chineseWisecracks()
 
+    override suspend fun classicPoems(): List<ClassicPoem> = networkApi.classicPoems()
     override suspend fun idioms(): List<Idiom> = networkApi.idioms()
     override suspend fun people(page: Int): PeopleWrapper = networkApi.people(page)
     override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -21,6 +22,7 @@ fun SimpleScaffold(
     onBackClick: () -> Unit,
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {},
 ) {
@@ -41,7 +43,9 @@ fun SimpleScaffold(
                 actions = actions
             )
         },
-        floatingActionButton = floatingActionButton
+        bottomBar = bottomBar,
+        floatingActionButton = floatingActionButton,
+        floatingActionButtonPosition = FabPosition.End
     ) { paddingValues: PaddingValues ->
         Surface(
             modifier = Modifier.padding(paddingValues)

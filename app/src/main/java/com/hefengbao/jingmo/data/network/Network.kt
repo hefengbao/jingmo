@@ -2,6 +2,7 @@ package com.hefengbao.jingmo.data.network
 
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
+import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
@@ -14,6 +15,7 @@ interface Network {
     suspend fun dataset(): List<Dataset>
     suspend fun chineseKnowledge(): List<ChineseKnowledge>
     suspend fun chineseWisecracks(): List<ChineseWisecrack>
+    suspend fun classicPoems(): List<ClassicPoem>
     suspend fun idioms(): List<Idiom>
     suspend fun people(page: Int): PeopleWrapper
     suspend fun poemSentences(): List<PoemSentence>

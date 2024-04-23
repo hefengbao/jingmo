@@ -7,6 +7,7 @@ import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
+import com.hefengbao.jingmo.data.model.asClassicPoemEntity
 import com.hefengbao.jingmo.data.model.asIdiomEntity
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
@@ -57,10 +58,11 @@ class DataViewModel @Inject constructor(
                         count++
                         _chineseKnowledgeResultProgress.value = count.toFloat() / total
                     }
+
+                    preference.setChineseKnowledgeVersion(version)
+                    _chineseKnowledgeResult.value = SyncStatus.Success
                 }
             }
-            preference.setChineseKnowledgeVersion(version)
-            _chineseKnowledgeResult.value = SyncStatus.Success
         }
     }
 
@@ -85,10 +87,11 @@ class DataViewModel @Inject constructor(
                         count++
                         _chineseWisecracksResultProgress.value = count.toFloat() / total
                     }
+
+                    preference.setChineseWisecracksVersion(version)
+                    _chineseWisecracksResult.value = SyncStatus.Success
                 }
             }
-            preference.setChineseWisecracksVersion(version)
-            _chineseWisecracksResult.value = SyncStatus.Success
         }
     }
 
@@ -113,10 +116,11 @@ class DataViewModel @Inject constructor(
                         count++
                         _idiomsResultProgress.value = count.toFloat() / total
                     }
+
+                    preference.setIdiomsVersion(version)
+                    _idiomsResult.value = SyncStatus.Success
                 }
             }
-            preference.setIdiomsVersion(version)
-            _idiomsResult.value = SyncStatus.Success
         }
     }
 
@@ -148,9 +152,38 @@ class DataViewModel @Inject constructor(
                     }
                 }
             }
-
+            // TODO 这里需优化
             preference.setPeopleVersion(version)
             _peopleResult.value = SyncStatus.Success
+        }
+    }
+
+    private val _classicPoemsResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val classicPoemsResult: SharedFlow<SyncStatus<Any>> = _classicPoemsResult
+    private val _classicPoemsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val classicPoemsResultProgress: SharedFlow<Float> = _classicPoemsResultProgress
+    fun syncClassicPoems(total: Int, version: Int) {
+        _classicPoemsResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            when (val response = repository.syncClassicPoems()) {
+                is Result.Error -> {
+                    _classicPoemsResult.value = SyncStatus.Error(response.exception)
+                }
+
+                Result.Loading -> {}
+                is Result.Success -> {
+                    var count = 0
+                    response.data.map {
+                        repository.insertClassicPoems(it.asClassicPoemEntity())
+                        count++
+                        _classicPoemsResultProgress.value = count.toFloat() / total
+                    }
+
+                    preference.setClassicPoemsVersion(version)
+                    _classicPoemsResult.value = SyncStatus.Success
+                }
+            }
         }
     }
 
@@ -175,10 +208,11 @@ class DataViewModel @Inject constructor(
                         count++
                         _poemSentencesResultProgress.value = count.toFloat() / total
                     }
+
+                    preference.setPoemSentencesVersion(version)
+                    _poemSentencesResult.value = SyncStatus.Success
                 }
             }
-            preference.setPoemSentencesVersion(version)
-            _poemSentencesResult.value = SyncStatus.Success
         }
     }
 
@@ -200,10 +234,11 @@ class DataViewModel @Inject constructor(
                         count++
                         _riddlesResultProgress.value = count.toFloat() / total
                     }
+
+                    preference.setRiddlesVersion(version)
+                    _riddlesResult.value = SyncStatus.Success
                 }
             }
-            preference.setRiddlesVersion(version)
-            _riddlesResult.value = SyncStatus.Success
         }
     }
 
@@ -227,10 +262,11 @@ class DataViewModel @Inject constructor(
                         count++
                         _tongueTwistersResultProgress.value = count.toFloat() / total
                     }
+
+                    preference.setTongueTwistersVersion(version)
+                    _tongueTwistersResult.value = SyncStatus.Success
                 }
             }
-            preference.setTongueTwistersVersion(version)
-            _tongueTwistersResult.value = SyncStatus.Success
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
+import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
@@ -18,6 +19,7 @@ import com.hefengbao.jingmo.data.database.dao.WritingDao
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
@@ -47,6 +49,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         ChineseKnowledgeEntity::class,
         ChineseWisecrackCollectionEntity::class,
         ChineseWisecrackEntity::class,
+        ClassicPoemEntity::class,
         IdiomCollectionEntity::class,
         IdiomEntity::class,
         PeopleEntity::class,
@@ -57,7 +60,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 9,
+    version = 10,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -67,6 +70,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 6, to = 7),
         AutoMigration(from = 7, to = 8, spec = AppDatabase.AutoMigration7To8::class),
         AutoMigration(from = 8, to = 9, spec = AppDatabase.AutoMigration8To9::class),
+        AutoMigration(from = 9, to = 10)
     ],
     exportSchema = true
 )
@@ -85,6 +89,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
 abstract class AppDatabase : RoomDatabase() {
     abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
     abstract fun chineseWisecrackDao(): ChineseWisecrackDao
+    abstract fun classicPoemDao(): ClassicPoemDao
     abstract fun idiomDao(): IdiomDao
     abstract fun peopleDao(): PeopleDao
     abstract fun riddleDao(): RiddleDao

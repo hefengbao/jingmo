@@ -9,19 +9,20 @@ const val ROUTE_HOME_GRAPH = "home_graph"
 private const val ROUTE_HOME = "home"
 
 fun NavGraphBuilder.homeGraph(
-    onLinksClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onPoemClick: () -> Unit,
-    onPoemSentenceClick: () -> Unit,
-    onChineseWisecrackClick: () -> Unit,
-    onIdiomClick: () -> Unit,
     onChineseColorClick: () -> Unit,
+    onChineseKnowledgeClick: () -> Unit,
+    onChineseWisecrackClick: () -> Unit,
+    onClassicPoemClick: () -> Unit,
     onFestivalClick: () -> Unit,
+    onIdiomClick: () -> Unit,
+    onLinksClick: () -> Unit,
+    onPeopleClick: () -> Unit,
+    onPoemSentenceClick: () -> Unit,
+    onRiddleClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     onSolarTermsClick: () -> Unit,
     onTongueTwisterClick: () -> Unit,
-    onChineseKnowledgeClick: () -> Unit,
-    onRiddleClick: () -> Unit,
-    onPeopleClick: () -> Unit,
+    onWritingClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
@@ -32,19 +33,20 @@ fun NavGraphBuilder.homeGraph(
             route = ROUTE_HOME
         ) {
             HomeRoute(
-                onLinksClick = onLinksClick,
-                onSettingsClick = onSettingsClick,
-                onPoemClick = onPoemClick,
-                onPoemSentenceClick = onPoemSentenceClick,
-                onChineseWisecrackClick = onChineseWisecrackClick,
                 onChineseColorClick = onChineseColorClick,
-                onIdiomClick = onIdiomClick,
+                onChineseKnowledgeClick = onChineseKnowledgeClick,
+                onChineseWisecrackClick = onChineseWisecrackClick,
+                onClassicPoemClick = onClassicPoemClick,
                 onFestivalClick = onFestivalClick,
+                onIdiomClick = onIdiomClick,
+                onLinksClick = onLinksClick,
+                onPeopleClick = onPeopleClick,
+                onPoemSentenceClick = onPoemSentenceClick,
+                onRiddleClick = onRiddleClick,
+                onSettingsClick = onSettingsClick,
                 onSolarTermsClick = onSolarTermsClick,
                 onTongueTwisterClick = onTongueTwisterClick,
-                onChineseKnowledgeClick = onChineseKnowledgeClick,
-                onRiddleClick = onRiddleClick,
-                onPeopleClick = onPeopleClick,
+                onWritingClick = onWritingClick
             )
         }
         nestGraph()

@@ -3,6 +3,7 @@ package com.hefengbao.jingmo.data.repository
 import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
@@ -11,6 +12,7 @@ import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
+import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
@@ -26,6 +28,8 @@ interface NetworkDatasourceRepository {
     suspend fun insertChinesKnowledge(entity: ChineseKnowledgeEntity)
     suspend fun syncChineseWisecracks(): Result<List<ChineseWisecrack>>
     suspend fun insertChineseWisecrack(entity: ChineseWisecrackEntity)
+    suspend fun syncClassicPoems(): Result<List<ClassicPoem>>
+    suspend fun insertClassicPoems(entity: ClassicPoemEntity)
     suspend fun syncIdioms(): Result<List<Idiom>>
     suspend fun insertIdiom(entity: IdiomEntity)
     suspend fun syncPeople(page: Int): Result<PeopleWrapper>
