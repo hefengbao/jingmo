@@ -8,17 +8,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.model.PoemSentenceWithBookmark
-import com.hefengbao.jingmo.ui.component.BottomActionBar
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
@@ -77,7 +84,10 @@ private fun PoemSentenceIndexScreen(
 ) {
 
     sentence?.let {
-        setLastReadId(sentence.id)
+        var isCollect = it.collectedAt != null
+        LaunchedEffect(it) {
+            setLastReadId(sentence.id)
+        }
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文名句",
@@ -91,6 +101,66 @@ private fun PoemSentenceIndexScreen(
                 IconButton(onClick = onSearchClick) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = null)
                 }
+            },
+            bottomBar = {
+                BottomAppBar(
+                    actions = {
+                        Row(
+                            modifier = modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    setCurrentId(prevId!!)
+                                },
+                                enabled = prevId != null
+                            ) {
+                                Icon(
+                                    modifier = modifier.padding(8.dp),
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = null
+                                )
+                            }
+                            IconButton(
+                                onClick = {
+                                    if (isCollect) {
+                                        setUncollect(it.id)
+                                    } else {
+                                        setCollect(it.id)
+                                    }
+                                    isCollect = !isCollect
+                                }
+                            ) {
+                                if (isCollect) {
+                                    Icon(
+                                        imageVector = Icons.Default.Bookmark,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Default.BookmarkBorder,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                            IconButton(
+                                modifier = modifier.padding(8.dp),
+                                onClick = {
+                                    setCurrentId(nextId!!)
+                                },
+                                enabled = nextId != null
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    },
+                )
             }
         ) {
             Box(
@@ -100,12 +170,12 @@ private fun PoemSentenceIndexScreen(
                         state = rememberDraggableState {},
                         orientation = Orientation.Horizontal,
                         onDragStarted = {},
-                        onDragStopped = {
-                            if (it < 0 && abs(it) > 500f) {
+                        onDragStopped = { velocity ->
+                            if (velocity < 0 && abs(velocity) > 500f) {
                                 nextId?.let {
                                     setCurrentId(nextId)
                                 }
-                            } else if (it > 0 && abs(it) > 500f) {
+                            } else if (velocity > 0 && abs(velocity) > 500f) {
                                 prevId?.let {
                                     setCurrentId(prevId)
                                 }
@@ -113,54 +183,37 @@ private fun PoemSentenceIndexScreen(
                         }
                     )
             ) {
-                Column(
+                Row(
                     modifier = modifier
                         .fillMaxSize()
-                        .padding(bottom = 80.dp)
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
-                        modifier = modifier
-                            .fillMaxSize()
-                            .padding(top = 64.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        ) {
-                            sentence.content.split("，", "。", "？", "！", "、").map {
+                        sentence.content.split("，", "。", "？", "！", "、").map {
 
-                                Column {
-                                    it.toCharArray().map { char ->
-                                        Text(
-                                            text = char.toString(),
-                                            style = TextStyle.Default.copy(fontSize = 24.sp)
-                                        )
-                                    }
+                            Column {
+                                it.toCharArray().map { char ->
+                                    Text(
+                                        text = char.toString(),
+                                        style = TextStyle.Default.copy(fontSize = 24.sp)
+                                    )
                                 }
                             }
                         }
-                        Column {
-                            sentence.from.replace("《", "﹁")
-                                .replace("》", "﹂")
-                                .toCharArray()
-                                .map {
-                                    Text(text = it.toString())
-                                }
-                        }
+                    }
+                    Column {
+                        sentence.from.replace("《", "﹁")
+                            .replace("》", "﹂")
+                            .toCharArray()
+                            .map { text ->
+                                Text(text = text.toString())
+                            }
                     }
                 }
-                BottomActionBar(
-                    modifier = modifier.align(Alignment.BottomCenter),
-                    id = sentence.id,
-                    prevId = prevId,
-                    nextId = nextId,
-                    setCurrentId = setCurrentId,
-                    setUncollect = setUncollect,
-                    setCollect = setCollect,
-                    collectedAt = sentence.collectedAt
-                )
             }
         }
     }
