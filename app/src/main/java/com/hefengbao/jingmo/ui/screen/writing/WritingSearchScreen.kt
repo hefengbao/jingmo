@@ -1,15 +1,30 @@
 package com.hefengbao.jingmo.ui.screen.writing
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,8 +37,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
-import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
 fun WritingSearchRoute(
@@ -31,61 +44,124 @@ fun WritingSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (id: String, type: String, query: String) -> Unit,
 ) {
+    val recommendList by viewModel.recommendList.collectAsState(initial = emptyList())
+
     val writings = viewModel.writings.collectAsLazyPagingItems()
 
-    var query: String by rememberSaveable {
-        if (viewModel.type == "author") {
-            mutableStateOf(viewModel.query)
-        } else {
-            mutableStateOf("")
-        }
+    var query: String by rememberSaveable { mutableStateOf("") }
+    var type: String by rememberSaveable { mutableStateOf("keyword") }
+
+    BackHandler(query.isNotEmpty()) {
+        query = ""
     }
 
     WritingSearchScreen(
         onBackClick = onBackClick,
+        recommendList = recommendList,
         writings = writings,
         onItemClick = onItemClick,
         type = viewModel.type,
+        onTypeChange = { type = it },
         query = query,
         onQueryChange = {
             query = it
-            viewModel.search(it)
+            viewModel.search(it, type)
         }
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun WritingSearchScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    recommendList: List<String>,
     writings: LazyPagingItems<SimpleWritingInfo>,
     onItemClick: (id: String, type: String, query: String) -> Unit,
     type: String,
+    onTypeChange: (String) -> Unit,
     query: String,
     onQueryChange: (String) -> Unit,
 ) {
-    if (type == "author") {
-        SimpleScaffold(
-            onBackClick = onBackClick,
-            title = query
-        ) {
-            if (writings.itemCount == 0) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-            }
-            List(writings = writings, onItemClick = onItemClick, type = type, query = query)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "返回"
+                        )
+                    }
+                },
+                title = {
+                    SearchBar(
+                        query = query,
+                        onQueryChange = onQueryChange,
+                        onSearch = {},
+                        active = false,
+                        onActiveChange = {},
+                        placeholder = {
+                            Text(text = "请输入作者或关键词")
+                        },
+                        trailingIcon = {
+                            if (query.isNotEmpty()) {
+                                IconButton(
+                                    onClick = {
+                                        onQueryChange("")
+                                        onTypeChange("keyword")
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Clear,
+                                        contentDescription = "清除"
+                                    )
+                                }
+                            }
+                        }
+                    ) {
+
+                    }
+                }
+            )
         }
-    } else {
-        SimpleSearchScaffold(
-            onBackClick = onBackClick,
-            value = query,
-            onValueChange = {
-                onQueryChange(it)
-            },
-            onSearch = { /*TODO*/ }
+    ) { paddingValues ->
+        Surface(
+            modifier = modifier.padding(paddingValues)
         ) {
-            if (query.isNotEmpty() && writings.itemCount == 0) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            if (query.isEmpty()) {
+                LazyVerticalGrid(
+                    modifier = modifier.padding(16.dp),
+                    columns = GridCells.Fixed(3),
+                ) {
+                    item(
+                        span = {
+                            GridItemSpan(3)
+                        }
+                    ) {
+                        Text(
+                            text = "作者推荐",
+                            modifier = modifier.padding(8.dp),
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
+                    items(
+                        items = recommendList
+                    ) {
+                        Text(text = it, modifier = modifier
+                            .clickable {
+                                onTypeChange("author")
+                                onQueryChange(it)
+                            }
+                            .padding(8.dp))
+                    }
+                }
+            } else {
+                if (writings.itemCount == 0) {
+                    Text(text = "没有查找到数据 /(ㄒoㄒ)/~~")
+                }
+                List(writings = writings, onItemClick = onItemClick, type = type, query = query)
             }
-            List(writings = writings, onItemClick = onItemClick, type = type, query = query)
         }
     }
 }

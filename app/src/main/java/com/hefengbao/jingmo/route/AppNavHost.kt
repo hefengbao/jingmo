@@ -306,10 +306,8 @@ fun AppNavHost(
                 writingIndexGraph(
                     onBackClick = navController::navigateUp,
                     onSearchClick = {
-                        // search 补位用，不产生任何作用
-                        navController.navigateToWritingSearchScreen("search", "search")
+                        navController.navigateToWritingSearchScreen()
                     },
-                    onAuthorClick = { navController.navigateToWritingSearchScreen("author", it) },
                     onBookmarksClick = { navController.navigateToWritingBookmarksScreen() },
                     onReadMoreClick = {
                         navController.navigateToWritingReadScreen()

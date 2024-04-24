@@ -24,6 +24,7 @@ fun SimpleScaffold(
     actions: @Composable RowScope.() -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
+    floatingActionButtonPosition: FabPosition = FabPosition.End,
     content: @Composable () -> Unit = {},
 ) {
     Scaffold(
@@ -45,7 +46,7 @@ fun SimpleScaffold(
         },
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
-        floatingActionButtonPosition = FabPosition.End
+        floatingActionButtonPosition = floatingActionButtonPosition
     ) { paddingValues: PaddingValues ->
         Surface(
             modifier = Modifier.padding(paddingValues)

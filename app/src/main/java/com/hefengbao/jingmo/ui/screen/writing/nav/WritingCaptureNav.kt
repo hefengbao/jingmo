@@ -19,7 +19,12 @@ private const val ROUTE = "$base/{$writingCaptureIdArg}"
 
 internal class WritingCaptureArgs(val poemId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(URLDecoder.decode(checkNotNull(savedStateHandle[writingCaptureIdArg]), UTF_8.name()))
+            this(
+                URLDecoder.decode(
+                    checkNotNull(savedStateHandle[writingCaptureIdArg]),
+                    UTF_8.name()
+                )
+            )
 }
 
 fun NavController.navigateToWritingCaptureScreen(id: String) {

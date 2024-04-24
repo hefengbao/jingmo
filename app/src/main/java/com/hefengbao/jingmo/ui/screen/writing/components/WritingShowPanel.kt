@@ -2,34 +2,26 @@ package com.hefengbao.jingmo.ui.screen.writing.components
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -56,13 +48,8 @@ fun WritingShowPanel(
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
     json: Json,
-
-    ) {
-    var isCollect = writing.collectedAt != null
-
+) {
     val tag = "note"
 
     val charDicts = mutableListOf<CharDict>()
@@ -166,6 +153,8 @@ fun WritingShowPanel(
         mutableStateOf<WordDict?>(null)
     }
 
+    val state = rememberLazyListState()
+
     BackHandler(showCharDialog) {
         showCharDialog = false
         showChar = null
@@ -190,6 +179,9 @@ fun WritingShowPanel(
         }
     }
 
+    LaunchedEffect(writing) {
+        state.animateScrollToItem(0)
+    }
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -214,8 +206,9 @@ fun WritingShowPanel(
             LazyColumn(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(start = 32.dp, end = 32.dp, top = 16.dp, bottom = 80.dp),
+                    .padding(horizontal = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
+                state = state
             ) {
                 item {
                     Column(
@@ -309,62 +302,6 @@ fun WritingShowPanel(
                 }
             }
         }
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(horizontal = 16.dp)
-                .height(64.dp)
-                .align(
-                    Alignment.BottomCenter
-                ),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = { setCurrentId(prevId!!) },
-                enabled = prevId != null
-            ) {
-                Icon(
-                    modifier = modifier.padding(8.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null
-                )
-            }
-            IconButton(
-                onClick = {
-                    if (isCollect) {
-                        setUncollect(writing.id)
-                    } else {
-                        setCollect(writing.id)
-                    }
-                    isCollect = !isCollect
-                }
-            ) {
-                if (isCollect) {
-                    Icon(
-                        imageVector = Icons.Default.Bookmark,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Default.BookmarkBorder,
-                        contentDescription = null
-                    )
-                }
-            }
-            IconButton(
-                modifier = modifier.padding(8.dp),
-                onClick = { setCurrentId(nextId!!) },
-                enabled = nextId != null
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = null
-                )
-            }
-        }
     }
 }
 
@@ -421,9 +358,9 @@ private fun WordDialog(
                 modifier = modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                if (wordDict.Spells != null){
+                if (wordDict.Spells != null) {
                     Text(text = "${wordDict.Text}（${wordDict.Spells}）")
-                }else{
+                } else {
                     Text(text = wordDict.Text)
                 }
                 wordDict.Explains.map {

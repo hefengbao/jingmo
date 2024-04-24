@@ -18,7 +18,6 @@ fun NavController.navigateToWritingIndexGraph() {
 fun NavGraphBuilder.writingIndexGraph(
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
-    onAuthorClick: (String) -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
@@ -33,7 +32,6 @@ fun NavGraphBuilder.writingIndexGraph(
             WritingIndexRoute(
                 onBackClick = onBackClick,
                 onSearchClick = onSearchClick,
-                onAuthorClick = onAuthorClick,
                 onBookmarksClick = onBookmarksClick,
                 onReadMoreClick = onReadMoreClick,
             )
