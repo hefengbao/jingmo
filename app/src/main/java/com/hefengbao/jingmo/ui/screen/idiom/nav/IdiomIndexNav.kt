@@ -15,9 +15,9 @@ fun NavController.navigateToIdiomIndexGraph() {
 
 fun NavGraphBuilder.idiomIndexGraph(
     onBackClick: () -> Unit,
-    onItemClick: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -27,9 +27,9 @@ fun NavGraphBuilder.idiomIndexGraph(
         composable(ROUTE_IDIOM_INDEX) {
             IdiomIndexRoute(
                 onBackClick = onBackClick,
-                onItemClick = onItemClick,
                 onReadMoreClick = onReadMoreClick,
-                onBookmarksClick = onBookmarksClick
+                onBookmarksClick = onBookmarksClick,
+                onSearchClick = onSearchClick
             )
         }
     }
