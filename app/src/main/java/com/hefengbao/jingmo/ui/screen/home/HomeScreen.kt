@@ -19,13 +19,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.model.HomeItem
 
 @Composable
 fun HomeRoute(
+    viewModel: HomeViewModel = hiltViewModel(),
     onChineseColorClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -41,7 +46,10 @@ fun HomeRoute(
     onTongueTwisterClick: () -> Unit,
     onWritingClick: () -> Unit
 ) {
+    val homeItem by viewModel.homeItem.collectAsState(initial = HomeItem())
+
     HomeScreen(
+        homeItem = homeItem,
         onChineseColorClick = onChineseColorClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
@@ -63,6 +71,7 @@ fun HomeRoute(
 @Composable
 private fun HomeScreen(
     modifier: Modifier = Modifier,
+    homeItem: HomeItem,
     onChineseColorClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -106,35 +115,45 @@ private fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 content = {
-                    item {
-                        Item(
-                            title = "经典诗文",
-                            onClick = onClassicPoemClick
-                        )
+                    if (homeItem.classicPoem) {
+                        item {
+                            Item(
+                                title = "经典诗文",
+                                onClick = onClassicPoemClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "诗文",
-                            onClick = onWritingClick
-                        )
+                    if (homeItem.writing) {
+                        item {
+                            Item(
+                                title = "诗文",
+                                onClick = onWritingClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "诗文名句",
-                            onClick = onPoemSentenceClick
-                        )
+                    if (homeItem.poemSentence) {
+                        item {
+                            Item(
+                                title = "诗文名句",
+                                onClick = onPoemSentenceClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "歇后语",
-                            onClick = onChineseWisecrackClick
-                        )
+                    if (homeItem.idiom) {
+                        item {
+                            Item(
+                                title = "成语",
+                                onClick = onIdiomClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "成语",
-                            onClick = onIdiomClick
-                        )
+                    if (homeItem.chineseWisecrack) {
+                        item {
+                            Item(
+                                title = "歇后语",
+                                onClick = onChineseWisecrackClick
+                            )
+                        }
                     }
                     /*item {
                         Item(
@@ -142,41 +161,53 @@ private fun HomeScreen(
                             onClick = onRiddleClick
                         )
                     }*/
-                    item {
-                        Item(
-                            title = "绕口令",
-                            onClick = onTongueTwisterClick
-                        )
+                    if (homeItem.tongueTwister) {
+                        item {
+                            Item(
+                                title = "绕口令",
+                                onClick = onTongueTwisterClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "传统节日",
-                            onClick = onFestivalClick
-                        )
+                    if (homeItem.festival) {
+                        item {
+                            Item(
+                                title = "传统节日",
+                                onClick = onFestivalClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "二十四节气",
-                            onClick = onSolarTermsClick
-                        )
+                    if (homeItem.solarTerm) {
+                        item {
+                            Item(
+                                title = "二十四节气",
+                                onClick = onSolarTermsClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "知识卡片",
-                            onClick = onChineseKnowledgeClick
-                        )
+                    if (homeItem.chineseKnowledge) {
+                        item {
+                            Item(
+                                title = "知识卡片",
+                                onClick = onChineseKnowledgeClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "人物",
-                            onClick = onPeopleClick
-                        )
+                    if (homeItem.people) {
+                        item {
+                            Item(
+                                title = "人物",
+                                onClick = onPeopleClick
+                            )
+                        }
                     }
-                    item {
-                        Item(
-                            title = "传统色",
-                            onClick = onChineseColorClick
-                        )
+                    if (homeItem.chineseColor) {
+                        item {
+                            Item(
+                                title = "传统色",
+                                onClick = onChineseColorClick
+                            )
+                        }
                     }
                 }
             )

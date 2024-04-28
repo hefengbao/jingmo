@@ -14,11 +14,12 @@ fun NavController.navigateToSettingsGraph() {
 }
 
 fun NavGraphBuilder.settingsGraph(
-    onBackClick: () -> Unit,
     onAboutClick: () -> Unit,
-    onPrivacyClick: () -> Unit,
+    onBackClick: () -> Unit,
     onDataClick: () -> Unit,
+    onHomeItemManagerClick: () -> Unit,
     onImportClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -27,11 +28,12 @@ fun NavGraphBuilder.settingsGraph(
     ) {
         composable(ROUTE_SETTINGS) {
             SettingsRoute(
-                onBackClick = onBackClick,
                 onAboutClick = onAboutClick,
-                onPrivacyClick = onPrivacyClick,
+                onBackClick = onBackClick,
                 onDataClick = onDataClick,
-                onImportClick = onImportClick
+                onHomeItemManagerClick = onHomeItemManagerClick,
+                onImportClick = onImportClick,
+                onPrivacyClick = onPrivacyClick,
             )
         }
         nestGraph()

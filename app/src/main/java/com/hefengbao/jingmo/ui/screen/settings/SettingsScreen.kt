@@ -26,18 +26,20 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsRoute(
-    onBackClick: () -> Unit,
     onAboutClick: () -> Unit,
-    onPrivacyClick: () -> Unit,
+    onBackClick: () -> Unit,
     onDataClick: () -> Unit,
+    onHomeItemManagerClick: () -> Unit,
     onImportClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
 ) {
     SettingsScreen(
-        onBackClick = onBackClick,
         onAboutClick = onAboutClick,
-        onPrivacyClick = onPrivacyClick,
+        onBackClick = onBackClick,
         onDataClick = onDataClick,
-        onImportClick = onImportClick
+        onHomeItemManagerClick = onHomeItemManagerClick,
+        onImportClick = onImportClick,
+        onPrivacyClick = onPrivacyClick,
     )
 }
 
@@ -45,11 +47,12 @@ fun SettingsRoute(
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit,
     onAboutClick: () -> Unit,
-    onPrivacyClick: () -> Unit,
+    onBackClick: () -> Unit,
     onDataClick: () -> Unit,
+    onHomeItemManagerClick: () -> Unit,
     onImportClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -76,6 +79,7 @@ fun SettingsScreen(
         ) {
             Item(title = "同步数据", onClick = onDataClick, showBadge = false)
             Item(title = "导入数据", onClick = onImportClick, showBadge = false)
+            Item(title = "栏目管理", onClick = onHomeItemManagerClick, showBadge = false)
             Item(title = "隐私政策", onClick = onPrivacyClick, showBadge = false)
             Item(title = "关于", onClick = onAboutClick, showBadge = false)
         }

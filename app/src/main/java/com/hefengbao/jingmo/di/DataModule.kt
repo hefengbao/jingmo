@@ -10,6 +10,8 @@ import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
 import com.hefengbao.jingmo.data.repository.ClassicPoemRepositoryImpl
 import com.hefengbao.jingmo.data.repository.FestivalRepository
 import com.hefengbao.jingmo.data.repository.FestivalRepositoryImpl
+import com.hefengbao.jingmo.data.repository.HomeRepository
+import com.hefengbao.jingmo.data.repository.HomeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import com.hefengbao.jingmo.data.repository.IdiomRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ImportRepository
@@ -69,6 +71,11 @@ interface DataModule {
     fun bindsFestivalRepository(
         festivalRepositoryImpl: FestivalRepositoryImpl
     ): FestivalRepository
+
+    @Binds
+    fun bindsHomeRepository(
+        homeRepositoryImpl: HomeRepositoryImpl
+    ): HomeRepository
 
     @Binds
     fun bindsImportRepository(

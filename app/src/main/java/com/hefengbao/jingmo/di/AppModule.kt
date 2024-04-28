@@ -4,6 +4,7 @@ import android.content.Context
 import com.hefengbao.jingmo.App
 import com.hefengbao.jingmo.data.datastore.AppPreference
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
+import com.hefengbao.jingmo.data.datastore.HomePreference
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
 import com.hefengbao.jingmo.data.network.fake.FakeAssetManager
 import dagger.Module
@@ -46,6 +47,12 @@ object AppModule {
     fun providesDatasetPreference(
         @ApplicationContext context: Context
     ): DatasetPreference = DatasetPreference(context)
+
+    @Provides
+    @Singleton
+    fun providesHomePreference(
+        @ApplicationContext context: Context
+    ): HomePreference = HomePreference(context)
 
     @Provides
     @Singleton

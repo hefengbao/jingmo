@@ -66,8 +66,10 @@ import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.riddle.nav.riddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.homeItemManagerScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.importScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToHomeItemManagerScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToImportScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsDataScreen
@@ -271,22 +273,26 @@ fun AppNavHost(
                     }
                 )
                 settingsGraph(
-                    onBackClick = navController::navigateUp,
                     onAboutClick = { navController.navigateToAboutScreen() },
-                    onPrivacyClick = { navController.navigateToPrivacyScreen() },
+                    onBackClick = navController::navigateUp,
                     onDataClick = { navController.navigateToSettingsDataScreen() },
+                    onHomeItemManagerClick = { navController.navigateToHomeItemManagerScreen() },
                     onImportClick = { navController.navigateToImportScreen() },
+                    onPrivacyClick = { navController.navigateToPrivacyScreen() },
                     nestGraph = {
                         aboutScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        homeItemManagerScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        importScreen(
                             onBackClick = navController::navigateUp
                         )
                         privacyScreen(
                             onBackClick = navController::navigateUp
                         )
                         settingsDataScreen(
-                            onBackClick = navController::navigateUp
-                        )
-                        importScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
