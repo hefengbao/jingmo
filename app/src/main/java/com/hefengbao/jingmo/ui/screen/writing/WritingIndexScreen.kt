@@ -84,7 +84,7 @@ private fun WritingIndexScreen(
                         }
                     },
                     actions = {
-                        IconButton(
+                        /*IconButton(
                             onClick = {
                                 if (isCollect) {
                                     setUncollect(writing.id)
@@ -106,7 +106,7 @@ private fun WritingIndexScreen(
                                     contentDescription = null
                                 )
                             }
-                        }
+                        }*/
                     }
                 )
             }
