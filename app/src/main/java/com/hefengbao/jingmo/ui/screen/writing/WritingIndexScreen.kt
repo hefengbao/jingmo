@@ -13,12 +13,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
+import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel
+import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel2
 import kotlinx.serialization.json.Json
 
 @Composable
@@ -30,6 +32,13 @@ fun WritingIndexRoute(
     onReadMoreClick: () -> Unit,
 ) {
     val writing by viewModel.writing.collectAsState(initial = null)
+    val writingCollectionEntity by viewModel.collected.collectAsState(initial = null)
+
+    LaunchedEffect(writing) {
+        writing?.let {
+            viewModel.getCollected(it.id)
+        }
+    }
 
     WritingIndexScreen(
         onBackClick = onBackClick,
@@ -37,6 +46,7 @@ fun WritingIndexRoute(
         onBookmarksClick = onBookmarksClick,
         onReadMoreClick = onReadMoreClick,
         writing = writing,
+        writingCollectionEntity = writingCollectionEntity,
         setUncollect = { viewModel.setUncollect(it) },
         setCollect = { viewModel.setCollect(it) },
         onFabClick = { viewModel.getRandomWriting() },
@@ -50,14 +60,15 @@ private fun WritingIndexScreen(
     onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
-    writing: WritingWithBookmark?,
+    writing: WritingEntity?,
+    writingCollectionEntity: WritingCollectionEntity?,
     setUncollect: (Int) -> Unit,
     setCollect: (Int) -> Unit,
     onFabClick: () -> Unit,
     json: Json
 ) {
     writing?.let { entity ->
-        var isCollect = writing.collectedAt != null
+        var isCollect = writingCollectionEntity != null
 
         SimpleScaffold(
             onBackClick = onBackClick,
@@ -84,7 +95,7 @@ private fun WritingIndexScreen(
                         }
                     },
                     actions = {
-                        /*IconButton(
+                        IconButton(
                             onClick = {
                                 if (isCollect) {
                                     setUncollect(writing.id)
@@ -106,12 +117,12 @@ private fun WritingIndexScreen(
                                     contentDescription = null
                                 )
                             }
-                        }*/
+                        }
                     }
                 )
             }
         ) {
-            WritingShowPanel(
+            WritingShowPanel2(
                 writing = entity,
                 prevId = null,
                 nextId = null,

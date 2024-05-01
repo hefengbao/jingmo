@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface WritingRepository {
     fun get(id: Int): Flow<WritingWithBookmark>
-    fun random(): Flow<WritingWithBookmark>
+    fun random(): Flow<WritingEntity>
+    fun collected(id: Int): Flow<WritingCollectionEntity?>
     fun list(): Flow<PagingData<WritingEntity>>
     fun search(query: String): Flow<PagingData<SimpleWritingInfo>>
     fun searchByAuthor(author: String): Flow<PagingData<SimpleWritingInfo>>
