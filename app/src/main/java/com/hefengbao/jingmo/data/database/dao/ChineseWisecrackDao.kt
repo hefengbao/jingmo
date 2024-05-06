@@ -33,8 +33,8 @@ interface ChineseWisecrackDao {
     @Query("select id from chinese_wisecracks where id < :id and (riddle like :query or answer like :query) order by id desc limit 1")
     fun getSearchPrevId(id: Int, query: String): Flow<Int?>
 
-    @Query("select w.*,c.collected_at from chinese_wisecrack_collections c join chinese_wisecracks w on c.id = w.id order by c.collected_at desc")
-    fun collections(): PagingSource<Int, ChineseWisecrackWithBookmark>
+    @Query("select w.* from chinese_wisecrack_collections c join chinese_wisecracks w on c.id = w.id order by c.collected_at desc")
+    fun collections(): PagingSource<Int, ChineseWisecrackEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun collect(entity: ChineseWisecrackCollectionEntity)

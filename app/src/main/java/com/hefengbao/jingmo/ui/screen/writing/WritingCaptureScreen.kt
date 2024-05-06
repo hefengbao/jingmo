@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -17,7 +17,7 @@ fun WritingCaptureRoute(
     viewModel: WritingCaptureViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val writing by viewModel.writing.collectAsState(initial = null)
+    val writing by viewModel.writing.collectAsState()
     val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
     val dataStatus = viewModel.appStatus
 
@@ -43,7 +43,7 @@ private fun WritingCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    writing: WritingWithBookmark?,
+    writing: WritingEntity?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(
@@ -56,7 +56,7 @@ private fun WritingCaptureScreen(
     ) { color, _ ->
         writing?.let { entity ->
             val content = buildString {
-                entity.clauses.mapIndexed { index, clause ->
+                entity.clauses.mapIndexed { _, clause ->
                     if (entity.type != "文") {
                         append(clause.content)
                         append("\n")

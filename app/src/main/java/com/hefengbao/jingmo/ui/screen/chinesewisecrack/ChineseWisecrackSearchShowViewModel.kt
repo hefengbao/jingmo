@@ -39,6 +39,14 @@ class ChineseWisecrackSearchShowViewModel @Inject constructor(
         initialValue = null
     )
 
+    val chineseWisecrackCollectionEntity = id.flatMapLatest {
+        chineseWisecrackRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
     val nextId = id.flatMapLatest {
         chineseWisecrackRepository.getSearchNextId(it, query)
     }.stateIn(
@@ -66,28 +74,4 @@ class ChineseWisecrackSearchShowViewModel @Inject constructor(
             chineseWisecrackRepository.collect(ChineseWisecrackCollectionEntity(id))
         }
     }
-
-    /*private val _nextId: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val nextId: SharedFlow<Int?> = _nextId
-    fun getNextId(id: Int, query: String) {
-        viewModelScope.launch {
-            _nextId.value = chineseWisecrackRepository.getSearchNextId(id, query)
-        }
-    }
-
-    private val _prevId: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val prevId: SharedFlow<Int?> = _prevId
-    fun getPrevId(id: Int, query: String) {
-        viewModelScope.launch {
-            _prevId.value = chineseWisecrackRepository.getSearchPrevId(id, query)
-        }
-    }
-
-    private val _chineseCrack: MutableStateFlow<ChineseWisecrackWithCollection?> = MutableStateFlow(null)
-    val chineseCrack: SharedFlow<ChineseWisecrackWithCollection?> = _chineseCrack
-    fun getChineseWisecrack(id: Int) {
-        viewModelScope.launch {
-            _chineseCrack.value = chineseWisecrackRepository.getChineseCrack(id)
-        }
-    }*/
 }

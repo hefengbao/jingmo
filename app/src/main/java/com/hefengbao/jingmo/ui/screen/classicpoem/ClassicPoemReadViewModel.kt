@@ -1,9 +1,9 @@
-package com.hefengbao.jingmo.ui.screen.idiom
+package com.hefengbao.jingmo.ui.screen.classicpoem
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
-import com.hefengbao.jingmo.data.repository.IdiomRepository
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
 import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,17 +17,16 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class IdiomReadViewModel @Inject constructor(
+class ClassicPoemReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val idiomRepository: IdiomRepository
+    private val classicPoemRepository: ClassicPoemRepository
 ) : ViewModel() {
-
     private var id = MutableStateFlow(1)
 
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.idiomsLastReadId
+                id.value = it.classicPoemsLastReadId
             }
         }
     }
@@ -36,16 +35,14 @@ class IdiomReadViewModel @Inject constructor(
         this.id.value = id
     }
 
-    val idiom = id.flatMapLatest {
-        idiomRepository.getIdiom(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
+    fun setLastReadId(id: Int) {
+        viewModelScope.launch {
+            preferenceRepository.setClassicPoemLastReadId(id)
+        }
+    }
 
-    val idiomCollectionEntity = id.flatMapLatest {
-        idiomRepository.isCollect(it)
+    val classicPoemEntity = id.flatMapLatest {
+        classicPoemRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -53,7 +50,7 @@ class IdiomReadViewModel @Inject constructor(
     )
 
     val prevId = id.flatMapLatest {
-        idiomRepository.getPrevId(it)
+        classicPoemRepository.getPrevId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -61,28 +58,30 @@ class IdiomReadViewModel @Inject constructor(
     )
 
     val nextId = id.flatMapLatest {
-        idiomRepository.getNextId(it)
+        classicPoemRepository.getNextId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    fun setUncollect(id: Int) {
+    val classicPoemCollectionEntity = id.flatMapLatest {
+        classicPoemRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
+    fun collect(id: Int) {
         viewModelScope.launch {
-            idiomRepository.uncollect(id)
+            classicPoemRepository.collect(ClassicPoemCollectionEntity(id))
         }
     }
 
-    fun setCollect(id: Int) {
+    fun uncollect(id: Int) {
         viewModelScope.launch {
-            idiomRepository.collect(IdiomCollectionEntity(id))
-        }
-    }
-
-    fun setLastReadId(id: Int) {
-        viewModelScope.launch {
-            preferenceRepository.setIdiomsLastReadId(id)
+            classicPoemRepository.uncollect(id)
         }
     }
 }

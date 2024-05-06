@@ -21,8 +21,14 @@ import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWise
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemBookmarksGraph
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemBookmarksReadScreen
 import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemIndexGraph
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemReadScreen
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.navigateToClassicPoemBookmarksGraph
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.navigateToClassicPoemBookmarksReadScreen
 import com.hefengbao.jingmo.ui.screen.classicpoem.nav.navigateToClassicPoemIndexGraph
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.navigateToClassicPoemReadScreen
 import com.hefengbao.jingmo.ui.screen.festival.nav.festivalIndexGraph
 import com.hefengbao.jingmo.ui.screen.festival.nav.festivalShowScreen
 import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalIndexGraph
@@ -175,8 +181,25 @@ fun AppNavHost(
                 )
                 classicPoemIndexGraph(
                     onBackClick = navController::navigateUp,
+                    onBookmarksClick = { navController.navigateToClassicPoemBookmarksGraph() },
+                    onReadMoreClick = { navController.navigateToClassicPoemReadScreen() },
                     nestGraph = {
-
+                        classicPoemReadScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        classicPoemBookmarksGraph(
+                            onBackClick = navController::navigateUp,
+                            onReadClick = {
+                                navController.navigateToClassicPoemBookmarksReadScreen(
+                                    it
+                                )
+                            },
+                            nestGraph = {
+                                classicPoemBookmarksReadScreen(
+                                    onBackClick = navController::navigateUp
+                                )
+                            }
+                        )
                     }
                 )
                 festivalIndexGraph(

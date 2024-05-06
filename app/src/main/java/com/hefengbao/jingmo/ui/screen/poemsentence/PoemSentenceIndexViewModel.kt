@@ -49,6 +49,14 @@ class PoemSentenceIndexViewModel @Inject constructor(
         initialValue = null
     )
 
+    val poemSentenceCollectionEntity = id.flatMapLatest {
+        poemSentenceRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
     val prevId = id.flatMapLatest {
         poemSentenceRepository.getPrevId(it)
     }.stateIn(

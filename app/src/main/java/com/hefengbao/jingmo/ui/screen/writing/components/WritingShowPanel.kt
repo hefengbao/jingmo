@@ -34,7 +34,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.model.writing.CharDict
 import com.hefengbao.jingmo.data.model.writing.WordDict
 import kotlinx.serialization.json.Json
@@ -44,7 +44,7 @@ import kotlin.math.abs
 @Composable
 fun WritingShowPanel(
     modifier: Modifier = Modifier,
-    writing: WritingWithBookmark,
+    writing: WritingEntity,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
@@ -182,6 +182,7 @@ fun WritingShowPanel(
     LaunchedEffect(writing) {
         state.animateScrollToItem(0)
     }
+
     Box(
         modifier = modifier
             .fillMaxSize()

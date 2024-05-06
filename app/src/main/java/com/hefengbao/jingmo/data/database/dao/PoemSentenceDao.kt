@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
-import com.hefengbao.jingmo.data.database.model.PoemSentenceWithBookmark
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,11 +14,11 @@ interface PoemSentenceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: PoemSentenceEntity)
 
-    @Query("select p.*,c.collected_at from poem_sentences p left join poem_sentence_collections c on p.id = c.id where p.id = :id")
-    fun getSentence(id: Int): Flow<PoemSentenceWithBookmark>
+    @Query("select p.* from poem_sentences p where p.id = :id")
+    fun getSentence(id: Int): Flow<PoemSentenceEntity>
 
-    @Query("select p.*,c.collected_at from poem_sentences p left join poem_sentence_collections c on p.id = c.id where p.id = (select id from poem_sentences order by random() limit 1)")
-    fun random(): Flow<PoemSentenceWithBookmark>
+    @Query("select p.* from poem_sentences p where p.id = (select id from poem_sentences order by random() limit 1)")
+    fun random(): Flow<PoemSentenceEntity>
 
     @Query("select id from poem_sentences where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
@@ -36,8 +35,8 @@ interface PoemSentenceDao {
     @Query("select id from poem_sentences where id < :id and content like :query order by id desc limit 1")
     suspend fun getSearchPrevId(id: Int, query: String): Int
 
-    @Query("select p.*,c.collected_at from poem_sentence_collections c join poem_sentences p on c.id = p.id  order by c.collected_at desc")
-    fun collections(): PagingSource<Int, PoemSentenceWithBookmark>
+    @Query("select p.* from poem_sentence_collections c join poem_sentences p on c.id = p.id  order by c.collected_at desc")
+    fun collections(): PagingSource<Int, PoemSentenceEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun collect(entity: PoemSentenceCollectionEntity)

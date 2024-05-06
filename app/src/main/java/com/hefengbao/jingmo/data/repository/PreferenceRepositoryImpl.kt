@@ -15,22 +15,30 @@ class PreferenceRepositoryImpl @Inject constructor(
     private val readStatus: ReadStatusPreference,
 ) : PreferenceRepository {
     override fun getDatasetStatus(): Flow<DatasetVersion> = dataset.datasetVersion
+
     override suspend fun setChineseKnowledgeVersion(version: Int) =
         dataset.setChineseKnowledgeVersion(version)
 
     override suspend fun setChineseWisecracksVersion(version: Int) =
         dataset.setChineseWisecracksVersion(version)
 
+    override suspend fun setClassicPoemsVersion(version: Int) =
+        dataset.setClassicPoemsVersion(version)
+
     override suspend fun setIdiomsVersion(version: Int) = dataset.setIdiomsVersion(version)
+
     override suspend fun setPeopleVersion(version: Int) = dataset.setPeopleVersion(version)
+
     override suspend fun setPoemSentencesVersion(version: Int) =
         dataset.setPoemSentencesVersion(version)
 
     override suspend fun setRiddlesVersion(version: Int) = dataset.setRiddlesVersion(version)
+
     override suspend fun setTongueTwistersVersion(version: Int) =
         dataset.setTongueTwistersVersion(version)
 
     override suspend fun setWritingsVersion(version: Int) = dataset.setWritingsVersion(version)
+
     override suspend fun setWritingsCurrentPage(page: Int) = dataset.setWritingsCurrentPage(page)
 
     override suspend fun setWritingsCurrentCount(count: Int) =
@@ -43,6 +51,9 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setChineseWisecracksLastReadId(id: Int) =
         readStatus.setChineseWisecracksLastReadId(id)
+
+    override suspend fun setClassicPoemLastReadId(id: Int) =
+        readStatus.setClassicPoemsLastReadId(id)
 
     override suspend fun setIdiomsLastReadId(id: Int) = readStatus.setIdiomsLastReadId(id)
 
@@ -59,7 +70,9 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setWritingsLastReadId(id: Int) = readStatus.setWritingsLastReadId(id)
 
     override fun getAppStatus(): Flow<AppStatus> = app.appStatus
+
     override suspend fun setCaptureTextColor(color: String) = app.setCaptureTextColor(color)
+
     override suspend fun setCaptureBackgroundColor(color: String) =
         app.setCaptureBackgroundColor(color)
 }

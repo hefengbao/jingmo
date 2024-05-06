@@ -1,11 +1,11 @@
-package com.hefengbao.jingmo.ui.screen.writing
+package com.hefengbao.jingmo.ui.screen.classicpoem
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
-import com.hefengbao.jingmo.data.repository.WritingRepository
-import com.hefengbao.jingmo.ui.screen.writing.nav.WritingBookmarksReadArgs
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
+import com.hefengbao.jingmo.ui.screen.classicpoem.nav.ClassicPoemBookmarksReadArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,18 +13,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class WritingBookmarksReadViewModel @Inject constructor(
-    private val writingRepository: WritingRepository,
-    savedStateHandle: SavedStateHandle,
-    val json: Json
+@OptIn(ExperimentalCoroutinesApi::class)
+class ClassicPoemBookmarksReadViewModel @Inject constructor(
+    private val classicPoemRepository: ClassicPoemRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val args = WritingBookmarksReadArgs(savedStateHandle)
-    private var id = MutableStateFlow(args.writingId.toInt())
+    private val args = ClassicPoemBookmarksReadArgs(savedStateHandle)
+    private var id = MutableStateFlow(args.poemId.toInt())
     private var collectedAt = MutableStateFlow(0L)
 
     fun setCurrentId(id: Int) {
@@ -35,16 +33,8 @@ class WritingBookmarksReadViewModel @Inject constructor(
         this.collectedAt.value = collectedAt
     }
 
-    val writing = id.flatMapLatest {
-        writingRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val writingCollectionEntity = id.flatMapLatest {
-        writingRepository.isCollect(it)
+    val classicPoemEntity = id.flatMapLatest {
+        classicPoemRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -52,7 +42,7 @@ class WritingBookmarksReadViewModel @Inject constructor(
     )
 
     val prevId = collectedAt.flatMapLatest {
-        writingRepository.getCollectionPrevId(it)
+        classicPoemRepository.getCollectionPrevId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -60,22 +50,30 @@ class WritingBookmarksReadViewModel @Inject constructor(
     )
 
     val nextId = collectedAt.flatMapLatest {
-        writingRepository.getCollectionNextId(it)
+        classicPoemRepository.getCollectionNextId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    fun setUncollect(id: Int) {
+    val classicPoemCollectionEntity = id.flatMapLatest {
+        classicPoemRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
+    fun collect(id: Int) {
         viewModelScope.launch {
-            writingRepository.uncollect(id)
+            classicPoemRepository.collect(ClassicPoemCollectionEntity(id))
         }
     }
 
-    fun setCollect(id: Int) {
+    fun uncollect(id: Int) {
         viewModelScope.launch {
-            writingRepository.collect(WritingCollectionEntity(id))
+            classicPoemRepository.uncollect(id)
         }
     }
 }

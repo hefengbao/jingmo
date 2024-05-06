@@ -23,7 +23,7 @@ fun ChineseWisecrackCaptureRoute(
     viewModel: ChineseWisecrackCaptureViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val chineseWisecrack by viewModel.chineseWisecrack.collectAsState(initial = null)
+    val chineseWisecrack by viewModel.chineseWisecrack.collectAsState()
     val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
     val dataStatus = viewModel.appStatus
 

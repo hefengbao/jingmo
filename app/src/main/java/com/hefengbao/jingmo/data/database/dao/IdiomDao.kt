@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
-import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
 import com.hefengbao.jingmo.data.database.model.SimpleIdiomInfo
 import kotlinx.coroutines.flow.Flow
 
@@ -16,11 +15,11 @@ interface IdiomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: IdiomEntity)
 
-    @Query("select i.*,c.collected_at from idioms i left join idiom_collections c on i.id = c.id where i.id = :id")
-    fun getIdiom(id: Int): Flow<IdiomWithBookmark>
+    @Query("select i.* from idioms i left join idiom_collections c on i.id = c.id where i.id = :id")
+    fun getIdiom(id: Int): Flow<IdiomEntity>
 
-    @Query("select i.*,c.collected_at from idioms i left join idiom_collections c on i.id = c.id where i.id = (select id from idioms order by random() limit 1)")
-    fun random(): Flow<IdiomWithBookmark>
+    @Query("select i.*from idioms i where i.id = (select id from idioms order by random() limit 1)")
+    fun random(): Flow<IdiomEntity>
 
     @Query("select id from idioms where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
@@ -40,8 +39,8 @@ interface IdiomDao {
     @Query("select id from idioms where id < :id and word like :query order by id desc limit 1")
     suspend fun getSearchPrevId(id: Int, query: String): Int
 
-    @Query("select i.*,c.collected_at from idiom_collections c join idioms i on c.id = i.id order by collected_at desc")
-    fun collections(): PagingSource<Int, IdiomWithBookmark>
+    @Query("select i.* from idiom_collections c join idioms i on c.id = i.id order by collected_at desc")
+    fun collections(): PagingSource<Int, IdiomEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun collect(entity: IdiomCollectionEntity)

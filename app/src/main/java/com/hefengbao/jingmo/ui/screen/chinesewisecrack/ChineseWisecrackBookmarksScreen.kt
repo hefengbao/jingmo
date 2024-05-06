@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
+import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -41,7 +41,7 @@ private fun ChineseWisecrackBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     setUncollect: (Int) -> Unit,
-    bookmarks: LazyPagingItems<ChineseWisecrackWithBookmark>,
+    bookmarks: LazyPagingItems<ChineseWisecrackEntity>,
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
         LazyColumn(

@@ -49,16 +49,22 @@ private fun ChineseWisecrackSearchScreen(
 
     SimpleSearchScaffold(
         onBackClick = onBackClick,
-        value = query,
-        onValueChange = { query = it },
-        onSearch = { onSearch(query) }
+        query = query,
+        onQueryChange = {
+            query = it
+            if (query.isNotEmpty()) {
+                onSearch(query)
+            }
+        },
+        onSearch = onSearch
     ) {
         LazyColumn(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth(),
         ) {
             itemsIndexed(
                 items = list,
-            ) { _, item ->
+            ) { index, item ->
                 Text(
                     modifier = modifier
                         .clickable {
@@ -68,7 +74,9 @@ private fun ChineseWisecrackSearchScreen(
                         .fillMaxWidth(),
                     text = item.riddle,
                 )
-                Divider(thickness = 0.5.dp)
+                if (index != list.lastIndex) {
+                    Divider(thickness = 0.5.dp)
+                }
             }
         }
     }

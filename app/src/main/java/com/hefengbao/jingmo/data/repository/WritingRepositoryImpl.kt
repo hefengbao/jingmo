@@ -8,18 +8,15 @@ import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
 import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class WritingRepositoryImpl @Inject constructor(
     private val writingDao: WritingDao
 ) : WritingRepository {
-    override fun get(id: Int): Flow<WritingWithBookmark> = writingDao.get(id)
+    override fun get(id: Int): Flow<WritingEntity> = writingDao.get(id)
 
     override fun random(): Flow<WritingEntity> = writingDao.random()
-
-    override fun collected(id: Int): Flow<WritingCollectionEntity?> = writingDao.collected(id)
 
     override fun list(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),

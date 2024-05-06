@@ -1,21 +1,20 @@
 package com.hefengbao.jingmo.ui.screen.classicpoem
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ReadMore
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -27,53 +26,80 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.ui.screen.classicpoem.components.ClassicPoemPanel
 import kotlinx.coroutines.launch
 
 @Composable
 fun ClassicPoemIndexRoute(
     viewModel: ClassicPoemIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
+    onReadMoreClick: () -> Unit,
 ) {
-    val poem by viewModel.poem.collectAsState(initial = null)
+    val classicPoemEntity by viewModel.classicPoemEntity.collectAsState(initial = null)
+    val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState(initial = null)
 
     LaunchedEffect(Unit) {
         viewModel.getRandom()
     }
 
+    LaunchedEffect(classicPoemEntity) {
+        classicPoemEntity?.let {
+            viewModel.isCollected(it.id)
+        }
+    }
+
     ClassicPoemIndexScreen(
         onBackClick = onBackClick,
-        classicPoemEntity = poem,
+        onBookmarksClick = onBookmarksClick,
+        onReadMoreClick = onReadMoreClick,
+        classicPoemEntity = classicPoemEntity,
         onFabClick = {
             viewModel.getRandom()
-        }
+        },
+        classicPoemCollectionEntity = classicPoemCollectionEntity,
+        setCollected = { viewModel.collect(it) },
+        setUncollected = { viewModel.uncollect(it) }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ClassicPoemIndexScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
+    onReadMoreClick: () -> Unit,
     classicPoemEntity: ClassicPoemEntity?,
-    onFabClick: () -> Unit
+    onFabClick: () -> Unit,
+    classicPoemCollectionEntity: ClassicPoemCollectionEntity?,
+    setCollected: (Int) -> Unit,
+    setUncollected: (Int) -> Unit
 ) {
     val annotationSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showAnnotationBottomSheet by remember { mutableStateOf(false) }
     val translationSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showTranslationBottomSheet by remember { mutableStateOf(false) }
-    var state = rememberLazyListState()
-    var scope = rememberCoroutineScope()
+    val poemSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    var showPoemBottomSheet by remember { mutableStateOf(false) }
+    val state = rememberLazyListState()
+    val scope = rememberCoroutineScope()
 
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "经典诗文",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+            IconButton(onClick = onReadMoreClick) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.ReadMore, contentDescription = "阅读")
+            }
+        },
         bottomBar = {
             classicPoemEntity?.let {
                 BottomAppBar(
@@ -97,6 +123,25 @@ private fun ClassicPoemIndexScreen(
                             ) {
                                 Text(text = "译")
                             }
+                            OutlinedButton(onClick = { showPoemBottomSheet = true }) {
+                                Text(text = "文")
+                            }
+                            if (classicPoemCollectionEntity != null) {
+                                IconButton(onClick = { setUncollected(classicPoemEntity.id) }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Bookmark,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            } else {
+                                IconButton(onClick = { setCollected(classicPoemEntity.id) }) {
+                                    Icon(
+                                        imageVector = Icons.Default.BookmarkBorder,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
                         }
                     },
                     floatingActionButton = {
@@ -114,156 +159,19 @@ private fun ClassicPoemIndexScreen(
         },
     ) {
         classicPoemEntity?.let { entity ->
-            SelectionContainer {
-                LazyColumn(
-                    modifier = modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    state = state
-                ) {
-                    item {
-                        Row {
-                            Text(
-                                text = "《${entity.collection}》",
-                                color = MaterialTheme.colorScheme.primary,
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                            entity.category?.let {
-                                Text(
-                                    text = "#${entity.category}",
-                                    color = MaterialTheme.colorScheme.primary,
-                                    style = MaterialTheme.typography.labelLarge
-                                )
-                            }
-                        }
-                    }
-                    item {
-                        Column(
-                            modifier = modifier
-                                .fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                        ) {
-                            Text(
-                                text = entity.title,
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                            Text(
-                                text = "【${entity.dynasty}】${entity.writer}",
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                            entity.preface?.let {
-                                Text(
-                                    text = it,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontStyle = FontStyle.Italic
-                                )
-                            }
-                            Text(
-                                text = entity.content
-                            )
-                        }
-                    }
-                    entity.creativeBackground?.let {
-                        item {
-                            Column(
-                                modifier = modifier
-                                    .fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                Text(
-                                    text = "💡创作背景",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                                Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
-                            }
-                        }
-                    }
-                    entity.explain?.let {
-                        item {
-                            Column(
-                                modifier = modifier
-                                    .fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                Text(
-                                    text = "📖文学赏析",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                                Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
-                            }
-                        }
-                    }
-                    entity.comment?.let {
-                        item {
-                            Column(
-                                modifier = modifier
-                                    .fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                Text(
-                                    text = "🔖 名家点评",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                                Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
-                            }
-                        }
-                    }
-                    entity.writerIntroduction?.let {
-                        item {
-                            Column(
-                                modifier = modifier
-                                    .fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                Text(
-                                    text = "📃 作者简介",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                                Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (showAnnotationBottomSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showAnnotationBottomSheet = false },
-                    sheetState = annotationSheetState
-                ) {
-                    SelectionContainer {
-                        LazyColumn(
-                            state = rememberLazyListState(),
-                            modifier = modifier.padding(32.dp, 16.dp, 32.dp, 32.dp)
-                        ) {
-                            entity.annotation?.let {
-                                item {
-                                    Text(text = it)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (showTranslationBottomSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showTranslationBottomSheet = false },
-                    sheetState = translationSheetState
-                ) {
-                    SelectionContainer {
-                        LazyColumn(
-                            state = rememberLazyListState(),
-                            modifier = modifier.padding(32.dp, 16.dp, 32.dp, 32.dp)
-                        ) {
-                            entity.translation?.let {
-                                item {
-                                    Text(text = it)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            ClassicPoemPanel(
+                entity = entity,
+                state = state,
+                showAnnotationBottomSheet = showAnnotationBottomSheet,
+                annotationSheetState = annotationSheetState,
+                onAnnotationBottomSheetDismiss = { showAnnotationBottomSheet = false },
+                showTranslationBottomSheet = showTranslationBottomSheet,
+                translationSheetState = translationSheetState,
+                onTranslationBottomSheetDismiss = { showTranslationBottomSheet = false },
+                showPoemBottomSheet = showPoemBottomSheet,
+                poemSheetState = poemSheetState,
+                onPoemBottomSheetDismiss = { showPoemBottomSheet = false }
+            )
         }
     }
 }

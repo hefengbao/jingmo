@@ -3,7 +3,7 @@ package com.hefengbao.jingmo.ui.screen.poemsentence
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.model.PoemSentenceWithBookmark
+import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
@@ -27,8 +27,8 @@ class PoemSentenceCaptureViewModel @Inject constructor(
 ) : ViewModel() {
     private val args: PoemSentenceCaptureArgs = PoemSentenceCaptureArgs(savedStateHandle)
 
-    private val _poemSentence: MutableStateFlow<PoemSentenceWithBookmark?> = MutableStateFlow(null)
-    val poemSentence: SharedFlow<PoemSentenceWithBookmark?> = _poemSentence
+    private val _poemSentence: MutableStateFlow<PoemSentenceEntity?> = MutableStateFlow(null)
+    val poemSentence: SharedFlow<PoemSentenceEntity?> = _poemSentence
 
     lateinit var appStatus: AppStatus
 

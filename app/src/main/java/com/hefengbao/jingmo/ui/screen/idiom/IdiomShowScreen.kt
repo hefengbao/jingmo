@@ -11,7 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
+import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.idiom.components.IdiomShowPanel
 
@@ -21,12 +22,14 @@ fun IdiomRoute(
     onCaptureClick: (Int) -> Unit,
     viewModel: IdiomShowViewModel = hiltViewModel()
 ) {
-    val idiom by viewModel.idiom.collectAsState(initial = null)
+    val idiom by viewModel.idiom.collectAsState()
+    val idiomCollectionEntity by viewModel.idiomCollectionEntity.collectAsState()
 
     IdiomScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         idiom = idiom,
+        idiomCollectionEntity = idiomCollectionEntity,
         setUncollect = { viewModel.setUncollect(it) },
         setCollect = { viewModel.setCollect(it) }
     )
@@ -36,28 +39,27 @@ fun IdiomRoute(
 private fun IdiomScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    idiom: IdiomWithBookmark?,
+    idiom: IdiomEntity?,
+    idiomCollectionEntity: IdiomCollectionEntity?,
     setUncollect: (Int) -> Unit,
     setCollect: (Int) -> Unit
 ) {
 
     idiom?.let { entity ->
-        var isCollect = entity.collectedAt != null
         SimpleScaffold(
             onBackClick = onBackClick,
             title = entity.word,
             actions = {
                 IconButton(
                     onClick = {
-                        if (isCollect) {
+                        if (idiomCollectionEntity != null) {
                             setUncollect(entity.id)
                         } else {
                             setCollect(entity.id)
                         }
-                        isCollect = !isCollect
                     }
                 ) {
-                    if (isCollect) {
+                    if (idiomCollectionEntity != null) {
                         Icon(
                             imageVector = Icons.Default.Bookmark,
                             contentDescription = null,

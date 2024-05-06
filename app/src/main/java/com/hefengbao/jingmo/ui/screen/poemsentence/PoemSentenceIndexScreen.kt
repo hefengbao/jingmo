@@ -35,7 +35,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.PoemSentenceWithBookmark
+import com.hefengbao.jingmo.data.database.entity.PoemSentenceCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
@@ -48,15 +49,17 @@ fun PoemSentenceIndexRoute(
     onBookmarksClick: () -> Unit,
 ) {
 
-    val prevId by viewModel.prevId.collectAsState(initial = null)
-    val nextId by viewModel.nextId.collectAsState(initial = null)
-    val sentence by viewModel.sentence.collectAsState(initial = null)
+    val prevId by viewModel.prevId.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
+    val sentence by viewModel.sentence.collectAsState()
+    val poemSentenceCollectionEntity by viewModel.poemSentenceCollectionEntity.collectAsState()
 
     PoemSentenceIndexScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         onSearchClick = onSearchItemClick,
         sentence = sentence,
+        poemSentenceCollectionEntity = poemSentenceCollectionEntity,
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
@@ -73,7 +76,8 @@ private fun PoemSentenceIndexScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     onSearchClick: () -> Unit,
-    sentence: PoemSentenceWithBookmark?,
+    sentence: PoemSentenceEntity?,
+    poemSentenceCollectionEntity: PoemSentenceCollectionEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
@@ -84,7 +88,6 @@ private fun PoemSentenceIndexScreen(
 ) {
 
     sentence?.let {
-        var isCollect = it.collectedAt != null
         LaunchedEffect(it) {
             setLastReadId(sentence.id)
         }
@@ -125,15 +128,14 @@ private fun PoemSentenceIndexScreen(
                             }
                             IconButton(
                                 onClick = {
-                                    if (isCollect) {
+                                    if (poemSentenceCollectionEntity != null) {
                                         setUncollect(it.id)
                                     } else {
                                         setCollect(it.id)
                                     }
-                                    isCollect = !isCollect
                                 }
                             ) {
-                                if (isCollect) {
+                                if (poemSentenceCollectionEntity != null) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
                                         contentDescription = null,

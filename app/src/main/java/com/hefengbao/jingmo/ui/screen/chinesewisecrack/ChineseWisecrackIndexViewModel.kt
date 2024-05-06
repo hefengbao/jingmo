@@ -44,6 +44,14 @@ class ChineseWisecrackIndexViewModel @Inject constructor(
         initialValue = null
     )
 
+    val chineseWisecrackCollectionEntity = id.flatMapLatest {
+        chineseWisecrackRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
     val nextId = id.flatMapLatest {
         chineseWisecrackRepository.getNextId(it)
     }.stateIn(

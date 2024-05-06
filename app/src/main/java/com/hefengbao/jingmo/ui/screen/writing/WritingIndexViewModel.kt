@@ -26,7 +26,6 @@ class WritingIndexViewModel @Inject constructor(
     val writing: SharedFlow<WritingEntity?> = _writing
     fun getRandomWriting() {
         viewModelScope.launch {
-            // 由于这里是随机查询，点击“收藏”或“取消收藏”都会导致这里数据变化，产生和“刷新”相同的效果/(ㄒoㄒ)/~~
             writingRepository.random().collectLatest {
                 _writing.value = it
             }
@@ -35,10 +34,9 @@ class WritingIndexViewModel @Inject constructor(
 
     private val _collected: MutableStateFlow<WritingCollectionEntity?> = MutableStateFlow(null)
     val collected: SharedFlow<WritingCollectionEntity?> = _collected
-
     fun getCollected(id: Int) {
         viewModelScope.launch {
-            writingRepository.collected(id).collectLatest {
+            writingRepository.isCollect(id).collectLatest {
                 _collected.value = it
             }
         }

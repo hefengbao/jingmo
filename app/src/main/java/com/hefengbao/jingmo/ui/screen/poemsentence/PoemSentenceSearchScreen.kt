@@ -53,14 +53,18 @@ private fun PoemSentenceSearchScreen(
     }
     SimpleSearchScaffold(
         onBackClick = onBackClick,
-        value = query,
-        onValueChange = {
+        query = query,
+        onQueryChange = {
             query = it
-            onSearch(it)
+            if (query.isNotEmpty()) {
+                onSearch(query)
+            }
         },
-        onSearch = { /*TODO*/ }
+        onSearch = onSearch
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = modifier.fillMaxWidth()
+        ) {
             items(
                 items = sentences
             ) {

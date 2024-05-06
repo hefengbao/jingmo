@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
+import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
@@ -50,7 +50,7 @@ private fun IdiomCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    idiom: IdiomWithBookmark?,
+    idiom: IdiomEntity?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

@@ -12,12 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
+import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 
 @Composable
 fun IdiomShowPanel(
     modifier: Modifier = Modifier,
-    idiom: IdiomWithBookmark,
+    idiom: IdiomEntity,
 ) {
     SelectionContainer {
         Column(

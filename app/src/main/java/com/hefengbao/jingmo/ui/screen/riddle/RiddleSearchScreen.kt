@@ -29,7 +29,7 @@ fun RiddleSearchRoute(
 
     RiddleSearchScreen(
         onBackClick = onBackClick,
-        onSearchClick = { viewModel.search(it) },
+        onSearch = { viewModel.search(it) },
         list = list
     )
 }
@@ -38,19 +38,26 @@ fun RiddleSearchRoute(
 private fun RiddleSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onSearchClick: (String) -> Unit,
+    onSearch: (String) -> Unit,
     list: List<RiddleEntity>
 ) {
     var query by remember { mutableStateOf("") }
 
-
     SimpleSearchScaffold(
         onBackClick = onBackClick,
-        value = query,
-        onValueChange = { query = it },
-        onSearch = { onSearchClick(query) }
+        query = query,
+        onQueryChange = {
+            query = it
+            if (query.isNotEmpty()) {
+                onSearch(query)
+            }
+        },
+        onSearch = onSearch
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
             itemsIndexed(
                 items = list
             ) { _: Int, item: RiddleEntity ->

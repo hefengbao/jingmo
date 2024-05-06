@@ -4,21 +4,20 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.hefengbao.jingmo.ui.screen.classicpoem.ClassicPoemIndexRoute
+import com.hefengbao.jingmo.ui.screen.classicpoem.ClassicPoemBookmarksRoute
 
-private const val ROUTE = "classic_poem_index"
-private const val ROUTE_GRAPH = "classic_poem_index_graph"
+private const val ROUTE = "classic_poem_bookmarks"
+private const val ROUTE_GRAPH = "classic_poem_bookmarks_graph"
 
-fun NavController.navigateToClassicPoemIndexGraph() {
+fun NavController.navigateToClassicPoemBookmarksGraph() {
     this.navigate(ROUTE_GRAPH) {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.classicPoemIndexGraph(
+fun NavGraphBuilder.classicPoemBookmarksGraph(
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
+    onReadClick: (Int) -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -26,10 +25,9 @@ fun NavGraphBuilder.classicPoemIndexGraph(
         route = ROUTE_GRAPH
     ) {
         composable(route = ROUTE) {
-            ClassicPoemIndexRoute(
+            ClassicPoemBookmarksRoute(
                 onBackClick = onBackClick,
-                onBookmarksClick = onBookmarksClick,
-                onReadMoreClick = onReadMoreClick
+                onReadClick = onReadClick
             )
         }
         nestGraph()

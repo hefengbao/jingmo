@@ -3,7 +3,6 @@ package com.hefengbao.jingmo.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
-import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
@@ -15,6 +14,7 @@ import com.hefengbao.jingmo.data.model.asRiddleEntity
 import com.hefengbao.jingmo.data.model.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.asWritingEntity
 import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepository
+import com.hefengbao.jingmo.data.repository.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -24,10 +24,9 @@ import javax.inject.Inject
 @HiltViewModel
 class DataViewModel @Inject constructor(
     private val repository: NetworkDatasourceRepository,
-    private val preference: DatasetPreference,
+    private val preference: PreferenceRepository,
 ) : ViewModel() {
-
-    val datasetPref = preference.datasetVersion
+    val datasetPref = preference.getDatasetStatus()
 
     private val _datasetResult: MutableStateFlow<Result<List<Dataset>>> =
         MutableStateFlow(Result.Loading)

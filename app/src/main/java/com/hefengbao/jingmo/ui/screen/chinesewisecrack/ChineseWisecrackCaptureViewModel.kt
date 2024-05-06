@@ -3,7 +3,6 @@ package com.hefengbao.jingmo.ui.screen.chinesewisecrack
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
 import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
@@ -13,8 +12,9 @@ import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.ChineseWisecrackCaptu
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,22 +27,21 @@ class ChineseWisecrackCaptureViewModel @Inject constructor(
 ) : ViewModel() {
     private val args: ChineseWisecrackCaptureArgs = ChineseWisecrackCaptureArgs(savedStateHandle)
 
-    private val _chineseWisecrack: MutableStateFlow<ChineseWisecrackWithBookmark?> =
-        MutableStateFlow(null)
-    val chineseWisecrack: SharedFlow<ChineseWisecrackWithBookmark?> = _chineseWisecrack
-
     lateinit var appStatus: AppStatus
 
     init {
         viewModelScope.launch {
             appStatus = preferenceRepository.getAppStatus().first()
-
-            chineseWisecrackRepository.getChineseCrack(args.chineseWisecrackId.toInt())
-                .collectLatest {
-                    _chineseWisecrack.value = it
-                }
         }
     }
+
+    val chineseWisecrack =
+        chineseWisecrackRepository.getChineseCrack(args.chineseWisecrackId.toInt())
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = null
+            )
 
     private val _chineseColors: MutableStateFlow<List<ChineseColor>> = MutableStateFlow(emptyList())
     val chineseColors: SharedFlow<List<ChineseColor>> = _chineseColors

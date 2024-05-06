@@ -5,17 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +19,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.model.SimpleIdiomInfo
+import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
 fun IdiomSearchRoute(
@@ -47,7 +39,6 @@ fun IdiomSearchRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun IdiomSearchScreen(
     modifier: Modifier,
@@ -60,43 +51,20 @@ private fun IdiomSearchScreen(
         mutableStateOf("")
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "返回"
-                        )
-                    }
-                },
-                title = {
-                    SearchBar(
-                        query = query,
-                        onQueryChange = { query = it },
-                        onSearch = { onSearch(query) },
-                        active = false,
-                        onActiveChange = {},
-                        trailingIcon = {
-                            if (query.isNotEmpty()) {
-                                IconButton(onClick = { query = "" }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Clear,
-                                        contentDescription = "清除"
-                                    )
-                                }
-                            }
-                        }
-                    ) {}
-                }
-            )
-        }
-    ) { paddingValues ->
+    SimpleSearchScaffold(
+        onBackClick = onBackClick,
+        query = query,
+        onQueryChange = {
+            query = it
+            if (query.isNotEmpty()) {
+                onSearch(query)
+            }
+        },
+        onSearch = onSearch
+    ) {
         LazyColumn(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(paddingValues),
+                .fillMaxWidth(),
             state = rememberLazyListState()
         ) {
             items(

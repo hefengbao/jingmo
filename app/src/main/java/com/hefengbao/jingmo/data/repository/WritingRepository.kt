@@ -5,13 +5,11 @@ import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
 import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import kotlinx.coroutines.flow.Flow
 
 interface WritingRepository {
-    fun get(id: Int): Flow<WritingWithBookmark>
+    fun get(id: Int): Flow<WritingEntity>
     fun random(): Flow<WritingEntity>
-    fun collected(id: Int): Flow<WritingCollectionEntity?>
     fun list(): Flow<PagingData<WritingEntity>>
     fun search(query: String): Flow<PagingData<SimpleWritingInfo>>
     fun searchByAuthor(author: String): Flow<PagingData<SimpleWritingInfo>>

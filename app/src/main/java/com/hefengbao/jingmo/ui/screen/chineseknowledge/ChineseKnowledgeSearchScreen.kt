@@ -10,17 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,14 +23,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
+import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
 fun ChineseKnowledgeSearchRoute(
@@ -43,61 +37,39 @@ fun ChineseKnowledgeSearchRoute(
     onBackClick: () -> Unit
 ) {
     val chineseKnowLedgeList by viewModel.chineseKnowledgeList.collectAsState(initial = emptyList())
-    var query by rememberSaveable { mutableStateOf("") }
 
     ChineseKnowledgeSearchScreen(
         onBackClick = onBackClick,
         chineseKnowLedgeList = chineseKnowLedgeList,
-        query = query,
-        onQueryChange = { query = it },
         onSearch = {
-            viewModel.search(query)
+            viewModel.search(it)
         }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun ChineseKnowledgeSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     chineseKnowLedgeList: List<ChineseKnowledgeEntity>,
-    query: String,
-    onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit
 ) {
+    var query by rememberSaveable { mutableStateOf("") }
     val uriHandler = LocalUriHandler.current
-    val keyboard = LocalSoftwareKeyboardController.current
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    SearchBar(
-                        query = query,
-                        onQueryChange = onQueryChange,
-                        onSearch = {
-                            onSearch(query)
-                            keyboard?.hide()
-                        },
-                        active = false,
-                        onActiveChange = {},
-                    ) {}
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
+    SimpleSearchScaffold(
+        onBackClick = onBackClick,
+        query = query,
+        onQueryChange = {
+            query = it
+            if (query.isNotEmpty()) {
+                onSearch(query)
+            }
+        },
+        onSearch = onSearch
+    ) {
         LazyColumn(
             modifier = modifier
-                .padding(paddingValues)
                 .padding(16.dp),
             content = {
                 if (chineseKnowLedgeList.isEmpty()) {

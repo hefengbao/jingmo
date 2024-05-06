@@ -46,6 +46,14 @@ class WritingReadViewModel @Inject constructor(
         initialValue = null
     )
 
+    val writingCollectionEntity = id.flatMapLatest {
+        writingRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(5_000),
+        initialValue = null
+    )
+
     val prevId = id.flatMapLatest {
         writingRepository.getPrevId(it)
     }.stateIn(

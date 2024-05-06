@@ -40,6 +40,14 @@ class WritingSearchReadViewModel @Inject constructor(
         initialValue = null
     )
 
+    val writingCollectionEntity = id.flatMapLatest {
+        writingRepository.isCollect(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
     val nextId = id.flatMapLatest {
         if (type == "author") {
             writingRepository.getNextId(it, query)

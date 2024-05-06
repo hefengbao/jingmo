@@ -9,6 +9,7 @@ interface PreferenceRepository {
     fun getDatasetStatus(): Flow<DatasetVersion>
     suspend fun setChineseKnowledgeVersion(version: Int)
     suspend fun setChineseWisecracksVersion(version: Int)
+    suspend fun setClassicPoemsVersion(version: Int)
     suspend fun setIdiomsVersion(version: Int)
     suspend fun setPeopleVersion(version: Int)
     suspend fun setPoemSentencesVersion(version: Int)
@@ -21,6 +22,7 @@ interface PreferenceRepository {
     fun getReadStatus(): Flow<ReadStatus>
     suspend fun setChineseKnowledgeLastReadId(id: Int)
     suspend fun setChineseWisecracksLastReadId(id: Int)
+    suspend fun setClassicPoemLastReadId(id: Int)
     suspend fun setIdiomsLastReadId(id: Int)
     suspend fun setPeopleLastReadId(id: Int)
     suspend fun setPoemSentencesLastReadId(id: Int)

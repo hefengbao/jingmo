@@ -21,7 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
+import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel
 import kotlinx.serialization.json.Json
@@ -33,14 +34,16 @@ fun WritingSearchReadRoute(
     onCaptureClick: (Int) -> Unit
 ) {
 
-    val writing by viewModel.writing.collectAsState(initial = null)
-    val prevId by viewModel.prevId.collectAsState(initial = null)
-    val nextId by viewModel.nextId.collectAsState(initial = null)
+    val writing by viewModel.writing.collectAsState()
+    val writingCollectionEntity by viewModel.writingCollectionEntity.collectAsState()
+    val prevId by viewModel.prevId.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
 
     WritingSearchReadScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         writing = writing,
+        writingCollectionEntity = writingCollectionEntity,
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
@@ -59,7 +62,8 @@ private fun WritingSearchReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    writing: WritingWithBookmark?,
+    writing: WritingEntity?,
+    writingCollectionEntity: WritingCollectionEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
@@ -68,7 +72,6 @@ private fun WritingSearchReadScreen(
     json: Json
 ) {
     writing?.let {
-        var isCollect = it.collectedAt != null
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文",
@@ -100,15 +103,14 @@ private fun WritingSearchReadScreen(
                             }
                             IconButton(
                                 onClick = {
-                                    if (isCollect) {
+                                    if (writingCollectionEntity != null) {
                                         setUncollect(writing.id)
                                     } else {
                                         setCollect(writing.id)
                                     }
-                                    isCollect = !isCollect
                                 }
                             ) {
-                                if (isCollect) {
+                                if (writingCollectionEntity != null) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
                                         contentDescription = null,

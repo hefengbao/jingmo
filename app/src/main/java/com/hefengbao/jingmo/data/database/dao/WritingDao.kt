@@ -5,12 +5,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.RewriteQueriesToDropUnusedColumns
 import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
 import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
-import com.hefengbao.jingmo.data.database.model.WritingWithBookmark
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,15 +16,11 @@ interface WritingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: WritingEntity)
 
-    @RewriteQueriesToDropUnusedColumns
-    @Query("select w.rowid, w.*, c.collected_at from writings w left join writing_collections c on w.rowid = c.id where  w.rowid = :id limit 1")
-    fun get(id: Int): Flow<WritingWithBookmark>
+    @Query("select w.rowid, w.* from writings w where w.rowid = :id limit 1")
+    fun get(id: Int): Flow<WritingEntity>
 
     @Query("select w.rowid, w.* from writings w where w.rowid = (select rowid from writings where type match  '词' or type match '律诗' or type match  '绝句' order by random() limit 1) limit 1")
     fun random(): Flow<WritingEntity>
-
-    @Query("select * from writing_collections c where c.id = :id limit 1")
-    fun collected(id: Int): Flow<WritingCollectionEntity?>
 
     @Query("select rowid, w.* from writings w order by rowid asc")
     fun list(): PagingSource<Int, WritingEntity>
@@ -48,7 +42,6 @@ interface WritingDao {
 
     @Query("select rowid from writings where rowid < :id order by rowid desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
-
 
     @Query("select rowid from writings where (author like :query or title_content like :query or content like :query) and rowid > :id order by rowid asc limit 1")
     fun getSearchNextId(id: Int, query: String): Flow<Int?>

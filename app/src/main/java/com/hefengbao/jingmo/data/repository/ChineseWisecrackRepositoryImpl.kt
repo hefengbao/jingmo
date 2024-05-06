@@ -17,7 +17,9 @@ class ChineseWisecrackRepositoryImpl @Inject constructor(
         chineseWisecrackDao.getChineseWisecrack(id)
 
     override fun getNextId(id: Int): Flow<Int?> = chineseWisecrackDao.getNextId(id)
+
     override fun getPrevId(id: Int): Flow<Int?> = chineseWisecrackDao.getPrevId(id)
+
     override fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>> =
         chineseWisecrackDao.searchWisecrackList("%$query%")
 
@@ -27,7 +29,7 @@ class ChineseWisecrackRepositoryImpl @Inject constructor(
     override fun getSearchPrevId(id: Int, query: String): Flow<Int?> =
         chineseWisecrackDao.getSearchPrevId(id, "%$query%")
 
-    override fun collections(): Flow<PagingData<ChineseWisecrackWithBookmark>> = Pager(
+    override fun collections(): Flow<PagingData<ChineseWisecrackEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = { chineseWisecrackDao.collections() }
     ).flow

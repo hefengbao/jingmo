@@ -19,6 +19,7 @@ import com.hefengbao.jingmo.data.database.dao.WritingDao
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
@@ -49,6 +50,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         ChineseKnowledgeEntity::class,
         ChineseWisecrackCollectionEntity::class,
         ChineseWisecrackEntity::class,
+        ClassicPoemCollectionEntity::class,
         ClassicPoemEntity::class,
         IdiomCollectionEntity::class,
         IdiomEntity::class,
@@ -60,7 +62,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 10,
+    version = 11,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -70,7 +72,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 6, to = 7),
         AutoMigration(from = 7, to = 8, spec = AppDatabase.AutoMigration7To8::class),
         AutoMigration(from = 8, to = 9, spec = AppDatabase.AutoMigration8To9::class),
-        AutoMigration(from = 9, to = 10)
+        AutoMigration(from = 9, to = 10),
+        AutoMigration(from = 10, to = 11),
     ],
     exportSchema = true
 )

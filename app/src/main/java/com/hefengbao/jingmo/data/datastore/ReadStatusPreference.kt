@@ -24,6 +24,7 @@ class ReadStatusPreference(
         ReadStatus(
             chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE] ?: 1,
             chineseWisecracksLastReadId = it[PREF_CHINESE_WISECRACKS] ?: 1,
+            classicPoemsLastReadId = it[PREF_CLASSIC_POEMS] ?: 1,
             idiomsLastReadId = it[PREF_IDIOMS] ?: 1,
             peopleLastReadId = it[PREF_PEOPLE] ?: 1,
             poemSentencesLastReadId = it[PREF_POEM_SENTENCES] ?: 1,
@@ -39,12 +40,18 @@ class ReadStatusPreference(
     suspend fun setChineseWisecracksLastReadId(version: Int) =
         setInt(context, PREF_CHINESE_WISECRACKS, version)
 
+    suspend fun setClassicPoemsLastReadId(version: Int) =
+        setInt(context, PREF_CLASSIC_POEMS, version)
+
     suspend fun setIdiomsLastReadId(version: Int) = setInt(context, PREF_IDIOMS, version)
+
     suspend fun setPeopleLastReadId(version: Int) = setInt(context, PREF_PEOPLE, version)
+
     suspend fun setPoemSentencesLastReadId(version: Int) =
         setInt(context, PREF_POEM_SENTENCES, version)
 
     suspend fun setRiddlesLastReadId(version: Int) = setInt(context, PREF_RIDDLES, version)
+
     suspend fun setTongueTwistersLastReadId(version: Int) =
         setInt(context, PREF_TONGUE_TWISTERS, version)
 
@@ -53,6 +60,7 @@ class ReadStatusPreference(
     companion object {
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_WISECRACKS = intPreferencesKey("key_chinese_wisecracks")
+        private val PREF_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
         private val PREF_IDIOMS = intPreferencesKey("key_idioms")
         private val PREF_PEOPLE = intPreferencesKey("key_people")
         private val PREF_POEM_SENTENCES = intPreferencesKey("key_poem_sentences")

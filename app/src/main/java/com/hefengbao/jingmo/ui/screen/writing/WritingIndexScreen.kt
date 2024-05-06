@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel2
+import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel
 import kotlinx.serialization.json.Json
 
 @Composable
@@ -68,8 +68,6 @@ private fun WritingIndexScreen(
     json: Json
 ) {
     writing?.let { entity ->
-        var isCollect = writingCollectionEntity != null
-
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "诗文",
@@ -97,15 +95,14 @@ private fun WritingIndexScreen(
                     actions = {
                         IconButton(
                             onClick = {
-                                if (isCollect) {
+                                if (writingCollectionEntity != null) {
                                     setUncollect(writing.id)
                                 } else {
                                     setCollect(writing.id)
                                 }
-                                isCollect = !isCollect
                             }
                         ) {
-                            if (isCollect) {
+                            if (writingCollectionEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
                                     contentDescription = null,
@@ -122,7 +119,7 @@ private fun WritingIndexScreen(
                 )
             }
         ) {
-            WritingShowPanel2(
+            WritingShowPanel(
                 writing = entity,
                 prevId = null,
                 nextId = null,

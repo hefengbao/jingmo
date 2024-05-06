@@ -2,7 +2,8 @@ package com.hefengbao.jingmo.ui.screen.idiom
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.model.IdiomWithBookmark
+import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.repository.IdiomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +20,36 @@ class IdiomIndexViewModel @Inject constructor(
         getRandomIdiom()
     }
 
-    private val _idiom: MutableStateFlow<IdiomWithBookmark?> = MutableStateFlow(null)
-    val idiom: SharedFlow<IdiomWithBookmark?> = _idiom
+    private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
+    val idiom: SharedFlow<IdiomEntity?> = _idiom
     fun getRandomIdiom() {
         viewModelScope.launch {
             idiomRepository.random().collectLatest {
                 _idiom.value = it
             }
+        }
+    }
+
+    private val _idiomCollectionEntity: MutableStateFlow<IdiomCollectionEntity?> =
+        MutableStateFlow(null)
+    val idiomCollectionEntity: SharedFlow<IdiomCollectionEntity?> = _idiomCollectionEntity
+    fun getIdiomCollectionEntity(id: Int) {
+        viewModelScope.launch {
+            idiomRepository.isCollect(id).collectLatest {
+                _idiomCollectionEntity.value = it
+            }
+        }
+    }
+
+    fun collect(id: Int) {
+        viewModelScope.launch {
+            idiomRepository.collect(IdiomCollectionEntity(id))
+        }
+    }
+
+    fun uncollect(id: Int) {
+        viewModelScope.launch {
+            idiomRepository.uncollect(id)
         }
     }
 }
