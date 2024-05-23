@@ -31,6 +31,7 @@ import com.hefengbao.jingmo.data.model.HomeItem
 @Composable
 fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
+    onChineseCharacterClick: () -> Unit,
     onChineseColorClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -50,6 +51,7 @@ fun HomeRoute(
 
     HomeScreen(
         homeItem = homeItem,
+        onChineseCharacterClick = onChineseCharacterClick,
         onChineseColorClick = onChineseColorClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
@@ -72,6 +74,7 @@ fun HomeRoute(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     homeItem: HomeItem,
+    onChineseCharacterClick: () -> Unit,
     onChineseColorClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -208,6 +211,12 @@ private fun HomeScreen(
                                 onClick = onChineseColorClick
                             )
                         }
+                    }
+                    item {
+                        Item(
+                            title = "汉字",
+                            onClick = onChineseCharacterClick
+                        )
                     }
                 }
             )

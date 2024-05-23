@@ -53,6 +53,7 @@ fun DataRoute(
 
     val datasetPref by viewModel.datasetPref.collectAsState(initial = DatasetVersion())
     val datasetResult by viewModel.datasetResult.collectAsState(initial = Result.Loading)
+
     val chineseKnowledgeResult by viewModel.chineseKnowledgeResult.collectAsState(initial = SyncStatus.NonStatus)
     val chineseKnowledgeResultProgress by viewModel.chineseKnowledgeResultProgress.collectAsState(
         initial = 0f
@@ -63,6 +64,8 @@ fun DataRoute(
     )
     val classicPoemsResult by viewModel.classicPoemsResult.collectAsState(initial = SyncStatus.NonStatus)
     val classicPoemsResultProgress by viewModel.classicPoemsResultProgress.collectAsState(initial = 0f)
+    val dictionaryResult by viewModel.dictionaryResult.collectAsState(initial = SyncStatus.NonStatus)
+    val dictionaryResultProgress by viewModel.dictionaryResultProgress.collectAsState(initial = 0f)
     val idiomsResult by viewModel.idiomsResult.collectAsState(initial = SyncStatus.NonStatus)
     val idiomsResultProgress by viewModel.idiomsResultProgress.collectAsState(initial = 0f)
     val peopleResult by viewModel.peopleResult.collectAsState(initial = SyncStatus.NonStatus)
@@ -95,6 +98,11 @@ fun DataRoute(
         },
         chineseWisecracksResult = chineseWisecracksResult,
         chineseWisecracksResultProgress = chineseWisecracksResultProgress,
+        syncDictionary = { total: Int, version: Int ->
+            viewModel.syncDictionary(total, version)
+        },
+        dictionaryResult = dictionaryResult,
+        dictionaryResultProgress = dictionaryResultProgress,
         syncIdioms = { total: Int, version: Int -> viewModel.syncIdioms(total, version) },
         idiomsResult = idiomsResult,
         idiomsResultProgress = idiomsResultProgress,
@@ -150,6 +158,9 @@ private fun DataScreen(
     syncClassicPoems: (total: Int, version: Int) -> Unit,
     classicPoemsResult: SyncStatus<Any>,
     classicPoemsResultProgress: Float,
+    syncDictionary: (total: Int, version: Int) -> Unit,
+    dictionaryResult: SyncStatus<Any>,
+    dictionaryResultProgress: Float,
     syncIdioms: (total: Int, version: Int) -> Unit,
     idiomsResult: SyncStatus<Any>,
     idiomsResultProgress: Float,
@@ -277,6 +288,14 @@ private fun DataScreen(
                         status = classicPoemsResult,
                         progress = classicPoemsResultProgress,
                         onClick = { count: Int, version: Int -> syncClassicPoems(count, version) }
+                    ),
+                    Menu(
+                        title = "字典",
+                        name = "dictionary",
+                        localVersion = datasetPref.dictionaryVersion,
+                        status = dictionaryResult,
+                        progress = dictionaryResultProgress,
+                        onClick = { count: Int, version: Int -> syncDictionary(count, version) }
                     )
                 )
 
@@ -316,10 +335,10 @@ private fun DataScreen(
                                     item.status.exception?.message
                                 } else null
                             )
-                        }
 
-                        if (index != menus.lastIndex) {
-                            Divider(modifier = modifier.padding(horizontal = 16.dp))
+                            if (index != menus.lastIndex) {
+                                Divider(modifier = modifier.padding(horizontal = 16.dp))
+                            }
                         }
                     }
                 }

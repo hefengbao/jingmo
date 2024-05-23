@@ -7,6 +7,7 @@ import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
+import com.hefengbao.jingmo.data.database.dao.DictionaryDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
@@ -34,46 +35,61 @@ object DatabaseModule {
     ).build()
 
     @Provides
+    @Singleton
     fun providesChineseKnowledgeDao(
         database: AppDatabase
     ): ChineseKnowledgeDao = database.chineseKnowledgeDao()
 
     @Provides
+    @Singleton
     fun providesChineseWisecrackDao(
         database: AppDatabase
     ): ChineseWisecrackDao = database.chineseWisecrackDao()
 
     @Provides
+    @Singleton
+    fun providesDictionaryDao(
+        database: AppDatabase
+    ): DictionaryDao = database.dictionaryDao()
+
+    @Provides
+    @Singleton
     fun providesPoemDao(
         database: AppDatabase
     ): ClassicPoemDao = database.classicPoemDao()
 
     @Provides
+    @Singleton
     fun providesIdiomDao(
         database: AppDatabase
     ): IdiomDao = database.idiomDao()
 
     @Provides
+    @Singleton
     fun providesPeopleDao(
         database: AppDatabase
     ): PeopleDao = database.peopleDao()
 
     @Provides
+    @Singleton
     fun providesPoemSentenceDao(
         database: AppDatabase
     ): PoemSentenceDao = database.poemSentenceDao()
 
     @Provides
+    @Singleton
     fun providesRiddleDao(
         database: AppDatabase
     ): RiddleDao = database.riddleDao()
 
     @Provides
+    @Singleton
     fun providesTongueTwisterDao(
         database: AppDatabase
     ): TongueTwisterDao = database.tongueTwisterDao()
 
     @Provides
+    @Singleton
     fun providesWritingDao(
         database: AppDatabase
     ): WritingDao = database.writingDao()

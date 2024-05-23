@@ -1,5 +1,7 @@
 package com.hefengbao.jingmo.di
 
+import com.hefengbao.jingmo.data.repository.ChineseCharacterRepository
+import com.hefengbao.jingmo.data.repository.ChineseCharacterRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseColorRepository
 import com.hefengbao.jingmo.data.repository.ChineseColorRepositoryImpl
 import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepository
@@ -43,9 +45,9 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface DataModule {
     @Binds
-    fun bindsIdiomRepository(
-        idiomRepository: IdiomRepositoryImpl
-    ): IdiomRepository
+    fun bindsChineseCharacterRepository(
+        chineseCharacterRepository: ChineseCharacterRepositoryImpl
+    ): ChineseCharacterRepository
 
     @Binds
     fun bindsChineseColorRepository(
@@ -76,6 +78,11 @@ interface DataModule {
     fun bindsHomeRepository(
         homeRepositoryImpl: HomeRepositoryImpl
     ): HomeRepository
+
+    @Binds
+    fun bindsIdiomRepository(
+        idiomRepository: IdiomRepositoryImpl
+    ): IdiomRepository
 
     @Binds
     fun bindsImportRepository(

@@ -33,5 +33,7 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun setChineseColor(checked: Boolean) = homePreference.setChineseColor(checked)
 
+    override suspend fun setCharacter(checked: Boolean) = homePreference.setCharacter(checked)
+
     override fun getHomeItem(): Flow<HomeItem> = homePreference.homeItem
 }

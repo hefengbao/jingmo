@@ -10,6 +10,7 @@ import androidx.room.migration.AutoMigrationSpec
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
+import com.hefengbao.jingmo.data.database.dao.DictionaryDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
@@ -21,6 +22,8 @@ import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntit
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
@@ -30,7 +33,6 @@ import com.hefengbao.jingmo.data.database.entity.RiddleEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
-import com.hefengbao.jingmo.data.database.util.DetailInfoListConverter
 import com.hefengbao.jingmo.data.database.util.IntListConverter
 import com.hefengbao.jingmo.data.database.util.PeopleAliasListConverter
 import com.hefengbao.jingmo.data.database.util.PeopleDetailListConverter
@@ -52,6 +54,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         ChineseWisecrackEntity::class,
         ClassicPoemCollectionEntity::class,
         ClassicPoemEntity::class,
+        DictionaryEntity::class,
+        DictionaryPinyinEntity::class,
         IdiomCollectionEntity::class,
         IdiomEntity::class,
         PeopleEntity::class,
@@ -62,7 +66,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 11,
+    version = 12,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -74,11 +78,11 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 8, to = 9, spec = AppDatabase.AutoMigration8To9::class),
         AutoMigration(from = 9, to = 10),
         AutoMigration(from = 10, to = 11),
+        AutoMigration(from = 11, to = 12),
     ],
     exportSchema = true
 )
 @TypeConverters(
-    DetailInfoListConverter::class,
     IntListConverter::class,
     PeopleAliasListConverter::class,
     PeopleDetailListConverter::class,
@@ -93,6 +97,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
     abstract fun chineseWisecrackDao(): ChineseWisecrackDao
     abstract fun classicPoemDao(): ClassicPoemDao
+    abstract fun dictionaryDao(): DictionaryDao
     abstract fun idiomDao(): IdiomDao
     abstract fun peopleDao(): PeopleDao
     abstract fun riddleDao(): RiddleDao

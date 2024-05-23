@@ -4,6 +4,8 @@ import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
@@ -14,13 +16,13 @@ import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
 import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.WritingWrapper
-
 
 interface NetworkDatasourceRepository {
     suspend fun dataset(): Result<List<Dataset>>
@@ -30,6 +32,10 @@ interface NetworkDatasourceRepository {
     suspend fun insertChineseWisecrack(entity: ChineseWisecrackEntity)
     suspend fun syncClassicPoems(): Result<List<ClassicPoem>>
     suspend fun insertClassicPoems(entity: ClassicPoemEntity)
+    suspend fun syncDictionary(page: Int): Result<DictionaryWrapper>
+    suspend fun insertDictionary(entity: DictionaryEntity)
+    suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity)
+    suspend fun clearDictionaryPinyin()
     suspend fun syncIdioms(): Result<List<Idiom>>
     suspend fun insertIdiom(entity: IdiomEntity)
     suspend fun syncPeople(page: Int): Result<PeopleWrapper>

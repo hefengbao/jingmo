@@ -3,10 +3,12 @@ package com.hefengbao.jingmo.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
+import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.asClassicPoemEntity
+import com.hefengbao.jingmo.data.model.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.asIdiomEntity
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
@@ -91,6 +93,53 @@ class DataViewModel @Inject constructor(
                     _chineseWisecracksResult.value = SyncStatus.Success
                 }
             }
+        }
+    }
+
+    private val _dictionaryResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val dictionaryResult: SharedFlow<SyncStatus<Any>> = _dictionaryResult
+    private val _dictionaryResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val dictionaryResultProgress: SharedFlow<Float> = _dictionaryResultProgress
+    fun syncDictionary(total: Int, version: Int) {
+        viewModelScope.launch {
+            repository.clearDictionaryPinyin()
+        }
+        _dictionaryResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncDictionary(page)) {
+                    is Result.Error -> _dictionaryResult.value =
+                        SyncStatus.Error(response.exception)
+
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        if (response.data.nextPage != null) {
+                            page++
+                        } else {
+                            page = null
+                        }
+                        response.data.data.map {
+                            repository.insertDictionary(it.asDictionaryEntity())
+                            it.pinyin2?.map { pinyin ->
+                                repository.insertDictionaryPinyin(
+                                    DictionaryPinyinEntity(
+                                        dictionaryId = it.id,
+                                        pinyin = pinyin,
+                                    )
+                                )
+                            }
+                            count++
+                            _dictionaryResultProgress.value = count.toFloat() / total
+                        }
+                    }
+                }
+            }
+            // TODO 这里需优化
+            preference.setDictionaryVersion(version)
+            _dictionaryResult.value = SyncStatus.Success
         }
     }
 

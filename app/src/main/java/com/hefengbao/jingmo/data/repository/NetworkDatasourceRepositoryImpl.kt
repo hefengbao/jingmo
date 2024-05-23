@@ -6,6 +6,8 @@ import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
@@ -16,6 +18,7 @@ import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
@@ -55,6 +58,18 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun insertClassicPoems(entity: ClassicPoemEntity) =
         database.classicPoemDao().insert(entity)
+
+    override suspend fun syncDictionary(page: Int): Result<DictionaryWrapper> = safeApiCall {
+        network.dictionary(page)
+    }
+
+    override suspend fun insertDictionary(entity: DictionaryEntity) =
+        database.dictionaryDao().insert(entity)
+
+    override suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity) =
+        database.dictionaryDao().insertDictionaryPinyin(entity)
+
+    override suspend fun clearDictionaryPinyin() = database.dictionaryDao().clearDictionaryPinyin()
 
     override suspend fun syncIdioms(): Result<List<Idiom>> = safeApiCall {
         network.idioms()

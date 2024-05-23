@@ -38,6 +38,7 @@ fun ImportRoute(
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState(initial = 0f)
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState(initial = 0f)
     val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState(initial = 0f)
+    val dictionaryRatio by viewModel.dictionaryRatio.collectAsState()
     val idiomsRatio by viewModel.idiomsRatio.collectAsState(initial = 0f)
     val peopleRatio by viewModel.peopleRatio.collectAsState(initial = 0f)
     val poemSentenceRatio by viewModel.poemSentencesRatio.collectAsState(initial = 0f)
@@ -47,6 +48,7 @@ fun ImportRoute(
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
     val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
+    val dictionaryStatus by viewModel.dictionaryStatus.collectAsState(initial = ImportStatus.Loading)
     val idiomsStatus by viewModel.idiomStatus.collectAsState(initial = ImportStatus.Loading)
     val poemSentencesStatus by viewModel.poemSentenceStatus.collectAsState(initial = ImportStatus.Loading)
     val peopleStatus by viewModel.peopleStatus.collectAsState(initial = ImportStatus.Loading)
@@ -64,6 +66,9 @@ fun ImportRoute(
         classicPoemsRatio = classicPoemsRatio,
         classicPoemsStatus = classicPoemsStatus,
         classicPoemsUris = { viewModel.classicPoems(it) },
+        dictionaryRatio = dictionaryRatio,
+        dictionaryStatus = dictionaryStatus,
+        dictionaryUris = { viewModel.dictionary(it) },
         idiomsRatio = idiomsRatio,
         idiomsStatus = idiomsStatus,
         idiomsUris = { viewModel.idioms(it) },
@@ -95,6 +100,9 @@ private fun ImportScreen(
     classicPoemsRatio: Float,
     classicPoemsStatus: ImportStatus<Any>,
     classicPoemsUris: (List<Uri>) -> Unit,
+    dictionaryRatio: Float,
+    dictionaryStatus: ImportStatus<Any>,
+    dictionaryUris: (List<Uri>) -> Unit,
     idiomsRatio: Float,
     idiomsStatus: ImportStatus<Any>,
     idiomsUris: (List<Uri>) -> Unit,
@@ -123,6 +131,10 @@ private fun ImportScreen(
     val classicPoemsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             classicPoemsUris(it)
+        }
+    val dictionaryLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            dictionaryUris(it)
         }
     val idiomsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -213,6 +225,13 @@ private fun ImportScreen(
                 ratio = classicPoemsRatio,
                 launcher = classicPoemsLauncher,
                 status = classicPoemsStatus
+            )
+            Divider()
+            MenuItem(
+                title = "字典",
+                ratio = dictionaryRatio,
+                launcher = dictionaryLauncher,
+                status = dictionaryStatus
             )
         }
     }

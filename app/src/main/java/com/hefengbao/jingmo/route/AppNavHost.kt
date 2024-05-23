@@ -3,6 +3,20 @@ package com.hefengbao.jingmo.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterPinyinIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterRadicalIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterSearchListScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterShowScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterStrokeIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.chineseCharacterStrokeScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterPinyinIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterRadicalIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterSearchListScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterShowScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterStrokeIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinesecharacter.nav.navigateToChineseCharacterStrokeScreen
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorShowScreen
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorIndexGraph
@@ -115,6 +129,7 @@ fun AppNavHost(
         startDestination = ROUTE_HOME_GRAPH
     ) {
         homeGraph(
+            onChineseCharacterClick = { navController.navigateToChineseCharacterIndexGraph() },
             onChineseColorClick = { navController.navigateToChineseColorIndexGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
@@ -130,6 +145,58 @@ fun AppNavHost(
             onTongueTwisterClick = { navController.navigateToTongueTwisterIndexGraph() },
             onWritingClick = { navController.navigateToWritingIndexGraph() },
             nestGraph = {
+                chineseCharacterIndexGraph(
+                    onBackClick = navController::navigateUp,
+                    onPinyinSearchClick = { navController.navigateToChineseCharacterPinyinIndexScreen() },
+                    onRadicalClickSearch = { navController.navigateToChineseCharacterRadicalIndexScreen() },
+                    onStrokeSearchClick = { navController.navigateToChineseCharacterStrokeIndexScreen() },
+                    onStrokeClick = { navController.navigateToChineseCharacterStrokeScreen() },
+                    onSearchClick = { char, type ->
+                        navController.navigateToChineseCharacterSearchListScreen(
+                            char,
+                            type
+                        )
+                    },
+                    nestGraph = {
+                        chineseCharacterPinyinIndexScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { pinyin, type ->
+                                navController.navigateToChineseCharacterSearchListScreen(
+                                    pinyin,
+                                    type
+                                )
+                            },
+                        )
+                        chineseCharacterRadicalIndexScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { radical, type ->
+                                navController.navigateToChineseCharacterSearchListScreen(
+                                    radical,
+                                    type
+                                )
+                            },
+                        )
+                        chineseCharacterStrokeIndexScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { stroke, type ->
+                                navController.navigateToChineseCharacterSearchListScreen(
+                                    stroke,
+                                    type
+                                )
+                            },
+                        )
+                        chineseCharacterSearchListScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseCharacterShowScreen(it) }
+                        )
+                        chineseCharacterShowScreen(
+                            onBackClick = navController::navigateUp,
+                        )
+                        chineseCharacterStrokeScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
                 chineseColorIndexGraph(
                     onBackClick = navController::navigateUp,
                     onItemClick = { navController.navigateToChineseColorShowScreen(it) },

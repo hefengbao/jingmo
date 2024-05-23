@@ -90,4 +90,10 @@ class HomeItemManagerViewModel @Inject constructor(
             homeRepository.setChineseColor(checked)
         }
     }
+
+    fun setCharacter(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setCharacter(checked)
+        }
+    }
 }

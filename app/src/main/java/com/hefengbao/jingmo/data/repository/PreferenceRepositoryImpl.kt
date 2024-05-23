@@ -25,6 +25,9 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setClassicPoemsVersion(version: Int) =
         dataset.setClassicPoemsVersion(version)
 
+    override suspend fun setDictionaryVersion(version: Int) =
+        dataset.setDictionaryVersion(version)
+
     override suspend fun setIdiomsVersion(version: Int) = dataset.setIdiomsVersion(version)
 
     override suspend fun setPeopleVersion(version: Int) = dataset.setPeopleVersion(version)

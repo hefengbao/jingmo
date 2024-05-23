@@ -17,22 +17,15 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 目前的内容有：
 
 1. 诗文 110 万篇,包含诗、词、辞赋、残句、联、文等；
-
 2. 诗文名句 10000 句；
-
 3. 歇后语 14026 条；
-
 4. 成语 30895 条；
-
 5. 中国传统色 161 种；
-
 6. 中国传统节日 19 个；
-
 7. 二十四节气；
-
 8. 绕口令 45 段；
-
 9. 知识卡片 464 组；
+10. 字典 20552 字。 
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
@@ -84,10 +77,6 @@ keyPassword=
 
 [https://github.com/MinchaoZhu/Chinese-Corpus-Process.git](https://github.com/MinchaoZhu/Chinese-Corpus-Process.git)
 
-[https://github.com/pwxcoo/chinese-xinhua.git](https://github.com/pwxcoo/chinese-xinhua.git)
-
-[https://github.com/dengxiuqi/ChineseLyrics](https://github.com/dengxiuqi/ChineseLyrics)
-
 [https://github.com/JoshuaCH/chinese_ancient_poetry.git](https://github.com/JoshuaCH/chinese_ancient_poetry.git)
 
 [https://github.com/caoxingyu/chinese-gushiwen.git](https://github.com/caoxingyu/chinese-gushiwen.git)
@@ -101,6 +90,24 @@ keyPassword=
 [http://zhongguose.com/](http://zhongguose.com/)
 
 [https://github.com/imoyao/GUSCSS/](https://github.com/imoyao/GUSCSS/)
+
+### 汉字/成语/词语
+
+[https://hanziwriter.org/cn/](https://hanziwriter.org/cn/)（[文档](https://hanziwriter.org/cn/docs.html)）
+
+[https://github.com/chanind/hanzi-writer-data](https://github.com/chanind/hanzi-writer-data)
+
+[https://github.com/skishore/makemeahanzi](https://github.com/skishore/makemeahanzi)
+
+[https://github.com/mapull/chinese-dictionary](https://github.com/mapull/chinese-dictionary)
+
+[https://github.com/pwxcoo/chinese-xinhua.git](https://github.com/pwxcoo/chinese-xinhua.git)
+
+[汉字部首表](https://baike.baidu.com/item/%E6%B1%89%E5%AD%97%E9%83%A8%E9%A6%96%E8%A1%A8/1993677)
+
+### 其他
+
+[https://github.com/dengxiuqi/ChineseLyrics](https://github.com/dengxiuqi/ChineseLyrics)
 
 ~本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀~
 

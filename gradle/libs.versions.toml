@@ -11,11 +11,13 @@ androidx-navigation = "2.6.0"
 androidx-hilt-navigation-compose = "1.0.0"
 bugly = "4.1.9.3"
 capturable = "2.0.0"
+coil = "2.6.0"
 compose-bom = "2024.01.00"
 core-ktx = "1.10.1"
 espresso-core = "3.5.1"
 hilt = "2.50"
 hiltExt = "1.0.0"
+hutool = "5.8.27"
 junit = "4.13.2"
 kotlin = "1.9.22"
 kotlinxCoroutines = "1.6.4"
@@ -43,6 +45,8 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 capturable = { group = "dev.shreyaspatil", name = "capturable", version.ref = "capturable" }
 ui = { group = "androidx.compose.ui", name = "ui" }
@@ -69,6 +73,7 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
 hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
+hutool = { group = "cn.hutool", name = "hutool-all", version.ref = "hutool" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }

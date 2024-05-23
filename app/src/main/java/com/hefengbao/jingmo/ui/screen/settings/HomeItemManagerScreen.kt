@@ -40,6 +40,7 @@ fun HomeItemManagerRoute(
         setChineseKnowledge = { viewModel.setChineseKnowledge(it) },
         setPeople = { viewModel.setPeople(it) },
         setChineseColor = { viewModel.setChineseColor(it) },
+        setCharacter = { viewModel.setCharacter(it) }
     )
 }
 
@@ -59,6 +60,7 @@ private fun HomeItemManagerScreen(
     setChineseKnowledge: (Boolean) -> Unit,
     setPeople: (Boolean) -> Unit,
     setChineseColor: (Boolean) -> Unit,
+    setCharacter: (Boolean) -> Unit,
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "栏目管理") {
         Column(
@@ -100,6 +102,11 @@ private fun HomeItemManagerScreen(
                 title = "传统色",
                 checked = homeItem.chineseColor,
                 onCheckedChange = setChineseColor
+            )
+            Item(
+                title = "汉字",
+                checked = homeItem.character,
+                onCheckedChange = setCharacter
             )
         }
     }
