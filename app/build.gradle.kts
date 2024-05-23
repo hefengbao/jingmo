@@ -141,6 +141,11 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.retrofit.kotlin.serialization)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
+
+    implementation(libs.hutool)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
