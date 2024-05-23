@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>汉字笔画</title>
+    <script src="./hanzi-writer.min.js"></script>
+    <style>
+        .target{
+		    width: 300px;
+		    height: 300px;
+		    display: block;
+		    margin: 0 auto;
+		    background: no-repeat center url("./bg.png");
+		    border: solid;
+		    margin: 30px;
+		}
+    </style>
+</head>
+<body>
+<div class="target" id="character-target-div"></div>
+<script>
+    var writer = HanziWriter.create('character-target-div', '墨', {
+        width: 300,
+        height: 300,
+        padding: 15,
+        delayBetweenLoops: 3000
+    });
+    writer.loopCharacterAnimation();
+
+    function callJS(newCharacter){
+        writer.setCharacter(newCharacter)
+        writer.loopCharacterAnimation();
+    }
+</script>
+</body>
+</html>

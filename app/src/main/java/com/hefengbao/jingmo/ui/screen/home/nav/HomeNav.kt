@@ -9,6 +9,7 @@ const val ROUTE_HOME_GRAPH = "home_graph"
 private const val ROUTE_HOME = "home"
 
 fun NavGraphBuilder.homeGraph(
+    onChineseCharacterClick: () -> Unit,
     onChineseColorClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -33,6 +34,7 @@ fun NavGraphBuilder.homeGraph(
             route = ROUTE_HOME
         ) {
             HomeRoute(
+                onChineseCharacterClick = onChineseCharacterClick,
                 onChineseColorClick = onChineseColorClick,
                 onChineseKnowledgeClick = onChineseKnowledgeClick,
                 onChineseWisecrackClick = onChineseWisecrackClick,

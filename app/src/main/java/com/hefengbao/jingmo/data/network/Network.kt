@@ -4,6 +4,7 @@ import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
@@ -16,6 +17,7 @@ interface Network {
     suspend fun chineseKnowledge(): List<ChineseKnowledge>
     suspend fun chineseWisecracks(): List<ChineseWisecrack>
     suspend fun classicPoems(): List<ClassicPoem>
+    suspend fun dictionary(page: Int): DictionaryWrapper
     suspend fun idioms(): List<Idiom>
     suspend fun people(page: Int): PeopleWrapper
     suspend fun poemSentences(): List<PoemSentence>

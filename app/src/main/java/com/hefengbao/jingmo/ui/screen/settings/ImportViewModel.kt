@@ -4,9 +4,11 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
+import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
@@ -15,6 +17,7 @@ import com.hefengbao.jingmo.data.model.WritingWrapper
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.asClassicPoemEntity
+import com.hefengbao.jingmo.data.model.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.asIdiomEntity
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
@@ -47,6 +50,7 @@ class ImportViewModel @Inject constructor(
     private val chineseKnowledgeCount = 464
     private val chineseWisecracksCount = 14026
     private val classicPoemCount = 955
+    private val dictionaryCount = 20552
     private val idiomsCount = 30895
     private val peopleCount = 85776
     private val poemSentencesCount = 10000
@@ -122,6 +126,36 @@ class ImportViewModel @Inject constructor(
                 }
             }
             _classicPoemsStatus.value = ImportStatus.Finish
+        }
+    }
+
+    val dictionaryRatio = repository.dictionaryTotal().distinctUntilChanged().flatMapLatest {
+        MutableStateFlow(it.toFloat() / dictionaryCount)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = 0f
+    )
+    private val _dictionaryStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val dictionaryStatus: SharedFlow<ImportStatus<Any>> = _dictionaryStatus
+    fun dictionary(uris: List<Uri>) {
+        viewModelScope.launch {
+            _dictionaryStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<DictionaryWrapper>(readTextFromUri(it)).data.forEach { dictionary ->
+                    repository.insertDictionary(dictionary.asDictionaryEntity())
+                    dictionary.pinyin2?.map { pinyin ->
+                        repository.insertDictionaryPinyin(
+                            DictionaryPinyinEntity(
+                                dictionaryId = dictionary.id,
+                                pinyin = pinyin,
+                            )
+                        )
+                    }
+                }
+            }
+            _dictionaryStatus.value = ImportStatus.Finish
         }
     }
 

@@ -11,5 +11,6 @@ data class HomeItem(
     val solarTerm: Boolean = true,
     val chineseKnowledge: Boolean = true,
     val people: Boolean = true,
-    val chineseColor: Boolean = true
+    val chineseColor: Boolean = true,
+    val character: Boolean = true,
 )

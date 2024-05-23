@@ -4,6 +4,7 @@ data class DatasetVersion(
     val chineseKnowledgeVersion: Int = 0,
     val chineseWisecracksVersion: Int = 0,
     val classicPoemsVersion: Int = 0,
+    val dictionaryVersion: Int = 0,
     val idiomsVersion: Int = 0,
     val peopleVersion: Int = 0,
     val poemSentencesVersion: Int = 0,

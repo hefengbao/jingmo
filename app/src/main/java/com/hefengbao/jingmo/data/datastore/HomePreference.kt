@@ -39,7 +39,8 @@ class HomePreference(
             solarTerm = it[PREF_SOLAR_TERM] ?: true,
             chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
             people = it[PREF_PEOPLE] ?: true,
-            chineseColor = it[PREF_CHINESE_COLOR] ?: true
+            chineseColor = it[PREF_CHINESE_COLOR] ?: true,
+            character = it[PREF_CHARACTER] ?: true,
         )
     }
 
@@ -68,6 +69,8 @@ class HomePreference(
 
     suspend fun setChineseColor(checked: Boolean) = setBoolean(context, PREF_CHINESE_COLOR, checked)
 
+    suspend fun setCharacter(checked: Boolean) = setBoolean(context, PREF_CHARACTER, checked)
+
     companion object {
         private val PREF_CLASSIC_POEM = booleanPreferencesKey("key_classic_poem")
         private val PREF_WRITING = booleanPreferencesKey("key_writing")
@@ -80,5 +83,6 @@ class HomePreference(
         private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
         private val PREF_PEOPLE = booleanPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_COLOR = booleanPreferencesKey("key_chinese_color")
+        private val PREF_CHARACTER = booleanPreferencesKey("key_character")
     }
 }

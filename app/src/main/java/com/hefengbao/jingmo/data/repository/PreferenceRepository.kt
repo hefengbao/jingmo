@@ -10,6 +10,7 @@ interface PreferenceRepository {
     suspend fun setChineseKnowledgeVersion(version: Int)
     suspend fun setChineseWisecracksVersion(version: Int)
     suspend fun setClassicPoemsVersion(version: Int)
+    suspend fun setDictionaryVersion(version: Int)
     suspend fun setIdiomsVersion(version: Int)
     suspend fun setPeopleVersion(version: Int)
     suspend fun setPoemSentencesVersion(version: Int)

@@ -4,6 +4,7 @@ import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.Idiom
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
@@ -54,15 +55,26 @@ class NetworkImpl @Inject constructor(
         .create(Api::class.java)
 
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
+
     override suspend fun chineseKnowledge(): List<ChineseKnowledge> = networkApi.chineseKnowledge()
+
     override suspend fun chineseWisecracks(): List<ChineseWisecrack> =
         networkApi.chineseWisecracks()
 
     override suspend fun classicPoems(): List<ClassicPoem> = networkApi.classicPoems()
+
+    override suspend fun dictionary(page: Int): DictionaryWrapper =
+        networkApi.dictionary(page = page)
+
     override suspend fun idioms(): List<Idiom> = networkApi.idioms()
+
     override suspend fun people(page: Int): PeopleWrapper = networkApi.people(page)
+
     override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()
+
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()
+
     override suspend fun tongueTwisters(): List<TongueTwister> = networkApi.tongueTwisters()
+
     override suspend fun writings(page: Int): WritingWrapper = networkApi3.writings(page)
 }
