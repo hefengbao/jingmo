@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material3.BottomAppBar
@@ -32,34 +30,29 @@ import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicpoem.components.ClassicPoemPanel
-import kotlinx.coroutines.launch
 
 @Composable
-fun ClassicPoemBookmarksReadRoute(
-    viewModel: ClassicPoemBookmarksReadViewModel = hiltViewModel(),
+fun ClassicPoemShowRoute(
+    viewModel: ClassicPoemShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
     val classicPoemEntity by viewModel.classicPoemEntity.collectAsState()
-    val prevId by viewModel.prevId.collectAsState()
-    val nextId by viewModel.nextId.collectAsState()
     val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState()
 
-    ClassicPoemBookmarksReadScreen(
+    ClassicPoemShowScreen(
         onBackClick = onBackClick,
         setCurrentId = { viewModel.setCurrentId(it) },
         setCurrentCollectedAt = { viewModel.setCurrentCollectedAt(it) },
         setCollect = { viewModel.collect(it) },
         setUncollect = { viewModel.uncollect(it) },
         classicPoemEntity = classicPoemEntity,
-        nextId = nextId,
-        prevId = prevId,
         classicPoemCollectionEntity = classicPoemCollectionEntity
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ClassicPoemBookmarksReadScreen(
+private fun ClassicPoemShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     setCurrentId: (Int) -> Unit,
@@ -67,8 +60,6 @@ private fun ClassicPoemBookmarksReadScreen(
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
     classicPoemEntity: ClassicPoemEntity?,
-    prevId: Int?,
-    nextId: Int?,
     classicPoemCollectionEntity: ClassicPoemCollectionEntity?
 ) {
     val annotationSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -87,11 +78,6 @@ private fun ClassicPoemBookmarksReadScreen(
     }
 
     classicPoemEntity?.let { entity ->
-        LaunchedEffect(entity) {
-            scope.launch {
-                state.animateScrollToItem(0)
-            }
-        }
         SimpleScaffold(
             onBackClick = onBackClick,
             title = entity.title,
@@ -102,19 +88,6 @@ private fun ClassicPoemBookmarksReadScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        IconButton(
-                            onClick = {
-                                prevId?.let {
-                                    setCurrentId(it)
-                                }
-                            },
-                            enabled = prevId != null
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = "上一个"
-                            )
-                        }
                         OutlinedButton(
                             onClick = {
                                 showAnnotationBottomSheet = true
@@ -149,20 +122,6 @@ private fun ClassicPoemBookmarksReadScreen(
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
-                        }
-
-                        IconButton(
-                            onClick = {
-                                nextId?.let {
-                                    setCurrentId(it)
-                                }
-                            },
-                            enabled = nextId != null
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                contentDescription = "下一个"
-                            )
                         }
                     }
                 }

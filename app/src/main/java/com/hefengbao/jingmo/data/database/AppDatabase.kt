@@ -22,6 +22,7 @@ import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntit
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.ClassicPoemFtsEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
@@ -54,6 +55,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         ChineseWisecrackEntity::class,
         ClassicPoemCollectionEntity::class,
         ClassicPoemEntity::class,
+        ClassicPoemFtsEntity::class,
         DictionaryEntity::class,
         DictionaryPinyinEntity::class,
         IdiomCollectionEntity::class,
@@ -66,7 +68,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 12,
+    version = 13,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -79,6 +81,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 9, to = 10),
         AutoMigration(from = 10, to = 11),
         AutoMigration(from = 11, to = 12),
+        AutoMigration(from = 12, to = 13),
     ],
     exportSchema = true
 )

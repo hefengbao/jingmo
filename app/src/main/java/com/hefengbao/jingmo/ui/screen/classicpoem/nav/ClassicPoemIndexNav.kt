@@ -19,6 +19,7 @@ fun NavGraphBuilder.classicPoemIndexGraph(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
+    onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -29,7 +30,8 @@ fun NavGraphBuilder.classicPoemIndexGraph(
             ClassicPoemIndexRoute(
                 onBackClick = onBackClick,
                 onBookmarksClick = onBookmarksClick,
-                onReadMoreClick = onReadMoreClick
+                onReadMoreClick = onReadMoreClick,
+                onSearchClick = onSearchClick
             )
         }
         nestGraph()

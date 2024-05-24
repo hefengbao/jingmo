@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import kotlinx.coroutines.flow.Flow
@@ -47,4 +48,7 @@ interface ClassicPoemDao {
     @Query("select id from classic_poem_collections where collected_at > :collectedAt order by collected_at asc limit 1")
     fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 
+    @Transaction
+    @Query("select * from classic_poems join classic_poems_fts on classic_poems_fts.rowid = classic_poems.id where classic_poems_fts match :query")
+    fun search(query: String): Flow<List<ClassicPoemEntity>>
 }

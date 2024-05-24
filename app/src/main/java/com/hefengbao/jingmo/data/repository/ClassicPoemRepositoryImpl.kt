@@ -42,4 +42,6 @@ class ClassicPoemRepositoryImpl @Inject constructor(
 
     override fun getCollectionPrevId(collectedAt: Long): Flow<Int?> =
         classicPoemDao.getCollectionPrevId(collectedAt)
+
+    override fun search(query: String): Flow<List<ClassicPoemEntity>> = classicPoemDao.search(query)
 }

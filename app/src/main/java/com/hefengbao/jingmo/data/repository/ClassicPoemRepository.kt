@@ -18,4 +18,5 @@ interface ClassicPoemRepository {
     fun collections(): Flow<PagingData<ClassicPoemEntity>>
     fun getCollectionNextId(collectedAt: Long): Flow<Int?>
     fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
+    fun search(query: String): Flow<List<ClassicPoemEntity>>
 }

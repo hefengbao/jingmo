@@ -8,6 +8,7 @@ import androidx.compose.material.icons.automirrored.filled.ReadMore
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +41,7 @@ fun ClassicPoemIndexRoute(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
+    onSearchClick: () -> Unit,
 ) {
     val classicPoemEntity by viewModel.classicPoemEntity.collectAsState(initial = null)
     val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState(initial = null)
@@ -58,6 +60,7 @@ fun ClassicPoemIndexRoute(
         onBackClick = onBackClick,
         onBookmarksClick = onBookmarksClick,
         onReadMoreClick = onReadMoreClick,
+        onSearchClick = onSearchClick,
         classicPoemEntity = classicPoemEntity,
         onFabClick = {
             viewModel.getRandom()
@@ -74,6 +77,7 @@ private fun ClassicPoemIndexScreen(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
+    onSearchClick: () -> Unit,
     classicPoemEntity: ClassicPoemEntity?,
     onFabClick: () -> Unit,
     classicPoemCollectionEntity: ClassicPoemCollectionEntity?,
@@ -98,6 +102,9 @@ private fun ClassicPoemIndexScreen(
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(imageVector = Icons.AutoMirrored.Filled.ReadMore, contentDescription = "阅读")
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
             }
         },
         bottomBar = {
