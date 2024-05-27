@@ -43,11 +43,10 @@ Android 8.0 及以上
 
 ## 赞助(赠人玫瑰，手有余香。)
 
-微信：
-![](screenshot/wechatpay.png)
-
-支付宝：
-![](screenshot/alipay.jpg)
+<p>
+<img src="screenshot/wechatpay.png" alt="微信赞赏码" style="zoom:50%"/>
+<img src="screenshot/alipay.jpg" alt="支付宝赞赏码" style="zoom:50%"/>
+</p>
 
 ## 运行项目
 
