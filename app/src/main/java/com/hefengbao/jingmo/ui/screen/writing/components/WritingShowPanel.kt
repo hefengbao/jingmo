@@ -2,13 +2,8 @@ package com.hefengbao.jingmo.ui.screen.writing.components
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,16 +33,12 @@ import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.model.writing.CharDict
 import com.hefengbao.jingmo.data.model.writing.WordDict
 import kotlinx.serialization.json.Json
-import kotlin.math.abs
 
 @SuppressLint("RememberReturnType")
 @Composable
 fun WritingShowPanel(
     modifier: Modifier = Modifier,
     writing: WritingEntity,
-    prevId: Int?,
-    nextId: Int?,
-    setCurrentId: (Int) -> Unit,
     json: Json,
 ) {
     val tag = "note"
@@ -183,120 +174,99 @@ fun WritingShowPanel(
         state.animateScrollToItem(0)
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .draggable(
-                state = rememberDraggableState {},
-                orientation = Orientation.Horizontal,
-                onDragStarted = {},
-                onDragStopped = {
-                    if (it < 0 && abs(it) > 500f) {
-                        nextId?.let {
-                            setCurrentId(nextId)
-                        }
-                    } else if (it > 0 && abs(it) > 500f) {
-                        prevId?.let {
-                            setCurrentId(prevId)
-                        }
+    SelectionContainer {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            state = state
+        ) {
+            item {
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    Text(
+                        text = writing.title.content,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        text = "${writing.dynasty}·${writing.author}",
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    if (writing.preface != null) {
+                        Text(
+                            text = writing.preface.replace("<br />", "\n"),
+                            style = MaterialTheme.typography.labelLarge,
+                            fontStyle = FontStyle.Italic
+                        )
                     }
-                }
-            )
-    ) {
-        SelectionContainer {
-            LazyColumn(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                state = state
-            ) {
-                item {
-                    Column(
-                        modifier = modifier
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    //Text(text = content, style = MaterialTheme.typography.bodyLarge)
+                    ClickableText(
+                        text = content,
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
                     ) {
-                        Text(
-                            text = writing.title.content,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                        Text(
-                            text = "${writing.dynasty}·${writing.author}",
-                            style = MaterialTheme.typography.labelLarge
-                        )
-                        if (writing.preface != null) {
-                            Text(
-                                text = writing.preface.replace("<br />", "\n"),
-                                style = MaterialTheme.typography.labelLarge,
-                                fontStyle = FontStyle.Italic
-                            )
-                        }
-                        //Text(text = content, style = MaterialTheme.typography.bodyLarge)
-                        ClickableText(
-                            text = content,
-                            style = MaterialTheme.typography.bodyLarge.copy(
-                                color = MaterialTheme.colorScheme.onBackground
-                            ),
-                        ) {
-                            content.getStringAnnotations(tag, it, it).map { string ->
-                                val arr = string.item.split("_")
+                        content.getStringAnnotations(tag, it, it).map { string ->
+                            val arr = string.item.split("_")
 
-                                when (arr[0]) {
-                                    "word" -> {
-                                        showWord = wordDicts[arr[1].toInt()]
-                                        showWordDialog = true
-                                    }
-
-                                    "char" -> {
-                                        showChar = charDicts[arr[1].toInt()]
-                                        showCharDialog = true
-                                    }
-
-                                    else -> {}
+                            when (arr[0]) {
+                                "word" -> {
+                                    showWord = wordDicts[arr[1].toInt()]
+                                    showWordDialog = true
                                 }
+
+                                "char" -> {
+                                    showChar = charDicts[arr[1].toInt()]
+                                    showCharDialog = true
+                                }
+
+                                else -> {}
                             }
                         }
                     }
                 }
+            }
 
-                writing.note?.let {
-                    item {
-                        Text(
-                            text = "\uD83D\uDCA1 按语、作者自注、跋",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(text = it, modifier = modifier.padding(top = 16.dp))
-                    }
+            writing.note?.let {
+                item {
+                    Text(
+                        text = "\uD83D\uDCA1 按语、作者自注、跋",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(text = it, modifier = modifier.padding(top = 16.dp))
                 }
+            }
 
-                writing.comments?.let {
-                    item {
-                        Text(text = "💡 赏析（评价）", style = MaterialTheme.typography.titleMedium)
-                        it.map {
-                            Column(
-                                modifier = modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                it.book?.let { book ->
-                                    Text(text = "\uD83D\uDCD6 $book")
-                                }
+            writing.comments?.let {
+                item {
+                    Text(text = "💡 赏析（评价）", style = MaterialTheme.typography.titleMedium)
+                    it.map {
+                        Column(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            it.book?.let { book ->
+                                Text(text = "\uD83D\uDCD6 $book")
+                            }
 
-                                it.section?.let { section ->
-                                    Text(text = section)
-                                }
+                            it.section?.let { section ->
+                                Text(text = section)
+                            }
 
-                                it.content?.let { content ->
-                                    Text(
-                                        text = content.replace("<br />", "\n")
-                                            .replace("</p>", "\n")
-                                            .replace("</div>", "\n")
-                                            .replace("<[^>]+>".toRegex(), "")
-                                    )
-                                }
+                            it.content?.let { content ->
+                                Text(
+                                    text = content.replace("<br />", "\n")
+                                        .replace("</p>", "\n")
+                                        .replace("</div>", "\n")
+                                        .replace("<[^>]+>".toRegex(), "")
+                                )
                             }
                         }
                     }

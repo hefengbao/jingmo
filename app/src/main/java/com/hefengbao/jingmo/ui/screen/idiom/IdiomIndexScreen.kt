@@ -62,63 +62,65 @@ private fun IdiomIndexScreen(
     setUncollect: (Int) -> Unit,
     getIdiomCollectionEntity: (Int) -> Unit,
 ) {
-    idiom?.let { entity ->
-        LaunchedEffect(entity) {
-            getIdiomCollectionEntity(entity.id)
-        }
-        SimpleScaffold(
-            onBackClick = onBackClick,
-            title = "成语",
-            actions = {
-                IconButton(onClick = onBookmarksClick) {
-                    Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-                }
-                IconButton(onClick = onReadMoreClick) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ReadMore,
-                        contentDescription = "阅读"
-                    )
-                }
-                IconButton(onClick = onSearchClick) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
-                }
-            },
-            bottomBar = {
-                BottomAppBar(
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = onFabClick) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
-                        }
-                    },
-                    actions = {
-                        IconButton(
-                            onClick = {
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "成语",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+            IconButton(onClick = onReadMoreClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ReadMore,
+                    contentDescription = "阅读"
+                )
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
+            }
+        },
+        bottomBar = {
+            BottomAppBar(
+                floatingActionButton = {
+                    FloatingActionButton(onClick = onFabClick) {
+                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            idiom?.let { entity ->
                                 if (idiomCollectionEntity != null) {
                                     setUncollect(entity.id)
                                 } else {
                                     setCollect(entity.id)
                                 }
                             }
-                        ) {
-                            if (idiomCollectionEntity != null) {
-                                Icon(
-                                    imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
-                                )
-                            }
+                        }
+                    ) {
+                        if (idiomCollectionEntity != null) {
+                            Icon(
+                                imageVector = Icons.Default.Bookmark,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.BookmarkBorder,
+                                contentDescription = null
+                            )
                         }
                     }
-                )
-            },
-
-            ) {
+                }
+            )
+        }
+    ) {
+        idiom?.let { entity ->
+            LaunchedEffect(entity) {
+                getIdiomCollectionEntity(entity.id)
+            }
             IdiomShowPanel(idiom = entity)
         }
     }
+
 }

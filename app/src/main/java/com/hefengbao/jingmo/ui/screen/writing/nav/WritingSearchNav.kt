@@ -15,7 +15,7 @@ fun NavController.navigateToWritingSearchScreen() {
 
 fun NavGraphBuilder.writingSearchScreen(
     onBackClick: () -> Unit,
-    onItemClick: (id: String, type: String, query: String) -> Unit,
+    onItemClick: (id: String) -> Unit,
 ) {
     composable(
         route = ROUTE,

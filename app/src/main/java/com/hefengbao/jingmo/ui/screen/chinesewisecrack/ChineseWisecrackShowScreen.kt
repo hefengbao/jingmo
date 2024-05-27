@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Photo
@@ -22,52 +20,42 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.components.ShowChineseWisecrackPanel
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.components.ChineseWisecrackShowPanel
 
 @Composable
-fun ChineseWisecrackSearchShowRoute(
-    viewModel: ChineseWisecrackSearchShowViewModel = hiltViewModel(),
+fun ChineseWisecrackShowRoute(
+    viewModel: ChineseWisecrackShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
 ) {
 
-    val prevId by viewModel.prevId.collectAsState()
-    val nextId by viewModel.nextId.collectAsState()
     val chineseWisecrack by viewModel.wisecrack.collectAsState()
     val chineseWisecrackCollectionEntity by viewModel.chineseWisecrackCollectionEntity.collectAsState()
 
-    ChineseWisecrackSearchShowScreen(
+    ChineseWisecrackShowScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         chineseCrack = chineseWisecrack,
         chineseWisecrackCollectionEntity = chineseWisecrackCollectionEntity,
-        prevId = prevId,
-        nextId = nextId,
-        setCurrentId = { viewModel.setCurrentId(it) },
         setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCurrentId(it) },
-        query = viewModel.query
+        setCollect = { viewModel.setCollect(it) },
     )
 }
 
 @Composable
-private fun ChineseWisecrackSearchShowScreen(
+private fun ChineseWisecrackShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     chineseCrack: ChineseWisecrackWithBookmark?,
     chineseWisecrackCollectionEntity: ChineseWisecrackCollectionEntity?,
-    prevId: Int?,
-    nextId: Int?,
-    setCurrentId: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
     setCollect: (Int) -> Unit,
-    query: String
 ) {
     chineseCrack?.let { entity ->
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "搜索：$query",
+            title = "歇后语",
             actions = {
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
                     Icon(imageVector = Icons.Default.Photo, contentDescription = null)
@@ -80,15 +68,6 @@ private fun ChineseWisecrackSearchShowScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        IconButton(
-                            onClick = { setCurrentId(prevId!!) },
-                            enabled = prevId != null
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = "上一个"
-                            )
-                        }
                         if (chineseWisecrackCollectionEntity == null) {
                             IconButton(onClick = { setCollect(entity.id) }) {
                                 Icon(
@@ -105,25 +84,12 @@ private fun ChineseWisecrackSearchShowScreen(
                                 )
                             }
                         }
-
-                        IconButton(
-                            onClick = { setCurrentId(nextId!!) },
-                            enabled = nextId != null
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                contentDescription = "下一个"
-                            )
-                        }
                     }
                 }
             }
         ) {
-            ShowChineseWisecrackPanel(
+            ChineseWisecrackShowPanel(
                 entity = entity,
-                prevId = prevId,
-                nextId = nextId,
-                setCurrentId = setCurrentId,
             )
         }
     }

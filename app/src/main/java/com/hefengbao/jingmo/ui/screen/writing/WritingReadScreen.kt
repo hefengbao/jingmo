@@ -1,7 +1,12 @@
 package com.hefengbao.jingmo.ui.screen.writing
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -28,6 +33,7 @@ import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.writing.components.WritingShowPanel
 import kotlinx.serialization.json.Json
+import kotlin.math.abs
 
 @Composable
 fun WritingReadRoute(
@@ -143,13 +149,31 @@ private fun WritingReadScreen(
             },
             floatingActionButtonPosition = FabPosition.Center
         ) {
-            WritingShowPanel(
-                writing = it,
-                prevId = prevId,
-                nextId = nextId,
-                setCurrentId = setCurrentId,
-                json = json
-            )
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = { velocity ->
+                            if (velocity < 0 && abs(velocity) > 500f) {
+                                nextId?.let {
+                                    setCurrentId(nextId)
+                                }
+                            } else if (velocity > 0 && abs(velocity) > 500f) {
+                                prevId?.let {
+                                    setCurrentId(prevId)
+                                }
+                            }
+                        }
+                    )
+            ) {
+                WritingShowPanel(
+                    writing = it,
+                    json = json
+                )
+            }
         }
     }
 }

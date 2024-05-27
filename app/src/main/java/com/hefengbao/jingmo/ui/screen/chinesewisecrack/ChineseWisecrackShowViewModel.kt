@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class ChineseWisecrackSearchShowViewModel @Inject constructor(
+class ChineseWisecrackShowViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val chineseWisecrackRepository: ChineseWisecrackRepository
 ) : ViewModel() {
@@ -25,11 +25,6 @@ class ChineseWisecrackSearchShowViewModel @Inject constructor(
     private val args = ChineseWisecrackSearchShowArgs(savedStateHandle)
 
     var id = MutableStateFlow(args.id.toInt())
-    val query = args.query
-
-    fun setCurrentId(id: Int) {
-        this.id.value = id
-    }
 
     val wisecrack = id.flatMapLatest {
         chineseWisecrackRepository.getChineseCrack(it)
@@ -41,22 +36,6 @@ class ChineseWisecrackSearchShowViewModel @Inject constructor(
 
     val chineseWisecrackCollectionEntity = id.flatMapLatest {
         chineseWisecrackRepository.isCollect(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val nextId = id.flatMapLatest {
-        chineseWisecrackRepository.getSearchNextId(it, query)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val prevId = id.flatMapLatest {
-        chineseWisecrackRepository.getSearchPrevId(it, query)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

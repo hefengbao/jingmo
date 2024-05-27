@@ -13,7 +13,7 @@ fun NavController.navigateToChineseWisecrackSearchScreen() {
 
 fun NavGraphBuilder.chineseWisecrackSearchScreen(
     onBackClick: () -> Unit,
-    onItemClick: (id: Int, query: String) -> Unit
+    onItemClick: (id: Int) -> Unit
 ) {
     composable(ROUTE) {
         ChineseWisecrackSearchRoute(

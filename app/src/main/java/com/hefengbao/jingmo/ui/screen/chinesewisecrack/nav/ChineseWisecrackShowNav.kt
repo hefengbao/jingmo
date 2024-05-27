@@ -6,50 +6,42 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.ChineseWisecrackSearchShowRoute
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.ChineseWisecrackShowRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
-internal const val chineseWisecrackSearchShowIdArg = "id"
-internal const val chineseWisecrackSearchShowQueryArg = "query"
-private const val base = "chinese_wisecrack_search_show"
-private const val ROUTE =
-    "$base/{$chineseWisecrackSearchShowIdArg}/{$chineseWisecrackSearchShowQueryArg}"
+internal const val chineseWisecrackShowIdArg = "id"
+private const val base = "chinese_wisecrack_show"
+private const val ROUTE = "$base/{$chineseWisecrackShowIdArg}"
 
-internal class ChineseWisecrackSearchShowArgs(val id: String, val query: String) {
+internal class ChineseWisecrackSearchShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[chineseWisecrackSearchShowIdArg]),
-                    UTF_8.name()
-                ),
-                URLDecoder.decode(
-                    checkNotNull(savedStateHandle[chineseWisecrackSearchShowQueryArg]),
+                    checkNotNull(savedStateHandle[chineseWisecrackShowIdArg]),
                     UTF_8.name()
                 )
             )
 }
 
 
-fun NavController.navigateToChineseWisecrackSearchShowScreen(id: String, query: String) {
+fun NavController.navigateToChineseWisecrackShowScreen(id: String) {
     val encodeId = URLEncoder.encode(id, UTF_8.name())
-    val encodeQuery = URLDecoder.decode(query, UTF_8.name())
-    this.navigate("$base/$encodeId/$encodeQuery")
+    this.navigate("$base/$encodeId")
 }
 
-fun NavGraphBuilder.chineseWisecrackSearchShowScreen(
+fun NavGraphBuilder.chineseWisecrackShowScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(chineseWisecrackSearchShowIdArg) { type = NavType.StringType },
-            navArgument(chineseWisecrackSearchShowQueryArg) { type = NavType.StringType },
+            navArgument(chineseWisecrackShowIdArg) { type = NavType.StringType },
         )
     ) {
-        ChineseWisecrackSearchShowRoute(
+        ChineseWisecrackShowRoute(
             onBackClick = onBackClick,
             onCaptureClick = onCaptureClick
         )

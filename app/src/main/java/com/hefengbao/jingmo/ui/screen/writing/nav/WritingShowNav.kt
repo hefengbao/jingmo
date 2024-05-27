@@ -13,52 +13,37 @@ import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val writingSearchReadIdArg = "writingId"
-internal const val writingSearchReadTypeArg = "type"
-internal const val writingSearchReadQueryArg = "query"
+internal const val writingShowIdArg = "writingId"
 
-private const val base = "writing_search_read"
+private const val base = "writing_show"
 
-private const val ROUTE =
-    "$base/{$writingSearchReadIdArg}/{$writingSearchReadTypeArg}/{$writingSearchReadQueryArg}"
+private const val ROUTE = "$base/{$writingShowIdArg}"
 
-internal class WritingSearchReadArgs(val poemId: String, val type: String, val query: String) {
+internal class WritingShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[writingSearchReadIdArg]),
+                    checkNotNull(savedStateHandle[writingShowIdArg]),
                     UTF_8.name()
-                ),
-                URLDecoder.decode(
-                    checkNotNull(savedStateHandle[writingSearchReadTypeArg]),
-                    UTF_8.name()
-                ),
-                URLDecoder.decode(
-                    checkNotNull(savedStateHandle[writingSearchReadQueryArg]),
-                    UTF_8.name()
-                ),
+                )
             )
 }
 
-fun NavController.navigateToWritingSearchShowScreen(id: String, type: String, query: String) {
+fun NavController.navigateToWritingShowScreen(id: String) {
     val encodedId = URLEncoder.encode(id, UTF_8.name())
-    val encodedType = URLEncoder.encode(type, UTF_8.name())
-    val encodedQuery = URLEncoder.encode(query, UTF_8.name())
-    this.navigate("$base/$encodedId/$encodedType/$encodedQuery") {
+    this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.writingSearchShowScreen(
+fun NavGraphBuilder.writingShowScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(writingSearchReadIdArg) { type = NavType.StringType },
-            navArgument(writingSearchReadTypeArg) { type = NavType.StringType },
-            navArgument(writingSearchReadQueryArg) { type = NavType.StringType },
+            navArgument(writingShowIdArg) { type = NavType.StringType },
         )
     ) {
         WritingShowRoute(

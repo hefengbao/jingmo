@@ -183,7 +183,7 @@ private fun HomeScreen(
                     if (homeItem.solarTerm) {
                         item {
                             Item(
-                                title = "二十四节气",
+                                title = "节气",
                                 onClick = onSolarTermsClick
                             )
                         }

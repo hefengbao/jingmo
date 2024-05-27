@@ -23,7 +23,7 @@ import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 fun ChineseWisecrackSearchRoute(
     viewModel: ChineseWisecrackSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (id: Int, query: String) -> Unit
+    onItemClick: (id: Int) -> Unit
 ) {
     val list by viewModel.searchWisecrackList.collectAsState(initial = emptyList())
 
@@ -41,7 +41,7 @@ private fun ChineseWisecrackSearchScreen(
     onBackClick: () -> Unit,
     list: List<ChineseWisecrackEntity>,
     onSearch: (String) -> Unit,
-    onItemClick: (id: Int, query: String) -> Unit
+    onItemClick: (id: Int) -> Unit
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -68,7 +68,7 @@ private fun ChineseWisecrackSearchScreen(
                 Text(
                     modifier = modifier
                         .clickable {
-                            onItemClick(item.id, query)
+                            onItemClick(item.id)
                         }
                         .padding(16.dp)
                         .fillMaxWidth(),

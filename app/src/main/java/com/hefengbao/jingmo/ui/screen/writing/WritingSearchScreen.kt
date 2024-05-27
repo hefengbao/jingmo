@@ -42,7 +42,7 @@ import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
 fun WritingSearchRoute(
     viewModel: WritingSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (id: String, type: String, query: String) -> Unit,
+    onItemClick: (id: String) -> Unit,
 ) {
     val recommendList by viewModel.recommendList.collectAsState(initial = emptyList())
 
@@ -60,7 +60,6 @@ fun WritingSearchRoute(
         recommendList = recommendList,
         writings = writings,
         onItemClick = onItemClick,
-        type = viewModel.type,
         onTypeChange = { type = it },
         query = query,
         onQueryChange = {
@@ -77,8 +76,7 @@ private fun WritingSearchScreen(
     onBackClick: () -> Unit,
     recommendList: List<String>,
     writings: LazyPagingItems<SimpleWritingInfo>,
-    onItemClick: (id: String, type: String, query: String) -> Unit,
-    type: String,
+    onItemClick: (id: String) -> Unit,
     onTypeChange: (String) -> Unit,
     query: String,
     onQueryChange: (String) -> Unit,
@@ -160,7 +158,7 @@ private fun WritingSearchScreen(
                 if (writings.itemCount == 0) {
                     Text(text = "没有查找到数据 /(ㄒoㄒ)/~~")
                 }
-                List(writings = writings, onItemClick = onItemClick, type = type, query = query)
+                List(writings = writings, onItemClick = onItemClick)
             }
         }
     }
@@ -170,9 +168,7 @@ private fun WritingSearchScreen(
 private fun List(
     modifier: Modifier = Modifier,
     writings: LazyPagingItems<SimpleWritingInfo>,
-    onItemClick: (id: String, type: String, query: String) -> Unit,
-    type: String,
-    query: String
+    onItemClick: (id: String) -> Unit,
 ) {
     LazyColumn {
         items(
@@ -183,7 +179,7 @@ private fun List(
                     modifier = modifier
                         .fillMaxWidth()
                         .clickable {
-                            onItemClick(entity.id.toString(), type, query)
+                            onItemClick(entity.id.toString())
                         }
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)

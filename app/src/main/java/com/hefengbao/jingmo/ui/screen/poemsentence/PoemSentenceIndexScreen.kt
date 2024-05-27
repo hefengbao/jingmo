@@ -86,105 +86,108 @@ private fun PoemSentenceIndexScreen(
     setLastReadId: (Int) -> Unit,
     onBookmarksClick: () -> Unit,
 ) {
-
-    sentence?.let {
-        LaunchedEffect(it) {
-            setLastReadId(sentence.id)
-        }
-        SimpleScaffold(
-            onBackClick = onBackClick,
-            title = "诗文名句",
-            actions = {
-                IconButton(onClick = onBookmarksClick) {
-                    Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-                }
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "诗文名句",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+            sentence?.let {
                 IconButton(onClick = { onCaptureClick(sentence.id) }) {
                     Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                 }
-                IconButton(onClick = onSearchClick) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                }
-            },
-            bottomBar = {
-                BottomAppBar(
-                    actions = {
-                        Row(
-                            modifier = modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            }
+        },
+        bottomBar = {
+            BottomAppBar(
+                actions = {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = {
+                                setCurrentId(prevId!!)
+                            },
+                            enabled = prevId != null
                         ) {
-                            IconButton(
-                                onClick = {
-                                    setCurrentId(prevId!!)
-                                },
-                                enabled = prevId != null
-                            ) {
-                                Icon(
-                                    modifier = modifier.padding(8.dp),
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = null
-                                )
-                            }
-                            IconButton(
-                                onClick = {
+                            Icon(
+                                modifier = modifier.padding(8.dp),
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                        IconButton(
+                            onClick = {
+                                sentence?.let {
                                     if (poemSentenceCollectionEntity != null) {
                                         setUncollect(it.id)
                                     } else {
                                         setCollect(it.id)
                                     }
                                 }
-                            ) {
-                                if (poemSentenceCollectionEntity != null) {
-                                    Icon(
-                                        imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.primary
-                                    )
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
-                                    )
-                                }
                             }
-                            IconButton(
-                                modifier = modifier.padding(8.dp),
-                                onClick = {
-                                    setCurrentId(nextId!!)
-                                },
-                                enabled = nextId != null
-                            ) {
+                        ) {
+                            if (poemSentenceCollectionEntity != null) {
                                 Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.BookmarkBorder,
                                     contentDescription = null
                                 )
                             }
                         }
-                    },
-                )
-            }
-        ) {
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .draggable(
-                        state = rememberDraggableState {},
-                        orientation = Orientation.Horizontal,
-                        onDragStarted = {},
-                        onDragStopped = { velocity ->
-                            if (velocity < 0 && abs(velocity) > 500f) {
-                                nextId?.let {
-                                    setCurrentId(nextId)
-                                }
-                            } else if (velocity > 0 && abs(velocity) > 500f) {
-                                prevId?.let {
-                                    setCurrentId(prevId)
-                                }
+                        IconButton(
+                            modifier = modifier.padding(8.dp),
+                            onClick = {
+                                setCurrentId(nextId!!)
+                            },
+                            enabled = nextId != null
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                },
+            )
+        }
+    ) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .draggable(
+                    state = rememberDraggableState {},
+                    orientation = Orientation.Horizontal,
+                    onDragStarted = {},
+                    onDragStopped = { velocity ->
+                        if (velocity < 0 && abs(velocity) > 500f) {
+                            nextId?.let {
+                                setCurrentId(nextId)
+                            }
+                        } else if (velocity > 0 && abs(velocity) > 500f) {
+                            prevId?.let {
+                                setCurrentId(prevId)
                             }
                         }
-                    )
-            ) {
+                    }
+                )
+        ) {
+            sentence?.let {
+                LaunchedEffect(it) {
+                    setLastReadId(sentence.id)
+                }
                 Row(
                     modifier = modifier
                         .fillMaxSize()

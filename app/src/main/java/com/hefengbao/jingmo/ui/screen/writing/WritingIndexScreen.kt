@@ -67,63 +67,62 @@ private fun WritingIndexScreen(
     onFabClick: () -> Unit,
     json: Json
 ) {
-    writing?.let { entity ->
-        SimpleScaffold(
-            onBackClick = onBackClick,
-            title = "诗文",
-            actions = {
-                IconButton(onClick = onBookmarksClick) {
-                    Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-                }
-                IconButton(onClick = onReadMoreClick) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ReadMore,
-                        contentDescription = "阅读"
-                    )
-                }
-                IconButton(onClick = onSearchClick) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
-                }
-            },
-            bottomBar = {
-                BottomAppBar(
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = onFabClick) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
-                        }
-                    },
-                    actions = {
-                        IconButton(
-                            onClick = {
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "诗文",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+            IconButton(onClick = onReadMoreClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ReadMore,
+                    contentDescription = "阅读"
+                )
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
+            }
+        },
+        bottomBar = {
+            BottomAppBar(
+                floatingActionButton = {
+                    FloatingActionButton(onClick = onFabClick) {
+                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            writing?.let {
                                 if (writingCollectionEntity != null) {
                                     setUncollect(writing.id)
                                 } else {
                                     setCollect(writing.id)
                                 }
                             }
-                        ) {
-                            if (writingCollectionEntity != null) {
-                                Icon(
-                                    imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
-                                )
-                            }
+                        }
+                    ) {
+                        if (writingCollectionEntity != null) {
+                            Icon(
+                                imageVector = Icons.Default.Bookmark,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.BookmarkBorder,
+                                contentDescription = null
+                            )
                         }
                     }
-                )
-            }
-        ) {
+                }
+            )
+        }
+    ) {
+        writing?.let { entity ->
             WritingShowPanel(
                 writing = entity,
-                prevId = null,
-                nextId = null,
-                setCurrentId = {},
                 json = json
             )
         }

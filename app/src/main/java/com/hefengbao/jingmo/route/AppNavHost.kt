@@ -29,12 +29,12 @@ import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackBookm
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchScreen
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.chineseWisecrackShowScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchScreen
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.navigateToChineseWisecrackShowScreen
 import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemBookmarksGraph
 import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemIndexGraph
 import com.hefengbao.jingmo.ui.screen.classicpoem.nav.classicPoemReadScreen
@@ -51,14 +51,12 @@ import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalIndexGraph
 import com.hefengbao.jingmo.ui.screen.festival.nav.navigateToFestivalShowScreen
 import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
-import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomBookmarksReadScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomCaptureScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomIndexGraph
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomReadScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomSearchScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.idiomShowScreen
-import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomBookmarksReadScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomCaptureScreen
 import com.hefengbao.jingmo.ui.screen.idiom.nav.navigateToIdiomIndexGraph
@@ -107,20 +105,18 @@ import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterI
 import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.navigateToTongueTwisterShowScreen
 import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterIndexGraph
 import com.hefengbao.jingmo.ui.screen.tonguetwister.nav.tongueTwisterShowScreen
-import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingBookmarksReadScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingCaptureScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingIndexGraph
 import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingReadScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingSearchScreen
-import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingSearchShowScreen
-import com.hefengbao.jingmo.ui.screen.writing.nav.writingBookmarksReadScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.navigateToWritingShowScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.writingBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.writingCaptureScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.writingIndexGraph
 import com.hefengbao.jingmo.ui.screen.writing.nav.writingReadScreen
 import com.hefengbao.jingmo.ui.screen.writing.nav.writingSearchScreen
-import com.hefengbao.jingmo.ui.screen.writing.nav.writingSearchShowScreen
+import com.hefengbao.jingmo.ui.screen.writing.nav.writingShowScreen
 
 @Composable
 fun AppNavHost(
@@ -228,14 +224,11 @@ fun AppNavHost(
                         )
                         chineseWisecrackSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { id: Int, query: String ->
-                                navController.navigateToChineseWisecrackSearchShowScreen(
-                                    id.toString(),
-                                    query
-                                )
+                            onItemClick = {
+                                navController.navigateToChineseWisecrackShowScreen(it.toString())
                             }
                         )
-                        chineseWisecrackSearchShowScreen(
+                        chineseWisecrackShowScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = {
                                 navController.navigateToChineseWisecrackCaptureScreen(
@@ -308,10 +301,7 @@ fun AppNavHost(
                         )
                         idiomBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToIdiomBookmarksReadScreen(it.toString()) }
-                        )
-                        idiomBookmarksReadScreen(
-                            onBackClick = navController::navigateUp
+                            onItemClick = { navController.navigateToIdiomShowScreen(it.toString()) }
                         )
                     }
                 )
@@ -425,20 +415,16 @@ fun AppNavHost(
                         writingBookmarksScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = {
-                                navController.navigateToWritingBookmarksReadScreen(it.toString())
+                                navController.navigateToWritingShowScreen(it.toString())
                             }
-                        )
-                        writingBookmarksReadScreen(
-                            onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToWritingCaptureScreen(it.toString()) }
                         )
                         writingSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { id: String, type: String, query: String ->
-                                navController.navigateToWritingSearchShowScreen(id, type, query)
+                            onItemClick = {
+                                navController.navigateToWritingShowScreen(it)
                             },
                         )
-                        writingSearchShowScreen(
+                        writingShowScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = { navController.navigateToWritingCaptureScreen(it.toString()) }
                         )

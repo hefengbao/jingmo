@@ -1,7 +1,12 @@
 package com.hefengbao.jingmo.ui.screen.chinesewisecrack
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -25,7 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinesewisecrack.components.ShowChineseWisecrackPanel
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.components.ChineseWisecrackShowPanel
+import kotlin.math.abs
 
 @Composable
 fun ChineseWisecrackIndexRoute(
@@ -75,41 +81,39 @@ private fun ChineseWisecrackIndexScreen(
     setUncollect: (Int) -> Unit,
     setLastReadId: (Int) -> Unit,
 ) {
-    chineseCrack?.let { entity ->
-        LaunchedEffect(entity) {
-            setLastReadId(entity.id)
-        }
-
-        SimpleScaffold(
-            onBackClick = onBackClick,
-            title = "歇后语",
-            actions = {
-                IconButton(onClick = onBookmarksClick) {
-                    Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-                }
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "歇后语",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+            chineseCrack?.let { entity ->
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
                     Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                 }
-                IconButton(onClick = onSearchClick) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                }
-            },
-            bottomBar = {
-                BottomAppBar {
-                    Row(
-                        modifier = modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            }
+        },
+        bottomBar = {
+            BottomAppBar {
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    IconButton(
+                        onClick = { setCurrentId(prevId!!) },
+                        enabled = prevId != null
                     ) {
-                        IconButton(
-                            onClick = { setCurrentId(prevId!!) },
-                            enabled = prevId != null
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = "上一个"
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = "上一个"
+                        )
+                    }
+                    chineseCrack?.let { entity ->
                         if (chineseWisecrackCollectionEntity == null) {
                             IconButton(onClick = { setCollect(entity.id) }) {
                                 Icon(
@@ -126,26 +130,49 @@ private fun ChineseWisecrackIndexScreen(
                                 )
                             }
                         }
-
-                        IconButton(
-                            onClick = { setCurrentId(nextId!!) },
-                            enabled = nextId != null
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                contentDescription = "下一个"
-                            )
-                        }
+                    }
+                    IconButton(
+                        onClick = { setCurrentId(nextId!!) },
+                        enabled = nextId != null
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                            contentDescription = "下一个"
+                        )
                     }
                 }
             }
-        ) {
-            ShowChineseWisecrackPanel(
-                entity = entity,
-                prevId = prevId,
-                nextId = nextId,
-                setCurrentId = setCurrentId
-            )
+        }
+    ) {
+        chineseCrack?.let { entity ->
+            LaunchedEffect(entity) {
+                setLastReadId(entity.id)
+            }
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = {
+                            if (it < 0 && abs(it) > 500f) {
+                                nextId?.let {
+                                    setCurrentId(nextId)
+                                }
+                            } else if (it > 0 && abs(it) > 500f) {
+                                prevId?.let {
+                                    setCurrentId(prevId)
+                                }
+                            }
+                        }
+                    )
+            ) {
+
+                ChineseWisecrackShowPanel(
+                    entity = entity,
+                )
+            }
         }
     }
 }
