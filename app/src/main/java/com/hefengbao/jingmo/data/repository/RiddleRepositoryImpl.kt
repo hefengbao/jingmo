@@ -16,10 +16,4 @@ class RiddleRepositoryImpl @Inject constructor(
 
     override fun searchResultList(query: String): Flow<List<RiddleEntity>> =
         dao.searchResult("%$query%")
-
-    override suspend fun getSearchNextId(id: Int, query: String): Int =
-        dao.getSearchNextId(id, "%$query%")
-
-    override suspend fun getSearchPrevId(id: Int, query: String): Int =
-        dao.getSearchPrevId(id, "%$query%")
 }

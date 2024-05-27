@@ -26,12 +26,6 @@ class PoemSentenceRepositoryImpl @Inject constructor(
 
     override fun random(): Flow<PoemSentenceEntity> = poemSentenceDao.random()
 
-    override suspend fun getSearchNextId(id: Int, query: String): Int =
-        poemSentenceDao.getSearchNextId(id, "%$query%")
-
-    override suspend fun getSearchPrevId(id: Int, query: String): Int =
-        poemSentenceDao.getSearchPrevId(id, "%$query%")
-
     override fun collections(): Flow<PagingData<PoemSentenceEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
@@ -46,10 +40,4 @@ class PoemSentenceRepositoryImpl @Inject constructor(
 
     override fun isCollect(id: Int): Flow<PoemSentenceCollectionEntity?> =
         poemSentenceDao.isCollect(id)
-
-    override fun getCollectionNextId(collectedAt: Long): Flow<Int?> =
-        poemSentenceDao.getCollectionNextId(collectedAt)
-
-    override fun getCollectionPrevId(collectedAt: Long): Flow<Int?> =
-        poemSentenceDao.getCollectionPrevId(collectedAt)
 }

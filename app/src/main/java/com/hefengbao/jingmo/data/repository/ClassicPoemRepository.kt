@@ -16,7 +16,5 @@ interface ClassicPoemRepository {
     suspend fun uncollect(id: Int)
     fun isCollect(id: Int): Flow<ClassicPoemCollectionEntity?>
     fun collections(): Flow<PagingData<ClassicPoemEntity>>
-    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
-    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
     fun search(query: String): Flow<List<ClassicPoemEntity>>
 }

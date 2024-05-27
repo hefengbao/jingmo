@@ -37,19 +37,7 @@ class WritingRepositoryImpl @Inject constructor(
 
     override fun getNextId(id: Int): Flow<Int?> = writingDao.getNextId(id)
 
-    override fun getNextId(id: Int, author: String): Flow<Int?> =
-        writingDao.getNextId(id, author)
-
     override fun getPrevId(id: Int): Flow<Int?> = writingDao.getPrevId(id)
-
-    override fun getPrevId(id: Int, author: String): Flow<Int?> =
-        writingDao.getPrevId(id, author)
-
-    override fun getSearchNextId(id: Int, query: String): Flow<Int?> =
-        writingDao.getSearchNextId(id, "*$query*")
-
-    override fun getSearchPrevId(id: Int, query: String): Flow<Int?> =
-        writingDao.getSearchPrevId(id, "*$query*")
 
     override fun collections(): Flow<PagingData<WritingBookmarkSimpleInfo>> = Pager(
         config = PagingConfig(pageSize = 30),
@@ -65,10 +53,4 @@ class WritingRepositoryImpl @Inject constructor(
 
     override fun isCollect(id: Int): Flow<WritingCollectionEntity?> =
         writingDao.isCollect(id)
-
-    override fun getCollectionNextId(collectedAt: Long): Flow<Int?> =
-        writingDao.getCollectionNextId(collectedAt)
-
-    override fun getCollectionPrevId(collectedAt: Long): Flow<Int?> =
-        writingDao.getCollectionPrevId(collectedAt)
 }

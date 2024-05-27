@@ -1,11 +1,11 @@
-package com.hefengbao.jingmo.ui.screen.writing
+package com.hefengbao.jingmo.ui.screen.chinesewisecrack
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
-import com.hefengbao.jingmo.data.repository.WritingRepository
-import com.hefengbao.jingmo.ui.screen.writing.nav.WritingBookmarksReadArgs
+import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
+import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
+import com.hefengbao.jingmo.ui.screen.chinesewisecrack.nav.ChineseWisecrackSearchShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,54 +13,50 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class WritingBookmarksReadViewModel @Inject constructor(
-    private val writingRepository: WritingRepository,
+class ChineseWisecrackSearchShowViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    val json: Json
+    private val chineseWisecrackRepository: ChineseWisecrackRepository
 ) : ViewModel() {
-    private val args = WritingBookmarksReadArgs(savedStateHandle)
-    private var id = MutableStateFlow(args.writingId.toInt())
-    private var collectedAt = MutableStateFlow(0L)
+
+    private val args = ChineseWisecrackSearchShowArgs(savedStateHandle)
+
+    var id = MutableStateFlow(args.id.toInt())
+    val query = args.query
 
     fun setCurrentId(id: Int) {
         this.id.value = id
     }
 
-    fun setCurrentCollectedAt(collectedAt: Long) {
-        this.collectedAt.value = collectedAt
-    }
-
-    val writing = id.flatMapLatest {
-        writingRepository.get(it)
+    val wisecrack = id.flatMapLatest {
+        chineseWisecrackRepository.getChineseCrack(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val writingCollectionEntity = id.flatMapLatest {
-        writingRepository.isCollect(it)
+    val chineseWisecrackCollectionEntity = id.flatMapLatest {
+        chineseWisecrackRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val prevId = collectedAt.flatMapLatest {
-        writingRepository.getCollectionPrevId(it)
+    val nextId = id.flatMapLatest {
+        chineseWisecrackRepository.getSearchNextId(it, query)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val nextId = collectedAt.flatMapLatest {
-        writingRepository.getCollectionNextId(it)
+    val prevId = id.flatMapLatest {
+        chineseWisecrackRepository.getSearchPrevId(it, query)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -69,13 +65,13 @@ class WritingBookmarksReadViewModel @Inject constructor(
 
     fun setUncollect(id: Int) {
         viewModelScope.launch {
-            writingRepository.uncollect(id)
+            chineseWisecrackRepository.uncollect(id)
         }
     }
 
     fun setCollect(id: Int) {
         viewModelScope.launch {
-            writingRepository.collect(WritingCollectionEntity(id))
+            chineseWisecrackRepository.collect(ChineseWisecrackCollectionEntity(id))
         }
     }
 }

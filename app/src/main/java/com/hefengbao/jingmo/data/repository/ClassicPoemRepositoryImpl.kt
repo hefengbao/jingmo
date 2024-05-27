@@ -37,11 +37,5 @@ class ClassicPoemRepositoryImpl @Inject constructor(
         pagingSourceFactory = { classicPoemDao.collections() }
     ).flow
 
-    override fun getCollectionNextId(collectedAt: Long): Flow<Int?> =
-        classicPoemDao.getCollectionNextId(collectedAt)
-
-    override fun getCollectionPrevId(collectedAt: Long): Flow<Int?> =
-        classicPoemDao.getCollectionPrevId(collectedAt)
-
     override fun search(query: String): Flow<List<ClassicPoemEntity>> = classicPoemDao.search(query)
 }

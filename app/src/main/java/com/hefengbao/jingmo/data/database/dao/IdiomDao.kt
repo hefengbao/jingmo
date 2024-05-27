@@ -33,12 +33,6 @@ interface IdiomDao {
     @Query("select id, word from idioms where word like :query order by id asc")
     fun searchSimpleIdiomInfoList(query: String): PagingSource<Int, SimpleIdiomInfo>
 
-    @Query("select id from idioms where id > :id and word like :query order by id asc limit 1")
-    suspend fun getSearchNextId(id: Int, query: String): Int
-
-    @Query("select id from idioms where id < :id and word like :query order by id desc limit 1")
-    suspend fun getSearchPrevId(id: Int, query: String): Int
-
     @Query("select i.* from idiom_collections c join idioms i on c.id = i.id order by collected_at desc")
     fun collections(): PagingSource<Int, IdiomEntity>
 
@@ -50,12 +44,6 @@ interface IdiomDao {
 
     @Query("select * from idiom_collections where id = :id")
     fun isCollect(id: Int): Flow<IdiomCollectionEntity?>
-
-    @Query("select id from idiom_collections where collected_at < :collectedAt order by collected_at desc limit 1")
-    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
-
-    @Query("select id from idiom_collections where collected_at > :collectedAt order by collected_at asc limit 1")
-    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 
     @Query("select count(*) from idioms")
     fun total(): Flow<Int>

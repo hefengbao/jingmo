@@ -42,12 +42,6 @@ interface ClassicPoemDao {
     @Query("select p.* from classic_poem_collections c join classic_poems p on c.id = p.id order by c.collected_at desc")
     fun collections(): PagingSource<Int, ClassicPoemEntity>
 
-    @Query("select id from classic_poem_collections where collected_at < :collectedAt order by collected_at desc limit 1")
-    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
-
-    @Query("select id from classic_poem_collections where collected_at > :collectedAt order by collected_at asc limit 1")
-    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
-
     @Transaction
     @Query("select * from classic_poems join classic_poems_fts on classic_poems_fts.rowid = classic_poems.id where classic_poems_fts match :query")
     fun search(query: String): Flow<List<ClassicPoemEntity>>

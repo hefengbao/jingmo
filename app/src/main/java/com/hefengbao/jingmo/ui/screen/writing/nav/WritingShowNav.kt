@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.hefengbao.jingmo.ui.screen.writing.WritingSearchReadRoute
+import com.hefengbao.jingmo.ui.screen.writing.WritingShowRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
@@ -61,7 +61,7 @@ fun NavGraphBuilder.writingSearchShowScreen(
             navArgument(writingSearchReadQueryArg) { type = NavType.StringType },
         )
     ) {
-        WritingSearchReadRoute(
+        WritingShowRoute(
             onBackClick = onBackClick,
             onCaptureClick = onCaptureClick
         )

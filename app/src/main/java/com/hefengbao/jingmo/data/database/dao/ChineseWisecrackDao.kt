@@ -27,12 +27,6 @@ interface ChineseWisecrackDao {
     @Query("select * from chinese_wisecracks where riddle like :query or answer like :query")
     fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>>
 
-    @Query("select id from chinese_wisecracks where id > :id and (riddle like :query or answer like :query) order by id asc limit 1")
-    fun getSearchNextId(id: Int, query: String): Flow<Int?>
-
-    @Query("select id from chinese_wisecracks where id < :id and (riddle like :query or answer like :query) order by id desc limit 1")
-    fun getSearchPrevId(id: Int, query: String): Flow<Int?>
-
     @Query("select w.* from chinese_wisecrack_collections c join chinese_wisecracks w on c.id = w.id order by c.collected_at desc")
     fun collections(): PagingSource<Int, ChineseWisecrackEntity>
 
@@ -44,12 +38,6 @@ interface ChineseWisecrackDao {
 
     @Query("select * from chinese_wisecrack_collections where id = :id")
     fun isCollect(id: Int): Flow<ChineseWisecrackCollectionEntity?>
-
-    @Query("select id from chinese_wisecrack_collections where collected_at < :collectedAt order by collected_at desc limit 1")
-    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
-
-    @Query("select id from chinese_wisecrack_collections where collected_at > :collectedAt order by collected_at asc limit 1")
-    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 
     @Query("select count(*) from chinese_wisecracks")
     fun total(): Flow<Int>

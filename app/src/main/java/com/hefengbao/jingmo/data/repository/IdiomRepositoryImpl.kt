@@ -36,12 +36,6 @@ class IdiomRepositoryImpl @Inject constructor(
             }
         ).flow
 
-    override suspend fun getSearchNextId(id: Int, query: String): Int =
-        idiomDao.getSearchNextId(id, "%$query%")
-
-    override suspend fun getSearchPrevId(id: Int, query: String): Int =
-        idiomDao.getSearchPrevId(id, "%$query%")
-
     override fun collections(): Flow<PagingData<IdiomEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = { idiomDao.collections() }
@@ -53,10 +47,4 @@ class IdiomRepositoryImpl @Inject constructor(
     override suspend fun uncollect(id: Int) = idiomDao.uncollect(id)
 
     override fun isCollect(id: Int): Flow<IdiomCollectionEntity?> = idiomDao.isCollect(id)
-
-    override fun getCollectionNextId(collectedAt: Long): Flow<Int?> =
-        idiomDao.getCollectionNextId(collectedAt)
-
-    override fun getCollectionPrevId(collectedAt: Long): Flow<Int?> =
-        idiomDao.getCollectionPrevId(collectedAt)
 }

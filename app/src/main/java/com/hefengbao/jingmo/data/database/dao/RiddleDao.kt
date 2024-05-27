@@ -26,11 +26,4 @@ interface RiddleDao {
 
     @Query("select * from riddles where puzzle like :query order by id asc")
     fun searchResult(query: String): Flow<List<RiddleEntity>>
-
-    @Query("select id from riddles where id > :id and puzzle like :query order by id asc limit 1")
-    suspend fun getSearchNextId(id: Int, query: String): Int
-
-    @Query("select id from riddles where id < :id and puzzle like :query order by id desc limit 1")
-    suspend fun getSearchPrevId(id: Int, query: String): Int
-
 }

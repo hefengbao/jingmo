@@ -15,14 +15,8 @@ interface WritingRepository {
     fun searchByAuthor(author: String): Flow<PagingData<SimpleWritingInfo>>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
-    fun getNextId(id: Int, author: String): Flow<Int?>
-    fun getPrevId(id: Int, author: String): Flow<Int?>
-    fun getSearchNextId(id: Int, query: String): Flow<Int?>
-    fun getSearchPrevId(id: Int, query: String): Flow<Int?>
     fun collections(): Flow<PagingData<WritingBookmarkSimpleInfo>>
     suspend fun collect(entity: WritingCollectionEntity)
     suspend fun uncollect(writingId: Int)
     fun isCollect(id: Int): Flow<WritingCollectionEntity?>
-    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
-    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 }

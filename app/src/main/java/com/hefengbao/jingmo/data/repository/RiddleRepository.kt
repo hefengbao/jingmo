@@ -8,6 +8,4 @@ interface RiddleRepository {
     suspend fun getNextId(id: Int): Int
     suspend fun getPrevId(id: Int): Int
     fun searchResultList(query: String): Flow<List<RiddleEntity>>
-    suspend fun getSearchNextId(id: Int, query: String): Int
-    suspend fun getSearchPrevId(id: Int, query: String): Int
 }

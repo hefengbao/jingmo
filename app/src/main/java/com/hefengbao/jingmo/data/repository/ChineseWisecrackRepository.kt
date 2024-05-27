@@ -11,8 +11,6 @@ interface ChineseWisecrackRepository {
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
     fun searchWisecrackList(query: String): Flow<List<ChineseWisecrackEntity>>
-    fun getSearchNextId(id: Int, query: String): Flow<Int?>
-    fun getSearchPrevId(id: Int, query: String): Flow<Int?>
     fun collections(): Flow<PagingData<ChineseWisecrackEntity>>
     suspend fun collect(entity: ChineseWisecrackCollectionEntity)
     suspend fun uncollect(id: Int)

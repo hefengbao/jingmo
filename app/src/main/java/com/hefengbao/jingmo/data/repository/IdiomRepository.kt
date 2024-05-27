@@ -13,12 +13,8 @@ interface IdiomRepository {
     fun getPrevId(id: Int): Flow<Int?>
     fun getSimpleIdiomInfoList(): Flow<PagingData<SimpleIdiomInfo>>
     fun searchSimpleIdiomInfoList(query: String): Flow<PagingData<SimpleIdiomInfo>>
-    suspend fun getSearchNextId(id: Int, query: String): Int
-    suspend fun getSearchPrevId(id: Int, query: String): Int
     fun collections(): Flow<PagingData<IdiomEntity>>
     suspend fun collect(entity: IdiomCollectionEntity)
     suspend fun uncollect(id: Int)
     fun isCollect(id: Int): Flow<IdiomCollectionEntity?>
-    fun getCollectionNextId(collectedAt: Long): Flow<Int?>
-    fun getCollectionPrevId(collectedAt: Long): Flow<Int?>
 }
