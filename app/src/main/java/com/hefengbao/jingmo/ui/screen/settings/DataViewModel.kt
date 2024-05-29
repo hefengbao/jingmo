@@ -151,24 +151,35 @@ class DataViewModel @Inject constructor(
     fun syncIdioms(total: Int, version: Int) {
         _idiomsResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncIdioms()) {
-                is Result.Error -> {
-                    _idiomsResult.value = SyncStatus.Error(response.exception)
-                }
+            var page: Int? = 1
+            var count = 0
 
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertIdiom(it.asIdiomEntity())
-                        count++
-                        _idiomsResultProgress.value = count.toFloat() / total
+            while (page != null) {
+                when (val response = repository.syncIdioms(page)) {
+                    is Result.Error -> {
+                        _idiomsResult.value = SyncStatus.Error(response.exception)
                     }
 
-                    preference.setIdiomsVersion(version)
-                    _idiomsResult.value = SyncStatus.Success
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        if (response.data.nextPage != null) {
+                            page++
+                        } else {
+                            page = null
+                        }
+
+                        response.data.data.map {
+                            repository.insertIdiom(it.asIdiomEntity())
+                            count++
+                            _idiomsResultProgress.value = count.toFloat() / total
+                        }
+                    }
                 }
             }
+
+            // TODO 这里需优化
+            preference.setIdiomsVersion(version)
+            _idiomsResult.value = SyncStatus.Success
         }
     }
 

@@ -9,7 +9,7 @@ import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.Idiom
+import com.hefengbao.jingmo.data.model.IdiomWrapper
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.TongueTwister
@@ -51,7 +51,7 @@ class ImportViewModel @Inject constructor(
     private val chineseWisecracksCount = 14026
     private val classicPoemCount = 955
     private val dictionaryCount = 20552
-    private val idiomsCount = 30895
+    private val idiomsCount = 49639
     private val peopleCount = 85776
     private val poemSentencesCount = 10000
     private val riddlesCount = 42446
@@ -173,7 +173,7 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _idiomStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<Idiom>>(readTextFromUri(it)).forEach { idiom ->
+                json.decodeFromString<IdiomWrapper>(readTextFromUri(it)).data.forEach { idiom ->
                     repository.insertIdiom(idiom.asIdiomEntity())
                 }
             }

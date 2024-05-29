@@ -1,16 +1,23 @@
 package com.hefengbao.jingmo.ui.screen.idiom.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
 
@@ -39,44 +46,126 @@ fun IdiomShowPanel(
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    text = "\uD83D\uDD3B 释义",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = idiom.explanation,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+            idiom.explanation?.let {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "释义")
+                    Text(
+                        text = it,
+                    )
+                }
             }
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    text = "\uD83D\uDD3B 示例",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = idiom.example,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+            idiom.source?.let { source ->
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "出处")
+
+                    val text = buildAnnotatedString {
+                        source.text?.let { append(it) }
+                        source.book?.let {
+                            withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                                append("《${it}》")
+                            }
+                        }
+                    }
+
+                    Text(text = text)
+                }
             }
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    text = "📖 出处",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = idiom.derivation,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+            idiom.quote?.let { quote ->
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "名著用例")
+
+                    val text = buildAnnotatedString {
+                        quote.text?.let { append(it) }
+                        quote.book?.let {
+                            withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                                append("《${it}》")
+                            }
+                        }
+                    }
+
+                    Text(text = text)
+                }
+            }
+
+            idiom.usage?.let {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "用法介绍")
+                    Text(text = it)
+                }
+            }
+
+            idiom.example?.let { example ->
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "示例")
+
+                    val text = buildAnnotatedString {
+                        example.text?.let { append(it) }
+                        example.book?.let {
+                            withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                                append("《${it}》")
+                            }
+                        }
+                    }
+
+                    Text(text = text)
+                }
+            }
+
+            idiom.similar?.let {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "同义成语")
+                    Text(text = it.joinToString("、"))
+                }
+            }
+
+            idiom.opposite?.let {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "反义成语")
+                    Text(text = it.joinToString("、"))
+                }
+            }
+
+            idiom.story?.let { list ->
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Title(text = "成语故事")
+                    list.forEach {
+                        Text(text = it)
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+private fun Title(
+    text: String
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(color = MaterialTheme.colorScheme.primary)
+            .padding(16.dp, 8.dp),
+        color = MaterialTheme.colorScheme.onPrimary,
+        style = MaterialTheme.typography.titleSmall,
+    )
 }

@@ -19,7 +19,7 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 1. 诗文 110 万篇,包含诗、词、辞赋、残句、联、文等；
 2. 诗文名句 10000 句；
 3. 歇后语 14026 条；
-4. 成语 30895 条；
+4. 成语 49639 条；
 5. 中国传统色 161 种；
 6. 中国传统节日 19 个；
 7. 二十四节气；
@@ -43,10 +43,11 @@ Android 8.0 及以上
 
 ## 赞助(赠人玫瑰，手有余香。)
 
-<p>
-<img src="screenshot/wechatpay.png" alt="微信赞赏码" style="max-width:50%"/>
-<img src="screenshot/alipay.jpg" alt="支付宝赞赏码" style="max-width:50%"/>
-</p>
+微信：
+![](screenshot/wechatpay.png)
+
+支付宝：
+![](screenshot/alipay.jpg)
 
 ## 运行项目
 

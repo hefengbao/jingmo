@@ -17,7 +17,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.Idiom
+import com.hefengbao.jingmo.data.model.IdiomWrapper
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -36,7 +36,7 @@ interface NetworkDatasourceRepository {
     suspend fun insertDictionary(entity: DictionaryEntity)
     suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity)
     suspend fun clearDictionaryPinyin()
-    suspend fun syncIdioms(): Result<List<Idiom>>
+    suspend fun syncIdioms(page: Int): Result<IdiomWrapper>
     suspend fun insertIdiom(entity: IdiomEntity)
     suspend fun syncPeople(page: Int): Result<PeopleWrapper>
     suspend fun insertPeople(entity: PeopleEntity)

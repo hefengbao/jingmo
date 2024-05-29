@@ -68,7 +68,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 13,
+    version = 15,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -82,6 +82,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 10, to = 11),
         AutoMigration(from = 11, to = 12),
         AutoMigration(from = 12, to = 13),
+        AutoMigration(from = 13, to = 14, spec = AppDatabase.AutoMigration13To14::class),
+        AutoMigration(from = 14, to = 15),
     ],
     exportSchema = true
 )
@@ -128,4 +130,12 @@ abstract class AppDatabase : RoomDatabase() {
         toColumnName = "rowid"
     )
     class AutoMigration8To9 : AutoMigrationSpec
+
+    @DeleteTable(
+        tableName = "idioms"
+    )
+    @DeleteTable(
+        tableName = "idiom_collections"
+    )
+    class AutoMigration13To14 : AutoMigrationSpec
 }

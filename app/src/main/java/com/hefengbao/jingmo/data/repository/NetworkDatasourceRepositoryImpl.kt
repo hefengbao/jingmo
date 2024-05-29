@@ -19,7 +19,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.Idiom
+import com.hefengbao.jingmo.data.model.IdiomWrapper
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -71,8 +71,8 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun clearDictionaryPinyin() = database.dictionaryDao().clearDictionaryPinyin()
 
-    override suspend fun syncIdioms(): Result<List<Idiom>> = safeApiCall {
-        network.idioms()
+    override suspend fun syncIdioms(page: Int): Result<IdiomWrapper> = safeApiCall {
+        network.idioms(page)
     }
 
     override suspend fun insertIdiom(entity: IdiomEntity) {

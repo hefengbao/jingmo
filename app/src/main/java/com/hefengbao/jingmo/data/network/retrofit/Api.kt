@@ -5,7 +5,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.Idiom
+import com.hefengbao.jingmo.data.model.IdiomWrapper
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -30,8 +30,10 @@ interface Api {
         @Path("page") page: Int
     ): DictionaryWrapper
 
-    @GET("idioms.json")
-    suspend fun idioms(): List<Idiom>
+    @GET("idioms_v2_{page}.json")
+    suspend fun idioms(
+        @Path("page") page: Int
+    ): IdiomWrapper
 
     @GET("people_{page}.json")
     suspend fun people(

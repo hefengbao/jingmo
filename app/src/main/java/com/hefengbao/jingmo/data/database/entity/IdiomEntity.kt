@@ -1,8 +1,11 @@
 package com.hefengbao.jingmo.data.database.entity
 
-import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.hefengbao.jingmo.data.model.IdiomExample
+import com.hefengbao.jingmo.data.model.IdiomQuote
+import com.hefengbao.jingmo.data.model.IdiomSource
 
 /**
  * 成语
@@ -13,11 +16,17 @@ data class IdiomEntity(
     val id: Int,
     val word: String,
     val pinyin: String,
-    val explanation: String,
-    val example: String,
-    val derivation: String,
-    @ColumnInfo("first_word")
-    val firstWord: String,
-    @ColumnInfo("first_letter")
-    val firstLetter: String
+    val abbr: String,
+    val explanation: String?,
+    @Embedded("source_")
+    val source: IdiomSource?,
+    @Embedded("quote_")
+    val quote: IdiomQuote?,
+    @Embedded("example_")
+    val example: IdiomExample?,
+    val similar: List<String>?,
+    val opposite: List<String>?,
+    val usage: String?,
+    val story: List<String>?,
+    val notice: String?,
 )

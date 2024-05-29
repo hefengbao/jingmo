@@ -76,14 +76,16 @@ class IdiomWidget(
                         )
                     }
                     item {
-                        Text(
-                            modifier = modifier.padding(top = 8.dp),
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                color = GlanceTheme.colors.onBackground
-                            ),
-                            text = entity.explanation
-                        )
+                        entity.explanation?.let {
+                            Text(
+                                modifier = modifier.padding(top = 8.dp),
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    color = GlanceTheme.colors.onBackground
+                                ),
+                                text = it
+                            )
+                        }
                     }
                 }
             }
