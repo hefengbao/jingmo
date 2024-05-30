@@ -91,9 +91,15 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
-    fun setCharacter(checked: Boolean) {
+    fun setChineseCharacter(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setCharacter(checked)
+            homeRepository.setChineseCharacter(checked)
+        }
+    }
+
+    fun setChineseExpression(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseExpression(checked)
         }
     }
 }

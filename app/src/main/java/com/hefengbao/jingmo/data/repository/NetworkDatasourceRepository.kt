@@ -1,6 +1,7 @@
 package com.hefengbao.jingmo.data.repository
 
 import com.hefengbao.jingmo.common.network.Result
+import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
@@ -12,6 +13,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.RiddleEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.model.ChineseExpressionWrapper
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
@@ -26,6 +28,8 @@ import com.hefengbao.jingmo.data.model.WritingWrapper
 
 interface NetworkDatasourceRepository {
     suspend fun dataset(): Result<List<Dataset>>
+    suspend fun syncChineseExpression(page: Int): Result<ChineseExpressionWrapper>
+    suspend fun insertChineseExpression(entity: ChineseExpressionEntity)
     suspend fun syncChineseKnowledge(): Result<List<ChineseKnowledge>>
     suspend fun insertChinesKnowledge(entity: ChineseKnowledgeEntity)
     suspend fun syncChineseWisecracks(): Result<List<ChineseWisecrack>>

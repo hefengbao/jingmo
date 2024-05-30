@@ -35,6 +35,7 @@ fun ImportRoute(
     viewModel: ImportViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
+    val chineseExpressionRatio by viewModel.chineseExpressionRatio.collectAsState()
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState(initial = 0f)
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState(initial = 0f)
     val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState(initial = 0f)
@@ -45,6 +46,7 @@ fun ImportRoute(
     val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState(initial = 0f)
     val writingsRatio by viewModel.writingsRatio.collectAsState(initial = 0f)
 
+    val chineseExpressionStatus by viewModel.chineseExpressionStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
     val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
@@ -57,6 +59,9 @@ fun ImportRoute(
 
     ImportScreen(
         onBackClick = onBackClick,
+        chineseExpressionRatio = chineseExpressionRatio,
+        chineseExpressionStatus = chineseExpressionStatus,
+        chineseExpressionUris = { viewModel.chineseExpression(it) },
         chineseKnowledgeRatio = chineseKnowledgeRatio,
         chineseKnowledgeStatus = chineseKnowledgeStatus,
         chineseKnowledgeUris = { viewModel.chineseKnowledge(it) },
@@ -91,6 +96,9 @@ fun ImportRoute(
 private fun ImportScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    chineseExpressionRatio: Float,
+    chineseExpressionStatus: ImportStatus<Any>,
+    chineseExpressionUris: (List<Uri>) -> Unit,
     chineseKnowledgeRatio: Float,
     chineseKnowledgeStatus: ImportStatus<Any>,
     chineseKnowledgeUris: (List<Uri>) -> Unit,
@@ -120,6 +128,10 @@ private fun ImportScreen(
     writingsUris: (List<Uri>) -> Unit
 ) {
     val uriHandler = LocalUriHandler.current
+    val chineseExpressionLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseExpressionUris(it)
+        }
     val chineseKnowledgeLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseKnowledgeUris(it)
@@ -172,66 +184,64 @@ private fun ImportScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             MenuItem(
-                title = "歇后语",
-                ratio = chineseWisecracksRatio,
-                launcher = chineseWisecracksLauncher,
-                status = chineseWisecracksStatus
+                title = "经典诗文",
+                ratio = classicPoemsRatio,
+                launcher = classicPoemsLauncher,
+                status = classicPoemsStatus
             )
-            Divider()
-            MenuItem(
-                title = "知识卡片",
-                ratio = chineseKnowledgeRatio,
-                launcher = chineseKnowledgeLauncher,
-                status = chineseKnowledgeStatus
-            )
-            Divider()
-            MenuItem(
-                title = "成语",
-                ratio = idiomsRatio,
-                launcher = idiomsLauncher,
-                status = idiomsStatus
-            )
-            Divider()
-            MenuItem(
-                title = "人物",
-                ratio = peopleRatio,
-                launcher = peopleLauncher,
-                status = peopleStatus
-            )
-            Divider()
-            MenuItem(
-                title = "诗文名句",
-                ratio = poemSentencesRatio,
-                launcher = poemSentencesLauncher,
-                status = poemSentencesStatus
-            )
-            Divider()
-            MenuItem(
-                title = "绕口令",
-                ratio = tongueTwistersRatio,
-                launcher = tongueTwistersLauncher,
-                status = tongueTwistersStatus
-            )
-            Divider()
             MenuItem(
                 title = "诗文",
                 ratio = writingsRatio,
                 launcher = writingsLauncher,
                 status = writingsStatus
             )
-            Divider()
             MenuItem(
-                title = "经典诗文",
-                ratio = classicPoemsRatio,
-                launcher = classicPoemsLauncher,
-                status = classicPoemsStatus
+                title = "诗文名句",
+                ratio = poemSentencesRatio,
+                launcher = poemSentencesLauncher,
+                status = poemSentencesStatus
             )
-            Divider()
             MenuItem(
-                title = "字典",
+                title = "汉字",
                 ratio = dictionaryRatio,
                 launcher = dictionaryLauncher,
                 status = dictionaryStatus
+            )
+            MenuItem(
+                title = "成语",
+                ratio = idiomsRatio,
+                launcher = idiomsLauncher,
+                status = idiomsStatus
+            )
+            MenuItem(
+                title = "词语",
+                ratio = chineseExpressionRatio,
+                launcher = chineseExpressionLauncher,
+                status = chineseExpressionStatus
+            )
+            MenuItem(
+                title = "歇后语",
+                ratio = chineseWisecracksRatio,
+                launcher = chineseWisecracksLauncher,
+                status = chineseWisecracksStatus
+            )
+            MenuItem(
+                title = "知识卡片",
+                ratio = chineseKnowledgeRatio,
+                launcher = chineseKnowledgeLauncher,
+                status = chineseKnowledgeStatus
+            )
+            MenuItem(
+                title = "人物",
+                ratio = peopleRatio,
+                launcher = peopleLauncher,
+                status = peopleStatus
+            )
+            MenuItem(
+                title = "绕口令",
+                ratio = tongueTwistersRatio,
+                launcher = tongueTwistersLauncher,
+                status = tongueTwistersStatus
             )
         }
     }
@@ -269,4 +279,5 @@ private fun MenuItem(
             Icon(imageVector = Icons.Default.FileOpen, contentDescription = "")
         }
     }
+    Divider()
 }

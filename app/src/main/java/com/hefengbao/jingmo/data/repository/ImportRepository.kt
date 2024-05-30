@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.repository
 
+import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
@@ -13,6 +14,7 @@ import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ImportRepository {
+    suspend fun insertChineseExpression(entity: ChineseExpressionEntity)
     suspend fun insertChineseWisecrack(entity: ChineseWisecrackEntity)
     suspend fun insertChineseKnowledge(entity: ChineseKnowledgeEntity)
     suspend fun insertClassicPoem(entity: ClassicPoemEntity)
@@ -23,6 +25,7 @@ interface ImportRepository {
     suspend fun insertPoemSentence(entity: PoemSentenceEntity)
     suspend fun insertTongueTwister(entity: TongueTwisterEntity)
     suspend fun insertWriting(entity: WritingEntity)
+    fun chineseExpressionTotal(): Flow<Int>
     fun chineseWisecrackTotal(): Flow<Int>
     fun chineseKnowledgeTotal(): Flow<Int>
     fun classicPoemTotal(): Flow<Int>

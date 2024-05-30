@@ -1,6 +1,7 @@
 package com.hefengbao.jingmo.data.model
 
 data class DatasetVersion(
+    val chineseExpressionVersion: Int = 0,
     val chineseKnowledgeVersion: Int = 0,
     val chineseWisecracksVersion: Int = 0,
     val classicPoemsVersion: Int = 0,

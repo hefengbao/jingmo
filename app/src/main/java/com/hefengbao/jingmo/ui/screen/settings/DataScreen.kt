@@ -53,7 +53,10 @@ fun DataRoute(
 
     val datasetPref by viewModel.datasetPref.collectAsState(initial = DatasetVersion())
     val datasetResult by viewModel.datasetResult.collectAsState(initial = Result.Loading)
-
+    val chineseExpressionResult by viewModel.chineseExpressionResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseExpressionResultProgress by viewModel.chineseExpressionResultProgress.collectAsState(
+        initial = 0f
+    )
     val chineseKnowledgeResult by viewModel.chineseKnowledgeResult.collectAsState(initial = SyncStatus.NonStatus)
     val chineseKnowledgeResultProgress by viewModel.chineseKnowledgeResultProgress.collectAsState(
         initial = 0f
@@ -85,6 +88,11 @@ fun DataRoute(
         onBackClick = onBackClick,
         datasetPref = datasetPref,
         datasetResult = datasetResult,
+        syncChineseExpression = { total: Int, version: Int ->
+            viewModel.syncChineseExpression(total, version)
+        },
+        chineseExpressionResult = chineseExpressionResult,
+        chineseExpressionResultProgress = chineseExpressionResultProgress,
         syncChineseKnowledge = { total: Int, version: Int ->
             viewModel.syncChineseKnowledge(total, version)
         },
@@ -149,6 +157,9 @@ private fun DataScreen(
     onBackClick: () -> Unit,
     datasetPref: DatasetVersion,
     datasetResult: Result<List<Dataset>>,
+    syncChineseExpression: (total: Int, version: Int) -> Unit,
+    chineseExpressionResult: SyncStatus<Any>,
+    chineseExpressionResultProgress: Float,
     syncChineseKnowledge: (total: Int, version: Int) -> Unit,
     chineseKnowledgeResult: SyncStatus<Any>,
     chineseKnowledgeResultProgress: Float,
@@ -290,12 +301,25 @@ private fun DataScreen(
                         onClick = { count: Int, version: Int -> syncClassicPoems(count, version) }
                     ),
                     Menu(
-                        title = "字典",
+                        title = "汉字",
                         name = "dictionary",
                         localVersion = datasetPref.dictionaryVersion,
                         status = dictionaryResult,
                         progress = dictionaryResultProgress,
                         onClick = { count: Int, version: Int -> syncDictionary(count, version) }
+                    ),
+                    Menu(
+                        title = "词语",
+                        name = "expressions",
+                        localVersion = datasetPref.chineseExpressionVersion,
+                        status = chineseExpressionResult,
+                        progress = chineseExpressionResultProgress,
+                        onClick = { count: Int, version: Int ->
+                            syncChineseExpression(
+                                count,
+                                version
+                            )
+                        }
                     )
                 )
 

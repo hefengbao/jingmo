@@ -12,5 +12,6 @@ data class HomeItem(
     val chineseKnowledge: Boolean = true,
     val people: Boolean = true,
     val chineseColor: Boolean = true,
-    val character: Boolean = true,
+    val chineseCharacter: Boolean = true,
+    val chineseExpression: Boolean = true,
 )

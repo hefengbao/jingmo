@@ -33,6 +33,7 @@ fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     onChineseCharacterClick: () -> Unit,
     onChineseColorClick: () -> Unit,
+    onChineseExpressionClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
     onClassicPoemClick: () -> Unit,
@@ -53,6 +54,7 @@ fun HomeRoute(
         homeItem = homeItem,
         onChineseCharacterClick = onChineseCharacterClick,
         onChineseColorClick = onChineseColorClick,
+        onChineseExpressionClick = onChineseExpressionClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
         onClassicPoemClick = onClassicPoemClick,
@@ -76,6 +78,7 @@ private fun HomeScreen(
     homeItem: HomeItem,
     onChineseCharacterClick: () -> Unit,
     onChineseColorClick: () -> Unit,
+    onChineseExpressionClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
     onClassicPoemClick: () -> Unit,
@@ -139,6 +142,22 @@ private fun HomeScreen(
                             Item(
                                 title = "诗文名句",
                                 onClick = onPoemSentenceClick
+                            )
+                        }
+                    }
+                    if (homeItem.chineseCharacter) {
+                        item {
+                            Item(
+                                title = "汉字",
+                                onClick = onChineseCharacterClick
+                            )
+                        }
+                    }
+                    if (homeItem.chineseExpression) {
+                        item {
+                            Item(
+                                title = "词语",
+                                onClick = onChineseExpressionClick
                             )
                         }
                     }
@@ -211,12 +230,6 @@ private fun HomeScreen(
                                 onClick = onChineseColorClick
                             )
                         }
-                    }
-                    item {
-                        Item(
-                            title = "汉字",
-                            onClick = onChineseCharacterClick
-                        )
                     }
                 }
             )

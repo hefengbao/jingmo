@@ -16,6 +16,9 @@ class PreferenceRepositoryImpl @Inject constructor(
 ) : PreferenceRepository {
     override fun getDatasetStatus(): Flow<DatasetVersion> = dataset.datasetVersion
 
+    override suspend fun setChineseExpressionVersion(version: Int) =
+        dataset.setChineseExpressionVersion(version)
+
     override suspend fun setChineseKnowledgeVersion(version: Int) =
         dataset.setChineseKnowledgeVersion(version)
 

@@ -7,6 +7,7 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
@@ -17,6 +18,7 @@ import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.RiddleDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WritingDao
+import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
@@ -50,6 +52,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
  */
 @Database(
     entities = [
+        ChineseExpressionEntity::class,
         ChineseKnowledgeEntity::class,
         ChineseWisecrackCollectionEntity::class,
         ChineseWisecrackEntity::class,
@@ -68,7 +71,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 15,
+    version = 16,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -84,6 +87,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 12, to = 13),
         AutoMigration(from = 13, to = 14, spec = AppDatabase.AutoMigration13To14::class),
         AutoMigration(from = 14, to = 15),
+        AutoMigration(from = 15, to = 16),
     ],
     exportSchema = true
 )
@@ -99,6 +103,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
     WritingQuoteListConverter::class,
 )
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun chineseExpressionDao(): ChineseExpressionDao
     abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
     abstract fun chineseWisecrackDao(): ChineseWisecrackDao
     abstract fun classicPoemDao(): ClassicPoemDao

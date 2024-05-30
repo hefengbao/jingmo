@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.model.ChineseExpressionWrapper
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
@@ -14,6 +15,7 @@ import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.TongueTwister
 import com.hefengbao.jingmo.data.model.WritingWrapper
+import com.hefengbao.jingmo.data.model.asChineseExpressionEntity
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.asClassicPoemEntity
@@ -47,6 +49,7 @@ class ImportViewModel @Inject constructor(
     private val json: Json,
     private val repository: ImportRepository
 ) : ViewModel() {
+    private val chineseExpressionCount = 320349
     private val chineseKnowledgeCount = 464
     private val chineseWisecracksCount = 14026
     private val classicPoemCount = 955
@@ -57,6 +60,31 @@ class ImportViewModel @Inject constructor(
     private val riddlesCount = 42446
     private val tongueTwistersCount = 45
     private val writingsCount = 1144422
+
+    val chineseExpressionRatio =
+        repository.chineseExpressionTotal().distinctUntilChanged().flatMapLatest {
+            MutableStateFlow(it.toFloat() / chineseExpressionCount)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0f
+        )
+    private val _chineseExpressionStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val chineseExpressionStatus: SharedFlow<ImportStatus<Any>> = _chineseExpressionStatus
+    fun chineseExpression(uris: List<Uri>) {
+        viewModelScope.launch {
+            _chineseExpressionStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<ChineseExpressionWrapper>(readTextFromUri(it))
+                    .data
+                    .forEach { chineseExpression ->
+                        repository.insertChineseExpression(chineseExpression.asChineseExpressionEntity())
+                    }
+            }
+            _chineseExpressionStatus.value = ImportStatus.Finish
+        }
+    }
 
     val chineseWisecrackRatio =
         repository.chineseWisecrackTotal().distinctUntilChanged().flatMapLatest {

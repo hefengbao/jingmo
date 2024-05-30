@@ -21,6 +21,12 @@ import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.chineseColorShowScreen
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinesecolor.nav.navigateToChineseColorShowScreen
+import com.hefengbao.jingmo.ui.screen.chineseexpression.nav.chineseExpressionGraph
+import com.hefengbao.jingmo.ui.screen.chineseexpression.nav.chineseExpressionSearchScreen
+import com.hefengbao.jingmo.ui.screen.chineseexpression.nav.chineseExpressionShowScreen
+import com.hefengbao.jingmo.ui.screen.chineseexpression.nav.navigateToChineseExpressionGraph
+import com.hefengbao.jingmo.ui.screen.chineseexpression.nav.navigateToChineseExpressionSearchScreen
+import com.hefengbao.jingmo.ui.screen.chineseexpression.nav.navigateToChineseExpressionShow
 import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeIndexGraph
 import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.chineseKnowledgeSearchScreen
 import com.hefengbao.jingmo.ui.screen.chineseknowledge.nav.navigateToChineseKnowSearchScreen
@@ -129,6 +135,7 @@ fun AppNavHost(
         homeGraph(
             onChineseCharacterClick = { navController.navigateToChineseCharacterIndexGraph() },
             onChineseColorClick = { navController.navigateToChineseColorIndexGraph() },
+            onChineseExpressionClick = { navController.navigateToChineseExpressionGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
             onClassicPoemClick = { navController.navigateToClassicPoemIndexGraph() },
@@ -200,6 +207,19 @@ fun AppNavHost(
                     onItemClick = { navController.navigateToChineseColorShowScreen(it) },
                     nestGraph = {
                         chineseColorShowScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                chineseExpressionGraph(
+                    onBackClick = navController::navigateUp,
+                    onSearchClick = { navController.navigateToChineseExpressionSearchScreen() },
+                    nestGraph = {
+                        chineseExpressionSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseExpressionShow(it) }
+                        )
+                        chineseExpressionShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

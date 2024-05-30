@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room.databaseBuilder
 import com.hefengbao.jingmo.common.Constant
 import com.hefengbao.jingmo.data.database.AppDatabase
+import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
@@ -33,6 +34,12 @@ object DatabaseModule {
         AppDatabase::class.java,
         Constant.DB_NAME,
     ).build()
+
+    @Provides
+    @Singleton
+    fun providesChineseExpressionDao(
+        database: AppDatabase
+    ): ChineseExpressionDao = database.chineseExpressionDao()
 
     @Provides
     @Singleton

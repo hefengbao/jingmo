@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.repository
 
+import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
@@ -9,6 +10,7 @@ import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.WritingDao
+import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ImportRepositoryImpl @Inject constructor(
+    private val chineseExpressionDao: ChineseExpressionDao,
     private val chineseWisecrackDao: ChineseWisecrackDao,
     private val chineseKnowledgeDao: ChineseKnowledgeDao,
     private val dictionaryDao: DictionaryDao,
@@ -33,6 +36,9 @@ class ImportRepositoryImpl @Inject constructor(
     private val tongueTwisterDao: TongueTwisterDao,
     private val writingDao: WritingDao
 ) : ImportRepository {
+    override suspend fun insertChineseExpression(entity: ChineseExpressionEntity) =
+        chineseExpressionDao.insert(entity)
+
     override suspend fun insertChineseWisecrack(entity: ChineseWisecrackEntity) =
         chineseWisecrackDao.insert(entity)
 
@@ -61,6 +67,8 @@ class ImportRepositoryImpl @Inject constructor(
 
     override suspend fun insertWriting(entity: WritingEntity) =
         writingDao.insert(entity)
+
+    override fun chineseExpressionTotal(): Flow<Int> = chineseExpressionDao.total()
 
     override fun chineseWisecrackTotal(): Flow<Int> = chineseWisecrackDao.total()
 

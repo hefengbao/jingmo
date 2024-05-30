@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.network.retrofit
 
+import com.hefengbao.jingmo.data.model.ChineseExpressionWrapper
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
@@ -55,6 +56,9 @@ class NetworkImpl @Inject constructor(
         .create(Api::class.java)
 
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
+
+    override suspend fun chineseExpressions(page: Int): ChineseExpressionWrapper =
+        networkApi.chineseExpressions(page)
 
     override suspend fun chineseKnowledge(): List<ChineseKnowledge> = networkApi.chineseKnowledge()
 

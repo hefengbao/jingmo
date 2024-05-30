@@ -15,6 +15,7 @@ interface HomeRepository {
     suspend fun setChineseKnowledge(checked: Boolean)
     suspend fun setPeople(checked: Boolean)
     suspend fun setChineseColor(checked: Boolean)
-    suspend fun setCharacter(checked: Boolean)
+    suspend fun setChineseCharacter(checked: Boolean)
+    suspend fun setChineseExpression(checked: Boolean)
     fun getHomeItem(): Flow<HomeItem>
 }

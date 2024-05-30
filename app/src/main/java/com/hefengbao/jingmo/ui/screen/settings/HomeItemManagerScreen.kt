@@ -40,7 +40,8 @@ fun HomeItemManagerRoute(
         setChineseKnowledge = { viewModel.setChineseKnowledge(it) },
         setPeople = { viewModel.setPeople(it) },
         setChineseColor = { viewModel.setChineseColor(it) },
-        setCharacter = { viewModel.setCharacter(it) }
+        setChineseCharacter = { viewModel.setChineseCharacter(it) },
+        setChineseExpression = { viewModel.setChineseExpression(it) }
     )
 }
 
@@ -60,7 +61,8 @@ private fun HomeItemManagerScreen(
     setChineseKnowledge: (Boolean) -> Unit,
     setPeople: (Boolean) -> Unit,
     setChineseColor: (Boolean) -> Unit,
-    setCharacter: (Boolean) -> Unit,
+    setChineseCharacter: (Boolean) -> Unit,
+    setChineseExpression: (Boolean) -> Unit,
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "栏目管理") {
         Column(
@@ -73,13 +75,31 @@ private fun HomeItemManagerScreen(
                 checked = homeItem.classicPoem,
                 onCheckedChange = setClassicPoem
             )
-            Item(title = "诗文", checked = homeItem.writing, onCheckedChange = setWriting)
+            Item(
+                title = "诗文",
+                checked = homeItem.writing,
+                onCheckedChange = setWriting
+            )
             Item(
                 title = "诗文名句",
                 checked = homeItem.poemSentence,
                 onCheckedChange = setPoemSentence
             )
-            Item(title = "成语", checked = homeItem.idiom, onCheckedChange = setIdiom)
+            Item(
+                title = "汉字",
+                checked = homeItem.chineseCharacter,
+                onCheckedChange = setChineseCharacter
+            )
+            Item(
+                title = "词语",
+                checked = homeItem.chineseExpression,
+                onCheckedChange = setChineseExpression
+            )
+            Item(
+                title = "成语",
+                checked = homeItem.idiom,
+                onCheckedChange = setIdiom
+            )
             Item(
                 title = "歇后语",
                 checked = homeItem.chineseWisecrack,
@@ -90,23 +110,30 @@ private fun HomeItemManagerScreen(
                 checked = homeItem.tongueTwister,
                 onCheckedChange = setTongueTwister
             )
-            Item(title = "传统节日", checked = homeItem.festival, onCheckedChange = setFestival)
-            Item(title = "二十四节气", checked = homeItem.solarTerm, onCheckedChange = setSolarTerm)
+            Item(
+                title = "传统节日",
+                checked = homeItem.festival,
+                onCheckedChange = setFestival
+            )
+            Item(
+                title = "二十四节气",
+                checked = homeItem.solarTerm,
+                onCheckedChange = setSolarTerm
+            )
             Item(
                 title = "知识卡片",
                 checked = homeItem.chineseKnowledge,
                 onCheckedChange = setChineseKnowledge
             )
-            Item(title = "人物", checked = homeItem.people, onCheckedChange = setPeople)
+            Item(
+                title = "人物",
+                checked = homeItem.people,
+                onCheckedChange = setPeople
+            )
             Item(
                 title = "传统色",
                 checked = homeItem.chineseColor,
                 onCheckedChange = setChineseColor
-            )
-            Item(
-                title = "汉字",
-                checked = homeItem.character,
-                onCheckedChange = setCharacter
             )
         }
     }

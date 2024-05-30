@@ -3,6 +3,7 @@ package com.hefengbao.jingmo.data.repository
 import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.common.network.SafeApiCall
 import com.hefengbao.jingmo.data.database.AppDatabase
+import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
@@ -14,6 +15,7 @@ import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.RiddleEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.model.ChineseExpressionWrapper
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
@@ -35,6 +37,14 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun dataset(): Result<List<Dataset>> = safeApiCall {
         network.dataset()
     }
+
+    override suspend fun syncChineseExpression(page: Int): Result<ChineseExpressionWrapper> =
+        safeApiCall {
+            network.chineseExpressions(page)
+        }
+
+    override suspend fun insertChineseExpression(entity: ChineseExpressionEntity) =
+        database.chineseExpressionDao().insert(entity)
 
     override suspend fun syncChineseKnowledge(): Result<List<ChineseKnowledge>> = safeApiCall {
         network.chineseKnowledge()

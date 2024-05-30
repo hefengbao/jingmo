@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.network.retrofit
 
+import com.hefengbao.jingmo.data.model.ChineseExpressionWrapper
 import com.hefengbao.jingmo.data.model.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
@@ -18,6 +19,11 @@ interface Api {
 
     @GET("dataset.json")
     suspend fun dataset(): List<Dataset>
+
+    @GET("expressions_{page}.json")
+    suspend fun chineseExpressions(
+        @Path("page") page: Int
+    ): ChineseExpressionWrapper
 
     @GET("chinese_knowledge.json")
     suspend fun chineseKnowledge(): List<ChineseKnowledge>

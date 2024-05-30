@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.asChineseExpressionEntity
 import com.hefengbao.jingmo.data.model.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.asClassicPoemEntity
@@ -36,6 +37,43 @@ class DataViewModel @Inject constructor(
     fun getDataset() {
         viewModelScope.launch {
             _datasetResult.value = repository.dataset()
+        }
+    }
+
+    private val _chineseExpressionResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseExpressionResult: SharedFlow<SyncStatus<Any>> = _chineseExpressionResult
+    private val _chineseExpressionResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseExpressionResultProgress: SharedFlow<Float> = _chineseExpressionResultProgress
+    fun syncChineseExpression(total: Int, version: Int) {
+        _chineseExpressionResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseExpression(page)) {
+                    is Result.Error -> {
+                        _chineseExpressionResult.value = SyncStatus.Error(response.exception)
+                    }
+
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        if (response.data.nextPage != null) {
+                            page++
+                        } else {
+                            page = null
+                        }
+                        response.data.data.map {
+                            repository.insertChineseExpression(it.asChineseExpressionEntity())
+                            count++
+                            _chineseExpressionResultProgress.value = count.toFloat() / total
+                        }
+                    }
+                }
+            }
+            // TODO 这里需优化
+            preference.setChineseExpressionVersion(version)
+            _chineseExpressionResult.value = SyncStatus.Success
         }
     }
 

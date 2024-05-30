@@ -40,7 +40,8 @@ class HomePreference(
             chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
             people = it[PREF_PEOPLE] ?: true,
             chineseColor = it[PREF_CHINESE_COLOR] ?: true,
-            character = it[PREF_CHARACTER] ?: true,
+            chineseCharacter = it[PREF_CHINESE_CHARACTER] ?: true,
+            chineseExpression = it[PREF_CHINESE_EXPRESSION] ?: true,
         )
     }
 
@@ -69,7 +70,11 @@ class HomePreference(
 
     suspend fun setChineseColor(checked: Boolean) = setBoolean(context, PREF_CHINESE_COLOR, checked)
 
-    suspend fun setCharacter(checked: Boolean) = setBoolean(context, PREF_CHARACTER, checked)
+    suspend fun setChineseCharacter(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_CHARACTER, checked)
+
+    suspend fun setChineseExpression(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_EXPRESSION, checked)
 
     companion object {
         private val PREF_CLASSIC_POEM = booleanPreferencesKey("key_classic_poem")
@@ -83,6 +88,7 @@ class HomePreference(
         private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
         private val PREF_PEOPLE = booleanPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_COLOR = booleanPreferencesKey("key_chinese_color")
-        private val PREF_CHARACTER = booleanPreferencesKey("key_character")
+        private val PREF_CHINESE_CHARACTER = booleanPreferencesKey("key_chinese_character")
+        private val PREF_CHINESE_EXPRESSION = booleanPreferencesKey("key_chinese_expression")
     }
 }
