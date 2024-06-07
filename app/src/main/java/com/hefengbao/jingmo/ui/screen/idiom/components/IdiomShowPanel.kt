@@ -67,7 +67,7 @@ fun IdiomShowPanel(
                         source.text?.let { append(it) }
                         source.book?.let {
                             withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                                append("《${it}》")
+                                append(it)
                             }
                         }
                     }
@@ -86,7 +86,7 @@ fun IdiomShowPanel(
                         quote.text?.let { append(it) }
                         quote.book?.let {
                             withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                                append("《${it}》")
+                                append(it)
                             }
                         }
                     }
@@ -114,7 +114,7 @@ fun IdiomShowPanel(
                         example.text?.let { append(it) }
                         example.book?.let {
                             withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                                append("《${it}》")
+                                append(it)
                             }
                         }
                     }
