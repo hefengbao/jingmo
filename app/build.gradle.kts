@@ -27,8 +27,8 @@ android {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
         targetSdk = 34
-        versionCode = 12
-        versionName = "1.10.0"
+        versionCode = 13
+        versionName = "1.11.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -98,7 +98,7 @@ android {
     }
     composeOptions {
         // 参考 https://developer.android.google.cn/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion = "1.5.10"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
