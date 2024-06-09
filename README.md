@@ -25,7 +25,8 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 7. 二十四节气；
 8. 绕口令 45 段；
 9. 知识卡片 464 组；
-10. 字典 20552 字。 
+10. 字典 20552 字； 
+11. 词典 320349 词；
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
