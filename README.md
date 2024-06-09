@@ -10,7 +10,7 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ## 介绍
 
-『京墨』开源的古诗词文（名句）、歇后语、成语、传统节日、绕口令等的阅读APP
+『京墨』开源的中华文化宝典 APP，诗（词）文（名句）、汉字、成语、词语、歇后语、绕口令、传统节日、传统色、节气、人物等。
 
 献给喜欢中华文字、文学、文化的人。
 
