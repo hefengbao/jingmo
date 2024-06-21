@@ -2,10 +2,14 @@ package com.hefengbao.jingmo.ui.screen.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Link
@@ -21,8 +25,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.R
@@ -110,6 +118,7 @@ private fun HomeScreen(
             )
         }
     ) { paddingValues ->
+
         Column(
             modifier = modifier
                 .padding(paddingValues)
@@ -121,6 +130,11 @@ private fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 content = {
+                    item(
+                        span = { GridItemSpan(2) }
+                    ) {
+                        Title(text = "古诗文")
+                    }
                     if (homeItem.classicPoem) {
                         item {
                             Item(
@@ -144,6 +158,20 @@ private fun HomeScreen(
                                 onClick = onPoemSentenceClick
                             )
                         }
+                    }
+                    if (homeItem.people) {
+                        item {
+                            Item(
+                                title = "人物",
+                                onClick = onPeopleClick
+                            )
+                        }
+                    }
+
+                    item(
+                        span = { GridItemSpan(2) }
+                    ) {
+                        Title(text = "现代汉语")
                     }
                     if (homeItem.chineseCharacter) {
                         item {
@@ -191,10 +219,24 @@ private fun HomeScreen(
                             )
                         }
                     }
+                    if (homeItem.chineseKnowledge) {
+                        item {
+                            Item(
+                                title = "知识卡片",
+                                onClick = onChineseKnowledgeClick
+                            )
+                        }
+                    }
+
+                    item(
+                        span = { GridItemSpan(2) }
+                    ) {
+                        Title(text = "传统文化")
+                    }
                     if (homeItem.festival) {
                         item {
                             Item(
-                                title = "传统节日",
+                                title = "节日",
                                 onClick = onFestivalClick
                             )
                         }
@@ -207,26 +249,10 @@ private fun HomeScreen(
                             )
                         }
                     }
-                    if (homeItem.chineseKnowledge) {
-                        item {
-                            Item(
-                                title = "知识卡片",
-                                onClick = onChineseKnowledgeClick
-                            )
-                        }
-                    }
-                    if (homeItem.people) {
-                        item {
-                            Item(
-                                title = "人物",
-                                onClick = onPeopleClick
-                            )
-                        }
-                    }
                     if (homeItem.chineseColor) {
                         item {
                             Item(
-                                title = "传统色",
+                                title = "颜色",
                                 onClick = onChineseColorClick
                             )
                         }
@@ -238,7 +264,7 @@ private fun HomeScreen(
 }
 
 @Composable
-fun Item(
+private fun Item(
     modifier: Modifier = Modifier,
     title: String,
     onClick: () -> Unit
@@ -254,8 +280,42 @@ fun Item(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(text = title, style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
+    }
+}
+
+@Composable
+private fun Title(
+    text: String
+) {
+    val color = MaterialTheme.colorScheme.primary
+    Row(
+        modifier = Modifier.padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .height(20.dp)
+                .drawBehind {
+                    drawLine(
+                        color = color,
+                        start = Offset(0f, 0f),
+                        end = Offset(0f, 80f),
+                        strokeWidth = 20f
+                    )
+                }
+        ) {}
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium
+        )
     }
 }
 

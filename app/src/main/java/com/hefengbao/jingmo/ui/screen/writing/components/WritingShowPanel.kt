@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.WritingEntity
 import com.hefengbao.jingmo.data.model.writing.CharDict
 import com.hefengbao.jingmo.data.model.writing.WordDict
+import com.hefengbao.jingmo.ui.component.BackgroundTitle
 import kotlinx.serialization.json.Json
 
 @SuppressLint("RememberReturnType")
@@ -234,17 +235,14 @@ fun WritingShowPanel(
 
             writing.note?.let {
                 item {
-                    Text(
-                        text = "\uD83D\uDCA1 按语、作者自注、跋",
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                    BackgroundTitle(title = "按语、作者自注、跋")
                     Text(text = it, modifier = modifier.padding(top = 16.dp))
                 }
             }
 
             writing.comments?.let {
                 item {
-                    Text(text = "💡 赏析（评价）", style = MaterialTheme.typography.titleMedium)
+                    BackgroundTitle(title = "赏析（评价）")
                     it.map {
                         Column(
                             modifier = modifier

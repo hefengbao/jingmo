@@ -1,25 +1,23 @@
 package com.hefengbao.jingmo.ui.screen.idiom.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable
 fun IdiomShowPanel(
@@ -43,14 +41,14 @@ fun IdiomShowPanel(
                 )
                 Text(
                     text = idiom.word,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.displaySmall
                 )
             }
             idiom.explanation?.let {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "释义")
+                    BackgroundTitle(title = "释义")
                     Text(
                         text = it,
                     )
@@ -61,7 +59,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "出处")
+                    BackgroundTitle(title = "出处")
 
                     val text = buildAnnotatedString {
                         source.text?.let { append(it) }
@@ -80,7 +78,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "名著用例")
+                    BackgroundTitle(title = "名著用例")
 
                     val text = buildAnnotatedString {
                         quote.text?.let { append(it) }
@@ -99,7 +97,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "用法介绍")
+                    BackgroundTitle(title = "用法介绍")
                     Text(text = it)
                 }
             }
@@ -108,7 +106,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "示例")
+                    BackgroundTitle(title = "示例")
 
                     val text = buildAnnotatedString {
                         example.text?.let { append(it) }
@@ -127,7 +125,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "同义成语")
+                    BackgroundTitle(title = "同义成语")
                     Text(text = it.joinToString("、"))
                 }
             }
@@ -136,7 +134,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "反义成语")
+                    BackgroundTitle(title = "反义成语")
                     Text(text = it.joinToString("、"))
                 }
             }
@@ -145,7 +143,7 @@ fun IdiomShowPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Title(text = "成语故事")
+                    BackgroundTitle(title = "成语故事")
                     list.forEach {
                         Text(text = it)
                     }
@@ -153,19 +151,4 @@ fun IdiomShowPanel(
             }
         }
     }
-}
-
-@Composable
-private fun Title(
-    text: String
-) {
-    Text(
-        text = text,
-        modifier = Modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(color = MaterialTheme.colorScheme.primary)
-            .padding(16.dp, 8.dp),
-        color = MaterialTheme.colorScheme.onPrimary,
-        style = MaterialTheme.typography.titleSmall,
-    )
 }

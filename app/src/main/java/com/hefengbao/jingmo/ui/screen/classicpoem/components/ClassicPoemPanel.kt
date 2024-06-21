@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,10 +96,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        Text(
-                            text = "💡创作背景",
-                            style = MaterialTheme.typography.titleLarge
-                        )
+                        BackgroundTitle("创作背景")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }
@@ -110,10 +108,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        Text(
-                            text = "📖文学赏析",
-                            style = MaterialTheme.typography.titleLarge
-                        )
+                        BackgroundTitle(title = "文学赏析")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }
@@ -125,10 +120,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        Text(
-                            text = "🔖 名家点评",
-                            style = MaterialTheme.typography.titleLarge
-                        )
+                        BackgroundTitle(title = "名家点评")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }
@@ -140,10 +132,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        Text(
-                            text = "📃 作者简介",
-                            style = MaterialTheme.typography.titleLarge
-                        )
+                        BackgroundTitle(title = "作者简介")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }

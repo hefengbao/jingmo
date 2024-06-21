@@ -12,8 +12,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.ui.screen.chineseexpression.components.ChineseExpressionShowPanel
 
 @Composable
 fun ChineseExpressionIndexRoute(
@@ -73,15 +72,7 @@ private fun ChineseExpressionIndexScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             expression?.let { entity ->
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(text = entity.pinyin, style = MaterialTheme.typography.bodyMedium)
-                    Text(text = entity.word)
-                }
-                entity.explanation?.let {
-                    Text(text = it)
-                }
+                ChineseExpressionShowPanel(entity = entity)
             }
         }
     }

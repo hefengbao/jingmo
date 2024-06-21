@@ -7,8 +7,8 @@ class LinksRepositoryImpl @Inject constructor() : LinksRepository {
     override fun getList(): List<Link> {
         return listOf(
             Link(
-                title = "国家中小学教育智慧平台",
-                desc = "",
+                title = "智慧中小学",
+                desc = "国家中小学智慧教育平台",
                 url = "https://basic.smartedu.cn/"
             ),
             Link(

@@ -89,7 +89,7 @@ fun AboutScreen(
                 Text(text = "❤贺丰宝（hefengbao）设计和编码❤")
 
                 val desc = """
-                『京墨』是开源、公益性 APP。献给喜欢中华文字、文学、文化的人。
+                『京墨』开源的中华文化宝典 APP。献给喜欢中华文字、文学、文化的人。
                 
                 本应用使用的数据来自网络（主要是 Github 开源的仓库），可在项目仓库查看 README.md 中的说明。
                 
@@ -132,7 +132,7 @@ fun AboutScreen(
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun AboutScreenPreview() {
+private fun AboutScreenPreview() {
     AboutRoute(
         onBackClick = {}
     )

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,9 +30,14 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        val viewModel by viewModels<MainActivityViewModel>()
+        val viewModel: MainActivityViewModel by viewModels()
 
         val destination = intent?.getStringExtra("destination")
+
+        // Turn off the decor fitting system windows, which allows us to handle insets,
+        // including IME animations, and go edge-to-edge
+        // This also sets up the initial system bar style based on the platform theme
+        enableEdgeToEdge()
 
         setContent {
             val appNavController = rememberNavController()
@@ -42,7 +48,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    //color = MaterialTheme.colorScheme.background
                 ) {
                     if (showLanding) {
                         LandingScreen()

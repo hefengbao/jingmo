@@ -10,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +19,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.SolarTerm
+import com.hefengbao.jingmo.ui.component.BackgroundTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -81,11 +81,7 @@ private fun SolarTermItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "\uD83D\uDD3B $label",
-            modifier = modifier.fillMaxWidth(),
-            style = MaterialTheme.typography.titleMedium
-        )
+        BackgroundTitle(title = label)
         Text(text = text, modifier = modifier.fillMaxWidth())
     }
 }

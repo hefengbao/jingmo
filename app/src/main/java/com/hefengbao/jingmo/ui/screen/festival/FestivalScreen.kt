@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,6 +18,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.Festival
+import com.hefengbao.jingmo.ui.component.BackgroundTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -78,7 +78,7 @@ private fun TextItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "\uD83D\uDD3B $title", style = MaterialTheme.typography.titleMedium)
+        BackgroundTitle(title = title)
         Text(text = content)
     }
 }
@@ -91,7 +91,7 @@ fun CommentItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "\uD83D\uDD3B $title", style = MaterialTheme.typography.titleMedium)
+        BackgroundTitle(title = title)
         for (comment in comments) {
             Text(text = comment)
         }

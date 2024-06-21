@@ -430,8 +430,11 @@ private fun Item(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(text = title, style = MaterialTheme.typography.titleMedium)
-                    Text(text = subtitle, color = Color.Gray)
+                    Text(text = title)
+                    Text(
+                        text = subtitle,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = .5f)
+                    )
                 }
 
                 if (enabled) {
