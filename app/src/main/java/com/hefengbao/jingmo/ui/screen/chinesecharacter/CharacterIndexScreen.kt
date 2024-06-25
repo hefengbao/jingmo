@@ -93,7 +93,11 @@ private fun ChineseCharacterIndexScreen(
                             query = it.substring(0, 1)
                         }
                     },
-                    onSearch = { onSearch(query, "char") },
+                    onSearch = {
+                        if (query.isNotEmpty()) {
+                            onSearch(query, "char")
+                        }
+                    },
                     active = false,
                     onActiveChange = {},
                     trailingIcon = {
