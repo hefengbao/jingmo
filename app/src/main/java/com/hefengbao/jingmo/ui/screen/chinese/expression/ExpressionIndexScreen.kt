@@ -22,7 +22,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -38,10 +37,6 @@ fun ChineseExpressionIndexRoute(
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getRandom()
-    }
-
     val expression by viewModel.expression.collectAsState(initial = null)
 
     ChineseExpressionIndexScreen(

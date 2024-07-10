@@ -55,10 +55,6 @@ fun ClassicPoemIndexRoute(
     val classicPoemEntity by viewModel.classicPoemEntity.collectAsState(initial = null)
     val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState(initial = null)
 
-    LaunchedEffect(Unit) {
-        viewModel.getRandom()
-    }
-
     LaunchedEffect(classicPoemEntity) {
         classicPoemEntity?.let {
             viewModel.isCollected(it.id)

@@ -24,6 +24,11 @@ import javax.inject.Inject
 class ExpressionIndexViewModel @Inject constructor(
     private val repository: ChineseExpressionRepository
 ) : ViewModel() {
+
+    init {
+        getRandom()
+    }
+
     private val _expression: MutableStateFlow<ChineseExpressionEntity?> = MutableStateFlow(null)
     val expression: SharedFlow<ChineseExpressionEntity?> = _expression
 

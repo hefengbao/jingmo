@@ -12,14 +12,16 @@ package com.hefengbao.jingmo.ui.screen.traditionalculture.solarterm
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.SolarTerm
@@ -55,23 +57,24 @@ private fun SolarTermIndexScreen(
         onBackClick = onBackClick,
         title = "二十四节气",
     ) {
-        LazyColumn(
-            content = {
-                itemsIndexed(
-                    items = solarTerms,
-                    key = { _: Int, item: SolarTerm -> item.id }
-                ) { _: Int, item: SolarTerm ->
-                    Text(
-                        text = item.name,
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                onItemClick(item.id)
-                            }
-                            .padding(horizontal = 16.dp, vertical = 16.dp)
-                    )
-                }
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4)
+        ) {
+            itemsIndexed(
+                items = solarTerms,
+                key = { _: Int, item: SolarTerm -> item.id }
+            ) { _: Int, item: SolarTerm ->
+                Text(
+                    text = item.name,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            onItemClick(item.id)
+                        }
+                        .padding(16.dp),
+                    textAlign = TextAlign.Center
+                )
             }
-        )
+        }
     }
 }

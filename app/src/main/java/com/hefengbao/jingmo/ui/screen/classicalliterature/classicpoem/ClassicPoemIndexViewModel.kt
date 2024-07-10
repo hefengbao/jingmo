@@ -25,6 +25,10 @@ import javax.inject.Inject
 class ClassicPoemIndexViewModel @Inject constructor(
     private val repository: ClassicPoemRepository
 ) : ViewModel() {
+    init {
+        getRandom()
+    }
+
     private val _classicPoemEntity: MutableStateFlow<ClassicPoemEntity?> = MutableStateFlow(null)
     val classicPoemEntity: SharedFlow<ClassicPoemEntity?> = _classicPoemEntity
 
