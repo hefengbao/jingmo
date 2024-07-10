@@ -217,7 +217,7 @@ private fun Title(text: String, color: Color) {
         modifier = Modifier
             .border(width = 1.dp, color = color)
             .padding(16.dp, 8.dp),
-        color = MaterialTheme.colorScheme.onPrimary,
+        color = color,
         style = MaterialTheme.typography.titleSmall,
     )
 }
