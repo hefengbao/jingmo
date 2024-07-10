@@ -1,0 +1,24 @@
+/*
+ * This file is part of the 京墨（jingmo）APP.
+ *
+ * (c) 贺丰宝（hefengbao） <hefengbao@foxmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+package com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class ClassicPoemBookmarksViewModel @Inject constructor(
+    repository: ClassicPoemRepository
+) : ViewModel() {
+    val poems = repository.collections().cachedIn(viewModelScope)
+}

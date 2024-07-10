@@ -19,21 +19,21 @@ private const val ROUTE_HOME = "home"
 
 fun NavGraphBuilder.homeGraph(
     onChineseCharacterClick: () -> Unit,
-    onChineseColorClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
+    onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onChineseRiddleClick: () -> Unit,
+    onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
-    onClassicPoemClick: () -> Unit,
-    onFestivalClick: () -> Unit,
-    onIdiomClick: () -> Unit,
+    onClassicalLiteratureClassicPoemClick: () -> Unit,
+    onClassicalLiteraturePeopleClick: () -> Unit,
+    onClassicalLiteratureSentenceClick: () -> Unit,
+    onClassicalLiteratureWritingClick: () -> Unit,
+    onTraditionalCultureColorClick: () -> Unit,
+    onTraditionalCultureFestivalClick: () -> Unit,
+    onTraditionalCultureSolarTermsClick: () -> Unit,
     onLinksClick: () -> Unit,
-    onPeopleClick: () -> Unit,
-    onPoemSentenceClick: () -> Unit,
-    onRiddleClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onSolarTermsClick: () -> Unit,
-    onTongueTwisterClick: () -> Unit,
-    onWritingClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
@@ -45,21 +45,21 @@ fun NavGraphBuilder.homeGraph(
         ) {
             HomeRoute(
                 onChineseCharacterClick = onChineseCharacterClick,
-                onChineseColorClick = onChineseColorClick,
                 onChineseExpressionClick = onChineseExpressionClick,
+                onChineseIdiomClick = onChineseIdiomClick,
                 onChineseKnowledgeClick = onChineseKnowledgeClick,
+                onChineseRiddleClick = onChineseRiddleClick,
+                onChineseTongueTwisterClick = onChineseTongueTwisterClick,
                 onChineseWisecrackClick = onChineseWisecrackClick,
-                onClassicPoemClick = onClassicPoemClick,
-                onFestivalClick = onFestivalClick,
-                onIdiomClick = onIdiomClick,
+                onClassicalLiteratureClassicPoemClick = onClassicalLiteratureClassicPoemClick,
+                onClassicalLiteraturePeopleClick = onClassicalLiteraturePeopleClick,
+                onClassicalLiteratureSentenceClick = onClassicalLiteratureSentenceClick,
+                onClassicalLiteratureWritingClick = onClassicalLiteratureWritingClick,
+                onTraditionalCultureColorClick = onTraditionalCultureColorClick,
+                onTraditionalCultureFestivalClick = onTraditionalCultureFestivalClick,
+                onTraditionalCultureSolarTermsClick = onTraditionalCultureSolarTermsClick,
                 onLinksClick = onLinksClick,
-                onPeopleClick = onPeopleClick,
-                onPoemSentenceClick = onPoemSentenceClick,
-                onRiddleClick = onRiddleClick,
                 onSettingsClick = onSettingsClick,
-                onSolarTermsClick = onSolarTermsClick,
-                onTongueTwisterClick = onTongueTwisterClick,
-                onWritingClick = onWritingClick
             )
         }
         nestGraph()

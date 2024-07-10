@@ -49,42 +49,42 @@ import com.hefengbao.jingmo.data.model.HomeItem
 fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     onChineseCharacterClick: () -> Unit,
-    onChineseColorClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
+    onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onChineseRiddleClick: () -> Unit,
+    onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
-    onClassicPoemClick: () -> Unit,
-    onFestivalClick: () -> Unit,
-    onIdiomClick: () -> Unit,
+    onClassicalLiteratureClassicPoemClick: () -> Unit,
+    onClassicalLiteraturePeopleClick: () -> Unit,
+    onClassicalLiteratureSentenceClick: () -> Unit,
+    onClassicalLiteratureWritingClick: () -> Unit,
+    onTraditionalCultureColorClick: () -> Unit,
+    onTraditionalCultureFestivalClick: () -> Unit,
+    onTraditionalCultureSolarTermsClick: () -> Unit,
     onLinksClick: () -> Unit,
-    onPeopleClick: () -> Unit,
-    onPoemSentenceClick: () -> Unit,
-    onRiddleClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onSolarTermsClick: () -> Unit,
-    onTongueTwisterClick: () -> Unit,
-    onWritingClick: () -> Unit
 ) {
     val homeItem by viewModel.homeItem.collectAsState(initial = HomeItem())
 
     HomeScreen(
         homeItem = homeItem,
         onChineseCharacterClick = onChineseCharacterClick,
-        onChineseColorClick = onChineseColorClick,
         onChineseExpressionClick = onChineseExpressionClick,
+        onChineseIdiomClick = onChineseIdiomClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
+        onChineseRiddleClick = onChineseRiddleClick,
+        onChineseTongueTwisterClick = onChineseTongueTwisterClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
-        onClassicPoemClick = onClassicPoemClick,
-        onFestivalClick = onFestivalClick,
-        onIdiomClick = onIdiomClick,
+        onClassicalLiteratureClassicPoemClick = onClassicalLiteratureClassicPoemClick,
+        onClassicalLiteraturePeopleClick = onClassicalLiteraturePeopleClick,
+        onClassicalLiteratureSentenceClick = onClassicalLiteratureSentenceClick,
+        onClassicalLiteratureWritingClick = onClassicalLiteratureWritingClick,
+        onTraditionalCultureColorClick = onTraditionalCultureColorClick,
+        onTraditionalCultureFestivalClick = onTraditionalCultureFestivalClick,
+        onTraditionalCultureSolarTermsClick = onTraditionalCultureSolarTermsClick,
         onLinksClick = onLinksClick,
-        onPeopleClick = onPeopleClick,
-        onPoemSentenceClick = onPoemSentenceClick,
-        onRiddleClick = onRiddleClick,
         onSettingsClick = onSettingsClick,
-        onSolarTermsClick = onSolarTermsClick,
-        onTongueTwisterClick = onTongueTwisterClick,
-        onWritingClick = onWritingClick
     )
 }
 
@@ -94,21 +94,21 @@ private fun HomeScreen(
     modifier: Modifier = Modifier,
     homeItem: HomeItem,
     onChineseCharacterClick: () -> Unit,
-    onChineseColorClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
+    onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onChineseRiddleClick: () -> Unit,
+    onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
-    onClassicPoemClick: () -> Unit,
-    onFestivalClick: () -> Unit,
-    onIdiomClick: () -> Unit,
+    onClassicalLiteratureClassicPoemClick: () -> Unit,
+    onClassicalLiteraturePeopleClick: () -> Unit,
+    onClassicalLiteratureSentenceClick: () -> Unit,
+    onClassicalLiteratureWritingClick: () -> Unit,
+    onTraditionalCultureColorClick: () -> Unit,
+    onTraditionalCultureFestivalClick: () -> Unit,
+    onTraditionalCultureSolarTermsClick: () -> Unit,
     onLinksClick: () -> Unit,
-    onPeopleClick: () -> Unit,
-    onPoemSentenceClick: () -> Unit,
-    onRiddleClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onSolarTermsClick: () -> Unit,
-    onTongueTwisterClick: () -> Unit,
-    onWritingClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -148,7 +148,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "经典诗文",
-                                onClick = onClassicPoemClick
+                                onClick = onClassicalLiteratureClassicPoemClick
                             )
                         }
                     }
@@ -156,7 +156,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "诗文",
-                                onClick = onWritingClick
+                                onClick = onClassicalLiteratureWritingClick
                             )
                         }
                     }
@@ -164,7 +164,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "诗文名句",
-                                onClick = onPoemSentenceClick
+                                onClick = onClassicalLiteratureSentenceClick
                             )
                         }
                     }
@@ -172,7 +172,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "人物",
-                                onClick = onPeopleClick
+                                onClick = onClassicalLiteraturePeopleClick
                             )
                         }
                     }
@@ -202,7 +202,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "成语",
-                                onClick = onIdiomClick
+                                onClick = onChineseIdiomClick
                             )
                         }
                     }
@@ -224,7 +224,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "绕口令",
-                                onClick = onTongueTwisterClick
+                                onClick = onChineseTongueTwisterClick
                             )
                         }
                     }
@@ -246,7 +246,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "节日",
-                                onClick = onFestivalClick
+                                onClick = onTraditionalCultureFestivalClick
                             )
                         }
                     }
@@ -254,7 +254,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "节气",
-                                onClick = onSolarTermsClick
+                                onClick = onTraditionalCultureSolarTermsClick
                             )
                         }
                     }
@@ -262,7 +262,7 @@ private fun HomeScreen(
                         item {
                             Item(
                                 title = "颜色",
-                                onClick = onChineseColorClick
+                                onClick = onTraditionalCultureColorClick
                             )
                         }
                     }

@@ -18,6 +18,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        CrashReport.initCrashReport(applicationContext, "f75198f767", BuildConfig.DEBUG)
+        CrashReport.initCrashReport(applicationContext, "", BuildConfig.DEBUG)
     }
 }
