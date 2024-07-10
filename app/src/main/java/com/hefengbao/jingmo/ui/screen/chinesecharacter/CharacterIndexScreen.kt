@@ -98,8 +98,8 @@ private fun ChineseCharacterIndexScreen(
                 SearchBar(
                     query = query,
                     onQueryChange = {
-                        if (query.isEmpty()) {
-                            query = it.substring(0, 1)
+                        if (it.length <= 1) {
+                            query = it
                         }
                     },
                     onSearch = {
