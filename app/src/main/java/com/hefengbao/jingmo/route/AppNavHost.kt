@@ -48,6 +48,14 @@ import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeInde
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navToChineseLyricIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleSearchScreen
@@ -146,6 +154,7 @@ fun AppNavHost(
             onChineseExpressionClick = { navController.navigateToChineseExpressionGraph() },
             onChineseIdiomClick = { navController.navigateToChineseIdiomIndexGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
+            onChineseLyricClick = { navController.navToChineseLyricIndexGraph() },
             onChineseRiddleClick = { navController.navigateToChineseRiddleIndexGraph() },
             onChineseTongueTwisterClick = { navController.navigateToChineseTongueTwisterIndexGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
@@ -257,6 +266,24 @@ fun AppNavHost(
                     onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
                     nestGraph = {
                         chineseKnowledgeSearchScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                chineseLyricIndexGraph(
+                    onBackClick = navController::navigateUp,
+                    onSearchClick = { navController.navigateToChineseLyricSearchScreen() },
+                    onBookmarksClick = { navController.navigateToChineseLyricBookmarksScreen() },
+                    nestGraph = {
+                        chineseLyricBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
+                        )
+                        chineseLyricSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
+                        )
+                        chineseLyricShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

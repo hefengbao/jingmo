@@ -22,6 +22,7 @@ import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.DictionaryDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
+import com.hefengbao.jingmo.data.database.dao.LyricDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.RiddleDao
@@ -38,6 +39,9 @@ import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.LyricCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.LyricEntity
+import com.hefengbao.jingmo.data.database.entity.LyricFtsEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
@@ -72,6 +76,9 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         DictionaryPinyinEntity::class,
         IdiomCollectionEntity::class,
         IdiomEntity::class,
+        LyricCollectionEntity::class,
+        LyricEntity::class,
+        LyricFtsEntity::class,
         PeopleEntity::class,
         PoemSentenceCollectionEntity::class,
         PoemSentenceEntity::class,
@@ -80,7 +87,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingCollectionEntity::class,
         WritingEntity::class,
     ],
-    version = 16,
+    version = 17,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -97,6 +104,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 13, to = 14, spec = AppDatabase.AutoMigration13To14::class),
         AutoMigration(from = 14, to = 15),
         AutoMigration(from = 15, to = 16),
+        AutoMigration(from = 16, to = 17),
     ],
     exportSchema = true
 )
@@ -118,6 +126,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun classicPoemDao(): ClassicPoemDao
     abstract fun dictionaryDao(): DictionaryDao
     abstract fun idiomDao(): IdiomDao
+    abstract fun lyricDao(): LyricDao
     abstract fun peopleDao(): PeopleDao
     abstract fun riddleDao(): RiddleDao
     abstract fun tongueTwisterDao(): TongueTwisterDao

@@ -37,6 +37,7 @@ class DatasetPreference(
             classicPoemsVersion = it[PREF_CLASSIC_POEMS] ?: 0,
             dictionaryVersion = it[PREF_DICTIONARY] ?: 0,
             idiomsVersion = it[PREF_IDIOMS] ?: 0,
+            lyricVersion = it[PREF_LYRICS] ?: 0,
             peopleVersion = it[PREF_PEOPLE] ?: 0,
             poemSentencesVersion = it[PREF_POEM_SENTENCES] ?: 0,
             riddlesVersion = it[PREF_RIDDLES] ?: 0,
@@ -63,6 +64,8 @@ class DatasetPreference(
 
     suspend fun setIdiomsVersion(version: Int) =
         setInt(context, PREF_IDIOMS, version)
+
+    suspend fun setLyricVersion(version: Int) = setInt(context, PREF_LYRICS, version)
 
     suspend fun setPeopleVersion(version: Int) =
         setInt(context, PREF_PEOPLE, version)
@@ -92,6 +95,7 @@ class DatasetPreference(
         private val PREF_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
         private val PREF_DICTIONARY = intPreferencesKey("key_dictionary")
         private val PREF_IDIOMS = intPreferencesKey("key_idioms")
+        private val PREF_LYRICS = intPreferencesKey("key_lyrics")
         private val PREF_PEOPLE = intPreferencesKey("key_people")
         private val PREF_POEM_SENTENCES = intPreferencesKey("key_poem_sentences")
         private val PREF_RIDDLES = intPreferencesKey("key_riddles")

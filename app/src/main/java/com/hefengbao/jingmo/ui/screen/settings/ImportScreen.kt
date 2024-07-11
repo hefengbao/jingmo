@@ -50,6 +50,7 @@ fun ImportRoute(
     val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState(initial = 0f)
     val dictionaryRatio by viewModel.dictionaryRatio.collectAsState()
     val idiomsRatio by viewModel.idiomsRatio.collectAsState(initial = 0f)
+    val lyricRatio by viewModel.lyricRatio.collectAsState(initial = 0f)
     val peopleRatio by viewModel.peopleRatio.collectAsState(initial = 0f)
     val poemSentenceRatio by viewModel.poemSentencesRatio.collectAsState(initial = 0f)
     val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState(initial = 0f)
@@ -61,6 +62,7 @@ fun ImportRoute(
     val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
     val dictionaryStatus by viewModel.dictionaryStatus.collectAsState(initial = ImportStatus.Loading)
     val idiomsStatus by viewModel.idiomStatus.collectAsState(initial = ImportStatus.Loading)
+    val lyricStatus by viewModel.lyricStatus.collectAsState(initial = ImportStatus.Loading)
     val poemSentencesStatus by viewModel.poemSentenceStatus.collectAsState(initial = ImportStatus.Loading)
     val peopleStatus by viewModel.peopleStatus.collectAsState(initial = ImportStatus.Loading)
     val tongueTwistersStatus by viewModel.tongueTwisterStatus.collectAsState(initial = ImportStatus.Loading)
@@ -86,6 +88,9 @@ fun ImportRoute(
         idiomsRatio = idiomsRatio,
         idiomsStatus = idiomsStatus,
         idiomsUris = { viewModel.idioms(it) },
+        lyricRatio = lyricRatio,
+        lyricStatus = lyricStatus,
+        lyricUris = { viewModel.lyrics(it) },
         peopleRatio = peopleRatio,
         peopleStatus = peopleStatus,
         peopleUris = { viewModel.people(it) },
@@ -123,6 +128,9 @@ private fun ImportScreen(
     idiomsRatio: Float,
     idiomsStatus: ImportStatus<Any>,
     idiomsUris: (List<Uri>) -> Unit,
+    lyricRatio: Float,
+    lyricStatus: ImportStatus<Any>,
+    lyricUris: (List<Uri>) -> Unit,
     peopleRatio: Float,
     peopleStatus: ImportStatus<Any>,
     peopleUris: (List<Uri>) -> Unit,
@@ -160,6 +168,10 @@ private fun ImportScreen(
     val idiomsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             idiomsUris(it)
+        }
+    val lyricLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            lyricUris(it)
         }
     val peopleLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -251,6 +263,12 @@ private fun ImportScreen(
                 ratio = tongueTwistersRatio,
                 launcher = tongueTwistersLauncher,
                 status = tongueTwistersStatus
+            )
+            MenuItem(
+                title = "歌词",
+                ratio = lyricRatio,
+                launcher = lyricLauncher,
+                status = lyricStatus
             )
         }
     }

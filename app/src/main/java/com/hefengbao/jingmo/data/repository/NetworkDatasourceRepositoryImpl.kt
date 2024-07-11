@@ -19,6 +19,7 @@ import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.LyricEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.RiddleEntity
@@ -31,6 +32,7 @@ import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.IdiomWrapper
+import com.hefengbao.jingmo.data.model.Lyric
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -97,6 +99,12 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertIdiom(entity: IdiomEntity) {
         database.idiomDao().insert(entity)
     }
+
+    override suspend fun syncLyrics(): Result<List<Lyric>> = safeApiCall {
+        network.lyrics()
+    }
+
+    override suspend fun insertLyric(entity: LyricEntity) = database.lyricDao().insert(entity)
 
     override suspend fun syncPeople(page: Int): Result<PeopleWrapper> = safeApiCall {
         network.people(page)

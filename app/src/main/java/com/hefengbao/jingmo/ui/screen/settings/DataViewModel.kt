@@ -20,6 +20,7 @@ import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.asClassicPoemEntity
 import com.hefengbao.jingmo.data.model.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.asIdiomEntity
+import com.hefengbao.jingmo.data.model.asLyricEntity
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
 import com.hefengbao.jingmo.data.model.asRiddleEntity
@@ -227,6 +228,36 @@ class DataViewModel @Inject constructor(
             // TODO 这里需优化
             preference.setIdiomsVersion(version)
             _idiomsResult.value = SyncStatus.Success
+        }
+    }
+
+    private val _lyricResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val lyricResult: SharedFlow<SyncStatus<Any>> = _lyricResult
+    private val _lyricResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val lyricResultProgress: SharedFlow<Float> = _lyricResultProgress
+    fun syncLyric(total: Int, version: Int) {
+        _lyricResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            when (val response = repository.syncLyrics()) {
+                is Result.Error -> {
+                    _lyricResult.value = SyncStatus.Error(response.exception)
+                }
+
+                Result.Loading -> {}
+                is Result.Success -> {
+                    var count = 0
+
+                    response.data.map {
+                        repository.insertLyric(it.asLyricEntity())
+                        count++
+                        _lyricResultProgress.value = count.toFloat() / total
+                    }
+
+                    preference.setLyricVersion(version)
+                    _lyricResult.value = SyncStatus.Success
+                }
+            }
         }
     }
 

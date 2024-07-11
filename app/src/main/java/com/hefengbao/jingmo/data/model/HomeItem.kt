@@ -23,4 +23,5 @@ data class HomeItem(
     val chineseColor: Boolean = true,
     val chineseCharacter: Boolean = true,
     val chineseExpression: Boolean = true,
+    val lyric: Boolean = true
 )

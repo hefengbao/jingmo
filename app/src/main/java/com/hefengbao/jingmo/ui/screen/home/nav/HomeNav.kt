@@ -22,6 +22,7 @@ fun NavGraphBuilder.homeGraph(
     onChineseExpressionClick: () -> Unit,
     onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onChineseLyricClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
     onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -48,6 +49,7 @@ fun NavGraphBuilder.homeGraph(
                 onChineseExpressionClick = onChineseExpressionClick,
                 onChineseIdiomClick = onChineseIdiomClick,
                 onChineseKnowledgeClick = onChineseKnowledgeClick,
+                onChineseLyricClick = onChineseLyricClick,
                 onChineseRiddleClick = onChineseRiddleClick,
                 onChineseTongueTwisterClick = onChineseTongueTwisterClick,
                 onChineseWisecrackClick = onChineseWisecrackClick,
@@ -64,5 +66,4 @@ fun NavGraphBuilder.homeGraph(
         }
         nestGraph()
     }
-
 }

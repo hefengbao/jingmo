@@ -22,6 +22,7 @@ interface PreferenceRepository {
     suspend fun setClassicPoemsVersion(version: Int)
     suspend fun setDictionaryVersion(version: Int)
     suspend fun setIdiomsVersion(version: Int)
+    suspend fun setLyricVersion(version: Int)
     suspend fun setPeopleVersion(version: Int)
     suspend fun setPoemSentencesVersion(version: Int)
     suspend fun setRiddlesVersion(version: Int)

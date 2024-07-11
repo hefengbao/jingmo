@@ -19,6 +19,7 @@ import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.DictionaryDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
+import com.hefengbao.jingmo.data.database.dao.LyricDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.RiddleDao
@@ -70,15 +71,21 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesPoemDao(
-        database: AppDatabase
-    ): ClassicPoemDao = database.classicPoemDao()
-
-    @Provides
-    @Singleton
     fun providesIdiomDao(
         database: AppDatabase
     ): IdiomDao = database.idiomDao()
+
+    @Provides
+    @Singleton
+    fun providesLyricDao(
+        database: AppDatabase
+    ): LyricDao = database.lyricDao()
+
+    @Provides
+    @Singleton
+    fun providesPoemDao(
+        database: AppDatabase
+    ): ClassicPoemDao = database.classicPoemDao()
 
     @Provides
     @Singleton

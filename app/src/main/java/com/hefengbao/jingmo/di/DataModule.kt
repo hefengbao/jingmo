@@ -31,6 +31,8 @@ import com.hefengbao.jingmo.data.repository.ImportRepository
 import com.hefengbao.jingmo.data.repository.ImportRepositoryImpl
 import com.hefengbao.jingmo.data.repository.LinksRepository
 import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
+import com.hefengbao.jingmo.data.repository.LyricRepository
+import com.hefengbao.jingmo.data.repository.LyricRepositoryImpl
 import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepository
 import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepositoryImpl
 import com.hefengbao.jingmo.data.repository.PeopleRepository
@@ -109,6 +111,11 @@ interface DataModule {
     fun bindsLinksRepository(
         linksRepositoryImpl: LinksRepositoryImpl
     ): LinksRepository
+
+    @Binds
+    fun bindsLyricRepository(
+        lyricRepositoryImpl: LyricRepositoryImpl
+    ): LyricRepository
 
     @Binds
     fun bindsNetworkDatasourceRepository(

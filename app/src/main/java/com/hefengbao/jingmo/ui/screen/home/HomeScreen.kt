@@ -52,6 +52,7 @@ fun HomeRoute(
     onChineseExpressionClick: () -> Unit,
     onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onChineseLyricClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
     onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -73,6 +74,7 @@ fun HomeRoute(
         onChineseExpressionClick = onChineseExpressionClick,
         onChineseIdiomClick = onChineseIdiomClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
+        onChineseLyricClick = onChineseLyricClick,
         onChineseRiddleClick = onChineseRiddleClick,
         onChineseTongueTwisterClick = onChineseTongueTwisterClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
@@ -97,6 +99,7 @@ private fun HomeScreen(
     onChineseExpressionClick: () -> Unit,
     onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
+    onChineseLyricClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
     onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -225,6 +228,14 @@ private fun HomeScreen(
                             Item(
                                 title = "绕口令",
                                 onClick = onChineseTongueTwisterClick
+                            )
+                        }
+                    }
+                    if (homeItem.lyric) {
+                        item {
+                            Item(
+                                title = "歌词",
+                                onClick = onChineseLyricClick
                             )
                         }
                     }

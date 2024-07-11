@@ -16,6 +16,7 @@ import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.IdiomWrapper
+import com.hefengbao.jingmo.data.model.Lyric
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -40,6 +41,9 @@ interface Api {
     @GET("chinese_wisecracks.json")
     suspend fun chineseWisecracks(): List<ChineseWisecrack>
 
+    @GET("classic_poems.json")
+    suspend fun classicPoems(): List<ClassicPoem>
+
     @GET("dict_{page}.json")
     suspend fun dictionary(
         @Path("page") page: Int
@@ -50,13 +54,13 @@ interface Api {
         @Path("page") page: Int
     ): IdiomWrapper
 
+    @GET("lyrics.json")
+    suspend fun lyrics(): List<Lyric>
+
     @GET("people_{page}.json")
     suspend fun people(
         @Path("page") page: Int
     ): PeopleWrapper
-
-    @GET("classic_poems.json")
-    suspend fun classicPoems(): List<ClassicPoem>
 
     @GET("poem_sentences.json")
     suspend fun poemSentences(): List<PoemSentence>
@@ -71,5 +75,4 @@ interface Api {
     suspend fun writings(
         @Path("page") page: Int
     ): WritingWrapper
-
 }

@@ -15,6 +15,7 @@ import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
 import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.DictionaryDao
 import com.hefengbao.jingmo.data.database.dao.IdiomDao
+import com.hefengbao.jingmo.data.database.dao.LyricDao
 import com.hefengbao.jingmo.data.database.dao.PeopleDao
 import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
 import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
@@ -26,6 +27,7 @@ import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.LyricEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
@@ -39,6 +41,7 @@ class ImportRepositoryImpl @Inject constructor(
     private val chineseKnowledgeDao: ChineseKnowledgeDao,
     private val dictionaryDao: DictionaryDao,
     private val idiomDao: IdiomDao,
+    private val lyricDao: LyricDao,
     private val peopleDao: PeopleDao,
     private val classicPoemDao: ClassicPoemDao,
     private val poemSentenceDao: PoemSentenceDao,
@@ -65,6 +68,8 @@ class ImportRepositoryImpl @Inject constructor(
     override suspend fun insertIdiom(entity: IdiomEntity) =
         idiomDao.insert(entity)
 
+    override suspend fun insertLyric(entity: LyricEntity) = lyricDao.insert(entity)
+
     override suspend fun insertPeople(entity: PeopleEntity) =
         peopleDao.insert(entity)
 
@@ -88,6 +93,8 @@ class ImportRepositoryImpl @Inject constructor(
     override fun dictionaryTotal(): Flow<Int> = dictionaryDao.total()
 
     override fun idiomsTotal(): Flow<Int> = idiomDao.total()
+
+    override fun lyricTotal(): Flow<Int> = lyricDao.total()
 
     override fun peopleTotal(): Flow<Int> = peopleDao.total()
 

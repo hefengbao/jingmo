@@ -17,6 +17,7 @@ import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.LyricEntity
 import com.hefengbao.jingmo.data.database.entity.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
 import com.hefengbao.jingmo.data.database.entity.RiddleEntity
@@ -29,6 +30,7 @@ import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.IdiomWrapper
+import com.hefengbao.jingmo.data.model.Lyric
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -51,6 +53,8 @@ interface NetworkDatasourceRepository {
     suspend fun clearDictionaryPinyin()
     suspend fun syncIdioms(page: Int): Result<IdiomWrapper>
     suspend fun insertIdiom(entity: IdiomEntity)
+    suspend fun syncLyrics(): Result<List<Lyric>>
+    suspend fun insertLyric(entity: LyricEntity)
     suspend fun syncPeople(page: Int): Result<PeopleWrapper>
     suspend fun insertPeople(entity: PeopleEntity)
     suspend fun syncPoemSentences(): Result<List<PoemSentence>>

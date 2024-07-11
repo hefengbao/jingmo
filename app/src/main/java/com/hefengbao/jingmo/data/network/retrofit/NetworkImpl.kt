@@ -16,6 +16,7 @@ import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.IdiomWrapper
+import com.hefengbao.jingmo.data.model.Lyric
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.Riddle
@@ -77,6 +78,8 @@ class NetworkImpl @Inject constructor(
     override suspend fun classicPoems(): List<ClassicPoem> = networkApi.classicPoems()
 
     override suspend fun dictionary(page: Int): DictionaryWrapper = networkApi.dictionary(page)
+
+    override suspend fun lyrics(): List<Lyric> = networkApi.lyrics()
 
     override suspend fun idioms(page: Int): IdiomWrapper = networkApi.idioms(page)
 

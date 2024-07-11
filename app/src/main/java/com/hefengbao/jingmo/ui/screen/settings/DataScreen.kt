@@ -80,6 +80,8 @@ fun DataRoute(
     val dictionaryResultProgress by viewModel.dictionaryResultProgress.collectAsState(initial = 0f)
     val idiomsResult by viewModel.idiomsResult.collectAsState(initial = SyncStatus.NonStatus)
     val idiomsResultProgress by viewModel.idiomsResultProgress.collectAsState(initial = 0f)
+    val lyricResult by viewModel.lyricResult.collectAsState(initial = SyncStatus.NonStatus)
+    val lyricResultProgress by viewModel.lyricResultProgress.collectAsState(initial = 0f)
     val peopleResult by viewModel.peopleResult.collectAsState(initial = SyncStatus.NonStatus)
     val peopleResultProgress by viewModel.peopleResultProgress.collectAsState(initial = 0f)
     val poemSentencesResult by viewModel.poemSentencesResult.collectAsState(initial = SyncStatus.NonStatus)
@@ -123,6 +125,9 @@ fun DataRoute(
         syncIdioms = { total: Int, version: Int -> viewModel.syncIdioms(total, version) },
         idiomsResult = idiomsResult,
         idiomsResultProgress = idiomsResultProgress,
+        syncLyric = { total: Int, version: Int -> viewModel.syncLyric(total, version) },
+        lyricResult = lyricResult,
+        lyricResultProgress = lyricResultProgress,
         syncPeople = { total: Int, version: Int -> viewModel.syncPeople(total, version) },
         peopleResult = peopleResult,
         peopleResultProgress = peopleResultProgress,
@@ -184,6 +189,9 @@ private fun DataScreen(
     syncIdioms: (total: Int, version: Int) -> Unit,
     idiomsResult: SyncStatus<Any>,
     idiomsResultProgress: Float,
+    syncLyric: (total: Int, version: Int) -> Unit,
+    lyricResult: SyncStatus<Any>,
+    lyricResultProgress: Float,
     syncPeople: (total: Int, version: Int) -> Unit,
     peopleResult: SyncStatus<Any>,
     peopleResultProgress: Float,
@@ -328,6 +336,16 @@ private fun DataScreen(
                                 count,
                                 version
                             )
+                        }
+                    ),
+                    Menu(
+                        title = "歌词",
+                        name = "lyrics",
+                        localVersion = datasetPref.lyricVersion,
+                        status = lyricResult,
+                        progress = lyricResultProgress,
+                        onClick = { count: Int, version: Int ->
+                            syncLyric(count, version)
                         }
                     )
                 )

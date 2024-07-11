@@ -20,6 +20,7 @@ import com.hefengbao.jingmo.data.model.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.IdiomWrapper
+import com.hefengbao.jingmo.data.model.Lyric
 import com.hefengbao.jingmo.data.model.PeopleWrapper
 import com.hefengbao.jingmo.data.model.PoemSentence
 import com.hefengbao.jingmo.data.model.TongueTwister
@@ -30,6 +31,7 @@ import com.hefengbao.jingmo.data.model.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.asClassicPoemEntity
 import com.hefengbao.jingmo.data.model.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.asIdiomEntity
+import com.hefengbao.jingmo.data.model.asLyricEntity
 import com.hefengbao.jingmo.data.model.asPeopleEntity
 import com.hefengbao.jingmo.data.model.asPoemSentenceEntity
 import com.hefengbao.jingmo.data.model.asTongueTwisterEntity
@@ -64,6 +66,7 @@ class ImportViewModel @Inject constructor(
     private val classicPoemCount = 955
     private val dictionaryCount = 20552
     private val idiomsCount = 49639
+    private val lyricCount = 499
     private val peopleCount = 85776
     private val poemSentencesCount = 10000
     private val riddlesCount = 42446
@@ -215,6 +218,28 @@ class ImportViewModel @Inject constructor(
                 }
             }
             _idiomStatus.value = ImportStatus.Finish
+        }
+    }
+
+    val lyricRatio = repository.lyricTotal().distinctUntilChanged().flatMapLatest {
+        MutableStateFlow(it.toFloat() / lyricCount)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = 0f
+    )
+    private val _lyricStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val lyricStatus: SharedFlow<ImportStatus<Any>> = _lyricStatus
+    fun lyrics(uris: List<Uri>) {
+        viewModelScope.launch {
+            _lyricStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<List<Lyric>>(readTextFromUri(it)).forEach { lyric ->
+                    repository.insertLyric(lyric.asLyricEntity())
+                }
+            }
+            _lyricStatus.value = ImportStatus.Finish
         }
     }
 

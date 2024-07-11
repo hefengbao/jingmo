@@ -16,6 +16,7 @@ data class DatasetVersion(
     val classicPoemsVersion: Int = 0,
     val dictionaryVersion: Int = 0,
     val idiomsVersion: Int = 0,
+    val lyricVersion: Int = 0,
     val peopleVersion: Int = 0,
     val poemSentencesVersion: Int = 0,
     val riddlesVersion: Int = 0,
