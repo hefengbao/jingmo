@@ -11,7 +11,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.lyric
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.repository.LyricRepository
+import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

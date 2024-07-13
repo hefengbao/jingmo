@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.traditionalculture.festival
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.model.Festival
-import com.hefengbao.jingmo.data.repository.FestivalRepository
+import com.hefengbao.jingmo.data.model.traditionalculture.Festival
+import com.hefengbao.jingmo.data.repository.traditionalculture.FestivalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,7 +28,7 @@ class FestivalIndexViewModel @Inject constructor(
 
     fun getList() {
         viewModelScope.launch {
-            _festivals.value = repository.getList()
+            _festivals.value = repository.list()
         }
     }
 }

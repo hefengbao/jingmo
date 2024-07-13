@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.WritingEntity
-import com.hefengbao.jingmo.data.repository.WritingRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WritingIndexViewModel @Inject constructor(
     val json: Json,
-    val writingRepository: WritingRepository
+    private val writingRepository: WritingRepository
 ) : ViewModel() {
     init {
         getRandomWriting()

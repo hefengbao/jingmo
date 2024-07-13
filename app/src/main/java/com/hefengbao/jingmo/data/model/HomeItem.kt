@@ -10,18 +10,35 @@
 package com.hefengbao.jingmo.data.model
 
 data class HomeItem(
-    val classicPoem: Boolean = true,
-    val writing: Boolean = true,
-    val poemSentence: Boolean = true,
-    val idiom: Boolean = true,
-    val chineseWisecrack: Boolean = true,
-    val tongueTwister: Boolean = true,
-    val festival: Boolean = true,
-    val solarTerm: Boolean = true,
-    val chineseKnowledge: Boolean = true,
-    val people: Boolean = true,
-    val chineseColor: Boolean = true,
+    val classicalLiteratureClassicPoem: Boolean = true,
+    val classicalLiteraturePeople: Boolean = true,
+    val classicalLiteratureSentence: Boolean = true,
+    val classicalLiteratureWriting: Boolean = true,
     val chineseCharacter: Boolean = true,
     val chineseExpression: Boolean = true,
-    val lyric: Boolean = true
-)
+    val chineseIdiom: Boolean = true,
+    val chineseKnowledge: Boolean = true,
+    val chineseLyric: Boolean = true,
+    val chineseTongueTwister: Boolean = true,
+    val chineseWisecrack: Boolean = true,
+    val traditionalCultureColor: Boolean = true,
+    val traditionalCultureFestival: Boolean = true,
+    val traditionalCultureSolarTerm: Boolean = true,
+) {
+    val classicalLiteratureGroup = classicalLiteratureClassicPoem ||
+            classicalLiteraturePeople ||
+            classicalLiteratureSentence ||
+            classicalLiteratureWriting
+
+    val chineseGroup = chineseCharacter ||
+            chineseExpression ||
+            chineseIdiom ||
+            chineseKnowledge ||
+            chineseLyric ||
+            chineseTongueTwister ||
+            chineseWisecrack
+
+    val traditionalCultureGroup = traditionalCultureColor ||
+            traditionalCultureFestival ||
+            traditionalCultureSolarTerm
+}

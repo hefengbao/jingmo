@@ -27,7 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.expression.components.ChineseExpressionShowPanel
 
@@ -52,7 +52,7 @@ private fun ChineseExpressionIndexScreen(
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
     onRefreshClick: () -> Unit,
-    expression: ChineseExpressionEntity?
+    expression: ExpressionEntity?
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,

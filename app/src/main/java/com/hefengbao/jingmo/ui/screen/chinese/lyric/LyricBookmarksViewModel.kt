@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.lyric
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.repository.LyricRepository
+import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

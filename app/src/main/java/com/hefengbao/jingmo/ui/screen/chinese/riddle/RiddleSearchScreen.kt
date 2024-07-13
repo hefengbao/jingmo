@@ -26,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.RiddleEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable

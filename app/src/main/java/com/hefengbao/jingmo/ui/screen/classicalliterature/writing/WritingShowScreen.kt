@@ -26,8 +26,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.components.WritingShowPanel
 import kotlinx.serialization.json.Json

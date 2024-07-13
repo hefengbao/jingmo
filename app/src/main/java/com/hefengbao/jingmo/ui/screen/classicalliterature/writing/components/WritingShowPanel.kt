@@ -38,9 +38,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.WritingEntity
-import com.hefengbao.jingmo.data.model.writing.CharDict
-import com.hefengbao.jingmo.data.model.writing.WordDict
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.model.classicalliterature.writing.CharDict
+import com.hefengbao.jingmo.data.model.classicalliterature.writing.WordDict
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 import kotlinx.serialization.json.Json
 

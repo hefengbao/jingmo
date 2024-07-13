@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.model.SolarTerm
+import com.hefengbao.jingmo.data.model.traditionalculture.SolarTerm
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable

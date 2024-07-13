@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
-import com.hefengbao.jingmo.data.repository.IdiomRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,7 +46,7 @@ class IdiomReadViewModel @Inject constructor(
     }
 
     val idiom = id.flatMapLatest {
-        idiomRepository.getIdiom(it)
+        idiomRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

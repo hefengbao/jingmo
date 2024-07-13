@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.hefengbao.jingmo.ui.screen.settings.components.SettingsTitle
 
 @Composable
 fun SettingsRoute(
@@ -86,9 +87,11 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState()),
         ) {
+            SettingsTitle(title = "功能")
             Item(title = "同步数据", onClick = onDataClick, showBadge = false)
             Item(title = "导入数据", onClick = onImportClick, showBadge = false)
             Item(title = "栏目管理", onClick = onHomeItemManagerClick, showBadge = false)
+            SettingsTitle(title = "其他")
             Item(title = "隐私政策", onClick = onPrivacyClick, showBadge = false)
             Item(title = "关于", onClick = onAboutClick, showBadge = false)
         }

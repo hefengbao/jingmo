@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.SimplePeopleInfo
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -58,7 +58,7 @@ private fun PeopleSearchScreen(
     onBackClick: () -> Unit,
     recommendList: List<String>,
     onSearch: (String) -> Unit,
-    searchResult: List<SimplePeopleInfo>,
+    searchResult: List<PeopleEntity>,
     onItemClick: (type: String, query: String) -> Unit,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current

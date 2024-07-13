@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceCollectionEntity
-import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SentenceIndexViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val poemSentenceRepository: PoemSentenceRepository
+    private val sentenceRepository: SentenceRepository
 ) : ViewModel() {
     private var id = MutableStateFlow(1)
 
@@ -51,7 +51,7 @@ class SentenceIndexViewModel @Inject constructor(
     }
 
     val sentence = id.flatMapLatest {
-        poemSentenceRepository.getSentence(it)
+        sentenceRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -59,7 +59,7 @@ class SentenceIndexViewModel @Inject constructor(
     )
 
     val sentenceCollectionEntity = id.flatMapLatest {
-        poemSentenceRepository.isCollect(it)
+        sentenceRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -67,7 +67,7 @@ class SentenceIndexViewModel @Inject constructor(
     )
 
     val prevId = id.flatMapLatest {
-        poemSentenceRepository.getPrevId(it)
+        sentenceRepository.getPrevId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -75,7 +75,7 @@ class SentenceIndexViewModel @Inject constructor(
     )
 
     val nextId = id.flatMapLatest {
-        poemSentenceRepository.getNextId(it)
+        sentenceRepository.getNextId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -84,13 +84,13 @@ class SentenceIndexViewModel @Inject constructor(
 
     fun setUncollect(id: Int) {
         viewModelScope.launch {
-            poemSentenceRepository.uncollect(id)
+            sentenceRepository.uncollect(id)
         }
     }
 
     fun setCollect(id: Int) {
         viewModelScope.launch {
-            poemSentenceRepository.collect(PoemSentenceCollectionEntity(id))
+            sentenceRepository.collect(SentenceCollectionEntity(id))
         }
     }
 }

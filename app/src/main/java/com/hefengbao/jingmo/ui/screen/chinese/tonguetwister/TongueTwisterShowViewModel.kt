@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.chinese.tonguetwister
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
-import com.hefengbao.jingmo.data.repository.TongueTwisterRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
+import com.hefengbao.jingmo.data.repository.chinese.TongueTwisterRepository
 import com.hefengbao.jingmo.ui.screen.chinese.tonguetwister.nav.TongueTwisterShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +36,7 @@ class TongueTwisterShowViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            tongueTwisterRepository.getTongueTwister(id).collectLatest { tongueTwister ->
+            tongueTwisterRepository.get(id).collectLatest { tongueTwister ->
                 _tongueTwister.value = tongueTwister
             }
         }

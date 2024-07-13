@@ -17,9 +17,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.WritingEntity
-import com.hefengbao.jingmo.data.model.ChineseColor
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun WritingCaptureRoute(
@@ -27,7 +27,7 @@ fun WritingCaptureRoute(
     onBackClick: () -> Unit
 ) {
     val writing by viewModel.writing.collectAsState()
-    val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
+    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
     val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {

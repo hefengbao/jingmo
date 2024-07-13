@@ -38,8 +38,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.components.ClassicPoemPanel
 import kotlinx.coroutines.launch

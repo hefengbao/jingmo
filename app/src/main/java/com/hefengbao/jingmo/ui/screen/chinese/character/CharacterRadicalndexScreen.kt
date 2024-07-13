@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.model.CharacterRadical
+import com.hefengbao.jingmo.data.model.chinese.character.Radical
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -52,7 +52,7 @@ private fun CharacterRadicalIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (String, String) -> Unit,
-    radicals: List<CharacterRadical>
+    radicals: List<Radical>
 ) {
     val configuration = LocalConfiguration.current
 

@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.chinese.expression
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
-import com.hefengbao.jingmo.data.repository.ChineseExpressionRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
+import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepository
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.ChineseExpressionShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,12 +24,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExpressionShowViewModel @Inject constructor(
-    private val repository: ChineseExpressionRepository,
+    private val repository: ExpressionRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val args = ChineseExpressionShowArgs(savedStateHandle)
-    private val _expression: MutableStateFlow<ChineseExpressionEntity?> = MutableStateFlow(null)
-    val expression: SharedFlow<ChineseExpressionEntity?> = _expression
+    private val _expression: MutableStateFlow<ExpressionEntity?> = MutableStateFlow(null)
+    val expression: SharedFlow<ExpressionEntity?> = _expression
 
     init {
         viewModelScope.launch {

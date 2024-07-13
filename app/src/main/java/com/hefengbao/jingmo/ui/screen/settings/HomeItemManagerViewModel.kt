@@ -34,71 +34,30 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
-    fun setClassicPoem(checked: Boolean) {
+    fun setClassicalLiteratureClassicPoem(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setClassicPoem(checked)
+            homeRepository.setClassicalLiteratureClassicPoem(checked)
         }
     }
 
-    fun setWriting(checked: Boolean) {
+    fun setClassicalLiteraturePeople(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setWriting(checked)
+            homeRepository.setClassicalLiteraturePeople(checked)
         }
     }
 
-    fun setPoemSentence(checked: Boolean) {
+    fun setClassicalLiteratureSentence(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setPoemSentence(checked)
+            homeRepository.setClassicalLiteratureSentence(checked)
         }
     }
 
-    fun setIdiom(checked: Boolean) {
+    fun setClassicalLiteratureWriting(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setIdiom(checked)
+            homeRepository.setClassicalLiteratureWriting(checked)
         }
     }
 
-    fun setChineseWisecrack(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setChineseWisecrack(checked)
-        }
-    }
-
-    fun setTongueTwister(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setTongueTwister(checked)
-        }
-    }
-
-    fun setFestival(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setFestival(checked)
-        }
-    }
-
-    fun setSolarTerm(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setSolarTerm(checked)
-        }
-    }
-
-    fun setChineseKnowledge(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setChineseKnowledge(checked)
-        }
-    }
-
-    fun setPeople(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setPeople(checked)
-        }
-    }
-
-    fun setChineseColor(checked: Boolean) {
-        viewModelScope.launch {
-            homeRepository.setChineseColor(checked)
-        }
-    }
 
     fun setChineseCharacter(checked: Boolean) {
         viewModelScope.launch {
@@ -109,6 +68,54 @@ class HomeItemManagerViewModel @Inject constructor(
     fun setChineseExpression(checked: Boolean) {
         viewModelScope.launch {
             homeRepository.setChineseExpression(checked)
+        }
+    }
+
+    fun setChineseIdiom(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseIdiom(checked)
+        }
+    }
+
+    fun setChineseKnowledge(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseKnowledge(checked)
+        }
+    }
+
+    fun setChineseLyric(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseLyric(checked)
+        }
+    }
+
+    fun setChineseTongueTwister(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseTongueTwister(checked)
+        }
+    }
+
+    fun setChineseWisecrack(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseWisecrack(checked)
+        }
+    }
+
+    fun setTraditionalCultureColor(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setTraditionalCultureColor(checked)
+        }
+    }
+
+    fun setTraditionalCultureFestival(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setTraditionalCultureFestival(checked)
+        }
+    }
+
+    fun setTraditionalCultureSolarTerm(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setTraditionalCultureSolarTerm(checked)
         }
     }
 }

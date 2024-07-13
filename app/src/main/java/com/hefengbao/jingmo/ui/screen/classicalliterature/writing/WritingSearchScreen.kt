@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 
 @Composable
 fun WritingSearchRoute(
@@ -84,7 +84,7 @@ private fun WritingSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     recommendList: List<String>,
-    writings: LazyPagingItems<SimpleWritingInfo>,
+    writings: LazyPagingItems<WritingEntity>,
     onItemClick: (id: String) -> Unit,
     onTypeChange: (String) -> Unit,
     query: String,
@@ -176,7 +176,7 @@ private fun WritingSearchScreen(
 @Composable
 private fun List(
     modifier: Modifier = Modifier,
-    writings: LazyPagingItems<SimpleWritingInfo>,
+    writings: LazyPagingItems<WritingEntity>,
     onItemClick: (id: String) -> Unit,
 ) {
     LazyColumn {
@@ -194,7 +194,7 @@ private fun List(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = entity.title,
+                        text = entity.title.content,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyLarge

@@ -21,7 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.SimpleTongueTwister
+import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -43,7 +43,7 @@ fun TongueTwisterIndexRoute(
 private fun TongueTwisterIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    tongueTwisters: List<SimpleTongueTwister>,
+    tongueTwisters: List<TongueTwisterEntity>,
     onItemClick: (Int) -> Unit
 ) {
     //var firstLoading by rememberSaveable { mutableStateOf(true) }
@@ -57,8 +57,8 @@ private fun TongueTwisterIndexScreen(
         ) {
             itemsIndexed(
                 items = tongueTwisters,
-                key = { _: Int, item: SimpleTongueTwister -> item.id }
-            ) { _: Int, item: SimpleTongueTwister ->
+                key = { _: Int, item: TongueTwisterEntity -> item.id }
+            ) { _: Int, item: TongueTwisterEntity ->
                 Text(
                     text = item.title,
                     modifier = modifier

@@ -32,18 +32,18 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.util.ClipboardUtil
-import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun ColorShowRoute(
     viewModel: ColorShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val chineseColor by viewModel.chineseColor.collectAsState(initial = null)
+    val chineseColor by viewModel.color.collectAsState(initial = null)
     ColorShowScreen(
         onBackClick = onBackClick,
-        chineseColor = chineseColor
+        color = chineseColor
     )
 }
 
@@ -51,9 +51,9 @@ fun ColorShowRoute(
 private fun ColorShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    chineseColor: ChineseColor?
+    color: ChineseColor?
 ) {
-    chineseColor?.let { color ->
+    color?.let {
         SimpleScaffold(
             onBackClick = onBackClick,
             title = color.name

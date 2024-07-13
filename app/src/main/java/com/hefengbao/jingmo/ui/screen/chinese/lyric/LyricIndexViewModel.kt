@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.chinese.lyric
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.LyricCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.LyricEntity
-import com.hefengbao.jingmo.data.repository.LyricRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
+import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

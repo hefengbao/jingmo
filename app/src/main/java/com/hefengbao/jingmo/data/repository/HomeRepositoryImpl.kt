@@ -17,36 +17,47 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val homePreference: HomePreference
 ) : HomeRepository {
-    override suspend fun setClassicPoem(checked: Boolean) = homePreference.setClassicPoem(checked)
+    override suspend fun setClassicalLiteratureClassicPoem(checked: Boolean) =
+        homePreference.setClassicalLiteratureClassicPoem(checked)
 
-    override suspend fun setWriting(checked: Boolean) = homePreference.setWriting(checked)
+    override suspend fun setClassicalLiteraturePeople(checked: Boolean) =
+        homePreference.setClassicalLiteraturePeople(checked)
 
-    override suspend fun setPoemSentence(checked: Boolean) = homePreference.setPoemSentence(checked)
+    override suspend fun setClassicalLiteratureSentence(checked: Boolean) =
+        homePreference.setClassicalLiteratureSentence(checked)
 
-    override suspend fun setIdiom(checked: Boolean) = homePreference.setIdiom(checked)
-
-    override suspend fun setChineseWisecrack(checked: Boolean) =
-        homePreference.setChineseWisecrack(checked)
-
-    override suspend fun setTongueTwister(checked: Boolean) =
-        homePreference.setTongueTwister(checked)
-
-    override suspend fun setFestival(checked: Boolean) = homePreference.setFestival(checked)
-
-    override suspend fun setSolarTerm(checked: Boolean) = homePreference.setSolarTerm(checked)
-
-    override suspend fun setChineseKnowledge(checked: Boolean) =
-        homePreference.setChineseKnowledge(checked)
-
-    override suspend fun setPeople(checked: Boolean) = homePreference.setPeople(checked)
-
-    override suspend fun setChineseColor(checked: Boolean) = homePreference.setChineseColor(checked)
+    override suspend fun setClassicalLiteratureWriting(checked: Boolean) =
+        homePreference.setClassicalLiteratureWriting(checked)
 
     override suspend fun setChineseCharacter(checked: Boolean) =
         homePreference.setChineseCharacter(checked)
 
     override suspend fun setChineseExpression(checked: Boolean) =
         homePreference.setChineseExpression(checked)
+
+    override suspend fun setChineseIdiom(checked: Boolean) =
+        homePreference.setChineseIdiom(checked)
+
+    override suspend fun setChineseKnowledge(checked: Boolean) =
+        homePreference.setChineseKnowledge(checked)
+
+    override suspend fun setChineseLyric(checked: Boolean) =
+        homePreference.setChineseLyric(checked)
+
+    override suspend fun setChineseTongueTwister(checked: Boolean) =
+        homePreference.setChineseTongueTwister(checked)
+
+    override suspend fun setChineseWisecrack(checked: Boolean) =
+        homePreference.setChineseWisecrack(checked)
+
+    override suspend fun setTraditionalCultureColor(checked: Boolean) =
+        homePreference.setTraditionalCultureColor(checked)
+
+    override suspend fun setTraditionalCultureFestival(checked: Boolean) =
+        homePreference.setTraditionalCultureFestival(checked)
+
+    override suspend fun setTraditionalCultureSolarTerm(checked: Boolean) =
+        homePreference.setTraditionalCultureSolarTerm(checked)
 
     override fun getHomeItem(): Flow<HomeItem> = homePreference.homeItem
 }

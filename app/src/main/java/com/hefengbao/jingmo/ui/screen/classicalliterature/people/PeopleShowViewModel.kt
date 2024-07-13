@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.people
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.PeopleEntity
-import com.hefengbao.jingmo.data.repository.PeopleRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.PeopleRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.people.nav.PeopleShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +39,7 @@ class PeopleShowViewModel @Inject constructor(
                     _people.value = it
                 }
             } else {
-                peopleRepository.getById(args.query.toInt()).collectLatest {
+                peopleRepository.get(args.query.toInt()).collectLatest {
                     _people.value = it
                 }
             }

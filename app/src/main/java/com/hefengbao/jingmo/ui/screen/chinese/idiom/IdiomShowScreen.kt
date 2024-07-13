@@ -20,8 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.components.IdiomShowPanel
 

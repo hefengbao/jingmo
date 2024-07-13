@@ -10,7 +10,7 @@
 package com.hefengbao.jingmo.data.database.util
 
 import androidx.room.TypeConverter
-import com.hefengbao.jingmo.data.model.writing.Comment
+import com.hefengbao.jingmo.data.model.classicalliterature.writing.Comment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

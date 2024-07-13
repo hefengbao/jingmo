@@ -10,13 +10,13 @@
 package com.hefengbao.jingmo.ui.screen.chinese.character
 
 import androidx.lifecycle.ViewModel
-import com.hefengbao.jingmo.data.repository.ChineseCharacterRepository
+import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterRadicalIndexViewModel @Inject constructor(
-    repository: ChineseCharacterRepository
+    repository: CharacterRepository
 ) : ViewModel() {
     val radicals = repository.radicals()
 }

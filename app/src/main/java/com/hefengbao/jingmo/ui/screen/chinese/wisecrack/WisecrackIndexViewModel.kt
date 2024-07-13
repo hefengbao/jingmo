@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
-import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WisecrackIndexViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val chineseWisecrackRepository: ChineseWisecrackRepository
+    private val wisecrackRepository: WisecrackRepository
 ) : ViewModel() {
 
     private var id = MutableStateFlow(1)
@@ -46,7 +46,7 @@ class WisecrackIndexViewModel @Inject constructor(
     }
 
     val chineseCrack = id.flatMapLatest {
-        chineseWisecrackRepository.getChineseCrack(it)
+        wisecrackRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -54,7 +54,7 @@ class WisecrackIndexViewModel @Inject constructor(
     )
 
     val chineseWisecrackCollectionEntity = id.flatMapLatest {
-        chineseWisecrackRepository.isCollect(it)
+        wisecrackRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -62,7 +62,7 @@ class WisecrackIndexViewModel @Inject constructor(
     )
 
     val nextId = id.flatMapLatest {
-        chineseWisecrackRepository.getNextId(it)
+        wisecrackRepository.getNextId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -70,7 +70,7 @@ class WisecrackIndexViewModel @Inject constructor(
     )
 
     val prevId = id.flatMapLatest {
-        chineseWisecrackRepository.getPrevId(it)
+        wisecrackRepository.getPrevId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -79,13 +79,13 @@ class WisecrackIndexViewModel @Inject constructor(
 
     fun setUncollect(id: Int) {
         viewModelScope.launch {
-            chineseWisecrackRepository.uncollect(id)
+            wisecrackRepository.uncollect(id)
         }
     }
 
     fun setCollect(id: Int) {
         viewModelScope.launch {
-            chineseWisecrackRepository.collect(ChineseWisecrackCollectionEntity(id))
+            wisecrackRepository.collect(WisecrackCollectionEntity(id))
         }
     }
 

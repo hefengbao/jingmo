@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
-import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.ClassicPoemRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.nav.ClassicPoemShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

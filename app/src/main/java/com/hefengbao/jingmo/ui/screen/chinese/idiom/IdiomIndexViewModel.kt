@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
-import com.hefengbao.jingmo.data.repository.IdiomRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

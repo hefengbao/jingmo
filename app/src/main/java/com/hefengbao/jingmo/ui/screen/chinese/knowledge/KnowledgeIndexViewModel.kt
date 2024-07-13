@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.chinese.knowledge
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class KnowledgeIndexViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val chineseKnowledgeRepository: ChineseKnowledgeRepository
+    private val knowledgeRepository: KnowledgeRepository
 ) : ViewModel() {
     var id = MutableStateFlow(0)
 
@@ -42,7 +42,7 @@ class KnowledgeIndexViewModel @Inject constructor(
     }
 
     val chineseKnowledge = id.flatMapLatest {
-        chineseKnowledgeRepository.getChineseKnowledge(it)
+        knowledgeRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -50,7 +50,7 @@ class KnowledgeIndexViewModel @Inject constructor(
     )
 
     val prevId = id.flatMapLatest {
-        chineseKnowledgeRepository.getPrevId(it)
+        knowledgeRepository.getPrevId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -58,7 +58,7 @@ class KnowledgeIndexViewModel @Inject constructor(
     )
 
     val nextId = id.flatMapLatest {
-        chineseKnowledgeRepository.getNextId(it)
+        knowledgeRepository.getNextId(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

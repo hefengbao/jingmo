@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
-import com.hefengbao.jingmo.data.model.ChineseColor
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun ChineseWisecrackCaptureRoute(
@@ -33,7 +33,7 @@ fun ChineseWisecrackCaptureRoute(
     onBackClick: () -> Unit
 ) {
     val chineseWisecrack by viewModel.chineseWisecrack.collectAsState()
-    val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
+    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
     val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {
@@ -58,7 +58,7 @@ private fun ChineseWisecrackCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    chineseWisecrack: ChineseWisecrackWithBookmark?,
+    chineseWisecrack: WisecrackEntity?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

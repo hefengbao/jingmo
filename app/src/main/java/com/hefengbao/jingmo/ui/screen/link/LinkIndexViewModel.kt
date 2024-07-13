@@ -28,7 +28,7 @@ class LinkIndexViewModel @Inject constructor(
 
     fun getList() {
         viewModelScope.launch {
-            _links.value = repository.getList()
+            _links.value = repository.list()
         }
     }
 }

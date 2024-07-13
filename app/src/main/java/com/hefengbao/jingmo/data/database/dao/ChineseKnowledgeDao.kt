@@ -13,16 +13,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChineseKnowledgeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: ChineseKnowledgeEntity)
+    suspend fun insert(entity: KnowledgeEntity)
 
     @Query("select k.rowid, k.* from chinese_knowledge k where k.rowid = :id limit 1")
-    fun getChineseKnowledge(id: Int): Flow<ChineseKnowledgeEntity>
+    fun getChineseKnowledge(id: Int): Flow<KnowledgeEntity>
 
     @Query("select rowid from chinese_knowledge where rowid <:id order by rowid desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
@@ -31,7 +31,7 @@ interface ChineseKnowledgeDao {
     fun getNextId(id: Int): Flow<Int?>
 
     @Query("select k.rowid, k.* from chinese_knowledge k where k.content match :query")
-    fun getSearchChineseKnowledgeList(query: String): Flow<List<ChineseKnowledgeEntity>>
+    fun getSearchChineseKnowledgeList(query: String): Flow<List<KnowledgeEntity>>
 
     @Query("delete from chinese_knowledge")
     suspend fun clear()

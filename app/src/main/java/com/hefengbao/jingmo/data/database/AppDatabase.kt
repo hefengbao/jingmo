@@ -16,39 +16,39 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
+import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
+import com.hefengbao.jingmo.data.database.dao.ChineseLyricDao
+import com.hefengbao.jingmo.data.database.dao.ChineseRiddleDao
+import com.hefengbao.jingmo.data.database.dao.ChineseTongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
-import com.hefengbao.jingmo.data.database.dao.ClassicPoemDao
-import com.hefengbao.jingmo.data.database.dao.DictionaryDao
-import com.hefengbao.jingmo.data.database.dao.IdiomDao
-import com.hefengbao.jingmo.data.database.dao.LyricDao
-import com.hefengbao.jingmo.data.database.dao.PeopleDao
-import com.hefengbao.jingmo.data.database.dao.PoemSentenceDao
-import com.hefengbao.jingmo.data.database.dao.RiddleDao
-import com.hefengbao.jingmo.data.database.dao.TongueTwisterDao
-import com.hefengbao.jingmo.data.database.dao.WritingDao
-import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
-import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemFtsEntity
-import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
-import com.hefengbao.jingmo.data.database.entity.DictionaryPinyinEntity
-import com.hefengbao.jingmo.data.database.entity.IdiomCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
-import com.hefengbao.jingmo.data.database.entity.LyricCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.LyricEntity
-import com.hefengbao.jingmo.data.database.entity.LyricFtsEntity
-import com.hefengbao.jingmo.data.database.entity.PeopleEntity
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
-import com.hefengbao.jingmo.data.database.entity.RiddleEntity
-import com.hefengbao.jingmo.data.database.entity.TongueTwisterEntity
-import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.WritingEntity
+import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
+import com.hefengbao.jingmo.data.database.dao.ClassicalLiteraturePeopleDao
+import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
+import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.LyricFtsEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemFtsEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.database.util.IntListConverter
 import com.hefengbao.jingmo.data.database.util.PeopleAliasListConverter
 import com.hefengbao.jingmo.data.database.util.PeopleDetailListConverter
@@ -65,13 +65,18 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
  */
 @Database(
     entities = [
-        ChineseExpressionEntity::class,
-        ChineseKnowledgeEntity::class,
-        ChineseWisecrackCollectionEntity::class,
-        ChineseWisecrackEntity::class,
         ClassicPoemCollectionEntity::class,
         ClassicPoemEntity::class,
         ClassicPoemFtsEntity::class,
+        PeopleEntity::class,
+        WritingCollectionEntity::class,
+        WritingEntity::class,
+        SentenceCollectionEntity::class,
+        SentenceEntity::class,
+        ExpressionEntity::class,
+        KnowledgeEntity::class,
+        WisecrackCollectionEntity::class,
+        WisecrackEntity::class,
         DictionaryEntity::class,
         DictionaryPinyinEntity::class,
         IdiomCollectionEntity::class,
@@ -79,13 +84,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         LyricCollectionEntity::class,
         LyricEntity::class,
         LyricFtsEntity::class,
-        PeopleEntity::class,
-        PoemSentenceCollectionEntity::class,
-        PoemSentenceEntity::class,
         RiddleEntity::class,
         TongueTwisterEntity::class,
-        WritingCollectionEntity::class,
-        WritingEntity::class,
     ],
     version = 17,
     autoMigrations = [
@@ -120,18 +120,18 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
     WritingQuoteListConverter::class,
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun chineseExpressionDao(): ChineseExpressionDao
-    abstract fun chineseKnowledgeDao(): ChineseKnowledgeDao
-    abstract fun chineseWisecrackDao(): ChineseWisecrackDao
-    abstract fun classicPoemDao(): ClassicPoemDao
-    abstract fun dictionaryDao(): DictionaryDao
-    abstract fun idiomDao(): IdiomDao
-    abstract fun lyricDao(): LyricDao
-    abstract fun peopleDao(): PeopleDao
-    abstract fun riddleDao(): RiddleDao
-    abstract fun tongueTwisterDao(): TongueTwisterDao
-    abstract fun poemSentenceDao(): PoemSentenceDao
-    abstract fun writingDao(): WritingDao
+    abstract fun expressionDao(): ChineseExpressionDao
+    abstract fun knowledgeDao(): ChineseKnowledgeDao
+    abstract fun wisecrackDao(): ChineseWisecrackDao
+    abstract fun classicPoemDao(): ClassicalLiteratureClassicPoemDao
+    abstract fun dictionaryDao(): ChineseDictionaryDao
+    abstract fun idiomDao(): ChineseIdiomDao
+    abstract fun lyricDao(): ChineseLyricDao
+    abstract fun peopleDao(): ClassicalLiteraturePeopleDao
+    abstract fun riddleDao(): ChineseRiddleDao
+    abstract fun tongueTwisterDao(): ChineseTongueTwisterDao
+    abstract fun sentenceDao(): ClassicalLiteratureSentenceDao
+    abstract fun writingDao(): ClassicalLiteratureWritingDao
 
     @DeleteTable(
         tableName = "poems"

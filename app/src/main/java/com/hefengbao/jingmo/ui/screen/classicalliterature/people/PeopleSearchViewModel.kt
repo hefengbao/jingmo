@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.people
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.model.SimplePeopleInfo
-import com.hefengbao.jingmo.data.repository.PeopleRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.PeopleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,16 +28,16 @@ class PeopleSearchViewModel @Inject constructor(
     val recommendList: SharedFlow<List<String>> = _recommendList
 
     init {
-        _recommendList.value = peopleRepository.getRecommendList()
+        _recommendList.value = peopleRepository.recommendList()
     }
 
-    private val _searchResult: MutableStateFlow<List<SimplePeopleInfo>> =
+    private val _searchResult: MutableStateFlow<List<PeopleEntity>> =
         MutableStateFlow(emptyList())
-    val searchResult: SharedFlow<List<SimplePeopleInfo>> = _searchResult
+    val searchResult: SharedFlow<List<PeopleEntity>> = _searchResult
 
     fun search(string: String) {
         viewModelScope.launch {
-            peopleRepository.searchList(string).collectLatest {
+            peopleRepository.search(string).collectLatest {
                 _searchResult.value = it
             }
         }

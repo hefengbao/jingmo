@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.character
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.repository.ChineseCharacterRepository
+import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.CharacterShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterShowViewModel @Inject constructor(
-    private val repository: ChineseCharacterRepository,
+    private val repository: CharacterRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val args = CharacterShowArgs(savedStateHandle)

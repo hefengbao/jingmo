@@ -13,18 +13,19 @@ import com.hefengbao.jingmo.data.model.HomeItem
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    suspend fun setClassicPoem(checked: Boolean)
-    suspend fun setWriting(checked: Boolean)
-    suspend fun setPoemSentence(checked: Boolean)
-    suspend fun setIdiom(checked: Boolean)
-    suspend fun setChineseWisecrack(checked: Boolean)
-    suspend fun setTongueTwister(checked: Boolean)
-    suspend fun setFestival(checked: Boolean)
-    suspend fun setSolarTerm(checked: Boolean)
-    suspend fun setChineseKnowledge(checked: Boolean)
-    suspend fun setPeople(checked: Boolean)
-    suspend fun setChineseColor(checked: Boolean)
+    suspend fun setClassicalLiteratureClassicPoem(checked: Boolean)
+    suspend fun setClassicalLiteraturePeople(checked: Boolean)
+    suspend fun setClassicalLiteratureSentence(checked: Boolean)
+    suspend fun setClassicalLiteratureWriting(checked: Boolean)
     suspend fun setChineseCharacter(checked: Boolean)
     suspend fun setChineseExpression(checked: Boolean)
+    suspend fun setChineseIdiom(checked: Boolean)
+    suspend fun setChineseKnowledge(checked: Boolean)
+    suspend fun setChineseLyric(checked: Boolean)
+    suspend fun setChineseTongueTwister(checked: Boolean)
+    suspend fun setChineseWisecrack(checked: Boolean)
+    suspend fun setTraditionalCultureColor(checked: Boolean)
+    suspend fun setTraditionalCultureFestival(checked: Boolean)
+    suspend fun setTraditionalCultureSolarTerm(checked: Boolean)
     fun getHomeItem(): Flow<HomeItem>
 }

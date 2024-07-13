@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SentenceBookmarksViewModel @Inject constructor(
-    private val repository: PoemSentenceRepository
+    private val repository: SentenceRepository
 ) : ViewModel() {
     val bookmarks = repository.collections().stateIn(
         scope = viewModelScope,

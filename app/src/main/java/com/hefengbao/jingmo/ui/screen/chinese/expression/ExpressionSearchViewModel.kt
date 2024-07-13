@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.expression
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.repository.ChineseExpressionRepository
+import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -26,7 +26,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
 class ExpressionSearchViewModel @Inject constructor(
-    private val repository: ChineseExpressionRepository
+    private val repository: ExpressionRepository
 ) : ViewModel() {
     private val query = MutableStateFlow("")
 

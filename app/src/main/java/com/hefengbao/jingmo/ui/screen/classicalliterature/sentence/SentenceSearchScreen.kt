@@ -30,7 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
@@ -53,7 +53,7 @@ fun SentenceSearchRoute(
 private fun SentenceSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    sentences: LazyPagingItems<PoemSentenceEntity>,
+    sentences: LazyPagingItems<SentenceEntity>,
     onSearch: (String) -> Unit,
     onCardClick: (Int) -> Unit,
 ) {

@@ -43,8 +43,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.model.ChineseColor
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun ColorIndexRoute(
@@ -56,14 +56,14 @@ fun ColorIndexRoute(
         viewModel.getList()
     }
 
-    val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
-    val searchColors by viewModel.searchChineseColors.collectAsState(initial = emptyList())
+    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
+    val searchColors by viewModel.searchColors.collectAsState(initial = emptyList())
 
     ColorIndexScreen(
         onBackClick = onBackClick,
         onSearch = { viewModel.search(it) },
         searchColors = searchColors,
-        chineseColors = chineseColors,
+        colors = chineseColors,
         onItemClick = onItemClick
     )
 }
@@ -75,7 +75,7 @@ private fun ColorIndexScreen(
     onBackClick: () -> Unit,
     onSearch: (String) -> Unit,
     searchColors: List<ChineseColor>,
-    chineseColors: List<ChineseColor>,
+    colors: List<ChineseColor>,
     onItemClick: (String) -> Unit
 ) {
     var showSearchBar by rememberSaveable { mutableStateOf(false) }
@@ -150,7 +150,7 @@ private fun ColorIndexScreen(
                 state = rememberLazyListState()
             ) {
                 itemsIndexed(
-                    items = chineseColors,
+                    items = colors,
                     key = { _, item -> item.id },
                 ) { _, item ->
                     Item(item = item, onItemClick = onItemClick)

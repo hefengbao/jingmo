@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @OptIn(ExperimentalMaterial3Api::class)

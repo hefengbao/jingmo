@@ -36,8 +36,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
-import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackShowPanel
 import kotlin.math.abs
@@ -62,7 +62,7 @@ fun ChineseWisecrackIndexRoute(
         onCaptureClick = onCaptureClick,
         onSearchClick = onSearchClick,
         chineseCrack = chineseWisecrack,
-        chineseWisecrackCollectionEntity = chineseWisecrackCollectionEntity,
+        wisecrackCollectionEntity = chineseWisecrackCollectionEntity,
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
@@ -81,8 +81,8 @@ private fun ChineseWisecrackIndexScreen(
     onBookmarksClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     onSearchClick: () -> Unit,
-    chineseCrack: ChineseWisecrackWithBookmark?,
-    chineseWisecrackCollectionEntity: ChineseWisecrackCollectionEntity?,
+    chineseCrack: WisecrackEntity?,
+    wisecrackCollectionEntity: WisecrackCollectionEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
@@ -123,7 +123,7 @@ private fun ChineseWisecrackIndexScreen(
                         )
                     }
                     chineseCrack?.let { entity ->
-                        if (chineseWisecrackCollectionEntity == null) {
+                        if (wisecrackCollectionEntity == null) {
                             IconButton(onClick = { setCollect(entity.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,

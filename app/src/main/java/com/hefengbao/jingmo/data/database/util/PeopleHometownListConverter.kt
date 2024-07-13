@@ -10,13 +10,13 @@
 package com.hefengbao.jingmo.data.database.util
 
 import androidx.room.TypeConverter
-import com.hefengbao.jingmo.data.model.PeopleHometown
+import com.hefengbao.jingmo.data.model.classicalliterature.people.Hometown
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class PeopleHometownListConverter {
     @TypeConverter
-    fun listToString(list: List<PeopleHometown>?): String? {
+    fun listToString(list: List<Hometown>?): String? {
         return if (list == null) {
             null
         } else {
@@ -25,7 +25,7 @@ class PeopleHometownListConverter {
     }
 
     @TypeConverter
-    fun stringToList(str: String?): List<PeopleHometown>? {
+    fun stringToList(str: String?): List<Hometown>? {
         return if (str == null) {
             null
         } else {

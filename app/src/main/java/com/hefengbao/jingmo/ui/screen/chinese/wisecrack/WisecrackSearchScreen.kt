@@ -25,7 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
@@ -48,7 +48,7 @@ fun ChineseWisecrackSearchRoute(
 private fun ChineseWisecrackSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    list: List<ChineseWisecrackEntity>,
+    list: List<WisecrackEntity>,
     onSearch: (String) -> Unit,
     onItemClick: (id: Int) -> Unit
 ) {

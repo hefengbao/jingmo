@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.model.CharacterStroke
+import com.hefengbao.jingmo.data.model.chinese.character.Stroke
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -44,7 +44,7 @@ private fun CharacterStrokeIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (String, String) -> Unit,
-    strokes: List<CharacterStroke>
+    strokes: List<Stroke>
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "笔画查询") {
         LazyVerticalGrid(
@@ -55,7 +55,7 @@ private fun CharacterStrokeIndexScreen(
         ) {
             itemsIndexed(
                 items = strokes
-            ) { _: Int, item: CharacterStroke ->
+            ) { _: Int, item: Stroke ->
                 Text(
                     text = item.label,
                     modifier = Modifier

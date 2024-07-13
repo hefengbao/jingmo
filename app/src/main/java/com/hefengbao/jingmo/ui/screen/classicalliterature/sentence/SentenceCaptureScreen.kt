@@ -26,9 +26,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
-import com.hefengbao.jingmo.data.model.ChineseColor
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun SentenceCaptureRoute(
@@ -36,7 +36,7 @@ fun SentenceCaptureRoute(
     onBackClick: () -> Unit
 ) {
     val poemSentence by viewModel.poemSentence.collectAsState(initial = null)
-    val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
+    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
     val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {
@@ -61,7 +61,7 @@ private fun SentenceCaptureScreen(
     onColorChange: (Color) -> Unit,
     defaultBackgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    poemSentence: PoemSentenceEntity?,
+    poemSentence: SentenceEntity?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(

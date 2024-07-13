@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.idiom
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.repository.IdiomRepository
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -36,7 +36,7 @@ class IdiomSearchViewModel @Inject constructor(
         .debounce(200)
         .distinctUntilChanged()
         .flatMapLatest {
-            idiomRepository.searchSimpleIdiomInfoList(it)
+            idiomRepository.search(it)
         }
         .cachedIn(viewModelScope)
 }

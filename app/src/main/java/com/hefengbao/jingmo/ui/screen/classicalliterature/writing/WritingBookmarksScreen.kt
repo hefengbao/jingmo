@@ -27,7 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.hefengbao.jingmo.data.database.model.WritingBookmarkSimpleInfo
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -49,7 +49,7 @@ fun WritingBookmarksRoute(
 private fun WritingBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    writings: LazyPagingItems<WritingBookmarkSimpleInfo>,
+    writings: LazyPagingItems<WritingEntity>,
     onItemClick: (id: Int) -> Unit
 ) {
     SimpleScaffold(
@@ -73,7 +73,7 @@ private fun WritingBookmarksScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = entity.title,
+                            text = entity.title.content,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             style = MaterialTheme.typography.bodyLarge

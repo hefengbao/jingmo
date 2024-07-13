@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.util.ClipboardUtil
-import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 

@@ -30,7 +30,7 @@ import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.hefengbao.jingmo.data.repository.WritingRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

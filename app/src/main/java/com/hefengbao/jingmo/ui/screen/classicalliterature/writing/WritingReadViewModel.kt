@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.WritingCollectionEntity
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.WritingRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

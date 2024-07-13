@@ -42,7 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
@@ -74,7 +74,7 @@ private fun ChineseKnowledgeIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
-    chineseKnowledge: ChineseKnowledgeEntity?,
+    chineseKnowledge: KnowledgeEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,

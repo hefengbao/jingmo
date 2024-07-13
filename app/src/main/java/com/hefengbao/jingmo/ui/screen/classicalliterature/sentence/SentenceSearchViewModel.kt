@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SentenceSearchViewModel @Inject constructor(
-    private val repository: PoemSentenceRepository
+    private val repository: SentenceRepository
 ) : ViewModel() {
     private val query = MutableStateFlow("")
     fun search(query: String) {
@@ -36,6 +36,6 @@ class SentenceSearchViewModel @Inject constructor(
     val sentences = query.debounce(200)
         .distinctUntilChanged()
         .filter { return@filter it.isNotEmpty() }
-        .flatMapLatest { repository.searchSentencesList(it) }
+        .flatMapLatest { repository.search(it) }
         .cachedIn(viewModelScope)
 }

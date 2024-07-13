@@ -25,7 +25,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable

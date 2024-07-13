@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.PeopleEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable

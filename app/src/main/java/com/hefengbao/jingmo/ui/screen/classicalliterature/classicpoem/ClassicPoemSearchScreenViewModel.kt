@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.ClassicPoemEntity
-import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.ClassicPoemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

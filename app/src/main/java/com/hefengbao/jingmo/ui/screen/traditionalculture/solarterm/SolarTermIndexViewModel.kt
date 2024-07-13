@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.traditionalculture.solarterm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.model.SolarTerm
-import com.hefengbao.jingmo.data.repository.SolarTermsRepository
+import com.hefengbao.jingmo.data.model.traditionalculture.SolarTerm
+import com.hefengbao.jingmo.data.repository.traditionalculture.SolarTermsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -27,7 +27,7 @@ class SolarTermIndexViewModel @Inject constructor(
     val solarTerms: SharedFlow<List<SolarTerm>> = _solarTerms
     fun getList() {
         viewModelScope.launch {
-            _solarTerms.value = repository.getList()
+            _solarTerms.value = repository.list()
         }
     }
 }

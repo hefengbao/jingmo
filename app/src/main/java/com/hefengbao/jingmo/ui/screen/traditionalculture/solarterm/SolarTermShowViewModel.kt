@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.traditionalculture.solarterm
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.hefengbao.jingmo.data.model.SolarTerm
-import com.hefengbao.jingmo.data.repository.SolarTermsRepository
+import com.hefengbao.jingmo.data.model.traditionalculture.SolarTerm
+import com.hefengbao.jingmo.data.repository.traditionalculture.SolarTermsRepository
 import com.hefengbao.jingmo.ui.screen.traditionalculture.solarterm.nav.SolarTermShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +30,6 @@ class SolarTermShowViewModel @Inject constructor(
     val solarTerm: SharedFlow<SolarTerm?> = _solarTerm
 
     init {
-        _solarTerm.value = repository.getList().first { args.solarTermId.toInt() == it.id }
+        _solarTerm.value = repository.list().first { args.solarTermId.toInt() == it.id }
     }
 }

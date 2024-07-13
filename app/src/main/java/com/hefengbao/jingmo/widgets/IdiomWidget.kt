@@ -29,7 +29,7 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.hefengbao.jingmo.data.repository.IdiomRepository
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

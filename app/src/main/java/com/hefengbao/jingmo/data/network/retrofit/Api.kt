@@ -9,19 +9,19 @@
 
 package com.hefengbao.jingmo.data.network.retrofit
 
-import com.hefengbao.jingmo.data.model.ChineseExpressionWrapper
-import com.hefengbao.jingmo.data.model.ChineseKnowledge
-import com.hefengbao.jingmo.data.model.ChineseWisecrack
-import com.hefengbao.jingmo.data.model.ClassicPoem
 import com.hefengbao.jingmo.data.model.Dataset
-import com.hefengbao.jingmo.data.model.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.IdiomWrapper
-import com.hefengbao.jingmo.data.model.Lyric
-import com.hefengbao.jingmo.data.model.PeopleWrapper
-import com.hefengbao.jingmo.data.model.PoemSentence
-import com.hefengbao.jingmo.data.model.Riddle
-import com.hefengbao.jingmo.data.model.TongueTwister
-import com.hefengbao.jingmo.data.model.WritingWrapper
+import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
+import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
+import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
+import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
+import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
+import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.Riddle
+import com.hefengbao.jingmo.data.model.chinese.TongueTwister
+import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
+import com.hefengbao.jingmo.data.model.classicalliterature.PeopleWrapper
+import com.hefengbao.jingmo.data.model.classicalliterature.PoemSentence
+import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -33,7 +33,7 @@ interface Api {
     @GET("expressions_{page}.json")
     suspend fun chineseExpressions(
         @Path("page") page: Int
-    ): ChineseExpressionWrapper
+    ): ExpressionWrapper
 
     @GET("chinese_knowledge.json")
     suspend fun chineseKnowledge(): List<ChineseKnowledge>

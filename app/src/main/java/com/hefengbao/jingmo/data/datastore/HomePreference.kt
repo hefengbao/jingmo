@@ -38,46 +38,45 @@ class HomePreference(
 ) {
     val homeItem: Flow<HomeItem> = context.home.data.map {
         HomeItem(
-            classicPoem = it[PREF_CLASSIC_POEM] ?: true,
-            writing = it[PREF_WRITING] ?: true,
-            poemSentence = it[PREF_POEM_SENTENCE] ?: true,
-            idiom = it[PREF_IDIOM] ?: true,
-            chineseWisecrack = it[PREF_CHINESE_WISECRACK] ?: true,
-            tongueTwister = it[PREF_TONGUE_TWISTER] ?: true,
-            festival = it[PREF_FESTIVAL] ?: true,
-            solarTerm = it[PREF_SOLAR_TERM] ?: true,
-            chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
-            people = it[PREF_PEOPLE] ?: true,
-            chineseColor = it[PREF_CHINESE_COLOR] ?: true,
+            classicalLiteratureClassicPoem = it[PREF_CLASSICAL_LITERATURE_CLASSIC_POEM] ?: true,
+            classicalLiteraturePeople = it[PREF_CLASSICAL_LITERATURE_PEOPLE] ?: true,
+            classicalLiteratureSentence = it[PREF_CLASSICAL_LITERATURE_SENTENCE] ?: true,
+            classicalLiteratureWriting = it[PREF_CLASSICAL_LITERATURE_WRITING] ?: true,
             chineseCharacter = it[PREF_CHINESE_CHARACTER] ?: true,
             chineseExpression = it[PREF_CHINESE_EXPRESSION] ?: true,
+            chineseIdiom = it[PREF_CHINESE_IDIOM] ?: true,
+            chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
+            chineseLyric = it[PREF_CHINESE_LYRIC] ?: true,
+            chineseTongueTwister = it[PREF_CHINESE_TONGUE_TWISTER] ?: true,
+            chineseWisecrack = it[PREF_CHINESE_WISECRACK] ?: true,
+            traditionalCultureColor = it[PREF_TRADITIONAL_CULTURE_COLOR] ?: true,
+            traditionalCultureFestival = it[PREF_TRADITIONAL_CULTURE_FESTIVAL] ?: true,
+            traditionalCultureSolarTerm = it[PREF_TRADITIONAL_CULTURE_SOLAR_TERM] ?: true,
         )
     }
 
-    suspend fun setClassicPoem(checked: Boolean) = setBoolean(context, PREF_CLASSIC_POEM, checked)
+    suspend fun setClassicalLiteratureClassicPoem(checked: Boolean) =
+        setBoolean(context, PREF_CLASSICAL_LITERATURE_CLASSIC_POEM, checked)
 
-    suspend fun setWriting(checked: Boolean) = setBoolean(context, PREF_WRITING, checked)
+    suspend fun setClassicalLiteratureWriting(checked: Boolean) =
+        setBoolean(context, PREF_CLASSICAL_LITERATURE_WRITING, checked)
 
-    suspend fun setPoemSentence(checked: Boolean) = setBoolean(context, PREF_POEM_SENTENCE, checked)
+    suspend fun setClassicalLiteratureSentence(checked: Boolean) =
+        setBoolean(context, PREF_CLASSICAL_LITERATURE_SENTENCE, checked)
 
-    suspend fun setIdiom(checked: Boolean) = setBoolean(context, PREF_IDIOM, checked)
+    suspend fun setClassicalLiteraturePeople(checked: Boolean) =
+        setBoolean(context, PREF_CLASSICAL_LITERATURE_PEOPLE, checked)
 
-    suspend fun setChineseWisecrack(checked: Boolean) =
-        setBoolean(context, PREF_CHINESE_WISECRACK, checked)
 
-    suspend fun setTongueTwister(checked: Boolean) =
-        setBoolean(context, PREF_TONGUE_TWISTER, checked)
+    suspend fun setTraditionalCultureFestival(checked: Boolean) =
+        setBoolean(context, PREF_TRADITIONAL_CULTURE_FESTIVAL, checked)
 
-    suspend fun setFestival(checked: Boolean) = setBoolean(context, PREF_FESTIVAL, checked)
+    suspend fun setTraditionalCultureSolarTerm(checked: Boolean) =
+        setBoolean(context, PREF_TRADITIONAL_CULTURE_SOLAR_TERM, checked)
 
-    suspend fun setSolarTerm(checked: Boolean) = setBoolean(context, PREF_SOLAR_TERM, checked)
+    suspend fun setTraditionalCultureColor(checked: Boolean) =
+        setBoolean(context, PREF_TRADITIONAL_CULTURE_COLOR, checked)
 
-    suspend fun setChineseKnowledge(checked: Boolean) =
-        setBoolean(context, PREF_CHINESE_KNOWLEDGE, checked)
-
-    suspend fun setPeople(checked: Boolean) = setBoolean(context, PREF_PEOPLE, checked)
-
-    suspend fun setChineseColor(checked: Boolean) = setBoolean(context, PREF_CHINESE_COLOR, checked)
 
     suspend fun setChineseCharacter(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_CHARACTER, checked)
@@ -85,19 +84,48 @@ class HomePreference(
     suspend fun setChineseExpression(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_EXPRESSION, checked)
 
+    suspend fun setChineseIdiom(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_IDIOM, checked)
+
+    suspend fun setChineseKnowledge(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_KNOWLEDGE, checked)
+
+    suspend fun setChineseLyric(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_LYRIC, checked)
+
+    suspend fun setChineseTongueTwister(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_TONGUE_TWISTER, checked)
+
+    suspend fun setChineseWisecrack(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_WISECRACK, checked)
+
     companion object {
-        private val PREF_CLASSIC_POEM = booleanPreferencesKey("key_classic_poem")
-        private val PREF_WRITING = booleanPreferencesKey("key_writing")
-        private val PREF_POEM_SENTENCE = booleanPreferencesKey("key_poem_sentence")
-        private val PREF_IDIOM = booleanPreferencesKey("key_idiom")
-        private val PREF_CHINESE_WISECRACK = booleanPreferencesKey("key_chinese_wisecrack")
-        private val PREF_TONGUE_TWISTER = booleanPreferencesKey("key_tongue_twister")
-        private val PREF_FESTIVAL = booleanPreferencesKey("key_festival")
-        private val PREF_SOLAR_TERM = booleanPreferencesKey("key_solar_term")
-        private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
-        private val PREF_PEOPLE = booleanPreferencesKey("key_chinese_knowledge")
-        private val PREF_CHINESE_COLOR = booleanPreferencesKey("key_chinese_color")
+        //古诗文 classical_literature CLASSICAL_LITERATURE
+        private val PREF_CLASSICAL_LITERATURE_CLASSIC_POEM =
+            booleanPreferencesKey("key_classical_literature_classic_poem")
+        private val PREF_CLASSICAL_LITERATURE_PEOPLE =
+            booleanPreferencesKey("key_classical_literature_people")
+        private val PREF_CLASSICAL_LITERATURE_SENTENCE =
+            booleanPreferencesKey("key_classical_literature_sentence")
+        private val PREF_CLASSICAL_LITERATURE_WRITING =
+            booleanPreferencesKey("key_classical_literature_writing")
+
+        //传统文化 traditional_culture TRADITIONAL_CULTURE
+        private val PREF_TRADITIONAL_CULTURE_COLOR =
+            booleanPreferencesKey("key_traditional_culture_color")
+        private val PREF_TRADITIONAL_CULTURE_FESTIVAL =
+            booleanPreferencesKey("key_traditional_culture_festival")
+        private val PREF_TRADITIONAL_CULTURE_SOLAR_TERM =
+            booleanPreferencesKey("key_traditional_culture_solar_term")
+
+        // 汉语
         private val PREF_CHINESE_CHARACTER = booleanPreferencesKey("key_chinese_character")
         private val PREF_CHINESE_EXPRESSION = booleanPreferencesKey("key_chinese_expression")
+        private val PREF_CHINESE_IDIOM = booleanPreferencesKey("key_chinese_idiom")
+        private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
+        private val PREF_CHINESE_LYRIC = booleanPreferencesKey("key_chinese_lyric")
+        private val PREF_CHINESE_TONGUE_TWISTER =
+            booleanPreferencesKey("key_chinese_tongue_twister")
+        private val PREF_CHINESE_WISECRACK = booleanPreferencesKey("key_chinese_wisecrack")
     }
 }

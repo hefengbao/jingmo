@@ -76,12 +76,12 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.util.FileUtil
-import com.hefengbao.jingmo.data.model.ChineseColor
 import dev.shreyaspatil.capturable.Capturable
 import dev.shreyaspatil.capturable.controller.rememberCaptureController
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class,

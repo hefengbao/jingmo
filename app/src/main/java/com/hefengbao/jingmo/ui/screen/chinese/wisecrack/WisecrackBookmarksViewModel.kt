@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
+import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WisecrackBookmarksViewModel @Inject constructor(
-    private val repository: ChineseWisecrackRepository
+    private val repository: WisecrackRepository
 ) : ViewModel() {
     val bookmarks = repository.collections().stateIn(
         scope = viewModelScope,

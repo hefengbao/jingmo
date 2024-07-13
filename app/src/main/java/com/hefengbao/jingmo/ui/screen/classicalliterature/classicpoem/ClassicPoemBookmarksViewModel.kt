@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.ClassicPoemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -21,12 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 
 @Composable
 fun ChineseWisecrackShowPanel(
     modifier: Modifier = Modifier,
-    entity: ChineseWisecrackWithBookmark,
+    entity: WisecrackEntity,
 ) {
     Column(
         modifier = modifier

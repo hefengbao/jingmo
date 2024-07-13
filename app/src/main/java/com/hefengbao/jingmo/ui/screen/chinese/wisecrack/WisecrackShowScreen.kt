@@ -26,8 +26,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
-import com.hefengbao.jingmo.data.database.model.ChineseWisecrackWithBookmark
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackShowPanel
 
@@ -45,7 +45,7 @@ fun ChineseWisecrackShowRoute(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
         chineseCrack = chineseWisecrack,
-        chineseWisecrackCollectionEntity = chineseWisecrackCollectionEntity,
+        wisecrackCollectionEntity = chineseWisecrackCollectionEntity,
         setUncollect = { viewModel.setUncollect(it) },
         setCollect = { viewModel.setCollect(it) },
     )
@@ -56,8 +56,8 @@ private fun ChineseWisecrackShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    chineseCrack: ChineseWisecrackWithBookmark?,
-    chineseWisecrackCollectionEntity: ChineseWisecrackCollectionEntity?,
+    chineseCrack: WisecrackEntity?,
+    wisecrackCollectionEntity: WisecrackCollectionEntity?,
     setUncollect: (Int) -> Unit,
     setCollect: (Int) -> Unit,
 ) {
@@ -77,7 +77,7 @@ private fun ChineseWisecrackShowScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        if (chineseWisecrackCollectionEntity == null) {
+                        if (wisecrackCollectionEntity == null) {
                             IconButton(onClick = { setCollect(entity.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,

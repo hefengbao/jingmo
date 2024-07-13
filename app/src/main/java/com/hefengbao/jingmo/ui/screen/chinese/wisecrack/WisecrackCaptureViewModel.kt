@@ -13,10 +13,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.model.AppStatus
-import com.hefengbao.jingmo.data.model.ChineseColor
-import com.hefengbao.jingmo.data.repository.ChineseColorRepository
-import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
+import com.hefengbao.jingmo.data.model.traditionalculture.Color
+import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
+import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.ChineseWisecrackCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,8 +30,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WisecrackCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val chineseWisecrackRepository: ChineseWisecrackRepository,
-    private val chineseColorRepository: ChineseColorRepository,
+    private val wisecrackRepository: WisecrackRepository,
+    private val colorRepository: ColorRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
     private val args: ChineseWisecrackCaptureArgs = ChineseWisecrackCaptureArgs(savedStateHandle)
@@ -45,18 +45,18 @@ class WisecrackCaptureViewModel @Inject constructor(
     }
 
     val chineseWisecrack =
-        chineseWisecrackRepository.getChineseCrack(args.chineseWisecrackId.toInt())
+        wisecrackRepository.get(args.chineseWisecrackId.toInt())
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = null
             )
 
-    private val _chineseColors: MutableStateFlow<List<ChineseColor>> = MutableStateFlow(emptyList())
-    val chineseColors: SharedFlow<List<ChineseColor>> = _chineseColors
+    private val _Colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
+    val colors: SharedFlow<List<Color>> = _Colors
     fun getColors() {
         viewModelScope.launch {
-            _chineseColors.value = chineseColorRepository.getList()
+            _Colors.value = colorRepository.list()
         }
     }
 

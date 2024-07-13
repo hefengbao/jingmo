@@ -27,7 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.hefengbao.jingmo.data.database.model.SimpleIdiomInfo
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
@@ -53,7 +53,7 @@ private fun IdiomSearchScreen(
     modifier: Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    idioms: LazyPagingItems<SimpleIdiomInfo>,
+    idioms: LazyPagingItems<IdiomEntity>,
     onSearch: (String) -> Unit,
 ) {
     var query by rememberSaveable {

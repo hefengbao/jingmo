@@ -29,7 +29,7 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,7 +37,7 @@ import javax.inject.Inject
 class PoemSentenceWidgetReceiver : GlanceAppWidgetReceiver() {
 
     @Inject
-    lateinit var repository: PoemSentenceRepository
+    lateinit var repository: SentenceRepository
 
     override val glanceAppWidget: GlanceAppWidget
         get() = PoemSentenceWidget(repository)
@@ -45,7 +45,7 @@ class PoemSentenceWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 
 class PoemSentenceWidget(
-    val repository: PoemSentenceRepository
+    val repository: SentenceRepository
 ) : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {

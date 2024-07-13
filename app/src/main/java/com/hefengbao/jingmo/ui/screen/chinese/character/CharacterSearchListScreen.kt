@@ -17,14 +17,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -33,10 +32,6 @@ fun CharacterSearchListRoute(
     onBackClick: () -> Unit,
     onItemClick: (String) -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getCharacters()
-    }
-
     val characters by viewModel.characters.collectAsState(initial = emptyList())
 
     CharacterSearchListScreen(

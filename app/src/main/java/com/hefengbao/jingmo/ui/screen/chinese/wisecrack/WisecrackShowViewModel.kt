@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.ChineseWisecrackCollectionEntity
-import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.ChineseWisecrackSearchShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WisecrackShowViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val chineseWisecrackRepository: ChineseWisecrackRepository
+    private val wisecrackRepository: WisecrackRepository
 ) : ViewModel() {
 
     private val args = ChineseWisecrackSearchShowArgs(savedStateHandle)
@@ -36,7 +36,7 @@ class WisecrackShowViewModel @Inject constructor(
     var id = MutableStateFlow(args.id.toInt())
 
     val wisecrack = id.flatMapLatest {
-        chineseWisecrackRepository.getChineseCrack(it)
+        wisecrackRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -44,7 +44,7 @@ class WisecrackShowViewModel @Inject constructor(
     )
 
     val chineseWisecrackCollectionEntity = id.flatMapLatest {
-        chineseWisecrackRepository.isCollect(it)
+        wisecrackRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -53,13 +53,13 @@ class WisecrackShowViewModel @Inject constructor(
 
     fun setUncollect(id: Int) {
         viewModelScope.launch {
-            chineseWisecrackRepository.uncollect(id)
+            wisecrackRepository.uncollect(id)
         }
     }
 
     fun setCollect(id: Int) {
         viewModelScope.launch {
-            chineseWisecrackRepository.collect(ChineseWisecrackCollectionEntity(id))
+            wisecrackRepository.collect(WisecrackCollectionEntity(id))
         }
     }
 }

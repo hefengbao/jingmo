@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.database.model.SimpleWritingInfo
-import com.hefengbao.jingmo.data.repository.PeopleRepository
-import com.hefengbao.jingmo.data.repository.WritingRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.PeopleRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -38,7 +38,7 @@ class WritingSearchViewModel @Inject constructor(
     val recommendList: SharedFlow<List<String>> = _recommendList
 
     init {
-        _recommendList.value = peopleRepository.getRecommendList()
+        _recommendList.value = peopleRepository.recommendList()
     }
 
     private val queryStateFlow = MutableStateFlow("")
@@ -49,7 +49,7 @@ class WritingSearchViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    val writings: Flow<PagingData<SimpleWritingInfo>> = queryStateFlow.debounce(200)
+    val writings: Flow<PagingData<WritingEntity>> = queryStateFlow.debounce(200)
         .distinctUntilChanged()
         .filter {
             return@filter it.isNotEmpty()

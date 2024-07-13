@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.traditionalculture.festival
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.model.Festival
-import com.hefengbao.jingmo.data.repository.FestivalRepository
+import com.hefengbao.jingmo.data.model.traditionalculture.Festival
+import com.hefengbao.jingmo.data.repository.traditionalculture.FestivalRepository
 import com.hefengbao.jingmo.ui.screen.traditionalculture.festival.nav.FestivalShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +33,7 @@ class FestivalViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _festival.value = repository.getList().first {
+            _festival.value = repository.list().first {
                 it.id == args.festivalId.toInt()
             }
         }

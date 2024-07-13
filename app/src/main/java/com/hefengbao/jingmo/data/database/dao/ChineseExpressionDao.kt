@@ -14,22 +14,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChineseExpressionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: ChineseExpressionEntity)
+    suspend fun insert(entity: ExpressionEntity)
 
     @Query("select * from chinese_expressions where id = (select e.id from chinese_expressions e order by random() limit 1) limit 1")
-    fun random(): Flow<ChineseExpressionEntity>
+    fun random(): Flow<ExpressionEntity>
 
     @Query("select * from chinese_expressions where id = :id")
-    fun get(id: Int): Flow<ChineseExpressionEntity>
+    fun get(id: Int): Flow<ExpressionEntity>
 
     @Query("select * from chinese_expressions where word like :query")
-    fun search(query: String): PagingSource<Int, ChineseExpressionEntity>
+    fun search(query: String): PagingSource<Int, ExpressionEntity>
 
     @Query("select count(*) from chinese_expressions")
     fun total(): Flow<Int>

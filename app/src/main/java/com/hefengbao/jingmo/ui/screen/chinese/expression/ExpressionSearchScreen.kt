@@ -25,7 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
@@ -49,7 +49,7 @@ private fun ChineseExpressionSearchScreen(
     onBackClick: () -> Unit,
     onSearch: (String) -> Unit,
     onItemClick: (Int) -> Unit,
-    expressions: LazyPagingItems<ChineseExpressionEntity>
+    expressions: LazyPagingItems<ExpressionEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -65,7 +65,7 @@ private fun ChineseExpressionSearchScreen(
         ) {
             itemsIndexed(
                 items = expressions
-            ) { _: Int, entity: ChineseExpressionEntity? ->
+            ) { _: Int, entity: ExpressionEntity? ->
                 entity?.let {
                     Text(
                         text = it.word,

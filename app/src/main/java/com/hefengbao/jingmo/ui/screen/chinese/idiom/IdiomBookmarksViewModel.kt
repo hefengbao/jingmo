@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.idiom
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.repository.IdiomRepository
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

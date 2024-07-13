@@ -9,46 +9,46 @@
 
 package com.hefengbao.jingmo.di
 
-import com.hefengbao.jingmo.data.repository.ChineseCharacterRepository
-import com.hefengbao.jingmo.data.repository.ChineseCharacterRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ChineseColorRepository
-import com.hefengbao.jingmo.data.repository.ChineseColorRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ChineseExpressionRepository
-import com.hefengbao.jingmo.data.repository.ChineseExpressionRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepository
-import com.hefengbao.jingmo.data.repository.ChineseKnowledgeRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepository
-import com.hefengbao.jingmo.data.repository.ChineseWisecrackRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ClassicPoemRepository
-import com.hefengbao.jingmo.data.repository.ClassicPoemRepositoryImpl
-import com.hefengbao.jingmo.data.repository.FestivalRepository
-import com.hefengbao.jingmo.data.repository.FestivalRepositoryImpl
 import com.hefengbao.jingmo.data.repository.HomeRepository
 import com.hefengbao.jingmo.data.repository.HomeRepositoryImpl
-import com.hefengbao.jingmo.data.repository.IdiomRepository
-import com.hefengbao.jingmo.data.repository.IdiomRepositoryImpl
-import com.hefengbao.jingmo.data.repository.ImportRepository
-import com.hefengbao.jingmo.data.repository.ImportRepositoryImpl
 import com.hefengbao.jingmo.data.repository.LinksRepository
 import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
-import com.hefengbao.jingmo.data.repository.LyricRepository
-import com.hefengbao.jingmo.data.repository.LyricRepositoryImpl
-import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepository
-import com.hefengbao.jingmo.data.repository.NetworkDatasourceRepositoryImpl
-import com.hefengbao.jingmo.data.repository.PeopleRepository
-import com.hefengbao.jingmo.data.repository.PeopleRepositoryImpl
-import com.hefengbao.jingmo.data.repository.PoemSentenceRepository
-import com.hefengbao.jingmo.data.repository.PoemSentenceRepositoryImpl
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepositoryImpl
-import com.hefengbao.jingmo.data.repository.RiddleRepository
-import com.hefengbao.jingmo.data.repository.RiddleRepositoryImpl
-import com.hefengbao.jingmo.data.repository.SolarTermsRepository
-import com.hefengbao.jingmo.data.repository.SolarTermsRepositoryImpl
-import com.hefengbao.jingmo.data.repository.TongueTwisterRepository
-import com.hefengbao.jingmo.data.repository.TongueTwisterRepositoryImpl
-import com.hefengbao.jingmo.data.repository.WritingRepository
-import com.hefengbao.jingmo.data.repository.WritingRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
+import com.hefengbao.jingmo.data.repository.chinese.CharacterRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepository
+import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
+import com.hefengbao.jingmo.data.repository.chinese.IdiomRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
+import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
+import com.hefengbao.jingmo.data.repository.chinese.LyricRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.RiddleRepository
+import com.hefengbao.jingmo.data.repository.chinese.RiddleRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.TongueTwisterRepository
+import com.hefengbao.jingmo.data.repository.chinese.TongueTwisterRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
+import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepositoryImpl
+import com.hefengbao.jingmo.data.repository.classicalliterature.ClassicPoemRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.ClassicPoemRepositoryImpl
+import com.hefengbao.jingmo.data.repository.classicalliterature.PeopleRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.PeopleRepositoryImpl
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepositoryImpl
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepositoryImpl
+import com.hefengbao.jingmo.data.repository.settings.ImportRepository
+import com.hefengbao.jingmo.data.repository.settings.ImportRepositoryImpl
+import com.hefengbao.jingmo.data.repository.settings.NetworkDatasourceRepository
+import com.hefengbao.jingmo.data.repository.settings.NetworkDatasourceRepositoryImpl
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepositoryImpl
+import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
+import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepositoryImpl
+import com.hefengbao.jingmo.data.repository.traditionalculture.FestivalRepository
+import com.hefengbao.jingmo.data.repository.traditionalculture.FestivalRepositoryImpl
+import com.hefengbao.jingmo.data.repository.traditionalculture.SolarTermsRepository
+import com.hefengbao.jingmo.data.repository.traditionalculture.SolarTermsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -59,28 +59,28 @@ import dagger.hilt.components.SingletonComponent
 interface DataModule {
     @Binds
     fun bindsChineseCharacterRepository(
-        chineseCharacterRepository: ChineseCharacterRepositoryImpl
-    ): ChineseCharacterRepository
+        repository: CharacterRepositoryImpl
+    ): CharacterRepository
 
     @Binds
     fun bindsChineseColorRepository(
-        chineseColorRepository: ChineseColorRepositoryImpl
-    ): ChineseColorRepository
+        chineseColorRepository: ColorRepositoryImpl
+    ): ColorRepository
 
     @Binds
     fun bindsChineseExpressionRepository(
-        chineseExpressionRepositoryImpl: ChineseExpressionRepositoryImpl
-    ): ChineseExpressionRepository
+        chineseExpressionRepositoryImpl: ExpressionRepositoryImpl
+    ): ExpressionRepository
 
     @Binds
     fun bindsChineseKnowledgeRepository(
-        chineseKnowledgeRepositoryImpl: ChineseKnowledgeRepositoryImpl
-    ): ChineseKnowledgeRepository
+        chineseKnowledgeRepositoryImpl: KnowledgeRepositoryImpl
+    ): KnowledgeRepository
 
     @Binds
     fun bindsChineseWisecrackRepository(
-        chineseCrackRepository: ChineseWisecrackRepositoryImpl
-    ): ChineseWisecrackRepository
+        chineseCrackRepository: WisecrackRepositoryImpl
+    ): WisecrackRepository
 
     @Binds
     fun bindsClassicPoemRepository(
@@ -129,8 +129,8 @@ interface DataModule {
 
     @Binds
     fun bindsPoemSentenceRepository(
-        poemSentenceRepository: PoemSentenceRepositoryImpl
-    ): PoemSentenceRepository
+        poemSentenceRepository: SentenceRepositoryImpl
+    ): SentenceRepository
 
     @Binds
     fun bindsPreferenceRepository(
@@ -153,7 +153,7 @@ interface DataModule {
     ): TongueTwisterRepository
 
     @Binds
-    fun bindsWritingRepository(
+    fun bindsClassicalLiteratureWritingRepository(
         writingRepositoryImpl: WritingRepositoryImpl
     ): WritingRepository
 }

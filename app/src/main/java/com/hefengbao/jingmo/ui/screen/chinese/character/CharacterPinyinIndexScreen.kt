@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.model.CharacterPinyin
+import com.hefengbao.jingmo.data.model.chinese.character.Pinyin
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -52,7 +52,7 @@ private fun CharacterPinyinIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (String, String) -> Unit,
-    pinyins: List<CharacterPinyin>
+    pinyins: List<Pinyin>
 ) {
     val configuration = LocalConfiguration.current
 

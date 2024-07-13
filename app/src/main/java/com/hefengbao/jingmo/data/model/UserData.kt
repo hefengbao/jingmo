@@ -9,6 +9,9 @@
 
 package com.hefengbao.jingmo.data.model
 
+import com.hefengbao.jingmo.data.model.theme.DarkThemeConfig
+import com.hefengbao.jingmo.data.model.theme.ThemeBrand
+
 data class UserData(
     val themeBrand: ThemeBrand,
     val darkThemeConfig: DarkThemeConfig,

@@ -12,8 +12,8 @@ package com.hefengbao.jingmo.ui.screen.chinese.character
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.DictionaryEntity
-import com.hefengbao.jingmo.data.repository.ChineseCharacterRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
+import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.CharacterSearchListArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterSearchListViewModel @Inject constructor(
-    private val repository: ChineseCharacterRepository,
+    private val repository: CharacterRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -36,7 +36,8 @@ class CharacterSearchListViewModel @Inject constructor(
     private val _characters: MutableStateFlow<List<DictionaryEntity>> =
         MutableStateFlow(emptyList())
     val characters: SharedFlow<List<DictionaryEntity>> = _characters
-    fun getCharacters() {
+
+    init {
         viewModelScope.launch {
             when (type) {
                 "pinyin" -> {

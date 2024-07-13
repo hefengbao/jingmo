@@ -37,7 +37,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.ChineseKnowledgeEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
@@ -60,7 +60,7 @@ fun ChineseKnowledgeSearchRoute(
 private fun ChineseKnowledgeSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    chineseKnowLedgeList: List<ChineseKnowledgeEntity>,
+    chineseKnowLedgeList: List<KnowledgeEntity>,
     onSearch: (String) -> Unit
 ) {
     var query by rememberSaveable { mutableStateOf("") }
@@ -92,8 +92,8 @@ private fun ChineseKnowledgeSearchScreen(
                 } else {
                     itemsIndexed(
                         items = chineseKnowLedgeList,
-                        key = { _: Int, item: ChineseKnowledgeEntity -> item.id }
-                    ) { _: Int, item: ChineseKnowledgeEntity ->
+                        key = { _: Int, item: KnowledgeEntity -> item.id }
+                    ) { _: Int, item: KnowledgeEntity ->
                         Card(
                             modifier = modifier
                                 .fillMaxWidth()

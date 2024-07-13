@@ -17,13 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.ChineseExpressionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable
 fun ChineseExpressionShowPanel(
     modifier: Modifier = Modifier,
-    entity: ChineseExpressionEntity
+    entity: ExpressionEntity
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),

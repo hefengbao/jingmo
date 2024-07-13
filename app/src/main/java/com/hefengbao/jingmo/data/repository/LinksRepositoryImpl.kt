@@ -13,7 +13,7 @@ import com.hefengbao.jingmo.data.model.Link
 import javax.inject.Inject
 
 class LinksRepositoryImpl @Inject constructor() : LinksRepository {
-    override fun getList(): List<Link> {
+    override fun list(): List<Link> {
         return listOf(
             Link(
                 title = "智慧中小学",

@@ -142,36 +142,39 @@ private fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 content = {
-                    item(
-                        span = { GridItemSpan(2) }
-                    ) {
-                        Title(text = "古诗文")
-                    }
-                    if (homeItem.classicPoem) {
-                        item {
-                            Item(
-                                title = "经典诗文",
-                                onClick = onClassicalLiteratureClassicPoemClick
-                            )
+                    if (homeItem.classicalLiteratureGroup) {
+                        item(
+                            span = { GridItemSpan(2) }
+                        ) {
+                            Title(text = "古诗文")
+                        }
+                        if (homeItem.classicalLiteratureClassicPoem) {
+                            item {
+                                Item(
+                                    title = "经典诗文",
+                                    onClick = onClassicalLiteratureClassicPoemClick
+                                )
+                            }
+                        }
+                        if (homeItem.classicalLiteratureWriting) {
+                            item {
+                                Item(
+                                    title = "诗文",
+                                    onClick = onClassicalLiteratureWritingClick
+                                )
+                            }
+                        }
+                        if (homeItem.classicalLiteratureSentence) {
+                            item {
+                                Item(
+                                    title = "诗文名句",
+                                    onClick = onClassicalLiteratureSentenceClick
+                                )
+                            }
                         }
                     }
-                    if (homeItem.writing) {
-                        item {
-                            Item(
-                                title = "诗文",
-                                onClick = onClassicalLiteratureWritingClick
-                            )
-                        }
-                    }
-                    if (homeItem.poemSentence) {
-                        item {
-                            Item(
-                                title = "诗文名句",
-                                onClick = onClassicalLiteratureSentenceClick
-                            )
-                        }
-                    }
-                    if (homeItem.people) {
+
+                    if (homeItem.classicalLiteraturePeople) {
                         item {
                             Item(
                                 title = "人物",
@@ -180,101 +183,105 @@ private fun HomeScreen(
                         }
                     }
 
-                    item(
-                        span = { GridItemSpan(2) }
-                    ) {
-                        Title(text = "现代汉语")
-                    }
-                    if (homeItem.chineseCharacter) {
-                        item {
-                            Item(
-                                title = "汉字",
-                                onClick = onChineseCharacterClick
-                            )
+                    if (homeItem.chineseGroup) {
+                        item(
+                            span = { GridItemSpan(2) }
+                        ) {
+                            Title(text = "现代汉语")
                         }
-                    }
-                    if (homeItem.chineseExpression) {
-                        item {
-                            Item(
-                                title = "词语",
-                                onClick = onChineseExpressionClick
-                            )
+                        if (homeItem.chineseCharacter) {
+                            item {
+                                Item(
+                                    title = "汉字",
+                                    onClick = onChineseCharacterClick
+                                )
+                            }
                         }
-                    }
-                    if (homeItem.idiom) {
-                        item {
-                            Item(
-                                title = "成语",
-                                onClick = onChineseIdiomClick
-                            )
+                        if (homeItem.chineseExpression) {
+                            item {
+                                Item(
+                                    title = "词语",
+                                    onClick = onChineseExpressionClick
+                                )
+                            }
                         }
-                    }
-                    if (homeItem.chineseWisecrack) {
-                        item {
-                            Item(
-                                title = "歇后语",
-                                onClick = onChineseWisecrackClick
-                            )
+                        if (homeItem.chineseIdiom) {
+                            item {
+                                Item(
+                                    title = "成语",
+                                    onClick = onChineseIdiomClick
+                                )
+                            }
                         }
-                    }
-                    /*item {
-                        Item(
-                            title = "谜语",
-                            onClick = onRiddleClick
-                        )
-                    }*/
-                    if (homeItem.tongueTwister) {
-                        item {
-                            Item(
-                                title = "绕口令",
-                                onClick = onChineseTongueTwisterClick
-                            )
+                        if (homeItem.chineseWisecrack) {
+                            item {
+                                Item(
+                                    title = "歇后语",
+                                    onClick = onChineseWisecrackClick
+                                )
+                            }
                         }
-                    }
-                    if (homeItem.lyric) {
-                        item {
+                        /*item {
                             Item(
-                                title = "歌词",
-                                onClick = onChineseLyricClick
+                                title = "谜语",
+                                onClick = onRiddleClick
                             )
+                        }*/
+                        if (homeItem.chineseTongueTwister) {
+                            item {
+                                Item(
+                                    title = "绕口令",
+                                    onClick = onChineseTongueTwisterClick
+                                )
+                            }
                         }
-                    }
-                    if (homeItem.chineseKnowledge) {
-                        item {
-                            Item(
-                                title = "知识卡片",
-                                onClick = onChineseKnowledgeClick
-                            )
+                        if (homeItem.chineseLyric) {
+                            item {
+                                Item(
+                                    title = "歌词",
+                                    onClick = onChineseLyricClick
+                                )
+                            }
+                        }
+                        if (homeItem.chineseKnowledge) {
+                            item {
+                                Item(
+                                    title = "知识卡片",
+                                    onClick = onChineseKnowledgeClick
+                                )
+                            }
                         }
                     }
 
-                    item(
-                        span = { GridItemSpan(2) }
-                    ) {
-                        Title(text = "传统文化")
-                    }
-                    if (homeItem.festival) {
-                        item {
-                            Item(
-                                title = "节日",
-                                onClick = onTraditionalCultureFestivalClick
-                            )
+                    if (homeItem.traditionalCultureGroup) {
+                        item(
+                            span = { GridItemSpan(2) }
+                        ) {
+                            Title(text = "传统文化")
                         }
-                    }
-                    if (homeItem.solarTerm) {
-                        item {
-                            Item(
-                                title = "节气",
-                                onClick = onTraditionalCultureSolarTermsClick
-                            )
+                        if (homeItem.traditionalCultureFestival) {
+                            item {
+                                Item(
+                                    title = "节日",
+                                    onClick = onTraditionalCultureFestivalClick
+                                )
+                            }
                         }
-                    }
-                    if (homeItem.chineseColor) {
-                        item {
-                            Item(
-                                title = "颜色",
-                                onClick = onTraditionalCultureColorClick
-                            )
+                        if (homeItem.traditionalCultureSolarTerm) {
+                            item {
+                                Item(
+                                    title = "节气",
+                                    onClick = onTraditionalCultureSolarTermsClick
+                                )
+                            }
+                        }
+                        if (homeItem.traditionalCultureColor) {
+                            item {
+                                Item(
+                                    title = "颜色",
+                                    onClick = onTraditionalCultureColorClick
+                                )
+                            }
                         }
                     }
                 }

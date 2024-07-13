@@ -44,8 +44,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
@@ -85,8 +85,8 @@ private fun SentenceIndexScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
     onSearchClick: () -> Unit,
-    sentence: PoemSentenceEntity?,
-    sentenceCollectionEntity: PoemSentenceCollectionEntity?,
+    sentence: SentenceEntity?,
+    sentenceCollectionEntity: SentenceCollectionEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,

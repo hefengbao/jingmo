@@ -11,9 +11,9 @@ package com.hefengbao.jingmo.ui.screen.chinese.riddle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.RiddleEntity
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.RiddleRepository
+import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
+import com.hefengbao.jingmo.data.repository.chinese.RiddleRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -62,7 +62,7 @@ class RiddleIndexViewModel @Inject constructor(
     val riddle: SharedFlow<RiddleEntity?> = _riddle
     fun getRiddle(id: Int) {
         viewModelScope.launch {
-            riddleRepository.getRiddle(id).collectLatest {
+            riddleRepository.get(id).collectLatest {
                 _riddle.value = it
             }
         }

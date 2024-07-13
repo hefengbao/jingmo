@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.data.database.entity.LyricEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 
 @Composable
 fun LyricShowPanel(

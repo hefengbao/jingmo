@@ -28,9 +28,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.IdiomEntity
-import com.hefengbao.jingmo.data.model.ChineseColor
+import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
+import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun IdiomCaptureRoute(
@@ -38,7 +38,7 @@ fun IdiomCaptureRoute(
     onBackClick: () -> Unit
 ) {
     val idiom by viewModel.idiom.collectAsState(initial = null)
-    val chineseColors by viewModel.chineseColors.collectAsState(initial = emptyList())
+    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
     val dataStatus = viewModel.appStatus
 
     LaunchedEffect(Unit) {

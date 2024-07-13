@@ -13,10 +13,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.model.AppStatus
-import com.hefengbao.jingmo.data.model.ChineseColor
-import com.hefengbao.jingmo.data.repository.ChineseColorRepository
-import com.hefengbao.jingmo.data.repository.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.WritingRepository
+import com.hefengbao.jingmo.data.model.traditionalculture.Color
+import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
+import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
+import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.WritingCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class WritingCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val writingRepository: WritingRepository,
-    private val chineseColorRepository: ChineseColorRepository,
+    private val colorRepository: ColorRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
     private val args: WritingCaptureArgs = WritingCaptureArgs(savedStateHandle)
@@ -50,11 +50,11 @@ class WritingCaptureViewModel @Inject constructor(
         initialValue = null
     )
 
-    private val _chineseColors: MutableStateFlow<List<ChineseColor>> = MutableStateFlow(emptyList())
-    val chineseColors: SharedFlow<List<ChineseColor>> = _chineseColors
+    private val _Colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
+    val colors: SharedFlow<List<Color>> = _Colors
     fun getColors() {
         viewModelScope.launch {
-            _chineseColors.value = chineseColorRepository.getList()
+            _Colors.value = colorRepository.list()
         }
     }
 

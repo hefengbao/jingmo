@@ -11,8 +11,8 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.people
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.PeopleEntity
-import com.hefengbao.jingmo.data.repository.PeopleRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.PeopleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -30,7 +30,7 @@ class PeopleIndexViewModel @Inject constructor(
 
     fun getRandomPeople() {
         viewModelScope.launch {
-            peopleRepository.getRandom().collectLatest {
+            peopleRepository.random().collectLatest {
                 _people.value = it
             }
         }

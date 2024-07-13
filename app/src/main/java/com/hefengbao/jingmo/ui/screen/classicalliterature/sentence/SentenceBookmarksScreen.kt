@@ -28,7 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.hefengbao.jingmo.data.database.entity.PoemSentenceEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -48,7 +48,7 @@ fun SentenceBookmarksRoute(
 private fun SentenceBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    bookmarks: LazyPagingItems<PoemSentenceEntity>,
+    bookmarks: LazyPagingItems<SentenceEntity>,
     onUncollectClick: (Int) -> Unit
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
