@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
-internal class ProverbSearchViewModel @Inject constructor(
+class ProverbSearchViewModel @Inject constructor(
     private val repository: ProverbRepository,
 ) : ViewModel() {
     private val query = MutableStateFlow("")

@@ -46,7 +46,7 @@ class ClassicPoemReadViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setClassicPoemLastReadId(id)
+            preferenceRepository.setClassicalLiteratureClassicPoemLastReadId(id)
         }
     }
 

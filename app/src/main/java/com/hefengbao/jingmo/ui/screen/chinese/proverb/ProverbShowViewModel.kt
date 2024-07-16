@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-internal class ProverbShowViewModel @Inject constructor(
+class ProverbShowViewModel @Inject constructor(
     private val repository: ProverbRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {

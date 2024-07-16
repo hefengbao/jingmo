@@ -38,7 +38,7 @@ class RiddleIndexViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setRiddlesLastReadId(id)
+            preferenceRepository.setChineseRiddleLastReadId(id)
         }
     }
 

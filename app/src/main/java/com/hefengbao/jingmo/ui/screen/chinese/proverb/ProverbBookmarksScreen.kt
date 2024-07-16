@@ -27,7 +27,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
-internal fun ProverbBookmarksRoute(
+fun ProverbBookmarksRoute(
     viewModel: ProverbBookmarksViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit

@@ -9,8 +9,6 @@
 
 package com.hefengbao.jingmo.di
 
-import com.hefengbao.jingmo.data.repository.HomeRepository
-import com.hefengbao.jingmo.data.repository.HomeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.LinksRepository
 import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
@@ -39,6 +37,8 @@ import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceReposito
 import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepositoryImpl
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepositoryImpl
+import com.hefengbao.jingmo.data.repository.settings.HomeItemRepository
+import com.hefengbao.jingmo.data.repository.settings.HomeItemRepositoryImpl
 import com.hefengbao.jingmo.data.repository.settings.ImportRepository
 import com.hefengbao.jingmo.data.repository.settings.ImportRepositoryImpl
 import com.hefengbao.jingmo.data.repository.settings.NetworkDatasourceRepository
@@ -95,9 +95,9 @@ interface DataModule {
     ): FestivalRepository
 
     @Binds
-    fun bindsHomeRepository(
-        homeRepositoryImpl: HomeRepositoryImpl
-    ): HomeRepository
+    fun bindsHomeItemRepository(
+        homeItemRepositoryImpl: HomeItemRepositoryImpl
+    ): HomeItemRepository
 
     @Binds
     fun bindsIdiomRepository(

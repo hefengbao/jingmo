@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.model.HomeItem
-import com.hefengbao.jingmo.data.repository.HomeRepository
+import com.hefengbao.jingmo.data.repository.settings.HomeItemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeItemManagerViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val repository: HomeItemRepository
 ) : ViewModel() {
 
     private val _homeItem: MutableStateFlow<HomeItem> = MutableStateFlow(HomeItem())
@@ -30,98 +30,98 @@ class HomeItemManagerViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            homeRepository.getHomeItem().collectLatest { _homeItem.value = it }
+            repository.getHomeItem().collectLatest { _homeItem.value = it }
         }
     }
 
     fun setClassicalLiteratureClassicPoem(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setClassicalLiteratureClassicPoem(checked)
+            repository.setClassicalLiteratureClassicPoem(checked)
         }
     }
 
     fun setClassicalLiteraturePeople(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setClassicalLiteraturePeople(checked)
+            repository.setClassicalLiteraturePeople(checked)
         }
     }
 
     fun setClassicalLiteratureSentence(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setClassicalLiteratureSentence(checked)
+            repository.setClassicalLiteratureSentence(checked)
         }
     }
 
     fun setClassicalLiteratureWriting(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setClassicalLiteratureWriting(checked)
+            repository.setClassicalLiteratureWriting(checked)
         }
     }
 
 
     fun setChineseCharacter(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseCharacter(checked)
+            repository.setChineseCharacter(checked)
         }
     }
 
     fun setChineseExpression(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseExpression(checked)
+            repository.setChineseExpression(checked)
         }
     }
 
     fun setChineseIdiom(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseIdiom(checked)
+            repository.setChineseIdiom(checked)
         }
     }
 
     fun setChineseKnowledge(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseKnowledge(checked)
+            repository.setChineseKnowledge(checked)
         }
     }
 
     fun setChineseLyric(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseLyric(checked)
+            repository.setChineseLyric(checked)
         }
     }
 
     fun setChineseProverb(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseProverb(checked)
+            repository.setChineseProverb(checked)
         }
     }
 
     fun setChineseTongueTwister(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseTongueTwister(checked)
+            repository.setChineseTongueTwister(checked)
         }
     }
 
     fun setChineseWisecrack(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setChineseWisecrack(checked)
+            repository.setChineseWisecrack(checked)
         }
     }
 
     fun setTraditionalCultureColor(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setTraditionalCultureColor(checked)
+            repository.setTraditionalCultureColor(checked)
         }
     }
 
     fun setTraditionalCultureFestival(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setTraditionalCultureFestival(checked)
+            repository.setTraditionalCultureFestival(checked)
         }
     }
 
     fun setTraditionalCultureSolarTerm(checked: Boolean) {
         viewModelScope.launch {
-            homeRepository.setTraditionalCultureSolarTerm(checked)
+            repository.setTraditionalCultureSolarTerm(checked)
         }
     }
 }

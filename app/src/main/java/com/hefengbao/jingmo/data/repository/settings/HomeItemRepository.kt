@@ -7,16 +7,12 @@
  * file that was distributed with this source code.
  */
 
-package com.hefengbao.jingmo.data.repository
+package com.hefengbao.jingmo.data.repository.settings
 
 import com.hefengbao.jingmo.data.model.HomeItem
 import kotlinx.coroutines.flow.Flow
 
-interface HomeRepository {
-    suspend fun setClassicalLiteratureClassicPoem(checked: Boolean)
-    suspend fun setClassicalLiteraturePeople(checked: Boolean)
-    suspend fun setClassicalLiteratureSentence(checked: Boolean)
-    suspend fun setClassicalLiteratureWriting(checked: Boolean)
+interface HomeItemRepository {
     suspend fun setChineseCharacter(checked: Boolean)
     suspend fun setChineseExpression(checked: Boolean)
     suspend fun setChineseIdiom(checked: Boolean)
@@ -25,6 +21,10 @@ interface HomeRepository {
     suspend fun setChineseProverb(checked: Boolean)
     suspend fun setChineseTongueTwister(checked: Boolean)
     suspend fun setChineseWisecrack(checked: Boolean)
+    suspend fun setClassicalLiteratureClassicPoem(checked: Boolean)
+    suspend fun setClassicalLiteraturePeople(checked: Boolean)
+    suspend fun setClassicalLiteratureSentence(checked: Boolean)
+    suspend fun setClassicalLiteratureWriting(checked: Boolean)
     suspend fun setTraditionalCultureColor(checked: Boolean)
     suspend fun setTraditionalCultureFestival(checked: Boolean)
     suspend fun setTraditionalCultureSolarTerm(checked: Boolean)

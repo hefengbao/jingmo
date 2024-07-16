@@ -30,7 +30,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
-internal fun ProverbSearchRoute(
+fun ProverbSearchRoute(
     viewModel: ProverbSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,

@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ProverbBookmarksViewModel @Inject constructor(
+class ProverbBookmarksViewModel @Inject constructor(
     repository: ProverbRepository,
 ) : ViewModel() {
     val proverbEntityCollections = repository.collections().cachedIn(viewModelScope)

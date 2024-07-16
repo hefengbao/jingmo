@@ -93,7 +93,7 @@ class WritingReadViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setWritingsLastReadId(id)
+            preferenceRepository.setClassicalLiteratureWritingLastReadId(id)
         }
     }
 }

@@ -34,7 +34,7 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.components.ProverbShowPanel
 
 @Composable
-internal fun ProverbIndexRoute(
+fun ProverbIndexRoute(
     viewModel: ProverbIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,

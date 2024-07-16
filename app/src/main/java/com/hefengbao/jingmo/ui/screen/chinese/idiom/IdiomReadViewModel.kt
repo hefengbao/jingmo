@@ -91,7 +91,7 @@ class IdiomReadViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setIdiomsLastReadId(id)
+            preferenceRepository.setChineseIdiomLastReadId(id)
         }
     }
 }

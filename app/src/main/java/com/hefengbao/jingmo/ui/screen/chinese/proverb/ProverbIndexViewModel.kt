@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ProverbIndexViewModel @Inject constructor(
+class ProverbIndexViewModel @Inject constructor(
     private val repository: ProverbRepository
 ) : ViewModel() {
     init {

@@ -41,32 +41,32 @@ import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
 
 interface NetworkDatasourceRepository {
     suspend fun dataset(): Result<List<Dataset>>
-    suspend fun syncChineseExpression(page: Int): Result<ExpressionWrapper>
+    suspend fun clearChineseDictionaryPinyin()
+    suspend fun insertChineseDictionary(entity: DictionaryEntity)
+    suspend fun insertChineseDictionaryPinyin(entity: DictionaryPinyinEntity)
+    suspend fun syncChineseDictionary(page: Int): Result<DictionaryWrapper>
     suspend fun insertChineseExpression(entity: ExpressionEntity)
-    suspend fun syncChineseKnowledge(): Result<List<ChineseKnowledge>>
+    suspend fun syncChineseExpressions(page: Int): Result<ExpressionWrapper>
+    suspend fun insertChineseIdiom(entity: IdiomEntity)
+    suspend fun syncChineseIdioms(page: Int): Result<IdiomWrapper>
     suspend fun insertChinesKnowledge(entity: KnowledgeEntity)
-    suspend fun syncChineseProverbs(): Result<List<Proverb>>
+    suspend fun syncChineseKnowledge(): Result<List<ChineseKnowledge>>
+    suspend fun insertChineseLyric(entity: LyricEntity)
+    suspend fun syncChineseLyrics(): Result<List<Lyric>>
     suspend fun insertChineseProverb(entity: ProverbEntity)
-    suspend fun syncChineseWisecracks(): Result<List<ChineseWisecrack>>
+    suspend fun syncChineseProverbs(): Result<List<Proverb>>
+    suspend fun insertChineseRiddle(entity: RiddleEntity)
+    suspend fun syncChineseRiddles(): Result<List<Riddle>>
+    suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity)
+    suspend fun syncChineseTongueTwisters(): Result<List<TongueTwister>>
     suspend fun insertChineseWisecrack(entity: WisecrackEntity)
-    suspend fun syncClassicPoems(): Result<List<ClassicPoem>>
-    suspend fun insertClassicPoems(entity: ClassicPoemEntity)
-    suspend fun syncDictionary(page: Int): Result<DictionaryWrapper>
-    suspend fun insertDictionary(entity: DictionaryEntity)
-    suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity)
-    suspend fun clearDictionaryPinyin()
-    suspend fun syncIdioms(page: Int): Result<IdiomWrapper>
-    suspend fun insertIdiom(entity: IdiomEntity)
-    suspend fun syncLyrics(): Result<List<Lyric>>
-    suspend fun insertLyric(entity: LyricEntity)
-    suspend fun syncPeople(page: Int): Result<PeopleWrapper>
-    suspend fun insertPeople(entity: PeopleEntity)
-    suspend fun syncPoemSentences(): Result<List<PoemSentence>>
-    suspend fun insertPoemSentence(entity: SentenceEntity)
-    suspend fun syncRiddles(): Result<List<Riddle>>
-    suspend fun insertRiddle(entity: RiddleEntity)
-    suspend fun syncTongueTwisters(): Result<List<TongueTwister>>
-    suspend fun insertTongueTwister(entity: TongueTwisterEntity)
-    suspend fun syncWritings(page: Int): Result<WritingWrapper>
-    suspend fun insertWriting(entity: WritingEntity)
+    suspend fun syncChineseWisecracks(): Result<List<ChineseWisecrack>>
+    suspend fun insertClassicalLiteratureClassicPoem(entity: ClassicPoemEntity)
+    suspend fun syncClassicalLiteratureClassicPoems(): Result<List<ClassicPoem>>
+    suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity)
+    suspend fun syncClassicalLiteraturePeople(page: Int): Result<PeopleWrapper>
+    suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity)
+    suspend fun syncClassicalLiteratureSentence(): Result<List<PoemSentence>>
+    suspend fun insertClassicalLiteratureWriting(entity: WritingEntity)
+    suspend fun syncClassicalLiteratureWritings(page: Int): Result<WritingWrapper>
 }

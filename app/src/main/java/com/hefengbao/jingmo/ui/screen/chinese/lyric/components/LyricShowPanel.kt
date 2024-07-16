@@ -64,7 +64,6 @@ fun LyricShowPanel(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = entity.content,
-                    textAlign = TextAlign.Center
                 )
             }
         }

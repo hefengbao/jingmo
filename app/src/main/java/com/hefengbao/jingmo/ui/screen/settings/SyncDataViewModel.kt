@@ -62,7 +62,7 @@ class DataViewModel @Inject constructor(
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncChineseExpression(page)) {
+                when (val response = repository.syncChineseExpressions(page)) {
                     is Result.Error -> {
                         _chineseExpressionResult.value = SyncStatus.Error(response.exception)
                     }
@@ -178,14 +178,14 @@ class DataViewModel @Inject constructor(
     val dictionaryResultProgress: SharedFlow<Float> = _dictionaryResultProgress
     fun syncDictionary(total: Int, version: Int) {
         viewModelScope.launch {
-            repository.clearDictionaryPinyin()
+            repository.clearChineseDictionaryPinyin()
         }
         _dictionaryResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncDictionary(page)) {
+                when (val response = repository.syncChineseDictionary(page)) {
                     is Result.Error -> _dictionaryResult.value =
                         SyncStatus.Error(response.exception)
 
@@ -197,9 +197,9 @@ class DataViewModel @Inject constructor(
                             page = null
                         }
                         response.data.data.map {
-                            repository.insertDictionary(it.asDictionaryEntity())
+                            repository.insertChineseDictionary(it.asDictionaryEntity())
                             it.pinyin2?.map { pinyin ->
-                                repository.insertDictionaryPinyin(
+                                repository.insertChineseDictionaryPinyin(
                                     DictionaryPinyinEntity(
                                         dictionaryId = it.id,
                                         pinyin = pinyin,
@@ -213,7 +213,7 @@ class DataViewModel @Inject constructor(
                 }
             }
             // TODO 这里需优化
-            preference.setDictionaryVersion(version)
+            preference.setChineseDictionaryVersion(version)
             _dictionaryResult.value = SyncStatus.Success
         }
     }
@@ -230,7 +230,7 @@ class DataViewModel @Inject constructor(
             var count = 0
 
             while (page != null) {
-                when (val response = repository.syncIdioms(page)) {
+                when (val response = repository.syncChineseIdioms(page)) {
                     is Result.Error -> {
                         _idiomsResult.value = SyncStatus.Error(response.exception)
                     }
@@ -244,7 +244,7 @@ class DataViewModel @Inject constructor(
                         }
 
                         response.data.data.map {
-                            repository.insertIdiom(it.asIdiomEntity())
+                            repository.insertChineseIdiom(it.asIdiomEntity())
                             count++
                             _idiomsResultProgress.value = count.toFloat() / total
                         }
@@ -253,7 +253,7 @@ class DataViewModel @Inject constructor(
             }
 
             // TODO 这里需优化
-            preference.setIdiomsVersion(version)
+            preference.setChineseIdiomVersion(version)
             _idiomsResult.value = SyncStatus.Success
         }
     }
@@ -266,7 +266,7 @@ class DataViewModel @Inject constructor(
     fun syncLyric(total: Int, version: Int) {
         _lyricResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncLyrics()) {
+            when (val response = repository.syncChineseLyrics()) {
                 is Result.Error -> {
                     _lyricResult.value = SyncStatus.Error(response.exception)
                 }
@@ -276,12 +276,12 @@ class DataViewModel @Inject constructor(
                     var count = 0
 
                     response.data.map {
-                        repository.insertLyric(it.asLyricEntity())
+                        repository.insertChineseLyric(it.asLyricEntity())
                         count++
                         _lyricResultProgress.value = count.toFloat() / total
                     }
 
-                    preference.setLyricVersion(version)
+                    preference.setChineseLyricVersion(version)
                     _lyricResult.value = SyncStatus.Success
                 }
             }
@@ -299,7 +299,7 @@ class DataViewModel @Inject constructor(
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncPeople(page)) {
+                when (val response = repository.syncClassicalLiteraturePeople(page)) {
                     is Result.Error -> _peopleResult.value = SyncStatus.Error(response.exception)
                     Result.Loading -> {}
                     is Result.Success -> {
@@ -309,7 +309,7 @@ class DataViewModel @Inject constructor(
                             page = null
                         }
                         response.data.data.map {
-                            repository.insertPeople(it.asPeopleEntity())
+                            repository.insertClassicalLiteraturePeople(it.asPeopleEntity())
                             count++
                             _peopleResultProgress.value = count.toFloat() / total
                         }
@@ -317,7 +317,7 @@ class DataViewModel @Inject constructor(
                 }
             }
             // TODO 这里需优化
-            preference.setPeopleVersion(version)
+            preference.setClassicalLiteraturePeopleVersion(version)
             _peopleResult.value = SyncStatus.Success
         }
     }
@@ -330,7 +330,7 @@ class DataViewModel @Inject constructor(
     fun syncClassicPoems(total: Int, version: Int) {
         _classicPoemsResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncClassicPoems()) {
+            when (val response = repository.syncClassicalLiteratureClassicPoems()) {
                 is Result.Error -> {
                     _classicPoemsResult.value = SyncStatus.Error(response.exception)
                 }
@@ -339,12 +339,12 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertClassicPoems(it.asClassicPoemEntity())
+                        repository.insertClassicalLiteratureClassicPoem(it.asClassicPoemEntity())
                         count++
                         _classicPoemsResultProgress.value = count.toFloat() / total
                     }
 
-                    preference.setClassicPoemsVersion(version)
+                    preference.setClassicalLiteratureClassicPoemsVersion(version)
                     _classicPoemsResult.value = SyncStatus.Success
                 }
             }
@@ -359,7 +359,7 @@ class DataViewModel @Inject constructor(
     fun syncPoemSentences(total: Int, version: Int) {
         _poemSentencesResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncPoemSentences()) {
+            when (val response = repository.syncClassicalLiteratureSentence()) {
                 is Result.Error -> {
                     _poemSentencesResult.value = SyncStatus.Error(response.exception)
                 }
@@ -368,12 +368,12 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertPoemSentence(it.asPoemSentenceEntity())
+                        repository.insertClassicalLiteratureSentence(it.asPoemSentenceEntity())
                         count++
                         _poemSentencesResultProgress.value = count.toFloat() / total
                     }
 
-                    preference.setPoemSentencesVersion(version)
+                    preference.setClassicalLiteratureSentenceVersion(version)
                     _poemSentencesResult.value = SyncStatus.Success
                 }
             }
@@ -388,18 +388,18 @@ class DataViewModel @Inject constructor(
     fun syncRiddles(total: Int, version: Int) {
         _riddlesResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncRiddles()) {
+            when (val response = repository.syncChineseRiddles()) {
                 is Result.Error -> _riddlesResult.value = SyncStatus.Error(response.exception)
                 Result.Loading -> {}
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertRiddle(it.asRiddleEntity())
+                        repository.insertChineseRiddle(it.asRiddleEntity())
                         count++
                         _riddlesResultProgress.value = count.toFloat() / total
                     }
 
-                    preference.setRiddlesVersion(version)
+                    preference.setChineseRiddleVersion(version)
                     _riddlesResult.value = SyncStatus.Success
                 }
             }
@@ -414,7 +414,7 @@ class DataViewModel @Inject constructor(
     fun syncTongueTwisters(total: Int, version: Int) {
         _tongueTwistersResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncTongueTwisters()) {
+            when (val response = repository.syncChineseTongueTwisters()) {
                 is Result.Error -> _tongueTwistersResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -422,12 +422,12 @@ class DataViewModel @Inject constructor(
                 is Result.Success -> {
                     var count = 0
                     response.data.map {
-                        repository.insertTongueTwister(it.asTongueTwisterEntity())
+                        repository.insertChineseTongueTwister(it.asTongueTwisterEntity())
                         count++
                         _tongueTwistersResultProgress.value = count.toFloat() / total
                     }
 
-                    preference.setTongueTwistersVersion(version)
+                    preference.setChineseTongueTwisterVersion(version)
                     _tongueTwistersResult.value = SyncStatus.Success
                 }
             }
@@ -458,19 +458,20 @@ class DataViewModel @Inject constructor(
         viewModelScope.launch {
 
             while (writingCurrentPage.value != 0) {
-                when (val response = repository.syncWritings(writingCurrentPage.value)) {
+                when (val response =
+                    repository.syncClassicalLiteratureWritings(writingCurrentPage.value)) {
                     is Result.Error -> _writingsResult.value == SyncStatus.Error(response.exception)
                     Result.Loading -> {}
                     is Result.Success -> {
                         response.data.data.map {
-                            repository.insertWriting(it.asWritingEntity())
+                            repository.insertClassicalLiteratureWriting(it.asWritingEntity())
                             writingCurrentCount.value++
                             _writingsResultProgress.value =
                                 writingCurrentCount.value.toFloat() / total
                         }
                         // 记录进度
-                        preference.setWritingsCurrentPage(writingCurrentPage.value)
-                        preference.setWritingsCurrentCount(writingCurrentCount.value)
+                        preference.setClassicalLiteratureWritingCurrentPage(writingCurrentPage.value)
+                        preference.setClassicalLiteratureWritingCurrentCount(writingCurrentCount.value)
 
                         if (response.data.nextPage != null) {
                             writingCurrentPage.value++
@@ -481,9 +482,9 @@ class DataViewModel @Inject constructor(
                     }
                 }
             }
-            preference.setWritingsVersion(version)
-            preference.setWritingsCurrentPage(1)
-            preference.setWritingsCurrentCount(0)
+            preference.setClassicalLiteratureWritingVersion(version)
+            preference.setClassicalLiteratureWritingCurrentPage(1)
+            preference.setClassicalLiteratureWritingCurrentCount(0)
             _writingsResult.value = SyncStatus.Success
         }
     }

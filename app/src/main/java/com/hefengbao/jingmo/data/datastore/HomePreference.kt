@@ -59,24 +59,24 @@ class HomePreference(
     suspend fun setClassicalLiteratureClassicPoem(checked: Boolean) =
         setBoolean(context, PREF_CLASSICAL_LITERATURE_CLASSIC_POEM, checked)
 
-    suspend fun setClassicalLiteratureWriting(checked: Boolean) =
-        setBoolean(context, PREF_CLASSICAL_LITERATURE_WRITING, checked)
+    suspend fun setClassicalLiteraturePeople(checked: Boolean) =
+        setBoolean(context, PREF_CLASSICAL_LITERATURE_PEOPLE, checked)
 
     suspend fun setClassicalLiteratureSentence(checked: Boolean) =
         setBoolean(context, PREF_CLASSICAL_LITERATURE_SENTENCE, checked)
 
-    suspend fun setClassicalLiteraturePeople(checked: Boolean) =
-        setBoolean(context, PREF_CLASSICAL_LITERATURE_PEOPLE, checked)
+    suspend fun setClassicalLiteratureWriting(checked: Boolean) =
+        setBoolean(context, PREF_CLASSICAL_LITERATURE_WRITING, checked)
 
+
+    suspend fun setTraditionalCultureColor(checked: Boolean) =
+        setBoolean(context, PREF_TRADITIONAL_CULTURE_COLOR, checked)
 
     suspend fun setTraditionalCultureFestival(checked: Boolean) =
         setBoolean(context, PREF_TRADITIONAL_CULTURE_FESTIVAL, checked)
 
     suspend fun setTraditionalCultureSolarTerm(checked: Boolean) =
         setBoolean(context, PREF_TRADITIONAL_CULTURE_SOLAR_TERM, checked)
-
-    suspend fun setTraditionalCultureColor(checked: Boolean) =
-        setBoolean(context, PREF_TRADITIONAL_CULTURE_COLOR, checked)
 
 
     suspend fun setChineseCharacter(checked: Boolean) =

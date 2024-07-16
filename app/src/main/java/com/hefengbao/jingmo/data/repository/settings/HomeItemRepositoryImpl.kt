@@ -7,27 +7,16 @@
  * file that was distributed with this source code.
  */
 
-package com.hefengbao.jingmo.data.repository
+package com.hefengbao.jingmo.data.repository.settings
 
 import com.hefengbao.jingmo.data.datastore.HomePreference
 import com.hefengbao.jingmo.data.model.HomeItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class HomeRepositoryImpl @Inject constructor(
+class HomeItemRepositoryImpl @Inject constructor(
     private val homePreference: HomePreference
-) : HomeRepository {
-    override suspend fun setClassicalLiteratureClassicPoem(checked: Boolean) =
-        homePreference.setClassicalLiteratureClassicPoem(checked)
-
-    override suspend fun setClassicalLiteraturePeople(checked: Boolean) =
-        homePreference.setClassicalLiteraturePeople(checked)
-
-    override suspend fun setClassicalLiteratureSentence(checked: Boolean) =
-        homePreference.setClassicalLiteratureSentence(checked)
-
-    override suspend fun setClassicalLiteratureWriting(checked: Boolean) =
-        homePreference.setClassicalLiteratureWriting(checked)
+) : HomeItemRepository {
 
     override suspend fun setChineseCharacter(checked: Boolean) =
         homePreference.setChineseCharacter(checked)
@@ -52,6 +41,18 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun setChineseWisecrack(checked: Boolean) =
         homePreference.setChineseWisecrack(checked)
+
+    override suspend fun setClassicalLiteratureClassicPoem(checked: Boolean) =
+        homePreference.setClassicalLiteratureClassicPoem(checked)
+
+    override suspend fun setClassicalLiteraturePeople(checked: Boolean) =
+        homePreference.setClassicalLiteraturePeople(checked)
+
+    override suspend fun setClassicalLiteratureSentence(checked: Boolean) =
+        homePreference.setClassicalLiteratureSentence(checked)
+
+    override suspend fun setClassicalLiteratureWriting(checked: Boolean) =
+        homePreference.setClassicalLiteratureWriting(checked)
 
     override suspend fun setTraditionalCultureColor(checked: Boolean) =
         homePreference.setTraditionalCultureColor(checked)

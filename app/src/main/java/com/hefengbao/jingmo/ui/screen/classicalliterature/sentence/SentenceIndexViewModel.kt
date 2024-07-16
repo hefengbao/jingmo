@@ -46,7 +46,7 @@ class SentenceIndexViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setPoemSentencesLastReadId(id)
+            preferenceRepository.setClassicalLiteratureSentenceLastReadId(id)
         }
     }
 

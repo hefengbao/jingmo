@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.model.HomeItem
-import com.hefengbao.jingmo.data.repository.HomeRepository
+import com.hefengbao.jingmo.data.repository.settings.HomeItemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    homeRepository: HomeRepository
+    homeRepository: HomeItemRepository
 ) : ViewModel() {
     private val _homeItem: MutableStateFlow<HomeItem> = MutableStateFlow(HomeItem())
     val homeItem: SharedFlow<HomeItem> = _homeItem

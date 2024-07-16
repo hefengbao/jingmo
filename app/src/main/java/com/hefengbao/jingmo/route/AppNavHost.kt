@@ -52,7 +52,7 @@ import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricBookmarksScr
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricShowScreen
-import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navToChineseLyricIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
@@ -162,7 +162,7 @@ fun AppNavHost(
             onChineseExpressionClick = { navController.navigateToChineseExpressionGraph() },
             onChineseIdiomClick = { navController.navigateToChineseIdiomIndexGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
-            onChineseLyricClick = { navController.navToChineseLyricIndexGraph() },
+            onChineseLyricClick = { navController.navigateToChineseLyricIndexGraph() },
             onChineseProverbClick = { navController.navigateToChineseProverbIndexGraph() },
             onChineseRiddleClick = { navController.navigateToChineseRiddleIndexGraph() },
             onChineseTongueTwisterClick = { navController.navigateToChineseTongueTwisterIndexGraph() },

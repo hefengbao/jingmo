@@ -91,7 +91,7 @@ class WisecrackIndexViewModel @Inject constructor(
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setChineseWisecracksLastReadId(id)
+            preferenceRepository.setChineseWisecrackLastReadId(id)
         }
     }
 

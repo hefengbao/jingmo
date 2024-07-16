@@ -18,7 +18,7 @@ import com.hefengbao.jingmo.ui.screen.chinese.lyric.LyricIndexRoute
 private const val ROUTE = "chinese_lyric_index"
 private const val ROUTE_GRAPH = "chinese_lyric_index_graph"
 
-fun NavController.navToChineseLyricIndexGraph() {
+fun NavController.navigateToChineseLyricIndexGraph() {
     this.navigate(ROUTE) {
         launchSingleTop = true
     }
