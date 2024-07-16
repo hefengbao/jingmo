@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import kotlinx.serialization.Serializable
 
+/**
+ * 歌词
+ */
 @Serializable
 data class Lyric(
     val id: Int,

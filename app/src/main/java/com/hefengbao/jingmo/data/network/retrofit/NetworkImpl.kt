@@ -16,6 +16,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
@@ -86,6 +87,8 @@ class NetworkImpl @Inject constructor(
     override suspend fun people(page: Int): PeopleWrapper = networkApi.people(page)
 
     override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()
+
+    override suspend fun chineseProverbs(): List<Proverb> = networkApi.chineseProverb()
 
     override suspend fun riddles(): List<Riddle> = networkApi.riddles()
 

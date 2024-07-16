@@ -15,6 +15,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
@@ -27,6 +28,7 @@ interface ImportRepository {
     suspend fun insertChineseExpression(entity: ExpressionEntity)
     suspend fun insertChineseWisecrack(entity: WisecrackEntity)
     suspend fun insertChineseKnowledge(entity: KnowledgeEntity)
+    suspend fun insertChineseProverb(entity: ProverbEntity)
     suspend fun insertClassicPoem(entity: ClassicPoemEntity)
     suspend fun insertDictionary(entity: DictionaryEntity)
     suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity)
@@ -39,6 +41,7 @@ interface ImportRepository {
     fun chineseExpressionTotal(): Flow<Int>
     fun chineseWisecrackTotal(): Flow<Int>
     fun chineseKnowledgeTotal(): Flow<Int>
+    fun chineseProverbTotal(): Flow<Int>
     fun classicPoemTotal(): Flow<Int>
     fun dictionaryTotal(): Flow<Int>
     fun idiomsTotal(): Flow<Int>

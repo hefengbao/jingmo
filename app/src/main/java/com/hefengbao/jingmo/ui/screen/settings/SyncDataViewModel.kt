@@ -20,6 +20,7 @@ import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
+import com.hefengbao.jingmo.data.model.chinese.asProverbEntity
 import com.hefengbao.jingmo.data.model.chinese.asRiddleEntity
 import com.hefengbao.jingmo.data.model.chinese.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asClassicPoemEntity
@@ -115,6 +116,32 @@ class DataViewModel @Inject constructor(
         }
     }
 
+    private val _chineseProverbResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseProverbResult: SharedFlow<SyncStatus<Any>> = _chineseProverbResult
+    private val _chineseProverbResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseProverbResultProgress: SharedFlow<Float> = _chineseProverbResultProgress
+    fun syncChineseProverbs(total: Int, version: Int) {
+        _chineseProverbResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            when (val response = repository.syncChineseProverbs()) {
+                is Result.Error -> _chineseProverbResult.value =
+                    SyncStatus.Error(response.exception)
+
+                Result.Loading -> {}
+                is Result.Success -> {
+                    var count = 0
+                    response.data.map {
+                        repository.insertChineseProverb(it.asProverbEntity())
+                        count++
+                        _chineseProverbResultProgress.value = count.toFloat() / total
+                    }
+                    preference.setChineseProverbVersion(version)
+                    _chineseProverbResult.value = SyncStatus.Success
+                }
+            }
+        }
+    }
 
     private val _chineseWisecracksResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)

@@ -23,6 +23,8 @@ import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
 import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
 import com.hefengbao.jingmo.data.repository.chinese.LyricRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.ProverbRepository
+import com.hefengbao.jingmo.data.repository.chinese.ProverbRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.RiddleRepository
 import com.hefengbao.jingmo.data.repository.chinese.RiddleRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.TongueTwisterRepository
@@ -156,4 +158,9 @@ interface DataModule {
     fun bindsClassicalLiteratureWritingRepository(
         writingRepositoryImpl: WritingRepositoryImpl
     ): WritingRepository
+
+    @Binds
+    fun bindsChineseProverbRepository(
+        proverbRepository: ProverbRepositoryImpl
+    ): ProverbRepository
 }

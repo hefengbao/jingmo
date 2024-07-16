@@ -56,6 +56,14 @@ import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navToChineseLyricIndexGr
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleInfoScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleSearchScreen
@@ -155,6 +163,7 @@ fun AppNavHost(
             onChineseIdiomClick = { navController.navigateToChineseIdiomIndexGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
             onChineseLyricClick = { navController.navToChineseLyricIndexGraph() },
+            onChineseProverbClick = { navController.navigateToChineseProverbIndexGraph() },
             onChineseRiddleClick = { navController.navigateToChineseRiddleIndexGraph() },
             onChineseTongueTwisterClick = { navController.navigateToChineseTongueTwisterIndexGraph() },
             onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
@@ -284,6 +293,24 @@ fun AppNavHost(
                             onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
                         )
                         chineseLyricShowScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                chineseProverbIndexGraph(
+                    onBackClick = navController::navigateUp,
+                    onBookmarksClick = { navController.navigateToChineseProverbBookmarksScreen() },
+                    onSearchClick = { navController.navigateToChineseProverbSearchScreen() },
+                    nestGraph = {
+                        chineseProverbBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseProverbShowScreen(it.toString()) }
+                        )
+                        chineseProverbSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseProverbShowScreen(it.toString()) }
+                        )
+                        chineseProverbShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

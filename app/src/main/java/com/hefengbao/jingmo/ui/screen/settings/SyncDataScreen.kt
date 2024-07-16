@@ -68,6 +68,10 @@ fun DataRoute(
     val chineseKnowledgeResultProgress by viewModel.chineseKnowledgeResultProgress.collectAsState(
         initial = 0f
     )
+    val chineseProverbResult by viewModel.chineseProverbResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseProverbResultProgress by viewModel.chineseProverbResultProgress.collectAsState(
+        initial = 0f
+    )
     val chineseWisecracksResult by viewModel.chineseWisecracksResult.collectAsState(initial = SyncStatus.NonStatus)
     val chineseWisecracksResultProgress by viewModel.chineseWisecracksResultProgress.collectAsState(
         initial = 0f
@@ -107,6 +111,11 @@ fun DataRoute(
         },
         chineseKnowledgeResult = chineseKnowledgeResult,
         chineseKnowledgeResultProgress = chineseKnowledgeResultProgress,
+        syncChineseProverb = { total: Int, version: Int ->
+            viewModel.syncChineseProverbs(total = total, version = version)
+        },
+        chineseProverbResult = chineseProverbResult,
+        chineseProverbResultProgress = chineseProverbResultProgress,
         syncChineseWisecracks = { total: Int, version: Int ->
             viewModel.syncChineseWisecracks(
                 total,
@@ -178,6 +187,9 @@ private fun DataScreen(
     syncChineseWisecracks: (total: Int, version: Int) -> Unit,
     chineseWisecracksResult: SyncStatus<Any>,
     chineseWisecracksResultProgress: Float,
+    syncChineseProverb: (total: Int, version: Int) -> Unit,
+    chineseProverbResult: SyncStatus<Any>,
+    chineseProverbResultProgress: Float,
     syncClassicPoems: (total: Int, version: Int) -> Unit,
     classicPoemsResult: SyncStatus<Any>,
     classicPoemsResultProgress: Float,
@@ -349,16 +361,13 @@ private fun DataScreen(
                                 }
                             ),
                             Item(
-                                title = "知识卡片",
-                                name = "chinese_knowledge",
-                                localVersion = datasetPref.chineseKnowledgeVersion,
-                                status = chineseKnowledgeResult,
-                                progress = chineseKnowledgeResultProgress,
+                                title = "谚语",
+                                name = "proverbs",
+                                localVersion = datasetPref.chineseProverVersion,
+                                status = chineseProverbResult,
+                                progress = chineseProverbResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseKnowledge(
-                                        count,
-                                        version
-                                    )
+                                    syncChineseProverb(count, version)
                                 }
                             ),
                             Item(
@@ -383,7 +392,20 @@ private fun DataScreen(
                                 onClick = { count: Int, version: Int ->
                                     syncLyric(count, version)
                                 }
-                            )
+                            ),
+                            Item(
+                                title = "知识卡片",
+                                name = "chinese_knowledge",
+                                localVersion = datasetPref.chineseKnowledgeVersion,
+                                status = chineseKnowledgeResult,
+                                progress = chineseKnowledgeResultProgress,
+                                onClick = { count: Int, version: Int ->
+                                    syncChineseKnowledge(
+                                        count,
+                                        version
+                                    )
+                                }
+                            ),
                         )
                     )
                 )

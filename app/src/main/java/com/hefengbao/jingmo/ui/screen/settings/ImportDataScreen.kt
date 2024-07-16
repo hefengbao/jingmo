@@ -45,20 +45,22 @@ fun ImportRoute(
     onBackClick: () -> Unit
 ) {
     val chineseExpressionRatio by viewModel.chineseExpressionRatio.collectAsState()
-    val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState(initial = 0f)
-    val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState(initial = 0f)
-    val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState(initial = 0f)
+    val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState()
+    val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState()
+    val chineseProverbRatio by viewModel.chineseProverbRatio.collectAsState()
+    val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState()
     val dictionaryRatio by viewModel.dictionaryRatio.collectAsState()
-    val idiomsRatio by viewModel.idiomsRatio.collectAsState(initial = 0f)
-    val lyricRatio by viewModel.lyricRatio.collectAsState(initial = 0f)
-    val peopleRatio by viewModel.peopleRatio.collectAsState(initial = 0f)
-    val poemSentenceRatio by viewModel.poemSentencesRatio.collectAsState(initial = 0f)
-    val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState(initial = 0f)
-    val writingsRatio by viewModel.writingsRatio.collectAsState(initial = 0f)
+    val idiomsRatio by viewModel.idiomsRatio.collectAsState()
+    val lyricRatio by viewModel.lyricRatio.collectAsState()
+    val peopleRatio by viewModel.peopleRatio.collectAsState()
+    val poemSentenceRatio by viewModel.poemSentencesRatio.collectAsState()
+    val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState()
+    val writingsRatio by viewModel.writingsRatio.collectAsState()
 
     val chineseExpressionStatus by viewModel.chineseExpressionStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseProverbStatus by viewModel.chineseProverbStatus.collectAsState(initial = ImportStatus.Loading)
     val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
     val dictionaryStatus by viewModel.dictionaryStatus.collectAsState(initial = ImportStatus.Loading)
     val idiomsStatus by viewModel.idiomStatus.collectAsState(initial = ImportStatus.Loading)
@@ -76,6 +78,9 @@ fun ImportRoute(
         chineseKnowledgeRatio = chineseKnowledgeRatio,
         chineseKnowledgeStatus = chineseKnowledgeStatus,
         chineseKnowledgeUris = { viewModel.chineseKnowledge(it) },
+        chineseProverbRatio = chineseProverbRatio,
+        chineseProverbStatus = chineseProverbStatus,
+        chineseProverbUris = { viewModel.chineseProverb(it) },
         chineseWisecracksRatio = chineseWisecrackRatio,
         chineseWisecracksStatus = chineseWisecracksStatus,
         chineseWisecracksUris = { viewModel.chineseWisecrack(it) },
@@ -116,6 +121,9 @@ private fun ImportScreen(
     chineseKnowledgeRatio: Float,
     chineseKnowledgeStatus: ImportStatus<Any>,
     chineseKnowledgeUris: (List<Uri>) -> Unit,
+    chineseProverbRatio: Float,
+    chineseProverbStatus: ImportStatus<Any>,
+    chineseProverbUris: (List<Uri>) -> Unit,
     chineseWisecracksRatio: Float,
     chineseWisecracksStatus: ImportStatus<Any>,
     chineseWisecracksUris: (List<Uri>) -> Unit,
@@ -152,6 +160,10 @@ private fun ImportScreen(
     val chineseKnowledgeLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseKnowledgeUris(it)
+        }
+    val chineseProverbLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseProverbUris(it)
         }
     val chineseWisecracksLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -255,10 +267,10 @@ private fun ImportScreen(
                 status = chineseWisecracksStatus
             )
             MenuItem(
-                title = "知识卡片",
-                ratio = chineseKnowledgeRatio,
-                launcher = chineseKnowledgeLauncher,
-                status = chineseKnowledgeStatus
+                title = "谚语",
+                ratio = chineseProverbRatio,
+                launcher = chineseProverbLauncher,
+                status = chineseProverbStatus
             )
             MenuItem(
                 title = "绕口令",
@@ -271,6 +283,12 @@ private fun ImportScreen(
                 ratio = lyricRatio,
                 launcher = lyricLauncher,
                 status = lyricStatus
+            )
+            MenuItem(
+                title = "知识卡片",
+                ratio = chineseKnowledgeRatio,
+                launcher = chineseKnowledgeLauncher,
+                status = chineseKnowledgeStatus
             )
         }
     }

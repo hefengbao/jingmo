@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import kotlinx.serialization.Serializable
 
+/**
+ * 谜语
+ */
 @Serializable
 data class Riddle(
     val id: Int,

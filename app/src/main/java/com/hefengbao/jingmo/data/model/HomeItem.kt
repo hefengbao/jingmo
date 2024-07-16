@@ -19,6 +19,7 @@ data class HomeItem(
     val chineseIdiom: Boolean = true,
     val chineseKnowledge: Boolean = true,
     val chineseLyric: Boolean = true,
+    val chineseProverb: Boolean = true,
     val chineseTongueTwister: Boolean = true,
     val chineseWisecrack: Boolean = true,
     val traditionalCultureColor: Boolean = true,
@@ -35,6 +36,7 @@ data class HomeItem(
             chineseIdiom ||
             chineseKnowledge ||
             chineseLyric ||
+            chineseProverb ||
             chineseTongueTwister ||
             chineseWisecrack
 

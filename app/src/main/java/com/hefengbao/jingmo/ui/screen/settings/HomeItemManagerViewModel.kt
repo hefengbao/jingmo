@@ -89,6 +89,12 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
+    fun setChineseProverb(checked: Boolean) {
+        viewModelScope.launch {
+            homeRepository.setChineseProverb(checked)
+        }
+    }
+
     fun setChineseTongueTwister(checked: Boolean) {
         viewModelScope.launch {
             homeRepository.setChineseTongueTwister(checked)

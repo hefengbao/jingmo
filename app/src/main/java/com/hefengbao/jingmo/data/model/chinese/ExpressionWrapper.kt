@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * 词语
+ */
 @Serializable
 data class ExpressionWrapper(
     val data: List<ChineseExpression>,

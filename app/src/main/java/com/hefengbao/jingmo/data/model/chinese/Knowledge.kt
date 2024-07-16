@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import kotlinx.serialization.Serializable
 
+/**
+ * 只是卡片
+ */
 @Serializable
 data class ChineseKnowledge(
     val id: Int,

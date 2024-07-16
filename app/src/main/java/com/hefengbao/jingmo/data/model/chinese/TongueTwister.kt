@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
 import kotlinx.serialization.Serializable
 
+/**
+ * 绕口令
+ */
 @Serializable
 data class TongueTwister(
     val id: Int,

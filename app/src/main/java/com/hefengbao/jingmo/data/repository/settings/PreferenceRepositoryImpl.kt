@@ -31,6 +31,9 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setChineseKnowledgeVersion(version: Int) =
         dataset.setChineseKnowledgeVersion(version)
 
+    override suspend fun setChineseProverbVersion(version: Int) =
+        dataset.setChineseProverbVersion(version)
+
     override suspend fun setChineseWisecracksVersion(version: Int) =
         dataset.setChineseWisecracksVersion(version)
 

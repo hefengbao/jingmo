@@ -19,6 +19,7 @@ data class DatasetVersion(
     val lyricVersion: Int = 0,
     val peopleVersion: Int = 0,
     val poemSentencesVersion: Int = 0,
+    val chineseProverVersion: Int = 0,
     val riddlesVersion: Int = 0,
     val tongueTwistersVersion: Int = 0,
     val writingsVersion: Int = 0,

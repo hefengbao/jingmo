@@ -13,6 +13,9 @@ import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * 汉字
+ */
 @Serializable
 data class Dictionary(
     val id: Int,

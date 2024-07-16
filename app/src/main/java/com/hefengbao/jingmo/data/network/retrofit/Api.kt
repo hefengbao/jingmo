@@ -16,6 +16,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
@@ -61,6 +62,9 @@ interface Api {
     suspend fun people(
         @Path("page") page: Int
     ): PeopleWrapper
+
+    @GET("proverbs.json")
+    suspend fun chineseProverb(): List<Proverb>
 
     @GET("poem_sentences.json")
     suspend fun poemSentences(): List<PoemSentence>

@@ -20,6 +20,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
 import com.hefengbao.jingmo.data.model.chinese.asChineseExpressionEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseKnowledgeEntity
@@ -27,6 +28,7 @@ import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
+import com.hefengbao.jingmo.data.model.chinese.asProverbEntity
 import com.hefengbao.jingmo.data.model.chinese.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
 import com.hefengbao.jingmo.data.model.classicalliterature.PeopleWrapper
@@ -62,6 +64,7 @@ class ImportViewModel @Inject constructor(
 ) : ViewModel() {
     private val chineseExpressionCount = 320349
     private val chineseKnowledgeCount = 464
+    private val chineseProverbsCount = 489
     private val chineseWisecracksCount = 14026
     private val classicPoemCount = 955
     private val dictionaryCount = 20552
@@ -95,6 +98,30 @@ class ImportViewModel @Inject constructor(
                     }
             }
             _chineseExpressionStatus.value = ImportStatus.Finish
+        }
+    }
+
+    val chineseProverbRatio =
+        repository.chineseProverbTotal().distinctUntilChanged().flatMapLatest {
+            MutableStateFlow(it.toFloat() / chineseProverbsCount)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0f
+        )
+    private val _chineseProverStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val chineseProverbStatus: SharedFlow<ImportStatus<Any>> = _chineseProverStatus
+    fun chineseProverb(uris: List<Uri>) {
+        viewModelScope.launch {
+            _chineseProverStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<List<Proverb>>(readTextFromUri(it))
+                    .forEach { proverb ->
+                        repository.insertChineseProverb(proverb.asProverbEntity())
+                    }
+            }
+            _chineseProverStatus.value = ImportStatus.Finish
         }
     }
 

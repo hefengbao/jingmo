@@ -33,6 +33,7 @@ class DatasetPreference(
         DatasetVersion(
             chineseExpressionVersion = it[PREF_CHINESE_EXPRESSION] ?: 0,
             chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE] ?: 0,
+            chineseProverVersion = it[PREF_CHINESE_PROVERB] ?: 0,
             chineseWisecracksVersion = it[PREF_CHINESE_WISECRACKS] ?: 0,
             classicPoemsVersion = it[PREF_CLASSIC_POEMS] ?: 0,
             dictionaryVersion = it[PREF_DICTIONARY] ?: 0,
@@ -53,6 +54,9 @@ class DatasetPreference(
 
     suspend fun setChineseKnowledgeVersion(version: Int) =
         setInt(context, PREF_CHINESE_KNOWLEDGE, version)
+
+    suspend fun setChineseProverbVersion(version: Int) =
+        setInt(context, PREF_CHINESE_PROVERB, version)
 
     suspend fun setChineseWisecracksVersion(version: Int) =
         setInt(context, PREF_CHINESE_WISECRACKS, version)
@@ -91,6 +95,7 @@ class DatasetPreference(
     companion object {
         private val PREF_CHINESE_EXPRESSION = intPreferencesKey("key_chinese_expression")
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
+        private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")
         private val PREF_CHINESE_WISECRACKS = intPreferencesKey("key_chinese_wisecracks")
         private val PREF_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
         private val PREF_DICTIONARY = intPreferencesKey("key_dictionary")

@@ -16,6 +16,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
@@ -34,6 +35,7 @@ interface Network {
     suspend fun idioms(page: Int): IdiomWrapper
     suspend fun people(page: Int): PeopleWrapper
     suspend fun poemSentences(): List<PoemSentence>
+    suspend fun chineseProverbs(): List<Proverb>
     suspend fun riddles(): List<Riddle>
     suspend fun tongueTwisters(): List<TongueTwister>
     suspend fun writings(page: Int): WritingWrapper
