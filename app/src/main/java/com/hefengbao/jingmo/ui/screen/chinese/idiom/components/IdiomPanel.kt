@@ -29,7 +29,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable
-fun IdiomShowPanel(
+fun IdiomPanel(
     modifier: Modifier = Modifier,
     idiom: IdiomEntity,
 ) {

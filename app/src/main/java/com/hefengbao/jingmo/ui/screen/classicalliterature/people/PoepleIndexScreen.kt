@@ -22,7 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.classicalliterature.people.components.ShowPeoplePanel
+import com.hefengbao.jingmo.ui.screen.classicalliterature.people.components.PeoplePanel
 
 @Composable
 fun PeopleIndexRoute(
@@ -70,7 +70,7 @@ private fun PeopleIndexScreen(
         }
     ) {
         people?.let {
-            ShowPeoplePanel(people = it)
+            PeoplePanel(people = it)
         }
     }
 }

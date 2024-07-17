@@ -21,7 +21,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable
-fun ChineseExpressionShowPanel(
+fun ExpressionPanel(
     modifier: Modifier = Modifier,
     entity: ExpressionEntity
 ) {

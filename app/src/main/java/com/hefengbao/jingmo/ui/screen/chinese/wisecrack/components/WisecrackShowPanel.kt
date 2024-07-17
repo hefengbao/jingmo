@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 
 @Composable
-fun ChineseWisecrackShowPanel(
+fun ChineseWisecrackPanel(
     modifier: Modifier = Modifier,
     entity: WisecrackEntity,
 ) {

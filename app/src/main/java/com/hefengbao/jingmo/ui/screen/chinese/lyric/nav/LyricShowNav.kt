@@ -22,7 +22,7 @@ import kotlin.text.Charsets.UTF_8
 
 internal const val lyricShowIdArg = "id"
 private const val base = "chinese_lyric_show"
-private const val ROUTE = "$base/${lyricShowIdArg}"
+private const val ROUTE = "$base/{$lyricShowIdArg}"
 
 internal class LyricShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(
@@ -42,7 +42,7 @@ fun NavGraphBuilder.chineseLyricShowScreen(
     onBackClick: () -> Unit,
 ) {
     composable(
-        route = "$base/{$lyricShowIdArg}",
+        route = ROUTE,
         arguments = listOf(
             navArgument(lyricShowIdArg) { type = NavType.StringType }
         )

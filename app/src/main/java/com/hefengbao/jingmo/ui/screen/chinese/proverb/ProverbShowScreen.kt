@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.proverb.components.ProverbShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.components.ProverbPanel
 
 @Composable
 fun ProverbShowRoute(
@@ -72,7 +72,7 @@ private fun ProverbShowScreen(
                 }
             }
         ) {
-            ProverbShowPanel(entity = entity)
+            ProverbPanel(entity = entity)
         }
     }
 }

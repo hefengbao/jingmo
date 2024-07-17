@@ -46,7 +46,7 @@ import kotlinx.serialization.json.Json
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun WritingShowPanel(
+fun WritingPanel(
     modifier: Modifier = Modifier,
     writing: WritingEntity,
     json: Json,

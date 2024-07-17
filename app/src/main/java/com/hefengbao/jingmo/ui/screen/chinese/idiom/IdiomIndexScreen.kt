@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.idiom.components.IdiomShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.idiom.components.IdiomPanel
 
 @Composable
 fun IdiomIndexRoute(
@@ -128,7 +128,7 @@ private fun IdiomIndexScreen(
             LaunchedEffect(entity) {
                 getIdiomCollectionEntity(entity.id)
             }
-            IdiomShowPanel(idiom = entity)
+            IdiomPanel(idiom = entity)
         }
     }
 

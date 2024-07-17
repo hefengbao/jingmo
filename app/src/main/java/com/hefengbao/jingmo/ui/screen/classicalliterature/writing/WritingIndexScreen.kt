@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.components.WritingShowPanel
+import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.components.WritingPanel
 import kotlinx.serialization.json.Json
 
 @Composable
@@ -130,7 +130,7 @@ private fun WritingIndexScreen(
         }
     ) {
         writing?.let { entity ->
-            WritingShowPanel(
+            WritingPanel(
                 writing = entity,
                 json = json
             )

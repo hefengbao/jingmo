@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.expression.components.ChineseExpressionShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.expression.components.ExpressionPanel
 
 @Composable
 fun ChineseExpressionShowRoute(
@@ -49,7 +49,7 @@ private fun ChineseExpressionShowScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             expression?.let { entity ->
-                ChineseExpressionShowPanel(entity = entity)
+                ExpressionPanel(entity = entity)
             }
         }
     }

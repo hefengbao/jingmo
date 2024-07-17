@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.lyric.components.LyricShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.components.LyricPanel
 
 @Composable
 fun LyricIndexRoute(
@@ -74,7 +74,7 @@ private fun LyricIndexScreen(
         title = "歌词",
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "")
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "")
             }
             IconButton(onClick = onSearchClick) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "")
@@ -117,6 +117,6 @@ private fun LyricIndexScreen(
             }
         }
     ) {
-        lyricEntity?.let { entity -> LyricShowPanel(entity = entity) }
+        lyricEntity?.let { entity -> LyricPanel(entity = entity) }
     }
 }

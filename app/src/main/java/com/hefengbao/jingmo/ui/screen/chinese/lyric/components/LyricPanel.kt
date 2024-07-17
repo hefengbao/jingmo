@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 
 @Composable
-fun LyricShowPanel(
+fun LyricPanel(
     modifier: Modifier = Modifier,
     entity: LyricEntity
 ) {

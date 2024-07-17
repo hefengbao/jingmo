@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackPanel
 
 @Composable
 fun ChineseWisecrackShowRoute(
@@ -97,7 +97,7 @@ private fun ChineseWisecrackShowScreen(
                 }
             }
         ) {
-            ChineseWisecrackShowPanel(
+            ChineseWisecrackPanel(
                 entity = entity,
             )
         }

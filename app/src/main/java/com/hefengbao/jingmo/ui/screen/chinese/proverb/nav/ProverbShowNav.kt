@@ -22,7 +22,7 @@ import kotlin.text.Charsets.UTF_8
 
 internal const val proverbShowIdArg = "id"
 private const val base = "chinese_proverb_show"
-private const val ROUTE = "$base/${proverbShowIdArg}"
+private const val ROUTE = "$base/{$proverbShowIdArg}"
 
 internal class ProverbShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(
@@ -42,7 +42,7 @@ fun NavGraphBuilder.chineseProverbShowScreen(
     onBackClick: () -> Unit,
 ) {
     composable(
-        route = "$base/{$proverbShowIdArg}",
+        route = ROUTE,
         arguments = listOf(
             navArgument(proverbShowIdArg) { type = NavType.StringType }
         )

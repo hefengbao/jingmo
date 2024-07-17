@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.knowledge.components.KnowledgeShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.components.KnowledgePanel
 
 @Composable
 fun KnowledgeShowRoute(
@@ -72,7 +72,7 @@ private fun LyricShowScreen(
                 }
             }
         ) {
-            KnowledgeShowPanel(entity = entity)
+            KnowledgePanel(entity = entity)
         }
     }
 }

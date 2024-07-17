@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 
 @Composable
-internal fun ProverbShowPanel(
+internal fun ProverbPanel(
     modifier: Modifier = Modifier,
     entity: ProverbEntity
 ) {

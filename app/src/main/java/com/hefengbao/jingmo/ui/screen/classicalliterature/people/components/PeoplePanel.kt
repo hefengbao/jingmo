@@ -24,7 +24,7 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntit
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 
 @Composable
-fun ShowPeoplePanel(
+fun PeoplePanel(
     modifier: Modifier = Modifier,
     people: PeopleEntity
 ) {

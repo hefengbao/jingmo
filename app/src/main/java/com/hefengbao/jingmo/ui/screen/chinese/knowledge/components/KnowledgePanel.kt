@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 
 @Composable
-fun KnowledgeShowPanel(
+fun KnowledgePanel(
     modifier: Modifier = Modifier,
     entity: KnowledgeEntity
 ) {

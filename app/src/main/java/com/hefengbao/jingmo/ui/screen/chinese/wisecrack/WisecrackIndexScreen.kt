@@ -39,7 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackPanel
 import kotlin.math.abs
 
 @Composable
@@ -178,7 +178,7 @@ private fun ChineseWisecrackIndexScreen(
                     )
             ) {
 
-                ChineseWisecrackShowPanel(
+                ChineseWisecrackPanel(
                     entity = entity,
                 )
             }

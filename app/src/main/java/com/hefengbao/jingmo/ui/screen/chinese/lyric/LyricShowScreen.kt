@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.lyric.components.LyricShowPanel
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.components.LyricPanel
 
 @Composable
 fun LyricShowRoute(
@@ -72,7 +72,7 @@ private fun LyricShowScreen(
                 }
             }
         ) {
-            LyricShowPanel(entity = entity)
+            LyricPanel(entity = entity)
         }
     }
 }
