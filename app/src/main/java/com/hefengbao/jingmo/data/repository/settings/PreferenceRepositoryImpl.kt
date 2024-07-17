@@ -93,7 +93,7 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setClassicalLiteratureSentenceLastReadId(id: Int) =
         readStatus.setPoemSentencesLastReadId(id)
-    
+
     override suspend fun setClassicalLiteratureWritingLastReadId(id: Int) =
         readStatus.setWritingsLastReadId(id)
 

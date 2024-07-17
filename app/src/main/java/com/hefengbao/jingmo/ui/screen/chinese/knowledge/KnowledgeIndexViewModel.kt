@@ -11,63 +11,57 @@ package com.hefengbao.jingmo.ui.screen.chinese.knowledge
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class KnowledgeIndexViewModel @Inject constructor(
-    private val preferenceRepository: PreferenceRepository,
-    private val knowledgeRepository: KnowledgeRepository
+    private val repository: KnowledgeRepository
 ) : ViewModel() {
-    var id = MutableStateFlow(0)
-
     init {
+        random()
+    }
+
+    private val _knowledgeEntity: MutableStateFlow<KnowledgeEntity?> = MutableStateFlow(null)
+    val knowledgeEntity: SharedFlow<KnowledgeEntity?> = _knowledgeEntity
+
+    fun random() {
         viewModelScope.launch {
-            id.value = preferenceRepository.getReadStatus().first().chineseKnowledgeLastReadId
+            repository.random().collectLatest {
+                _knowledgeEntity.value = it
+            }
         }
     }
 
-    fun setCurrentId(id: Int) {
-        this.id.value = id
+    private val _knowledgeCollectionEntity: MutableStateFlow<KnowledgeCollectionEntity?> =
+        MutableStateFlow(null)
+    val knowledgeCollectionEntity: SharedFlow<KnowledgeCollectionEntity?> =
+        _knowledgeCollectionEntity
+
+    fun isCollect(id: Int) {
+        viewModelScope.launch {
+            repository.isCollect(id).collectLatest {
+                _knowledgeCollectionEntity.value = it
+            }
+        }
     }
 
-    val chineseKnowledge = id.flatMapLatest {
-        knowledgeRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val prevId = id.flatMapLatest {
-        knowledgeRepository.getPrevId(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val nextId = id.flatMapLatest {
-        knowledgeRepository.getNextId(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    fun setLastReadId(id: Int) {
+    fun collect(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setChineseKnowledgeLastReadId(id)
+            repository.collect(KnowledgeCollectionEntity(id))
+        }
+    }
+
+    fun uncollect(id: Int) {
+        viewModelScope.launch {
+            repository.uncollect(id)
         }
     }
 }

@@ -34,7 +34,9 @@ import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeFtsEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricFtsEntity
@@ -78,13 +80,15 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         SentenceCollectionEntity::class,
         SentenceEntity::class,
         ExpressionEntity::class,
-        KnowledgeEntity::class,
         WisecrackCollectionEntity::class,
         WisecrackEntity::class,
         DictionaryEntity::class,
         DictionaryPinyinEntity::class,
         IdiomCollectionEntity::class,
         IdiomEntity::class,
+        KnowledgeCollectionEntity::class,
+        KnowledgeEntity::class,
+        KnowledgeFtsEntity::class,
         LyricCollectionEntity::class,
         LyricEntity::class,
         LyricFtsEntity::class,
@@ -94,7 +98,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         RiddleEntity::class,
         TongueTwisterEntity::class,
     ],
-    version = 18,
+    version = 20,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -113,6 +117,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 15, to = 16),
         AutoMigration(from = 16, to = 17),
         AutoMigration(from = 17, to = 18),
+        AutoMigration(from = 18, to = 19, spec = AppDatabase.AutoMigration18To19::class),
+        AutoMigration(from = 19, to = 20),
     ],
     exportSchema = true
 )
@@ -170,4 +176,9 @@ abstract class AppDatabase : RoomDatabase() {
         tableName = "idiom_collections"
     )
     class AutoMigration13To14 : AutoMigrationSpec
+
+    @DeleteTable(
+        tableName = "chinese_knowledge"
+    )
+    class AutoMigration18To19 : AutoMigrationSpec
 }

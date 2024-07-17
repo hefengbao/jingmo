@@ -9,10 +9,13 @@
 
 package com.hefengbao.jingmo.data.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -21,21 +24,28 @@ interface ChineseKnowledgeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: KnowledgeEntity)
 
-    @Query("select k.rowid, k.* from chinese_knowledge k where k.rowid = :id limit 1")
-    fun getChineseKnowledge(id: Int): Flow<KnowledgeEntity>
+    @Query("select * from chinese_knowledge where id = :id limit 1")
+    fun get(id: Int): Flow<KnowledgeEntity>
 
-    @Query("select rowid from chinese_knowledge where rowid <:id order by rowid desc limit 1")
-    fun getPrevId(id: Int): Flow<Int?>
+    @Query("select k.*from chinese_knowledge k where k.id = (select id from chinese_knowledge order by random() limit 1) limit 1")
+    fun random(): Flow<KnowledgeEntity>
 
-    @Query("select rowid from chinese_knowledge where rowid > :id order by rowid asc limit 1")
-    fun getNextId(id: Int): Flow<Int?>
+    @Transaction
+    @Query("select * from chinese_knowledge join chinese_knowledge_fts on chinese_knowledge_fts.rowid = chinese_knowledge.id where chinese_knowledge_fts match :query")
+    fun search(query: String): Flow<List<KnowledgeEntity>>
 
-    @Query("select k.rowid, k.* from chinese_knowledge k where k.content match :query")
-    fun getSearchChineseKnowledgeList(query: String): Flow<List<KnowledgeEntity>>
-
-    @Query("delete from chinese_knowledge")
-    suspend fun clear()
+    @Query("select k.* from chinese_knowledge_collections c join chinese_knowledge k on c.id = k.id order by collected_at desc")
+    fun collections(): PagingSource<Int, KnowledgeEntity>
 
     @Query("select count(*) from chinese_knowledge")
     fun total(): Flow<Int>
+
+    @Query("select * from chinese_knowledge_collections where id = :id")
+    fun isCollect(id: Int): Flow<KnowledgeCollectionEntity?>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun collect(entity: KnowledgeCollectionEntity)
+
+    @Query("delete from chinese_knowledge_collections where id = :id")
+    suspend fun uncollect(id: Int)
 }

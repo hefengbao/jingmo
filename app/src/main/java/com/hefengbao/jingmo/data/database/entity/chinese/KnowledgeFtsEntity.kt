@@ -9,14 +9,20 @@
 
 package com.hefengbao.jingmo.data.database.entity.chinese
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Fts4
+import androidx.room.FtsOptions
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "chinese_knowledge")
-data class KnowledgeEntity(
+@Fts4(
+    tokenizer = FtsOptions.TOKENIZER_ICU,
+    contentEntity = KnowledgeEntity::class,
+)
+@Entity(tableName = "chinese_knowledge_fts")
+data class KnowledgeFtsEntity(
     @PrimaryKey
+    @ColumnInfo("rowid")
     val id: Int,
-    val content: String,
-    val label: String,
-    val url: String?,
+    val content: String
 )

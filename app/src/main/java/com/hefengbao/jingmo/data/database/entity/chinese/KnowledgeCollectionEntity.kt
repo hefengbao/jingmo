@@ -9,14 +9,19 @@
 
 package com.hefengbao.jingmo.data.database.entity.chinese
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "chinese_knowledge")
-data class KnowledgeEntity(
+/**
+ * 知识卡片书签
+ */
+@Entity(tableName = "chinese_knowledge_collections", indices = [Index("collected_at")])
+data class KnowledgeCollectionEntity(
     @PrimaryKey
-    val id: Int,
-    val content: String,
-    val label: String,
-    val url: String?,
-)
+    val id: Int
+) {
+    @ColumnInfo(name = "collected_at")
+    var collectedAt: Long = System.currentTimeMillis()
+}

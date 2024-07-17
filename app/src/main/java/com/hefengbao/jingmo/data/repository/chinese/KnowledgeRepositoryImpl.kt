@@ -9,23 +9,36 @@
 
 package com.hefengbao.jingmo.data.repository.chinese
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
+import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class KnowledgeRepositoryImpl @Inject constructor(
-    private val chineseKnowledgeDao: ChineseKnowledgeDao
+    private val dao: ChineseKnowledgeDao
 ) : KnowledgeRepository {
-    override fun get(id: Int): Flow<KnowledgeEntity> =
-        chineseKnowledgeDao.getChineseKnowledge(id)
+    override suspend fun insert(entity: KnowledgeEntity) = dao.insert(entity)
 
-    override fun getPrevId(id: Int): Flow<Int?> =
-        chineseKnowledgeDao.getPrevId(id)
+    override fun get(id: Int): Flow<KnowledgeEntity> = dao.get(id)
 
-    override fun getNextId(id: Int): Flow<Int?> =
-        chineseKnowledgeDao.getNextId(id)
+    override fun random(): Flow<KnowledgeEntity> = dao.random()
 
-    override fun search(query: String): Flow<List<KnowledgeEntity>> =
-        chineseKnowledgeDao.getSearchChineseKnowledgeList("*$query*")
+    override fun search(query: String): Flow<List<KnowledgeEntity>> = dao.search(query)
+
+    override fun collections(): Flow<PagingData<KnowledgeEntity>> = Pager(
+        config = PagingConfig(pageSize = 15),
+        pagingSourceFactory = { dao.collections() }
+    ).flow
+
+    override fun total(): Flow<Int> = dao.total()
+
+    override fun isCollect(id: Int): Flow<KnowledgeCollectionEntity?> = dao.isCollect(id)
+
+    override suspend fun collect(entity: KnowledgeCollectionEntity) = dao.collect(entity)
+
+    override suspend fun uncollect(id: Int) = dao.uncollect(id)
 }

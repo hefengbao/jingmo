@@ -44,16 +44,20 @@ import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.navigateToChineseIdiomIn
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.navigateToChineseIdiomReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.navigateToChineseIdiomSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.navigateToChineseIdiomShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricShowScreen
-import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbBookmarksScreen
@@ -273,8 +277,17 @@ fun AppNavHost(
                 chineseKnowledgeIndexGraph(
                     onBackClick = navController::navigateUp,
                     onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
+                    onBookmarksClick = { navController.navigateToChineseKnowledgeBookmarksScreen() },
                     nestGraph = {
+                        chineseKnowledgeBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseKnowledgeShowScreen(it.toString()) }
+                        )
                         chineseKnowledgeSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseKnowledgeShowScreen(it.toString()) }
+                        )
+                        chineseKnowledgeShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

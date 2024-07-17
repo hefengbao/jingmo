@@ -25,6 +25,7 @@ fun NavController.navigateToChineseKnowledgeIndexGraph() {
 fun NavGraphBuilder.chineseKnowledgeIndexGraph(
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -34,7 +35,8 @@ fun NavGraphBuilder.chineseKnowledgeIndexGraph(
         composable(ROUTE) {
             ChineseKnowledgeIndexRoute(
                 onBackClick = onBackClick,
-                onSearchClick = onSearchClick
+                onSearchClick = onSearchClick,
+                onBookmarksClick = onBookmarksClick
             )
         }
         nestGraph()
