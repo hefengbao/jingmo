@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,6 +31,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -68,6 +70,7 @@ fun HomeRoute(
     onSettingsClick: () -> Unit,
 ) {
     val homeItem by viewModel.homeItem.collectAsState(initial = HomeItem())
+    val showSyncDataTip by viewModel.showSyncDataTip.collectAsState(initial = false)
 
     HomeScreen(
         homeItem = homeItem,
@@ -89,6 +92,8 @@ fun HomeRoute(
         onTraditionalCultureSolarTermsClick = onTraditionalCultureSolarTermsClick,
         onLinksClick = onLinksClick,
         onSettingsClick = onSettingsClick,
+        showSyncDataTip = showSyncDataTip,
+        updateShowSyncDataTip = { viewModel.updateShowSyncDataTip() }
     )
 }
 
@@ -115,7 +120,23 @@ private fun HomeScreen(
     onTraditionalCultureSolarTermsClick: () -> Unit,
     onLinksClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    showSyncDataTip: Boolean,
+    updateShowSyncDataTip: () -> Unit,
 ) {
+    if (showSyncDataTip) {
+        AlertDialog(
+            onDismissRequest = updateShowSyncDataTip,
+            confirmButton = {
+                TextButton(onClick = updateShowSyncDataTip) {
+                    Text(text = "知道了")
+                }
+            },
+            text = {
+                Text(text = "如果首次使用，请点击右上角设置（⚙）同步数据或者导入数据")
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(

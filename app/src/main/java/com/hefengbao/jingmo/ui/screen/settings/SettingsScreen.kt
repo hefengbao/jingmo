@@ -29,6 +29,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -64,6 +68,14 @@ fun SettingsScreen(
     onImportClick: () -> Unit,
     onPrivacyClick: () -> Unit,
 ) {
+    var showThemeDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showThemeDialog) {
+        ThemeDialog {
+            showThemeDialog = false
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -87,6 +99,8 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState()),
         ) {
+            SettingsTitle(title = "UI")
+            Item(title = "主题设置", onClick = { showThemeDialog = true }, showBadge = false)
             SettingsTitle(title = "功能")
             Item(title = "同步数据", onClick = onDataClick, showBadge = false)
             Item(title = "导入数据", onClick = onImportClick, showBadge = false)

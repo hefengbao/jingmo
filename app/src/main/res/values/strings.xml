@@ -3,4 +3,16 @@
     <string name="widget_idiom">成语</string>
     <string name="widget_poem">诗文</string>
     <string name="widget_poem_sentence">诗文名句</string>
+    <string name="feature_settings_loading">Loading…</string>
+    <string name="feature_settings_theme">主题</string>
+    <string name="feature_settings_brand_default">默认</string>
+    <string name="feature_settings_brand_android">Android</string>
+    <string name="feature_settings_dark_mode_preference">深色模式</string>
+    <string name="feature_settings_dark_mode_config_system_default">跟随系统</string>
+    <string name="feature_settings_dark_mode_config_light">浅色</string>
+    <string name="feature_settings_dark_mode_config_dark">深色</string>
+    <string name="feature_settings_dynamic_color_preference">使用动态颜色</string>
+    <string name="feature_settings_dynamic_color_yes">是</string>
+    <string name="feature_settings_dynamic_color_no">否</string>
+    <string name="feature_settings_dismiss_dialog_button_text">确认</string>
 </resources>

@@ -103,4 +103,6 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setCaptureBackgroundColor(color: String) =
         app.setCaptureBackgroundColor(color)
+
+    override suspend fun setShowSyncDataTip(show: Boolean) = app.setShowSyncDataTip(show)
 }

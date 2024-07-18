@@ -45,6 +45,8 @@ import com.hefengbao.jingmo.data.repository.settings.NetworkDatasourceRepository
 import com.hefengbao.jingmo.data.repository.settings.NetworkDatasourceRepositoryImpl
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepositoryImpl
+import com.hefengbao.jingmo.data.repository.settings.ThemeRepository
+import com.hefengbao.jingmo.data.repository.settings.ThemeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepositoryImpl
 import com.hefengbao.jingmo.data.repository.traditionalculture.FestivalRepository
@@ -163,4 +165,9 @@ interface DataModule {
     fun bindsChineseProverbRepository(
         proverbRepository: ProverbRepositoryImpl
     ): ProverbRepository
+
+    @Binds
+    fun bindsThemeRepository(
+        themeRepositoryImpl: ThemeRepositoryImpl
+    ): ThemeRepository
 }

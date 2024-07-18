@@ -9,7 +9,14 @@
 
 package com.hefengbao.jingmo.data.model
 
+import com.hefengbao.jingmo.data.model.theme.DarkThemeConfig
+import com.hefengbao.jingmo.data.model.theme.ThemeBrand
+
 data class AppStatus(
     val captureTextColor: String,
     val captureBackgroundColor: String,
+    val themeBrand: ThemeBrand,
+    val darkThemeConfig: DarkThemeConfig,
+    val useDynamicColor: Boolean,
+    val showSyncDataTip: Boolean
 )
