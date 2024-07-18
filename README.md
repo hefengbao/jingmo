@@ -1,6 +1,6 @@
 # 京墨
 
-![](screenshot/2.png)
+![](screenshot/v1.13.0.png)
 
 ## 仓库
 
@@ -27,6 +27,8 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 9. 知识卡片 464 组；
 10. 字典 20552 字； 
 11. 词典 320349 词；
+12. 歌词 499 首;
+13. 谚语 489 组；
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
