@@ -37,12 +37,15 @@ interface ChineseDictionaryDao {
     @Query("select d.* from dictionary d where d.id in (select p.dictionary_id from dictionary_pinyin p where p.pinyin = :pinyin)")
     fun getByPinyin(pinyin: String): Flow<List<DictionaryEntity>>
 
+    @Query("select count(d.id) from dictionary d")
+    fun total(): Flow<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity)
 
     @Query("delete from dictionary_pinyin")
     suspend fun clearDictionaryPinyin()
 
-    @Query("select count(d.id) from dictionary d")
-    fun total(): Flow<Int>
+    @Query("delete from dictionary")
+    suspend fun clear()
 }

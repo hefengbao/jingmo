@@ -54,40 +54,77 @@ class ImportRepositoryImpl @Inject constructor(
     override suspend fun insertChineseExpression(entity: ExpressionEntity) =
         chineseExpressionDao.insert(entity)
 
+    override suspend fun clearChineseExpressions() =
+        chineseExpressionDao.clear()
+
     override suspend fun insertChineseWisecrack(entity: WisecrackEntity) =
         chineseWisecrackDao.insert(entity)
+
+    override suspend fun clearChineseWisecracks() =
+        chineseWisecrackDao.clear()
 
     override suspend fun insertChineseKnowledge(entity: KnowledgeEntity) =
         chineseKnowledgeDao.insert(entity)
 
+    override suspend fun clearChineseKnowledge() =
+        chineseKnowledgeDao.clear()
+
     override suspend fun insertChineseProverb(entity: ProverbEntity) =
         chineseProverbDao.insert(entity)
 
-    override suspend fun insertClassicPoem(entity: ClassicPoemEntity) =
-        classicalLiteratureClassicPoemDao.insert(entity)
+    override suspend fun clearChineseProverbs() =
+        chineseProverbDao.clear()
 
-    override suspend fun insertDictionary(entity: DictionaryEntity) =
+    override suspend fun insertChineseDictionary(entity: DictionaryEntity) =
         chineseDictionaryDao.insert(entity)
 
-    override suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity) =
+    override suspend fun insertChineseDictionaryPinyin(entity: DictionaryPinyinEntity) =
         chineseDictionaryDao.insertDictionaryPinyin(entity)
 
-    override suspend fun insertIdiom(entity: IdiomEntity) =
+    override suspend fun clearChineseDictionaries() =
+        chineseDictionaryDao.clear()
+
+    override suspend fun insertChineseIdiom(entity: IdiomEntity) =
         chineseIdiomDao.insert(entity)
 
-    override suspend fun insertLyric(entity: LyricEntity) = chineseLyricDao.insert(entity)
+    override suspend fun clearChineseIdioms() =
+        chineseIdiomDao.clear()
 
-    override suspend fun insertPeople(entity: PeopleEntity) =
-        classicalLiteraturePeopleDao.insert(entity)
+    override suspend fun insertChineseLyric(entity: LyricEntity) =
+        chineseLyricDao.insert(entity)
 
-    override suspend fun insertPoemSentence(entity: SentenceEntity) =
-        classicalLiteratureSentenceDao.insert(entity)
+    override suspend fun clearChineseLyrics() =
+        chineseLyricDao.clear()
 
-    override suspend fun insertTongueTwister(entity: TongueTwisterEntity) =
+    override suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity) =
         chineseTongueTwisterDao.insert(entity)
 
-    override suspend fun insertWriting(entity: WritingEntity) =
+    override suspend fun clearChineseTongueTwisters() =
+        chineseTongueTwisterDao.clear()
+
+    override suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity) =
+        classicalLiteraturePeopleDao.insert(entity)
+
+    override suspend fun clearClassicalLiteraturePeople() =
+        classicalLiteraturePeopleDao.clear()
+
+    override suspend fun insertClassicalLiteratureClassicPoems(entity: ClassicPoemEntity) =
+        classicalLiteratureClassicPoemDao.insert(entity)
+
+    override suspend fun clearClassicalLiteratureClassicPoems() =
+        classicalLiteratureClassicPoemDao.clear()
+
+    override suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity) =
+        classicalLiteratureSentenceDao.insert(entity)
+
+    override suspend fun clearClassicalLiteratureSentence() =
+        classicalLiteratureSentenceDao.clear()
+
+    override suspend fun insertClassicalLiteratureWriting(entity: WritingEntity) =
         classicalLiteratureWritingDao.insert(entity)
+
+    override suspend fun clearClassicalLiteratureWritings() =
+        classicalLiteratureWritingDao.clear()
 
     override fun chineseExpressionTotal(): Flow<Int> = chineseExpressionDao.total()
 
@@ -97,19 +134,22 @@ class ImportRepositoryImpl @Inject constructor(
 
     override fun chineseProverbTotal(): Flow<Int> = chineseProverbDao.total()
 
-    override fun classicPoemTotal(): Flow<Int> = classicalLiteratureClassicPoemDao.total()
+    override fun classicalLiteratureClassicPoemTotal(): Flow<Int> =
+        classicalLiteratureClassicPoemDao.total()
 
-    override fun dictionaryTotal(): Flow<Int> = chineseDictionaryDao.total()
+    override fun chineseDictionaryTotal(): Flow<Int> = chineseDictionaryDao.total()
 
-    override fun idiomsTotal(): Flow<Int> = chineseIdiomDao.total()
+    override fun chineseIdiomTotal(): Flow<Int> = chineseIdiomDao.total()
 
-    override fun lyricTotal(): Flow<Int> = chineseLyricDao.total()
+    override fun chineseLyricTotal(): Flow<Int> = chineseLyricDao.total()
 
-    override fun peopleTotal(): Flow<Int> = classicalLiteraturePeopleDao.total()
+    override fun classicalLiteraturePeopleTotal(): Flow<Int> = classicalLiteraturePeopleDao.total()
 
-    override fun poemSentencesTotal(): Flow<Int> = classicalLiteratureSentenceDao.total()
+    override fun classicalLiteratureSentenceTotal(): Flow<Int> =
+        classicalLiteratureSentenceDao.total()
 
-    override fun tongueTwistersTotal(): Flow<Int> = chineseTongueTwisterDao.total()
+    override fun chineseTongueTwistersTotal(): Flow<Int> = chineseTongueTwisterDao.total()
 
-    override fun writingsTotal(): Flow<Int> = classicalLiteratureWritingDao.total()
+    override fun classicalLiteratureWritingTotal(): Flow<Int> =
+        classicalLiteratureWritingDao.total()
 }

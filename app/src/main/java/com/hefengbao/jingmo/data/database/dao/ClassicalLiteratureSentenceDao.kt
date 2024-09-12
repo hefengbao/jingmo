@@ -50,7 +50,9 @@ interface ClassicalLiteratureSentenceDao {
     @Query("select * from poem_sentence_collections where id = :id")
     fun isCollect(id: Int): Flow<SentenceCollectionEntity?>
 
-
     @Query("select count(*) from poem_sentences")
     fun total(): Flow<Int>
+
+    @Query("delete from poem_sentences")
+    suspend fun clear()
 }

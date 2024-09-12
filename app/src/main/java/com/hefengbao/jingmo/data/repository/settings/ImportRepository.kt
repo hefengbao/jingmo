@@ -26,28 +26,40 @@ import kotlinx.coroutines.flow.Flow
 
 interface ImportRepository {
     suspend fun insertChineseExpression(entity: ExpressionEntity)
+    suspend fun clearChineseExpressions()
     suspend fun insertChineseWisecrack(entity: WisecrackEntity)
+    suspend fun clearChineseWisecracks()
     suspend fun insertChineseKnowledge(entity: KnowledgeEntity)
+    suspend fun clearChineseKnowledge()
     suspend fun insertChineseProverb(entity: ProverbEntity)
-    suspend fun insertClassicPoem(entity: ClassicPoemEntity)
-    suspend fun insertDictionary(entity: DictionaryEntity)
-    suspend fun insertDictionaryPinyin(entity: DictionaryPinyinEntity)
-    suspend fun insertIdiom(entity: IdiomEntity)
-    suspend fun insertLyric(entity: LyricEntity)
-    suspend fun insertPeople(entity: PeopleEntity)
-    suspend fun insertPoemSentence(entity: SentenceEntity)
-    suspend fun insertTongueTwister(entity: TongueTwisterEntity)
-    suspend fun insertWriting(entity: WritingEntity)
+    suspend fun clearChineseProverbs()
+    suspend fun insertChineseDictionary(entity: DictionaryEntity)
+    suspend fun insertChineseDictionaryPinyin(entity: DictionaryPinyinEntity)
+    suspend fun clearChineseDictionaries()
+    suspend fun insertChineseIdiom(entity: IdiomEntity)
+    suspend fun clearChineseIdioms()
+    suspend fun insertChineseLyric(entity: LyricEntity)
+    suspend fun clearChineseLyrics()
+    suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity)
+    suspend fun clearChineseTongueTwisters()
+    suspend fun insertClassicalLiteratureClassicPoems(entity: ClassicPoemEntity)
+    suspend fun clearClassicalLiteratureClassicPoems()
+    suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity)
+    suspend fun clearClassicalLiteraturePeople()
+    suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity)
+    suspend fun clearClassicalLiteratureSentence()
+    suspend fun insertClassicalLiteratureWriting(entity: WritingEntity)
+    suspend fun clearClassicalLiteratureWritings()
     fun chineseExpressionTotal(): Flow<Int>
     fun chineseWisecrackTotal(): Flow<Int>
     fun chineseKnowledgeTotal(): Flow<Int>
     fun chineseProverbTotal(): Flow<Int>
-    fun classicPoemTotal(): Flow<Int>
-    fun dictionaryTotal(): Flow<Int>
-    fun idiomsTotal(): Flow<Int>
-    fun lyricTotal(): Flow<Int>
-    fun peopleTotal(): Flow<Int>
-    fun poemSentencesTotal(): Flow<Int>
-    fun tongueTwistersTotal(): Flow<Int>
-    fun writingsTotal(): Flow<Int>
+    fun chineseDictionaryTotal(): Flow<Int>
+    fun chineseIdiomTotal(): Flow<Int>
+    fun chineseLyricTotal(): Flow<Int>
+    fun chineseTongueTwistersTotal(): Flow<Int>
+    fun classicalLiteratureClassicPoemTotal(): Flow<Int>
+    fun classicalLiteraturePeopleTotal(): Flow<Int>
+    fun classicalLiteratureSentenceTotal(): Flow<Int>
+    fun classicalLiteratureWritingTotal(): Flow<Int>
 }

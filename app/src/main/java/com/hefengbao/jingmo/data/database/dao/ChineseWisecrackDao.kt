@@ -52,4 +52,7 @@ interface ChineseWisecrackDao {
 
     @Query("select count(*) from chinese_wisecracks")
     fun total(): Flow<Int>
+
+    @Query("delete from chinese_wisecracks")
+    suspend fun clear()
 }

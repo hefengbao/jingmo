@@ -54,4 +54,7 @@ interface ClassicalLiteratureClassicPoemDao {
     @Transaction
     @Query("select * from classic_poems join classic_poems_fts on classic_poems_fts.rowid = classic_poems.id where classic_poems_fts match :query")
     fun search(query: String): Flow<List<ClassicPoemEntity>>
+
+    @Query("delete from classic_poems")
+    suspend fun clear()
 }

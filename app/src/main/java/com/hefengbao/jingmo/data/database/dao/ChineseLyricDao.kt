@@ -54,4 +54,7 @@ interface ChineseLyricDao {
 
     @Query("delete from lyric_collections where id = :id")
     suspend fun uncollect(id: Int)
+
+    @Query("delete from lyrics")
+    suspend fun clear()
 }

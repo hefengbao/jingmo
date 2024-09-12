@@ -24,6 +24,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.FileOpen
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,6 +34,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -75,39 +77,51 @@ fun ImportRoute(
         chineseExpressionRatio = chineseExpressionRatio,
         chineseExpressionStatus = chineseExpressionStatus,
         chineseExpressionUris = { viewModel.chineseExpression(it) },
+        clearChineseExpressions = viewModel::clearChineseExpressions,
         chineseKnowledgeRatio = chineseKnowledgeRatio,
         chineseKnowledgeStatus = chineseKnowledgeStatus,
         chineseKnowledgeUris = { viewModel.chineseKnowledge(it) },
+        clearChineseKnowledge = viewModel::clearChineseKnowledge,
         chineseProverbRatio = chineseProverbRatio,
         chineseProverbStatus = chineseProverbStatus,
         chineseProverbUris = { viewModel.chineseProverb(it) },
+        clearChineseProverbs = viewModel::clearChineseProverbs,
         chineseWisecracksRatio = chineseWisecrackRatio,
         chineseWisecracksStatus = chineseWisecracksStatus,
         chineseWisecracksUris = { viewModel.chineseWisecrack(it) },
+        clearChineseWisecracks = viewModel::clearChineseWisecracks,
         classicPoemsRatio = classicPoemsRatio,
         classicPoemsStatus = classicPoemsStatus,
         classicPoemsUris = { viewModel.classicPoems(it) },
+        clearClassicPoems = viewModel::clearClassicalLiteratureClassicPoems,
         dictionaryRatio = dictionaryRatio,
         dictionaryStatus = dictionaryStatus,
         dictionaryUris = { viewModel.dictionary(it) },
+        clearChineseDictionaries = viewModel::clearChineseDictionaries,
         idiomsRatio = idiomsRatio,
         idiomsStatus = idiomsStatus,
         idiomsUris = { viewModel.idioms(it) },
+        clearChineseIdioms = viewModel::clearChineseIdioms,
         lyricRatio = lyricRatio,
         lyricStatus = lyricStatus,
         lyricUris = { viewModel.lyrics(it) },
+        clearChineseLyrics = viewModel::clearChineseLyrics,
         peopleRatio = peopleRatio,
         peopleStatus = peopleStatus,
         peopleUris = { viewModel.people(it) },
+        clearClassicalLiteraturePeople = viewModel::clearClassicalLiteraturePeople,
         poemSentencesRatio = poemSentenceRatio,
         poemSentencesStatus = poemSentencesStatus,
         poemSentencesUris = { viewModel.poemSentences(it) },
+        clearClassicalLiteratureSentence = viewModel::clearClassicalLiteratureSentence,
         tongueTwistersRatio = tongueTwistersRatio,
         tongueTwistersStatus = tongueTwistersStatus,
         tongueTwistersUris = { viewModel.tongueTwisters(it) },
+        clearChineseTongueTwisters = viewModel::clearChineseTongueTwisters,
         writingsRatio = writingsRatio,
         writingsStatus = writingsStatus,
-        writingsUris = { viewModel.writings(it) }
+        writingsUris = { viewModel.writings(it) },
+        clearClassicalLiteratureWritings = viewModel::clearClassicalLiteratureWritings
     )
 }
 
@@ -118,39 +132,51 @@ private fun ImportScreen(
     chineseExpressionRatio: Float,
     chineseExpressionStatus: ImportStatus<Any>,
     chineseExpressionUris: (List<Uri>) -> Unit,
+    clearChineseExpressions: () -> Unit,
     chineseKnowledgeRatio: Float,
     chineseKnowledgeStatus: ImportStatus<Any>,
     chineseKnowledgeUris: (List<Uri>) -> Unit,
+    clearChineseKnowledge: () -> Unit,
     chineseProverbRatio: Float,
     chineseProverbStatus: ImportStatus<Any>,
     chineseProverbUris: (List<Uri>) -> Unit,
+    clearChineseProverbs: () -> Unit,
     chineseWisecracksRatio: Float,
     chineseWisecracksStatus: ImportStatus<Any>,
     chineseWisecracksUris: (List<Uri>) -> Unit,
+    clearChineseWisecracks: () -> Unit,
     classicPoemsRatio: Float,
     classicPoemsStatus: ImportStatus<Any>,
     classicPoemsUris: (List<Uri>) -> Unit,
+    clearClassicPoems: () -> Unit,
     dictionaryRatio: Float,
     dictionaryStatus: ImportStatus<Any>,
     dictionaryUris: (List<Uri>) -> Unit,
+    clearChineseDictionaries: () -> Unit,
     idiomsRatio: Float,
     idiomsStatus: ImportStatus<Any>,
     idiomsUris: (List<Uri>) -> Unit,
+    clearChineseIdioms: () -> Unit,
     lyricRatio: Float,
     lyricStatus: ImportStatus<Any>,
     lyricUris: (List<Uri>) -> Unit,
+    clearChineseLyrics: () -> Unit,
     peopleRatio: Float,
     peopleStatus: ImportStatus<Any>,
     peopleUris: (List<Uri>) -> Unit,
+    clearClassicalLiteraturePeople: () -> Unit,
     poemSentencesRatio: Float,
     poemSentencesStatus: ImportStatus<Any>,
     poemSentencesUris: (List<Uri>) -> Unit,
+    clearClassicalLiteratureSentence: () -> Unit,
     tongueTwistersRatio: Float,
     tongueTwistersStatus: ImportStatus<Any>,
     tongueTwistersUris: (List<Uri>) -> Unit,
+    clearChineseTongueTwisters: () -> Unit,
     writingsRatio: Float,
     writingsStatus: ImportStatus<Any>,
-    writingsUris: (List<Uri>) -> Unit
+    writingsUris: (List<Uri>) -> Unit,
+    clearClassicalLiteratureWritings: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
     val chineseExpressionLauncher =
@@ -221,74 +247,86 @@ private fun ImportScreen(
                 title = "经典诗文",
                 ratio = classicPoemsRatio,
                 launcher = classicPoemsLauncher,
-                status = classicPoemsStatus
+                status = classicPoemsStatus,
+                onDeleteClick = clearClassicPoems
             )
             MenuItem(
                 title = "诗文",
                 ratio = writingsRatio,
                 launcher = writingsLauncher,
-                status = writingsStatus
+                status = writingsStatus,
+                onDeleteClick = clearClassicalLiteratureWritings
             )
             MenuItem(
                 title = "诗文名句",
                 ratio = poemSentencesRatio,
                 launcher = poemSentencesLauncher,
-                status = poemSentencesStatus
+                status = poemSentencesStatus,
+                onDeleteClick = clearClassicalLiteratureSentence
             )
             MenuItem(
                 title = "人物",
                 ratio = peopleRatio,
                 launcher = peopleLauncher,
-                status = peopleStatus
+                status = peopleStatus,
+                onDeleteClick = clearClassicalLiteraturePeople
             )
             SettingsTitle(title = "现代汉语")
             MenuItem(
                 title = "汉字",
                 ratio = dictionaryRatio,
                 launcher = dictionaryLauncher,
-                status = dictionaryStatus
+                status = dictionaryStatus,
+                onDeleteClick = clearChineseDictionaries
             )
             MenuItem(
                 title = "成语",
                 ratio = idiomsRatio,
                 launcher = idiomsLauncher,
-                status = idiomsStatus
+                status = idiomsStatus,
+                onDeleteClick = clearChineseIdioms
             )
             MenuItem(
                 title = "词语",
                 ratio = chineseExpressionRatio,
                 launcher = chineseExpressionLauncher,
-                status = chineseExpressionStatus
+                status = chineseExpressionStatus,
+                onDeleteClick = clearChineseExpressions
             )
             MenuItem(
                 title = "歇后语",
                 ratio = chineseWisecracksRatio,
                 launcher = chineseWisecracksLauncher,
-                status = chineseWisecracksStatus
+                status = chineseWisecracksStatus,
+                onDeleteClick = clearChineseWisecracks
             )
             MenuItem(
                 title = "谚语",
                 ratio = chineseProverbRatio,
                 launcher = chineseProverbLauncher,
-                status = chineseProverbStatus
+                status = chineseProverbStatus,
+                onDeleteClick = clearChineseProverbs
             )
             MenuItem(
                 title = "绕口令",
                 ratio = tongueTwistersRatio,
                 launcher = tongueTwistersLauncher,
-                status = tongueTwistersStatus
+                status = tongueTwistersStatus,
+                onDeleteClick = clearChineseTongueTwisters
             )
             MenuItem(
                 title = "歌词",
                 ratio = lyricRatio,
                 launcher = lyricLauncher,
-                status = lyricStatus
+                status = lyricStatus,
+                onDeleteClick = clearChineseLyrics
             )
             MenuItem(
                 title = "知识卡片",
                 ratio = chineseKnowledgeRatio,
                 launcher = chineseKnowledgeLauncher,
-                status = chineseKnowledgeStatus
+                status = chineseKnowledgeStatus,
+                onDeleteClick = clearChineseKnowledge
             )
         }
     }
@@ -301,7 +339,8 @@ private fun MenuItem(
     title: String,
     ratio: Float,
     launcher: ManagedActivityResultLauncher<Array<String>, List<@JvmSuppressWildcards Uri>>,
-    status: ImportStatus<Any>
+    status: ImportStatus<Any>,
+    onDeleteClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -323,6 +362,13 @@ private fun MenuItem(
                     CircularProgressIndicator()
                 }
                 Icon(imageVector = Icons.Default.FileOpen, contentDescription = "")
+            }
+            IconButton(onClick = onDeleteClick) {
+                Icon(
+                    imageVector = Icons.Outlined.Delete,
+                    contentDescription = "删除数据",
+                    tint = Color.Red
+                )
             }
         }
     }

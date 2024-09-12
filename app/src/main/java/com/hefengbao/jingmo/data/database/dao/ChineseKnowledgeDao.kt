@@ -54,4 +54,7 @@ interface ChineseKnowledgeDao {
 
     @Query("delete from chinese_knowledge_collections where id = :id")
     suspend fun uncollect(id: Int)
+
+    @Query("delete from chinese_knowledge")
+    suspend fun clear()
 }

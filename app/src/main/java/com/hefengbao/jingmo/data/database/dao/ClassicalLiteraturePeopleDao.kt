@@ -35,4 +35,7 @@ interface ClassicalLiteraturePeopleDao {
 
     @Query("select count(*) from people")
     fun total(): Flow<Int>
+
+    @Query("delete from people")
+    suspend fun clear()
 }

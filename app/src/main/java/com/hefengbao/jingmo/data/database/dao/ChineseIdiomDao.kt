@@ -55,4 +55,7 @@ interface ChineseIdiomDao {
 
     @Query("select count(*) from idioms")
     fun total(): Flow<Int>
+
+    @Query("delete from idioms")
+    suspend fun clear()
 }

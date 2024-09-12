@@ -38,4 +38,7 @@ interface ChineseRiddleDao {
 
     @Query("select * from riddles where puzzle like :query order by id asc")
     fun search(query: String): Flow<List<RiddleEntity>>
+
+    @Query("delete from riddles")
+    suspend fun clear()
 }

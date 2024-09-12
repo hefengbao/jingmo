@@ -58,4 +58,7 @@ interface ClassicalLiteratureWritingDao {
 
     @Query("select count(w.rowid) from writings w")
     fun total(): Flow<Int>
+
+    @Query("delete from writings")
+    suspend fun clear()
 }

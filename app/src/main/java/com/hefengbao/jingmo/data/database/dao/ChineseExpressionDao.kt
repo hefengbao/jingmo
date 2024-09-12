@@ -33,4 +33,7 @@ interface ChineseExpressionDao {
 
     @Query("select count(*) from chinese_expressions")
     fun total(): Flow<Int>
+
+    @Query("delete from chinese_expressions")
+    suspend fun clear()
 }

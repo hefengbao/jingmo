@@ -45,4 +45,7 @@ interface ChineseProverbDao {
 
     @Query("delete from proverb_collections where id = :id")
     suspend fun uncollect(id: Int)
+
+    @Query("delete from proverbs")
+    suspend fun clear()
 }

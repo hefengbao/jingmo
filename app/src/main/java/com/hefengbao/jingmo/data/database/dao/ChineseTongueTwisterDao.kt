@@ -38,4 +38,7 @@ interface ChineseTongueTwisterDao {
 
     @Query("select count(*) from tongue_twisters")
     fun total(): Flow<Int>
+
+    @Query("delete from tongue_twisters")
+    suspend fun clear()
 }
