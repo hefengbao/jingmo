@@ -48,33 +48,17 @@ fun RiddleIndexRoute(
     onInfoClick: () -> Unit,
     onSearchClick: () -> Unit
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getRiddle(viewModel.id)
-        viewModel.getNextId(viewModel.id)
-        viewModel.getPrevId(viewModel.id)
-    }
-    val riddle by viewModel.riddle.collectAsState(initial = null)
-    val nextId by viewModel.nextId.collectAsState(initial = null)
-    val prevId by viewModel.prevId.collectAsState(initial = null)
+
+    val riddle by viewModel.riddle.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
+    val prevId by viewModel.prevId.collectAsState()
 
     RiddleIndexScreen(
         onBackClick = onBackClick,
         onInfoClick = onInfoClick,
         onSearchClick = onSearchClick,
-        onNextClick = {
-            viewModel.getRiddle(nextId!!)
-            viewModel.getNextId(nextId!!)
-            viewModel.getPrevId(nextId!!)
-        },
-        onPrevClick = {
-            viewModel.getRiddle(prevId!!)
-            viewModel.getNextId(prevId!!)
-            viewModel.getPrevId(prevId!!)
-        },
         riddle = riddle,
-        setLastReadId = {
-            viewModel.setLastReadId(it)
-        },
+        setCurrentId = { viewModel.setCurrentId(it) },
         prevId = prevId,
         nextId = nextId
     )
@@ -86,10 +70,8 @@ private fun RiddleIndexScreen(
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit,
     onSearchClick: () -> Unit,
-    onNextClick: () -> Unit,
-    onPrevClick: () -> Unit,
     riddle: RiddleEntity?,
-    setLastReadId: (Int) -> Unit,
+    setCurrentId: (Int) -> Unit,
     prevId: Int?,
     nextId: Int?
 ) {
@@ -110,7 +92,6 @@ private fun RiddleIndexScreen(
         riddle?.let { entity ->
             LaunchedEffect(entity) {
                 showAnswer = false // 默认隐藏答案
-                setLastReadId(entity.id)
             }
 
             Box(
@@ -143,8 +124,8 @@ private fun RiddleIndexScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(
-                        onClick = onPrevClick,
-                        enabled = prevId != 0,
+                        onClick = { prevId?.let(setCurrentId) },
+                        enabled = prevId != null,
                         modifier = modifier.padding(16.dp),
                     ) {
                         Icon(
@@ -164,8 +145,8 @@ private fun RiddleIndexScreen(
                     }
 
                     IconButton(
-                        onClick = onNextClick,
-                        enabled = nextId != 0,
+                        onClick = { nextId?.let(setCurrentId) },
+                        enabled = nextId != null,
                         modifier = modifier.padding(16.dp),
                     ) {
                         Icon(

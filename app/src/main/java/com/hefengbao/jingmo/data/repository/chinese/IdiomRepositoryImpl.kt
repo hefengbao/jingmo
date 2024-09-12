@@ -21,7 +21,7 @@ import javax.inject.Inject
 class IdiomRepositoryImpl @Inject constructor(
     private val chineseIdiomDao: ChineseIdiomDao
 ) : IdiomRepository {
-    override fun get(id: Int): Flow<IdiomEntity> = chineseIdiomDao.getIdiom(id)
+    override fun get(id: Int): Flow<IdiomEntity> = chineseIdiomDao.get(id)
 
     override fun random(): Flow<IdiomEntity> = chineseIdiomDao.random()
 
@@ -32,7 +32,7 @@ class IdiomRepositoryImpl @Inject constructor(
     override fun list(): Flow<PagingData<IdiomEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            chineseIdiomDao.getSimpleIdiomInfoList()
+            chineseIdiomDao.list()
         }
     ).flow
 
@@ -40,7 +40,7 @@ class IdiomRepositoryImpl @Inject constructor(
         Pager(
             config = PagingConfig(pageSize = 30),
             pagingSourceFactory = {
-                chineseIdiomDao.searchSimpleIdiomInfoList("%$query%")
+                chineseIdiomDao.search("%$query%")
             }
         ).flow
 

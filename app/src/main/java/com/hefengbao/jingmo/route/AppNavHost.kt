@@ -46,26 +46,32 @@ import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.navigateToChineseIdiomSe
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.navigateToChineseIdiomShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.chineseKnowledgeShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleIndexGraph
@@ -81,11 +87,13 @@ import com.hefengbao.jingmo.ui.screen.chinese.tonguetwister.nav.navigateToChines
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.chineseWisecrackBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.chineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.chineseWisecrackIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.chineseWisecrackReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.chineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.chineseWisecrackShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.navigateToChineseWisecrackBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.navigateToChineseWisecrackCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.navigateToChineseWisecrackIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.navigateToChineseWisecrackReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.navigateToChineseWisecrackSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.navigateToChineseWisecrackShowScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.nav.classicalLiteratureClassicPoemBookmarksGraph
@@ -107,10 +115,12 @@ import com.hefengbao.jingmo.ui.screen.classicalliterature.people.nav.navigateToC
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceIndexGraph
+import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceReadScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceSearchScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceIndexGraph
+import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceReadScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceSearchScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.classicalLiteratureWritingBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.classicalLiteratureWritingCaptureScreen
@@ -276,12 +286,16 @@ fun AppNavHost(
                 )
                 chineseKnowledgeIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
                     onBookmarksClick = { navController.navigateToChineseKnowledgeBookmarksScreen() },
+                    onReadMoreClick = { navController.navigateToChineseKnowledgeReadScreen() },
+                    onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
                     nestGraph = {
                         chineseKnowledgeBookmarksScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { navController.navigateToChineseKnowledgeShowScreen(it.toString()) }
+                        )
+                        chineseKnowledgeReadScreen(
+                            onBackClick = navController::navigateUp,
                         )
                         chineseKnowledgeSearchScreen(
                             onBackClick = navController::navigateUp,
@@ -294,12 +308,16 @@ fun AppNavHost(
                 )
                 chineseLyricIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onSearchClick = { navController.navigateToChineseLyricSearchScreen() },
                     onBookmarksClick = { navController.navigateToChineseLyricBookmarksScreen() },
+                    onReadMoreClick = { navController.navigateToChineseLyricReadScreen() },
+                    onSearchClick = { navController.navigateToChineseLyricSearchScreen() },
                     nestGraph = {
                         chineseLyricBookmarksScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
+                        )
+                        chineseLyricReadScreen(
+                            onBackClick = navController::navigateUp,
                         )
                         chineseLyricSearchScreen(
                             onBackClick = navController::navigateUp,
@@ -313,11 +331,15 @@ fun AppNavHost(
                 chineseProverbIndexGraph(
                     onBackClick = navController::navigateUp,
                     onBookmarksClick = { navController.navigateToChineseProverbBookmarksScreen() },
+                    onReadMoreClick = { navController.navigateToChineseProverbReadScreen() },
                     onSearchClick = { navController.navigateToChineseProverbSearchScreen() },
                     nestGraph = {
                         chineseProverbBookmarksScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { navController.navigateToChineseProverbShowScreen(it.toString()) }
+                        )
+                        chineseProverbReadScreen(
+                            onBackClick = navController::navigateUp
                         )
                         chineseProverbSearchScreen(
                             onBackClick = navController::navigateUp,
@@ -352,12 +374,21 @@ fun AppNavHost(
                 )
                 chineseWisecrackIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
-                    onSearchClick = { navController.navigateToChineseWisecrackSearchScreen() },
                     onBookmarksClick = { navController.navigateToChineseWisecrackBookmarksScreen() },
+                    onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
+                    onReadMoreClick = { navController.navigateToChineseWisecrackReadScreen() },
+                    onSearchClick = { navController.navigateToChineseWisecrackSearchScreen() },
                     nestGraph = {
                         chineseWisecrackCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        chineseWisecrackReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = {
+                                navController.navigateToChineseWisecrackCaptureScreen(
+                                    it.toString()
+                                )
+                            },
                         )
                         chineseWisecrackSearchScreen(
                             onBackClick = navController::navigateUp,
@@ -408,16 +439,28 @@ fun AppNavHost(
                 )
                 classicalLiteratureSentenceIndexGraph(
                     onBackClick = navController::navigateUp,
+                    onBookmarksClick = { navController.navigateToClassicalLiteratureSentenceBookmarksScreen() },
                     onCaptureClick = {
                         navController.navigateToClassicalLiteratureSentenceCaptureScreen(
                             it.toString()
                         )
                     },
+                    onReadMoreClick = { navController.navigateToClassicalLiteratureSentenceReadScreen() },
                     onSearchClick = { navController.navigateToClassicalLiteratureSentenceSearchScreen() },
-                    onBookmarksClick = { navController.navigateToClassicalLiteratureSentenceBookmarksScreen() },
                     nestGraph = {
+                        classicalLiteratureSentenceBookmarksScreen(
+                            onBackClick = navController::navigateUp
+                        )
                         classicalLiteratureSentenceCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        classicalLiteratureSentenceReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = {
+                                navController.navigateToClassicalLiteratureSentenceCaptureScreen(
+                                    it.toString()
+                                )
+                            }
                         )
                         classicalLiteratureSentenceSearchScreen(
                             onBackClick = navController::navigateUp,
@@ -426,9 +469,6 @@ fun AppNavHost(
                                     it.toString()
                                 )
                             },
-                        )
-                        classicalLiteratureSentenceBookmarksScreen(
-                            onBackClick = navController::navigateUp
                         )
                     }
                 )

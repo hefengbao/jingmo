@@ -21,6 +21,8 @@ interface KnowledgeRepository {
     fun search(query: String): Flow<List<KnowledgeEntity>>
     fun collections(): Flow<PagingData<KnowledgeEntity>>
     fun total(): Flow<Int>
+    fun getNextId(id: Int): Flow<Int?>
+    fun getPrevId(id: Int): Flow<Int?>
     fun isCollect(id: Int): Flow<KnowledgeCollectionEntity?>
     suspend fun collect(entity: KnowledgeCollectionEntity)
     suspend fun uncollect(id: Int)

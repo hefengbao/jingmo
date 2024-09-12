@@ -12,85 +12,54 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class SentenceIndexViewModel @Inject constructor(
-    private val preferenceRepository: PreferenceRepository,
-    private val sentenceRepository: SentenceRepository
+    private val repository: SentenceRepository
 ) : ViewModel() {
-    private var id = MutableStateFlow(1)
-
     init {
+        getRandom()
+    }
+
+    private val _sentenceEntity: MutableStateFlow<SentenceEntity?> = MutableStateFlow(null)
+    val sentenceEntity: SharedFlow<SentenceEntity?> = _sentenceEntity
+
+    fun getRandom() {
         viewModelScope.launch {
-            preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.poemSentencesLastReadId
+            repository.random().collectLatest { _sentenceEntity.value = it }
+        }
+    }
+
+    private val _sentenceCollectionEntity: MutableStateFlow<SentenceCollectionEntity?> =
+        MutableStateFlow(null)
+    val sentenceCollectionEntity: SharedFlow<SentenceCollectionEntity?> =
+        _sentenceCollectionEntity
+
+    fun isCollected(id: Int) {
+        viewModelScope.launch {
+            repository.isCollect(id).collectLatest {
+                _sentenceCollectionEntity.value = it
             }
         }
     }
 
-    fun setCurrentId(id: Int) {
-        this.id.value = id
-    }
-
-    fun setLastReadId(id: Int) {
-        viewModelScope.launch {
-            preferenceRepository.setClassicalLiteratureSentenceLastReadId(id)
-        }
-    }
-
-    val sentence = id.flatMapLatest {
-        sentenceRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val sentenceCollectionEntity = id.flatMapLatest {
-        sentenceRepository.isCollect(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val prevId = id.flatMapLatest {
-        sentenceRepository.getPrevId(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val nextId = id.flatMapLatest {
-        sentenceRepository.getNextId(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
     fun setUncollect(id: Int) {
         viewModelScope.launch {
-            sentenceRepository.uncollect(id)
+            repository.uncollect(id)
         }
     }
 
     fun setCollect(id: Int) {
         viewModelScope.launch {
-            sentenceRepository.collect(SentenceCollectionEntity(id))
+            repository.collect(SentenceCollectionEntity(id))
         }
     }
 }

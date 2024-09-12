@@ -21,6 +21,12 @@ interface ChineseProverbDao {
     @Query("select p.*from proverbs p where p.id = (select id from proverbs order by random() limit 1) limit 1")
     fun random(): Flow<ProverbEntity>
 
+    @Query("select id from proverbs where id > :id order by id asc limit 1")
+    fun getNextId(id: Int): Flow<Int?>
+
+    @Query("select id from proverbs where id < :id order by id desc limit 1")
+    fun getPrevId(id: Int): Flow<Int?>
+
     @Transaction
     @Query("select * from proverbs join proverbs_fts on proverbs_fts.rowid = proverbs.id where proverbs_fts match :query")
     fun search(query: String): Flow<List<ProverbEntity>>

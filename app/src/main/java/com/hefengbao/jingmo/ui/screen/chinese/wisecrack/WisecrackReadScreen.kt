@@ -16,17 +16,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ReadMore
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Photo
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +32,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
@@ -44,61 +40,47 @@ import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecr
 import kotlin.math.abs
 
 @Composable
-fun ChineseWisecrackIndexRoute(
-    viewModel: WisecrackIndexViewModel = hiltViewModel(),
+fun ChineseWisecrackReadRoute(
+    viewModel: WisecrackReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
 ) {
-    val chineseWisecrack by viewModel.wiseCrack.collectAsState(initial = null)
-    val chineseWisecrackCollection by viewModel.wiseCrackCollection.collectAsState(initial = null)
 
-    ChineseWisecrackIndexScreen(
+    val prevId by viewModel.prevId.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
+    val chineseWisecrack by viewModel.chineseCrack.collectAsState()
+    val chineseWisecrackCollectionEntity by viewModel.chineseWisecrackCollectionEntity.collectAsState()
+
+    ChineseWisecrackReadScreen(
         onBackClick = onBackClick,
-        onBookmarksClick = onBookmarksClick,
         onCaptureClick = onCaptureClick,
-        onReadMoreClick = onReadMoreClick,
-        onSearchClick = onSearchClick,
         chineseCrack = chineseWisecrack,
-        wisecrackCollectionEntity = chineseWisecrackCollection,
+        wisecrackCollectionEntity = chineseWisecrackCollectionEntity,
+        prevId = prevId,
+        nextId = nextId,
+        setCurrentId = { viewModel.setCurrentId(it) },
         setCollect = { viewModel.setCollect(it) },
         setUncollect = { viewModel.setUncollect(it) },
-        onRefresh = viewModel::getRandom
     )
 }
 
 @Composable
-private fun ChineseWisecrackIndexScreen(
+private fun ChineseWisecrackReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
     chineseCrack: WisecrackEntity?,
     wisecrackCollectionEntity: WisecrackCollectionEntity?,
+    prevId: Int?,
+    nextId: Int?,
+    setCurrentId: (Int) -> Unit,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
-    onRefresh: () -> Unit
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "歇后语",
         actions = {
-            IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-            }
-            IconButton(onClick = onReadMoreClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
-                )
-            }
-            IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = null)
-            }
             chineseCrack?.let { entity ->
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
                     Icon(imageVector = Icons.Default.Photo, contentDescription = null)
@@ -106,39 +88,50 @@ private fun ChineseWisecrackIndexScreen(
             }
         },
         bottomBar = {
-            BottomAppBar(
-                actions = {
-                    Row(
-                        modifier = modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround
+            BottomAppBar {
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    IconButton(
+                        onClick = { setCurrentId(prevId!!) },
+                        enabled = prevId != null
                     ) {
-                        chineseCrack?.let { entity ->
-                            if (wisecrackCollectionEntity == null) {
-                                IconButton(onClick = { setCollect(entity.id) }) {
-                                    Icon(
-                                        imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
-                                    )
-                                }
-                            } else {
-                                IconButton(onClick = { setUncollect(entity.id) }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.primary
-                                    )
-                                }
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = "上一个"
+                        )
+                    }
+                    chineseCrack?.let { entity ->
+                        if (wisecrackCollectionEntity == null) {
+                            IconButton(onClick = { setCollect(entity.id) }) {
+                                Icon(
+                                    imageVector = Icons.Default.BookmarkBorder,
+                                    contentDescription = null
+                                )
+                            }
+                        } else {
+                            IconButton(onClick = { setUncollect(entity.id) }) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
                             }
                         }
                     }
-                },
-                floatingActionButton = {
-                    FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                    IconButton(
+                        onClick = { setCurrentId(nextId!!) },
+                        enabled = nextId != null
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                            contentDescription = "下一个"
+                        )
                     }
                 }
-            )
+            }
         }
     ) {
         chineseCrack?.let { entity ->
@@ -151,14 +144,17 @@ private fun ChineseWisecrackIndexScreen(
                         onDragStarted = {},
                         onDragStopped = {
                             if (it < 0 && abs(it) > 500f) {
-                                onRefresh()
+                                nextId?.let {
+                                    setCurrentId(nextId)
+                                }
                             } else if (it > 0 && abs(it) > 500f) {
-                                onRefresh()
+                                prevId?.let {
+                                    setCurrentId(prevId)
+                                }
                             }
                         }
                     )
             ) {
-
                 ChineseWisecrackPanel(
                     entity = entity,
                 )

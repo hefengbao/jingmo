@@ -9,8 +9,14 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReadMore
@@ -36,6 +42,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
@@ -43,6 +50,7 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoem
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.components.ClassicPoemPanel
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 @Composable
 fun ClassicPoemIndexRoute(
@@ -79,6 +87,7 @@ fun ClassicPoemIndexRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ClassicPoemIndexScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
@@ -117,6 +126,7 @@ private fun ClassicPoemIndexScreen(
                 BottomAppBar(
                     actions = {
                         Row(
+                            modifier = Modifier.padding(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             OutlinedButton(
@@ -170,20 +180,37 @@ private fun ClassicPoemIndexScreen(
             }
         },
     ) {
-        classicPoemEntity?.let { entity ->
-            ClassicPoemPanel(
-                entity = entity,
-                state = state,
-                showAnnotationBottomSheet = showAnnotationBottomSheet,
-                annotationSheetState = annotationSheetState,
-                onAnnotationBottomSheetDismiss = { showAnnotationBottomSheet = false },
-                showTranslationBottomSheet = showTranslationBottomSheet,
-                translationSheetState = translationSheetState,
-                onTranslationBottomSheetDismiss = { showTranslationBottomSheet = false },
-                showPoemBottomSheet = showPoemBottomSheet,
-                poemSheetState = poemSheetState,
-                onPoemBottomSheetDismiss = { showPoemBottomSheet = false }
-            )
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .draggable(
+                    state = rememberDraggableState {},
+                    orientation = Orientation.Horizontal,
+                    onDragStarted = {},
+                    onDragStopped = { velocity ->
+                        if (velocity < 0 && abs(velocity) > 500f) {
+                            onFabClick()
+                        } else if (velocity > 0 && abs(velocity) > 500f) {
+                            onFabClick()
+                        }
+                    }
+                )
+        ) {
+            classicPoemEntity?.let { entity ->
+                ClassicPoemPanel(
+                    entity = entity,
+                    state = state,
+                    showAnnotationBottomSheet = showAnnotationBottomSheet,
+                    annotationSheetState = annotationSheetState,
+                    onAnnotationBottomSheetDismiss = { showAnnotationBottomSheet = false },
+                    showTranslationBottomSheet = showTranslationBottomSheet,
+                    translationSheetState = translationSheetState,
+                    onTranslationBottomSheetDismiss = { showTranslationBottomSheet = false },
+                    showPoemBottomSheet = showPoemBottomSheet,
+                    poemSheetState = poemSheetState,
+                    onPoemBottomSheetDismiss = { showPoemBottomSheet = false }
+                )
+            }
         }
     }
 }

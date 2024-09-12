@@ -24,7 +24,10 @@ interface ChineseWisecrackDao {
     suspend fun insert(entity: WisecrackEntity)
 
     @Query("select w.* from chinese_wisecracks w  where w.id = :id")
-    fun getChineseWisecrack(id: Int): Flow<WisecrackEntity>
+    fun get(id: Int): Flow<WisecrackEntity>
+
+    @Query("select w.* from chinese_wisecracks w where w.id = (select id from chinese_wisecracks order by random() limit 1)")
+    fun random(): Flow<WisecrackEntity>
 
     @Query("select id from chinese_wisecracks where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
@@ -33,7 +36,7 @@ interface ChineseWisecrackDao {
     fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select * from chinese_wisecracks where riddle like :query or answer like :query")
-    fun searchWisecrackList(query: String): Flow<List<WisecrackEntity>>
+    fun search(query: String): Flow<List<WisecrackEntity>>
 
     @Query("select w.* from chinese_wisecrack_collections c join chinese_wisecracks w on c.id = w.id order by c.collected_at desc")
     fun collections(): PagingSource<Int, WisecrackEntity>

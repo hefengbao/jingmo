@@ -1,10 +1,10 @@
 /*
- * This file is part of the 京墨（jingmo）APP.
+ *  This file is part of the 京墨（jingmo）APP.
  *
  * (c) 贺丰宝（hefengbao） <hefengbao@foxmail.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
  */
 
 package com.hefengbao.jingmo.ui.screen.chinese.lyric
@@ -12,19 +12,18 @@ package com.hefengbao.jingmo.ui.screen.chinese.lyric
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ReadMore
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,73 +40,63 @@ import com.hefengbao.jingmo.ui.screen.chinese.lyric.components.LyricPanel
 import kotlin.math.abs
 
 @Composable
-fun LyricIndexRoute(
-    viewModel: LyricIndexViewModel = hiltViewModel(),
-    onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
+fun LyricReadRoute(
+    viewModel: LyricReadViewModel = hiltViewModel(),
+    onBackClick: () -> Unit
 ) {
-    val lyricEntity by viewModel.lyricEntity.collectAsState(initial = null)
-    val lyricCollectionEntity by viewModel.lyricCollectionEntity.collectAsState(initial = null)
+    val lyric by viewModel.lyric.collectAsState()
+    val lyricCollection by viewModel.lyricCollection.collectAsState()
+    val prevId by viewModel.prevId.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
 
-    LyricIndexScreen(
+    LyricReadScreen(
         onBackClick = onBackClick,
-        onBookmarksClick = onBookmarksClick,
-        onReadMoreClick = onReadMoreClick,
-        onSearchClick = onSearchClick,
-        lyricEntity = lyricEntity,
-        lyricCollectionEntity = lyricCollectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        refresh = { viewModel.random() },
-        isCollect = { viewModel.isCollect(it) }
+        lyric = lyric,
+        lyricCollection = lyricCollection,
+        prevId = prevId,
+        nextId = nextId,
+        setCurrentId = viewModel::setCurrentId,
+        setCollect = viewModel::collect,
+        setUncollect = viewModel::uncollect
     )
 }
 
 @Composable
-private fun LyricIndexScreen(
+private fun LyricReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    lyricEntity: LyricEntity?,
-    lyricCollectionEntity: LyricCollectionEntity?,
+    lyric: LyricEntity?,
+    lyricCollection: LyricCollectionEntity?,
+    prevId: Int?,
+    nextId: Int?,
+    setCurrentId: (Int) -> Unit,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
-    refresh: () -> Unit,
-    isCollect: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "歌词",
-        actions = {
-            IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")
-            }
-            IconButton(onClick = onReadMoreClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
-                )
-            }
-            IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
-            }
-        },
         bottomBar = {
-            lyricEntity?.let {
-
-                isCollect(lyricEntity.id)
-
+            lyric?.let { entity ->
                 BottomAppBar(
                     actions = {
                         Row(
-                            modifier = modifier.padding(horizontal = 16.dp)
+                            modifier = modifier
+                                .padding(horizontal = 16.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            if (lyricCollectionEntity != null) {
-                                IconButton(onClick = { setUncollect(lyricEntity.id) }) {
+                            IconButton(
+                                onClick = { prevId?.let(setCurrentId) },
+                                enabled = prevId != null
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                    contentDescription = "上一个"
+                                )
+                            }
+                            if (lyricCollection != null) {
+                                IconButton(onClick = { setUncollect(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
                                         contentDescription = null,
@@ -115,20 +104,24 @@ private fun LyricIndexScreen(
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(lyricEntity.id) }) {
+                                IconButton(onClick = { setCollect(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
                                         contentDescription = null
                                     )
                                 }
                             }
+                            IconButton(
+                                onClick = { nextId?.let(setCurrentId) },
+                                enabled = nextId != null
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                                    contentDescription = "下一个"
+                                )
+                            }
                         }
                     },
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = refresh) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
-                        }
-                    }
                 )
             }
         }
@@ -142,14 +135,16 @@ private fun LyricIndexScreen(
                     onDragStarted = {},
                     onDragStopped = {
                         if (it < 0 && abs(it) > 500f) {
-                            refresh()
+                            nextId?.let(setCurrentId)
                         } else if (it > 0 && abs(it) > 500f) {
-                            refresh()
+                            prevId?.let(setCurrentId)
                         }
                     }
                 )
         ) {
-            lyricEntity?.let { entity -> LyricPanel(entity = entity) }
+            lyric?.let { entity ->
+                LyricPanel(entity = entity)
+            }
         }
     }
 }

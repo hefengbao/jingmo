@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface WisecrackRepository {
     fun get(id: Int): Flow<WisecrackEntity>
+    fun random(): Flow<WisecrackEntity>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
     fun search(query: String): Flow<List<WisecrackEntity>>

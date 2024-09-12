@@ -32,6 +32,8 @@ class ReadStatusPreference(
     val readStatus: Flow<ReadStatus> = context.readStatus.data.map {
         ReadStatus(
             chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE] ?: 1,
+            chineseLyricLastReadId = it[PREF_CHINESE_LYRIC] ?: 1,
+            chineseProverbLastReadId = it[PREF_CHINESE_PROVERB] ?: 1,
             chineseWisecracksLastReadId = it[PREF_CHINESE_WISECRACKS] ?: 1,
             classicPoemsLastReadId = it[PREF_CLASSIC_POEMS] ?: 1,
             idiomsLastReadId = it[PREF_IDIOMS] ?: 1,
@@ -43,31 +45,38 @@ class ReadStatusPreference(
         )
     }
 
-    suspend fun setChineseKnowledgeLastReadId(version: Int) =
-        setInt(context, PREF_CHINESE_KNOWLEDGE, version)
+    suspend fun setChineseKnowledgeLastReadId(id: Int) =
+        setInt(context, PREF_CHINESE_KNOWLEDGE, id)
 
-    suspend fun setChineseWisecracksLastReadId(version: Int) =
-        setInt(context, PREF_CHINESE_WISECRACKS, version)
+    suspend fun setChineseLyricLastReadId(id: Int) =
+        setInt(context, PREF_CHINESE_LYRIC, id)
 
-    suspend fun setClassicPoemsLastReadId(version: Int) =
-        setInt(context, PREF_CLASSIC_POEMS, version)
+    suspend fun setChineseProverbLastReadId(id: Int) = setInt(context, PREF_CHINESE_PROVERB, id)
 
-    suspend fun setIdiomsLastReadId(version: Int) = setInt(context, PREF_IDIOMS, version)
+    suspend fun setChineseWisecracksLastReadId(id: Int) =
+        setInt(context, PREF_CHINESE_WISECRACKS, id)
 
-    suspend fun setPeopleLastReadId(version: Int) = setInt(context, PREF_PEOPLE, version)
+    suspend fun setClassicPoemsLastReadId(id: Int) =
+        setInt(context, PREF_CLASSIC_POEMS, id)
 
-    suspend fun setPoemSentencesLastReadId(version: Int) =
-        setInt(context, PREF_POEM_SENTENCES, version)
+    suspend fun setIdiomsLastReadId(id: Int) = setInt(context, PREF_IDIOMS, id)
 
-    suspend fun setRiddlesLastReadId(version: Int) = setInt(context, PREF_RIDDLES, version)
+    suspend fun setPeopleLastReadId(id: Int) = setInt(context, PREF_PEOPLE, id)
 
-    suspend fun setTongueTwistersLastReadId(version: Int) =
-        setInt(context, PREF_TONGUE_TWISTERS, version)
+    suspend fun setPoemSentencesLastReadId(id: Int) =
+        setInt(context, PREF_POEM_SENTENCES, id)
 
-    suspend fun setWritingsLastReadId(version: Int) = setInt(context, PREF_WRITINGS, version)
+    suspend fun setRiddlesLastReadId(id: Int) = setInt(context, PREF_RIDDLES, id)
+
+    suspend fun setTongueTwistersLastReadId(id: Int) =
+        setInt(context, PREF_TONGUE_TWISTERS, id)
+
+    suspend fun setWritingsLastReadId(id: Int) = setInt(context, PREF_WRITINGS, id)
 
     companion object {
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
+        private val PREF_CHINESE_LYRIC = intPreferencesKey("key_chinese_lyric")
+        private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")
         private val PREF_CHINESE_WISECRACKS = intPreferencesKey("key_chinese_wisecracks")
         private val PREF_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
         private val PREF_IDIOMS = intPreferencesKey("key_idioms")

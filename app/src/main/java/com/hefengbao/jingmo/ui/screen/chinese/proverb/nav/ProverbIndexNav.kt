@@ -27,6 +27,7 @@ fun NavController.navigateToChineseProverbIndexGraph() {
 fun NavGraphBuilder.chineseProverbIndexGraph(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
@@ -38,6 +39,7 @@ fun NavGraphBuilder.chineseProverbIndexGraph(
             ProverbIndexRoute(
                 onBackClick = onBackClick,
                 onBookmarksClick = onBookmarksClick,
+                onReadMoreClick = onReadMoreClick,
                 onSearchClick = onSearchClick
             )
         }

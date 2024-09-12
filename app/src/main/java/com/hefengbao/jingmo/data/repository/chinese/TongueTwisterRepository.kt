@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TongueTwisterRepository {
     fun get(id: Int): Flow<TongueTwisterEntity>
-    suspend fun getNextId(id: Int): Int
-    suspend fun getPrevId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
+    fun getPrevId(id: Int): Flow<Int?>
     fun search(): Flow<List<TongueTwisterEntity>>
 }

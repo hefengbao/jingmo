@@ -7,11 +7,12 @@
  * file that was distributed with this source code.
  */
 
-package com.hefengbao.jingmo.ui.screen.chinese.riddle
+package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.repository.chinese.RiddleRepository
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,43 +26,71 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class RiddleIndexViewModel @Inject constructor(
-    private val riddleRepository: RiddleRepository,
-    private val preferenceRepository: PreferenceRepository
+class SentenceReadViewModel @Inject constructor(
+    private val preferenceRepository: PreferenceRepository,
+    private val sentenceRepository: SentenceRepository
 ) : ViewModel() {
-    private val id = MutableStateFlow(1)
+    private var id = MutableStateFlow(1)
 
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.riddlesLastReadId
+                id.value = it.poemSentencesLastReadId
             }
         }
     }
 
     fun setCurrentId(id: Int) {
         this.id.value = id
+    }
 
+    fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setChineseRiddleLastReadId(id)
+            preferenceRepository.setClassicalLiteratureSentenceLastReadId(id)
         }
     }
 
-    val nextId = id.flatMapLatest { riddleRepository.getNextId(it) }.stateIn(
+    val sentence = id.flatMapLatest {
+        sentenceRepository.get(it)
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val prevId = id.flatMapLatest { riddleRepository.getPrevId(it) }.stateIn(
+    val sentenceCollectionEntity = id.flatMapLatest {
+        sentenceRepository.isCollect(it)
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val riddle = id.flatMapLatest { riddleRepository.get(it) }.stateIn(
+    val prevId = id.flatMapLatest {
+        sentenceRepository.getPrevId(it)
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
+
+    val nextId = id.flatMapLatest {
+        sentenceRepository.getNextId(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
+    fun setUncollect(id: Int) {
+        viewModelScope.launch {
+            sentenceRepository.uncollect(id)
+        }
+    }
+
+    fun setCollect(id: Int) {
+        viewModelScope.launch {
+            sentenceRepository.collect(SentenceCollectionEntity(id))
+        }
+    }
 }

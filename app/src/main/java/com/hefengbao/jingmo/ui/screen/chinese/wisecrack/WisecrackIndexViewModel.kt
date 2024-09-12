@@ -12,70 +12,43 @@ package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class WisecrackIndexViewModel @Inject constructor(
-    private val preferenceRepository: PreferenceRepository,
     private val wisecrackRepository: WisecrackRepository
 ) : ViewModel() {
 
-    private var id = MutableStateFlow(1)
-
     init {
+        getRandom()
+    }
+
+    private val _wiseCrack: MutableStateFlow<WisecrackEntity?> = MutableStateFlow(null)
+    val wiseCrack: SharedFlow<WisecrackEntity?> = _wiseCrack
+
+    fun getRandom() {
         viewModelScope.launch {
-            preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.chineseWisecracksLastReadId
-            }
+            wisecrackRepository.random().collectLatest { _wiseCrack.value = it }
         }
     }
 
-    fun setCurrentId(id: Int) {
-        this.id.value = id
+    private val _wiseCrackCollection: MutableStateFlow<WisecrackCollectionEntity?> =
+        MutableStateFlow(null)
+    val wiseCrackCollection: SharedFlow<WisecrackCollectionEntity?> = _wiseCrackCollection
+    fun isCollect(id: Int) {
+        viewModelScope.launch {
+            wisecrackRepository.isCollect(id).collectLatest { _wiseCrackCollection.value = it }
+        }
     }
-
-    val chineseCrack = id.flatMapLatest {
-        wisecrackRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val chineseWisecrackCollectionEntity = id.flatMapLatest {
-        wisecrackRepository.isCollect(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val nextId = id.flatMapLatest {
-        wisecrackRepository.getNextId(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val prevId = id.flatMapLatest {
-        wisecrackRepository.getPrevId(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
 
     fun setUncollect(id: Int) {
         viewModelScope.launch {
@@ -88,11 +61,4 @@ class WisecrackIndexViewModel @Inject constructor(
             wisecrackRepository.collect(WisecrackCollectionEntity(id))
         }
     }
-
-    fun setLastReadId(id: Int) {
-        viewModelScope.launch {
-            preferenceRepository.setChineseWisecrackLastReadId(id)
-        }
-    }
-
 }

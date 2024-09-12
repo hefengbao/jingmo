@@ -3,20 +3,22 @@
  *
  * (c) 贺丰宝（hefengbao） <hefengbao@foxmail.com>
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information: Int, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 package com.hefengbao.jingmo.data.model
 
 data class ReadStatus(
-    val chineseKnowledgeLastReadId: Int = 1,
-    val chineseWisecracksLastReadId: Int = 1,
-    val classicPoemsLastReadId: Int = 1,
-    val idiomsLastReadId: Int = 1,
-    val peopleLastReadId: Int = 1,
-    val poemSentencesLastReadId: Int = 1,
-    val riddlesLastReadId: Int = 1,
-    val tongueTwistersLastReadId: Int = 1,
-    val writingsLastReadId: Int = 1,
+    val chineseKnowledgeLastReadId: Int,
+    val chineseLyricLastReadId: Int,
+    val chineseProverbLastReadId: Int,
+    val chineseWisecracksLastReadId: Int,
+    val classicPoemsLastReadId: Int,
+    val idiomsLastReadId: Int,
+    val peopleLastReadId: Int,
+    val poemSentencesLastReadId: Int,
+    val riddlesLastReadId: Int,
+    val tongueTwistersLastReadId: Int,
+    val writingsLastReadId: Int,
 )

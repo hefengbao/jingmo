@@ -27,6 +27,10 @@ class ProverbRepositoryImpl @Inject constructor(
 
     override fun total(): Flow<Int> = proverbDao.total()
 
+    override fun prevId(id: Int): Flow<Int?> = proverbDao.getPrevId(id)
+
+    override fun nextId(id: Int): Flow<Int?> = proverbDao.getNextId(id)
+
     override fun isCollect(id: Int): Flow<ProverbCollectionEntity?> = proverbDao.isCollect(id)
 
     override suspend fun collect(entity: ProverbCollectionEntity) = proverbDao.collect(entity)

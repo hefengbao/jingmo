@@ -25,14 +25,17 @@ interface ChineseRiddleDao {
     suspend fun insertAll(entities: List<RiddleEntity>)
 
     @Query("select * from riddles where id = :id limit 1")
-    fun getRiddle(id: Int): Flow<RiddleEntity>
+    fun get(id: Int): Flow<RiddleEntity>
+
+    @Query("select r.* from riddles r where r.id = (select id from riddles order by random() limit 1)")
+    fun random(): Flow<RiddleEntity>
 
     @Query("select id from riddles where id > :id order by id asc limit 1")
-    suspend fun getNextId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
 
     @Query("select id from riddles where id < :id order by id desc limit 1")
-    suspend fun getPrevId(id: Int): Int
+    fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select * from riddles where puzzle like :query order by id asc")
-    fun searchResult(query: String): Flow<List<RiddleEntity>>
+    fun search(query: String): Flow<List<RiddleEntity>>
 }

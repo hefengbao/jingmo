@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RiddleRepository {
     fun get(id: Int): Flow<RiddleEntity>
-    suspend fun getNextId(id: Int): Int
-    suspend fun getPrevId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
+    fun getPrevId(id: Int): Flow<Int?>
     fun search(query: String): Flow<List<RiddleEntity>>
 }

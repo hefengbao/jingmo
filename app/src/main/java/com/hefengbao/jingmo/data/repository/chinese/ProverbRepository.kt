@@ -12,6 +12,8 @@ interface ProverbRepository {
     fun search(query: String): Flow<List<ProverbEntity>>
     fun collections(): Flow<PagingData<ProverbEntity>>
     fun total(): Flow<Int>
+    fun prevId(id: Int): Flow<Int?>
+    fun nextId(id: Int): Flow<Int?>
     fun isCollect(id: Int): Flow<ProverbCollectionEntity?>
     suspend fun collect(entity: ProverbCollectionEntity)
     suspend fun uncollect(id: Int)

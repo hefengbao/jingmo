@@ -25,6 +25,7 @@ fun NavController.navigateToChineseWisecrackIndexGraph() {
 fun NavGraphBuilder.chineseWisecrackIndexGraph(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
@@ -37,6 +38,7 @@ fun NavGraphBuilder.chineseWisecrackIndexGraph(
             ChineseWisecrackIndexRoute(
                 onBackClick = onBackClick,
                 onCaptureClick = onCaptureClick,
+                onReadMoreClick = onReadMoreClick,
                 onSearchClick = onSearchClick,
                 onBookmarksClick = onBookmarksClick
             )

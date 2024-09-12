@@ -22,16 +22,19 @@ interface ChineseTongueTwisterDao {
     suspend fun insert(entity: TongueTwisterEntity)
 
     @Query("select * from tongue_twisters where id = :id")
-    fun getTongueTwister(id: Int): Flow<TongueTwisterEntity>
+    fun get(id: Int): Flow<TongueTwisterEntity>
+
+    @Query("select t.* from tongue_twisters t where t.id = (select id from tongue_twisters order by random() limit 1)")
+    fun random(): Flow<TongueTwisterEntity>
 
     @Query("select id from tongue_twisters where id > :id order by id asc limit 1")
-    suspend fun getNextId(id: Int): Int
+    fun getNextId(id: Int): Flow<Int?>
 
     @Query("select id from tongue_twisters where id < :id order by id desc limit 1")
-    suspend fun getPrevId(id: Int): Int
+    fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select * from tongue_twisters order by id asc")
-    fun getTongueTwisterList(): Flow<List<TongueTwisterEntity>>
+    fun list(): Flow<List<TongueTwisterEntity>>
 
     @Query("select count(*) from tongue_twisters")
     fun total(): Flow<Int>

@@ -22,7 +22,7 @@ class SentenceRepositoryImpl @Inject constructor(
     private val classicalLiteratureSentenceDao: ClassicalLiteratureSentenceDao
 ) : SentenceRepository {
     override fun get(id: Int): Flow<SentenceEntity> =
-        classicalLiteratureSentenceDao.getSentence(id)
+        classicalLiteratureSentenceDao.get(id)
 
     override fun random(): Flow<SentenceEntity> = classicalLiteratureSentenceDao.random()
 
@@ -32,7 +32,7 @@ class SentenceRepositoryImpl @Inject constructor(
 
     override fun search(query: String): Flow<PagingData<SentenceEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { classicalLiteratureSentenceDao.searchSentencesList("%$query%") }
+        pagingSourceFactory = { classicalLiteratureSentenceDao.search("%$query%") }
     ).flow
 
     override fun collections(): Flow<PagingData<SentenceEntity>> = Pager(

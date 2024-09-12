@@ -36,6 +36,10 @@ class LyricRepositoryImpl @Inject constructor(
 
     override fun isCollect(id: Int): Flow<LyricCollectionEntity?> = chineseLyricDao.isCollect(id)
 
+    override fun prevId(id: Int): Flow<Int?> = chineseLyricDao.getPrevId(id)
+
+    override fun nextId(id: Int): Flow<Int?> = chineseLyricDao.getNextId(id)
+
     override suspend fun collect(entity: LyricCollectionEntity) = chineseLyricDao.collect(entity)
 
     override suspend fun uncollect(id: Int) = chineseLyricDao.uncollect(id)

@@ -26,9 +26,10 @@ fun NavController.navigateToClassicalLiteratureSentenceIndexGraph() {
 
 fun NavGraphBuilder.classicalLiteratureSentenceIndexGraph(
     onBackClick: () -> Unit,
-    onCaptureClick: (Int) -> Unit,
-    onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
+    onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -38,9 +39,10 @@ fun NavGraphBuilder.classicalLiteratureSentenceIndexGraph(
         composable(ROUTE) {
             SentenceIndexRoute(
                 onBackClick = onBackClick,
+                onBookmarksClick = onBookmarksClick,
                 onCaptureClick = onCaptureClick,
+                onReadMoreClick = onReadMoreClick,
                 onSearchItemClick = onSearchClick,
-                onBookmarksClick = onBookmarksClick
             )
         }
     }

@@ -30,6 +30,12 @@ interface ChineseLyricDao {
     @Query("select l.*from lyrics l where l.id = (select id from lyrics order by random() limit 1) limit 1")
     fun random(): Flow<LyricEntity>
 
+    @Query("select id from lyrics where id > :id order by id asc limit 1")
+    fun getNextId(id: Int): Flow<Int?>
+
+    @Query("select id from lyrics where id < :id order by id desc limit 1")
+    fun getPrevId(id: Int): Flow<Int?>
+
     @Transaction
     @Query("select * from lyrics join lyrics_fts on lyrics_fts.rowid = lyrics.id where lyrics_fts match :query")
     fun search(query: String): Flow<List<LyricEntity>>

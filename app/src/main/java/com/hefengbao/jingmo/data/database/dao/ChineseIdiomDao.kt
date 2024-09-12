@@ -24,9 +24,9 @@ interface ChineseIdiomDao {
     suspend fun insert(entity: IdiomEntity)
 
     @Query("select i.* from idioms i left join idiom_collections c on i.id = c.id where i.id = :id")
-    fun getIdiom(id: Int): Flow<IdiomEntity>
+    fun get(id: Int): Flow<IdiomEntity>
 
-    @Query("select i.*from idioms i where i.id = (select id from idioms order by random() limit 1)")
+    @Query("select i.* from idioms i where i.id = (select id from idioms order by random() limit 1)")
     fun random(): Flow<IdiomEntity>
 
     @Query("select id from idioms where id > :id order by id asc limit 1")
@@ -36,10 +36,10 @@ interface ChineseIdiomDao {
     fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select * from idioms order by id asc")
-    fun getSimpleIdiomInfoList(): PagingSource<Int, IdiomEntity>
+    fun list(): PagingSource<Int, IdiomEntity>
 
     @Query("select * from idioms where word like :query order by id asc")
-    fun searchSimpleIdiomInfoList(query: String): PagingSource<Int, IdiomEntity>
+    fun search(query: String): PagingSource<Int, IdiomEntity>
 
     @Query("select i.* from idiom_collections c join idioms i on c.id = i.id order by collected_at desc")
     fun collections(): PagingSource<Int, IdiomEntity>

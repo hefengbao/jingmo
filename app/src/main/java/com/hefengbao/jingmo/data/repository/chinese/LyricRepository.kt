@@ -21,6 +21,8 @@ interface LyricRepository {
     fun collections(): Flow<PagingData<LyricEntity>>
     fun total(): Flow<Int>
     fun isCollect(id: Int): Flow<LyricCollectionEntity?>
+    fun prevId(id: Int): Flow<Int?>
+    fun nextId(id: Int): Flow<Int?>
     suspend fun collect(entity: LyricCollectionEntity)
     suspend fun uncollect(id: Int)
 }

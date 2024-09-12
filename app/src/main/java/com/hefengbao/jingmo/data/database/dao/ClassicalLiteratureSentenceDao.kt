@@ -24,7 +24,7 @@ interface ClassicalLiteratureSentenceDao {
     suspend fun insert(entity: SentenceEntity)
 
     @Query("select p.* from poem_sentences p where p.id = :id")
-    fun getSentence(id: Int): Flow<SentenceEntity>
+    fun get(id: Int): Flow<SentenceEntity>
 
     @Query("select p.* from poem_sentences p where p.id = (select id from poem_sentences order by random() limit 1)")
     fun random(): Flow<SentenceEntity>
@@ -36,7 +36,7 @@ interface ClassicalLiteratureSentenceDao {
     fun getPrevId(id: Int): Flow<Int?>
 
     @Query("select * from poem_sentences where content like :query")
-    fun searchSentencesList(query: String): PagingSource<Int, SentenceEntity>
+    fun search(query: String): PagingSource<Int, SentenceEntity>
 
     @Query("select p.* from poem_sentence_collections c join poem_sentences p on c.id = p.id  order by c.collected_at desc")
     fun collections(): PagingSource<Int, SentenceEntity>

@@ -21,15 +21,16 @@ import javax.inject.Inject
 class WisecrackRepositoryImpl @Inject constructor(
     private val chineseWisecrackDao: ChineseWisecrackDao
 ) : WisecrackRepository {
-    override fun get(id: Int): Flow<WisecrackEntity> =
-        chineseWisecrackDao.getChineseWisecrack(id)
+    override fun get(id: Int): Flow<WisecrackEntity> = chineseWisecrackDao.get(id)
+
+    override fun random(): Flow<WisecrackEntity> = chineseWisecrackDao.random()
 
     override fun getNextId(id: Int): Flow<Int?> = chineseWisecrackDao.getNextId(id)
 
     override fun getPrevId(id: Int): Flow<Int?> = chineseWisecrackDao.getPrevId(id)
 
     override fun search(query: String): Flow<List<WisecrackEntity>> =
-        chineseWisecrackDao.searchWisecrackList("%$query%")
+        chineseWisecrackDao.search("%$query%")
 
     override fun collections(): Flow<PagingData<WisecrackEntity>> = Pager(
         config = PagingConfig(pageSize = 30),

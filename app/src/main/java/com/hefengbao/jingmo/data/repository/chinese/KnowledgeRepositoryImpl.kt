@@ -36,6 +36,10 @@ class KnowledgeRepositoryImpl @Inject constructor(
 
     override fun total(): Flow<Int> = dao.total()
 
+    override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
+
+    override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
+
     override fun isCollect(id: Int): Flow<KnowledgeCollectionEntity?> = dao.isCollect(id)
 
     override suspend fun collect(entity: KnowledgeCollectionEntity) = dao.collect(entity)

@@ -9,6 +9,13 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReadMore
 import androidx.compose.material.icons.filled.Bookmark
@@ -25,12 +32,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.components.WritingPanel
 import kotlinx.serialization.json.Json
+import kotlin.math.abs
 
 @Composable
 fun WritingIndexRoute(
@@ -65,6 +75,7 @@ fun WritingIndexRoute(
 
 @Composable
 private fun WritingIndexScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
@@ -101,39 +112,60 @@ private fun WritingIndexScreen(
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            writing?.let {
-                                if (writingCollectionEntity != null) {
-                                    setUncollect(writing.id)
-                                } else {
-                                    setCollect(writing.id)
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                writing?.let {
+                                    if (writingCollectionEntity != null) {
+                                        setUncollect(writing.id)
+                                    } else {
+                                        setCollect(writing.id)
+                                    }
                                 }
                             }
-                        }
-                    ) {
-                        if (writingCollectionEntity != null) {
-                            Icon(
-                                imageVector = Icons.Default.Bookmark,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.BookmarkBorder,
-                                contentDescription = null
-                            )
+                        ) {
+                            if (writingCollectionEntity != null) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.BookmarkBorder,
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 }
             )
         }
     ) {
-        writing?.let { entity ->
-            WritingPanel(
-                writing = entity,
-                json = json
-            )
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .draggable(
+                    state = rememberDraggableState {},
+                    orientation = Orientation.Horizontal,
+                    onDragStarted = {},
+                    onDragStopped = { velocity ->
+                        if (velocity < 0 && abs(velocity) > 500f) {
+                            onFabClick()
+                        } else if (velocity > 0 && abs(velocity) > 500f) {
+                            onFabClick()
+                        }
+                    }
+                )
+        ) {
+            writing?.let { entity ->
+                WritingPanel(
+                    writing = entity,
+                    json = json
+                )
+            }
         }
     }
 }

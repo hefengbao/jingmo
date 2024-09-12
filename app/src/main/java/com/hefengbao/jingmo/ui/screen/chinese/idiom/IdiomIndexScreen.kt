@@ -9,6 +9,13 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReadMore
 import androidx.compose.material.icons.filled.Bookmark
@@ -25,11 +32,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.components.IdiomPanel
+import kotlin.math.abs
 
 @Composable
 fun IdiomIndexRoute(
@@ -49,7 +59,7 @@ fun IdiomIndexRoute(
         onReadMoreClick = onReadMoreClick,
         onBookmarksClick = onBookmarksClick,
         onSearchClick = onSearchClick,
-        onFabClick = { viewModel.getRandomIdiom() },
+        onRefresh = { viewModel.getRandomIdiom() },
         setCollect = { viewModel.collect(it) },
         setUncollect = { viewModel.uncollect(it) },
         getIdiomCollectionEntity = {
@@ -60,13 +70,14 @@ fun IdiomIndexRoute(
 
 @Composable
 private fun IdiomIndexScreen(
+    modifier: Modifier = Modifier,
     idiom: IdiomEntity?,
     idiomCollectionEntity: IdiomCollectionEntity?,
     onBackClick: () -> Unit,
     onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onSearchClick: () -> Unit,
-    onFabClick: () -> Unit,
+    onRefresh: () -> Unit,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
     getIdiomCollectionEntity: (Int) -> Unit,
@@ -91,45 +102,65 @@ private fun IdiomIndexScreen(
         bottomBar = {
             BottomAppBar(
                 floatingActionButton = {
-                    FloatingActionButton(onClick = onFabClick) {
+                    FloatingActionButton(onClick = onRefresh) {
                         Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            idiom?.let { entity ->
-                                if (idiomCollectionEntity != null) {
-                                    setUncollect(entity.id)
-                                } else {
-                                    setCollect(entity.id)
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                idiom?.let { entity ->
+                                    if (idiomCollectionEntity != null) {
+                                        setUncollect(entity.id)
+                                    } else {
+                                        setCollect(entity.id)
+                                    }
                                 }
                             }
-                        }
-                    ) {
-                        if (idiomCollectionEntity != null) {
-                            Icon(
-                                imageVector = Icons.Default.Bookmark,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.BookmarkBorder,
-                                contentDescription = null
-                            )
+                        ) {
+                            if (idiomCollectionEntity != null) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.BookmarkBorder,
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 }
             )
         }
     ) {
-        idiom?.let { entity ->
-            LaunchedEffect(entity) {
-                getIdiomCollectionEntity(entity.id)
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .draggable(
+                    state = rememberDraggableState {},
+                    orientation = Orientation.Horizontal,
+                    onDragStarted = {},
+                    onDragStopped = { velocity ->
+                        if (velocity < 0 && abs(velocity) > 500f) {
+                            onRefresh()
+                        } else if (velocity > 0 && abs(velocity) > 500f) {
+                            onRefresh()
+                        }
+                    }
+                )
+        ) {
+            idiom?.let { entity ->
+                LaunchedEffect(entity) {
+                    getIdiomCollectionEntity(entity.id)
+                }
+                IdiomPanel(idiom = entity)
             }
-            IdiomPanel(idiom = entity)
         }
     }
-
 }

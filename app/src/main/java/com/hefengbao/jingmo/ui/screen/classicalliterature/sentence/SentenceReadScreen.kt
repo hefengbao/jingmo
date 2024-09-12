@@ -17,19 +17,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ReadMore
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Photo
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,70 +48,52 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
 @Composable
-fun SentenceIndexRoute(
-    viewModel: SentenceIndexViewModel = hiltViewModel(),
+fun SentenceReadRoute(
+    viewModel: SentenceReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchItemClick: () -> Unit,
 ) {
-    val sentence by viewModel.sentenceEntity.collectAsState(initial = null)
-    val sentenceCollectionEntity by viewModel.sentenceCollectionEntity.collectAsState(initial = null)
 
-    LaunchedEffect(sentence) {
-        sentence?.let {
-            viewModel.isCollected(it.id)
-        }
-    }
+    val prevId by viewModel.prevId.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
+    val sentence by viewModel.sentence.collectAsState()
+    val sentenceCollectionEntity by viewModel.sentenceCollectionEntity.collectAsState()
 
-    SentenceIndexScreen(
+    SentenceReadScreen(
         onBackClick = onBackClick,
-        onBookmarksClick = onBookmarksClick,
-        onReadMoreClick = onReadMoreClick,
         onCaptureClick = onCaptureClick,
-        onSearchClick = onSearchItemClick,
         sentence = sentence,
         sentenceCollectionEntity = sentenceCollectionEntity,
-        onRefresh = viewModel::getRandom,
-        setCollect = viewModel::setCollect,
-        setUncollect = viewModel::setUncollect
+        prevId = prevId,
+        nextId = nextId,
+        setCurrentId = { viewModel.setCurrentId(it) },
+        setUncollect = { viewModel.setUncollect(it) },
+        setCollect = { viewModel.setCollect(it) },
+        setLastReadId = { viewModel.setLastReadId(it) },
     )
 }
 
 @Composable
-private fun SentenceIndexScreen(
+private fun SentenceReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
     sentence: SentenceEntity?,
     sentenceCollectionEntity: SentenceCollectionEntity?,
-    onRefresh: () -> Unit,
-    setCollect: (Int) -> Unit,
+    prevId: Int?,
+    nextId: Int?,
+    setCurrentId: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
+    setCollect: (Int) -> Unit,
+    setLastReadId: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "诗文名句",
         actions = {
-            IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-            }
-            IconButton(onClick = onReadMoreClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
-                )
-            }
-            IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
-            }
             sentence?.let {
                 IconButton(onClick = { onCaptureClick(sentence.id) }) {
-                    Icon(imageVector = Icons.Default.Photo, contentDescription = "生成图片")
+                    Icon(imageVector = Icons.Default.Photo, contentDescription = null)
                 }
             }
         },
@@ -121,8 +101,23 @@ private fun SentenceIndexScreen(
             BottomAppBar(
                 actions = {
                     Row(
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
+                        IconButton(
+                            onClick = {
+                                setCurrentId(prevId!!)
+                            },
+                            enabled = prevId != null
+                        ) {
+                            Icon(
+                                modifier = modifier.padding(8.dp),
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
                         IconButton(
                             onClick = {
                                 sentence?.let {
@@ -147,13 +142,20 @@ private fun SentenceIndexScreen(
                                 )
                             }
                         }
+                        IconButton(
+                            modifier = modifier.padding(8.dp),
+                            onClick = {
+                                setCurrentId(nextId!!)
+                            },
+                            enabled = nextId != null
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = null
+                            )
+                        }
                     }
                 },
-                floatingActionButton = {
-                    FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
-                    }
-                }
             )
         }
     ) {
@@ -166,14 +168,21 @@ private fun SentenceIndexScreen(
                     onDragStarted = {},
                     onDragStopped = { velocity ->
                         if (velocity < 0 && abs(velocity) > 500f) {
-                            onRefresh()
+                            nextId?.let {
+                                setCurrentId(nextId)
+                            }
                         } else if (velocity > 0 && abs(velocity) > 500f) {
-                            onRefresh()
+                            prevId?.let {
+                                setCurrentId(prevId)
+                            }
                         }
                     }
                 )
         ) {
             sentence?.let {
+                LaunchedEffect(it) {
+                    setLastReadId(sentence.id)
+                }
                 Row(
                     modifier = modifier
                         .fillMaxSize()
