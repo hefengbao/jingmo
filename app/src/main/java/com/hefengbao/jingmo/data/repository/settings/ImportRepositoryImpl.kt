@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.data.repository.settings
 
+import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
 import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
@@ -21,6 +22,7 @@ import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteraturePeopleDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
+import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
@@ -38,6 +40,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ImportRepositoryImpl @Inject constructor(
+    private val chineseAntitheticalCoupletDao: ChineseAntitheticalCoupletDao,
     private val chineseExpressionDao: ChineseExpressionDao,
     private val chineseWisecrackDao: ChineseWisecrackDao,
     private val chineseKnowledgeDao: ChineseKnowledgeDao,
@@ -51,6 +54,12 @@ class ImportRepositoryImpl @Inject constructor(
     private val chineseTongueTwisterDao: ChineseTongueTwisterDao,
     private val classicalLiteratureWritingDao: ClassicalLiteratureWritingDao
 ) : ImportRepository {
+    override suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity) =
+        chineseAntitheticalCoupletDao.insert(entity)
+
+    override suspend fun clearChineseAntitheticalCouplet() =
+        chineseAntitheticalCoupletDao.clear()
+
     override suspend fun insertChineseExpression(entity: ExpressionEntity) =
         chineseExpressionDao.insert(entity)
 
@@ -125,6 +134,9 @@ class ImportRepositoryImpl @Inject constructor(
 
     override suspend fun clearClassicalLiteratureWritings() =
         classicalLiteratureWritingDao.clear()
+
+    override fun chineseAntitheticalCoupletTotal(): Flow<Int> =
+        chineseAntitheticalCoupletDao.total()
 
     override fun chineseExpressionTotal(): Flow<Int> = chineseExpressionDao.total()
 

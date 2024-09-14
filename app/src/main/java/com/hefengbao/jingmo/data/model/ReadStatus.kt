@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.model
 
 data class ReadStatus(
+    val chineseAntitheticalCoupletLastReadId: Int,
     val chineseKnowledgeLastReadId: Int,
     val chineseLyricLastReadId: Int,
     val chineseProverbLastReadId: Int,

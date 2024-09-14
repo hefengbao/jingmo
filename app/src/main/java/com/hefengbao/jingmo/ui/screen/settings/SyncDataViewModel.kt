@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.chinese.asAntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseExpressionEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
@@ -48,6 +49,36 @@ class DataViewModel @Inject constructor(
     fun getDataset() {
         viewModelScope.launch {
             _datasetResult.value = repository.dataset()
+        }
+    }
+
+    private val _chineseAntitheticalCoupletResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseAntitheticalCoupletResult: SharedFlow<SyncStatus<Any>> =
+        _chineseAntitheticalCoupletResult
+    private val _chineseAntitheticalCoupletProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseAntitheticalCoupletProgress: SharedFlow<Float> = _chineseAntitheticalCoupletProgress
+    fun syncChineseAntitheticalCouplet(total: Int, version: Int) {
+        _chineseAntitheticalCoupletResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            var count = 0
+            when (val response = repository.syncChineseAntitheticalCouplets()) {
+                is Result.Error -> {
+                    _chineseAntitheticalCoupletResult.value = SyncStatus.Error(response.exception)
+                }
+
+                Result.Loading -> {}
+                is Result.Success -> {
+                    response.data.map {
+                        repository.insertChineseAntitheticalCouplet(it.asAntitheticalCoupletEntity())
+                        count++
+                        _chineseAntitheticalCoupletProgress.value = count.toFloat() / total
+                    }
+
+                    preference.setChineseAntitheticalVersion(version)
+                    _chineseAntitheticalCoupletResult.value = SyncStatus.Success
+                }
+            }
         }
     }
 

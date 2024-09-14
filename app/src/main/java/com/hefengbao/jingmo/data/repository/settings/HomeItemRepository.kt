@@ -13,6 +13,7 @@ import com.hefengbao.jingmo.data.model.HomeItem
 import kotlinx.coroutines.flow.Flow
 
 interface HomeItemRepository {
+    suspend fun setChineseAntitheticalCouplet(checked: Boolean)
     suspend fun setChineseCharacter(checked: Boolean)
     suspend fun setChineseExpression(checked: Boolean)
     suspend fun setChineseIdiom(checked: Boolean)

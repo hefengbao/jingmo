@@ -46,6 +46,7 @@ fun ImportRoute(
     viewModel: ImportViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
+    val chineseAntitheticalCoupletRatio by viewModel.chineseAntitheticalCoupletRatio.collectAsState()
     val chineseExpressionRatio by viewModel.chineseExpressionRatio.collectAsState()
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState()
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState()
@@ -59,6 +60,9 @@ fun ImportRoute(
     val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState()
     val writingsRatio by viewModel.writingsRatio.collectAsState()
 
+    val chineseAntitheticalCoupletStatus by viewModel.chineseAntitheticalCoupletStatus.collectAsState(
+        initial = ImportStatus.Loading
+    )
     val chineseExpressionStatus by viewModel.chineseExpressionStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
@@ -74,6 +78,10 @@ fun ImportRoute(
 
     ImportScreen(
         onBackClick = onBackClick,
+        chineseAntitheticalCoupletRatio = chineseAntitheticalCoupletRatio,
+        chineseAntitheticalCoupletStatus = chineseAntitheticalCoupletStatus,
+        chineseAntitheticalCoupletUris = viewModel::chineseAntitheticalCouplet,
+        clearChineseAntitheticalCouplet = viewModel::clearChineseAntitheticalCouplet,
         chineseExpressionRatio = chineseExpressionRatio,
         chineseExpressionStatus = chineseExpressionStatus,
         chineseExpressionUris = { viewModel.chineseExpression(it) },
@@ -129,6 +137,10 @@ fun ImportRoute(
 private fun ImportScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    chineseAntitheticalCoupletRatio: Float,
+    chineseAntitheticalCoupletStatus: ImportStatus<Any>,
+    chineseAntitheticalCoupletUris: (List<Uri>) -> Unit,
+    clearChineseAntitheticalCouplet: () -> Unit,
     chineseExpressionRatio: Float,
     chineseExpressionStatus: ImportStatus<Any>,
     chineseExpressionUris: (List<Uri>) -> Unit,
@@ -179,6 +191,11 @@ private fun ImportScreen(
     clearClassicalLiteratureWritings: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
+    val chineseAntitheticalCoupletLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseAntitheticalCoupletUris(it)
+        }
+
     val chineseExpressionLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseExpressionUris(it)
@@ -313,6 +330,13 @@ private fun ImportScreen(
                 launcher = tongueTwistersLauncher,
                 status = tongueTwistersStatus,
                 onDeleteClick = clearChineseTongueTwisters
+            )
+            MenuItem(
+                title = "对联",
+                ratio = chineseAntitheticalCoupletRatio,
+                launcher = chineseAntitheticalCoupletLauncher,
+                status = chineseAntitheticalCoupletStatus,
+                onDeleteClick = clearChineseAntitheticalCouplet
             )
             MenuItem(
                 title = "歌词",

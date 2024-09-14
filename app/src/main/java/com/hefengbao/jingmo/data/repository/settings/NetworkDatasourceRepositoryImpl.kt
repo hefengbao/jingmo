@@ -12,6 +12,7 @@ package com.hefengbao.jingmo.data.repository.settings
 import com.hefengbao.jingmo.common.network.Result
 import com.hefengbao.jingmo.common.network.SafeApiCall
 import com.hefengbao.jingmo.data.database.AppDatabase
+import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
@@ -27,6 +28,7 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntit
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
@@ -50,6 +52,14 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun dataset(): Result<List<Dataset>> = safeApiCall {
         network.dataset()
     }
+
+    override suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity) =
+        database.antitheticalCoupletDao().insert(entity)
+
+    override suspend fun syncChineseAntitheticalCouplets(): Result<List<AntitheticalCouplet>> =
+        safeApiCall {
+            network.chineseAntitheticalCouplets()
+        }
 
     override suspend fun clearChineseDictionaryPinyin() =
         database.dictionaryDao().clearDictionaryPinyin()

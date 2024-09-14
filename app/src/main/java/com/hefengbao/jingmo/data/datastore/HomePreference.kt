@@ -44,6 +44,7 @@ class HomePreference(
             classicalLiteratureWriting = it[PREF_CLASSICAL_LITERATURE_WRITING] ?: true,
             chineseCharacter = it[PREF_CHINESE_CHARACTER] ?: true,
             chineseExpression = it[PREF_CHINESE_EXPRESSION] ?: true,
+            chineseAntitheticalCouplet = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: true,
             chineseIdiom = it[PREF_CHINESE_IDIOM] ?: true,
             chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
             chineseLyric = it[PREF_CHINESE_LYRIC] ?: true,
@@ -78,6 +79,8 @@ class HomePreference(
     suspend fun setTraditionalCultureSolarTerm(checked: Boolean) =
         setBoolean(context, PREF_TRADITIONAL_CULTURE_SOLAR_TERM, checked)
 
+    suspend fun setChineseAntitheticalCouplet(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_ANTITHETICAL_COUPLET, checked)
 
     suspend fun setChineseCharacter(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_CHARACTER, checked)
@@ -123,6 +126,8 @@ class HomePreference(
             booleanPreferencesKey("key_traditional_culture_solar_term")
 
         // 汉语
+        private val PREF_CHINESE_ANTITHETICAL_COUPLET =
+            booleanPreferencesKey("key_chinese_antithetical_couplet")
         private val PREF_CHINESE_CHARACTER = booleanPreferencesKey("key_chinese_character")
         private val PREF_CHINESE_EXPRESSION = booleanPreferencesKey("key_chinese_expression")
         private val PREF_CHINESE_IDIOM = booleanPreferencesKey("key_chinese_idiom")

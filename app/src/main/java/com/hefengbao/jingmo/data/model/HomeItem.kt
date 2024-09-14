@@ -14,6 +14,7 @@ data class HomeItem(
     val classicalLiteraturePeople: Boolean = true,
     val classicalLiteratureSentence: Boolean = true,
     val classicalLiteratureWriting: Boolean = true,
+    val chineseAntitheticalCouplet: Boolean = true,
     val chineseCharacter: Boolean = true,
     val chineseExpression: Boolean = true,
     val chineseIdiom: Boolean = true,
@@ -31,7 +32,8 @@ data class HomeItem(
             classicalLiteratureSentence ||
             classicalLiteratureWriting
 
-    val chineseGroup = chineseCharacter ||
+    val chineseGroup = chineseAntitheticalCouplet ||
+            chineseCharacter ||
             chineseExpression ||
             chineseIdiom ||
             chineseKnowledge ||

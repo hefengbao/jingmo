@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
+import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
@@ -23,6 +24,7 @@ import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
+import com.hefengbao.jingmo.data.model.chinese.asAntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseExpressionEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
@@ -64,6 +66,7 @@ class ImportViewModel @Inject constructor(
     private val repository: ImportRepository,
     private val preference: DatasetPreference,
 ) : ViewModel() {
+    private val chineseAntitheticalCoupletCount = 490
     private val chineseExpressionCount = 320349
     private val chineseKnowledgeCount = 464
     private val chineseProverbsCount = 489
@@ -77,6 +80,38 @@ class ImportViewModel @Inject constructor(
     private val riddlesCount = 42446
     private val tongueTwistersCount = 45
     private val writingsCount = 1144422
+
+    val chineseAntitheticalCoupletRatio =
+        repository.chineseAntitheticalCoupletTotal().distinctUntilChanged().flatMapLatest {
+            MutableStateFlow(it.toFloat() / chineseAntitheticalCoupletCount)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0f
+        )
+    private val _chineseAntitheticalCoupletStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val chineseAntitheticalCoupletStatus: SharedFlow<ImportStatus<Any>> =
+        _chineseAntitheticalCoupletStatus
+
+    fun chineseAntitheticalCouplet(uris: List<Uri>) {
+        viewModelScope.launch {
+            _chineseAntitheticalCoupletStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<List<AntitheticalCouplet>>(readTextFromUri(it))
+                    .forEach { antitheticalCouplet ->
+                        repository.insertChineseAntitheticalCouplet(antitheticalCouplet.asAntitheticalCoupletEntity())
+                    }
+            }
+            _chineseAntitheticalCoupletStatus.value = ImportStatus.Finish
+        }
+    }
+
+    fun clearChineseAntitheticalCouplet() {
+        viewModelScope.launch {
+            repository.clearChineseAntitheticalCouplet()
+        }
+    }
 
     val chineseExpressionRatio =
         repository.chineseExpressionTotal().distinctUntilChanged().flatMapLatest {

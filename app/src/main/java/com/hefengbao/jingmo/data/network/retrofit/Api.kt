@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.network.retrofit
 
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
@@ -35,6 +36,9 @@ interface Api {
     suspend fun chineseExpressions(
         @Path("page") page: Int
     ): ExpressionWrapper
+
+    @GET("chinese_antithetical_couplet.json")
+    suspend fun chineseAntitheticalCouplet(): List<AntitheticalCouplet>
 
     @GET("chinese_knowledge.json")
     suspend fun chineseKnowledge(): List<ChineseKnowledge>

@@ -58,6 +58,11 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
+    fun setChineseAntitheticalCouplet(checked: Boolean) {
+        viewModelScope.launch {
+            repository.setChineseAntitheticalCouplet(checked)
+        }
+    }
 
     fun setChineseCharacter(checked: Boolean) {
         viewModelScope.launch {

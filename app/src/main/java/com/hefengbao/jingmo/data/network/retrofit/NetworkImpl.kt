@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.network.retrofit
 
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
 import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
@@ -67,6 +68,9 @@ class NetworkImpl @Inject constructor(
         .create(Api::class.java)
 
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
+
+    override suspend fun chineseAntitheticalCouplets(): List<AntitheticalCouplet> =
+        networkApi.chineseAntitheticalCouplet()
 
     override suspend fun chineseExpressions(page: Int): ExpressionWrapper =
         networkApi.chineseExpressions(page)

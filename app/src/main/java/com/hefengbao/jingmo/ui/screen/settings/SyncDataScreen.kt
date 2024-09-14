@@ -60,6 +60,12 @@ fun DataRoute(
 
     val datasetPref by viewModel.datasetPref.collectAsState(initial = DatasetVersion())
     val datasetResult by viewModel.datasetResult.collectAsState(initial = Result.Loading)
+    val chineseAntitheticalCoupletResult by viewModel.chineseAntitheticalCoupletResult.collectAsState(
+        initial = SyncStatus.NonStatus
+    )
+    val chineseAntitheticalCoupletProgress by viewModel.chineseAntitheticalCoupletProgress.collectAsState(
+        initial = 0f
+    )
     val chineseExpressionResult by viewModel.chineseExpressionResult.collectAsState(initial = SyncStatus.NonStatus)
     val chineseExpressionResultProgress by viewModel.chineseExpressionResultProgress.collectAsState(
         initial = 0f
@@ -101,6 +107,11 @@ fun DataRoute(
         onBackClick = onBackClick,
         datasetPref = datasetPref,
         datasetResult = datasetResult,
+        syncChineseAntitheticalCouplet = { total: Int, version: Int ->
+            viewModel.syncChineseAntitheticalCouplet(total, version)
+        },
+        chineseAntitheticalCoupletResult = chineseAntitheticalCoupletResult,
+        chineseAntitheticalCoupletProgress = chineseAntitheticalCoupletProgress,
         syncChineseExpression = { total: Int, version: Int ->
             viewModel.syncChineseExpression(total, version)
         },
@@ -178,6 +189,9 @@ private fun DataScreen(
     onBackClick: () -> Unit,
     datasetPref: DatasetVersion,
     datasetResult: Result<List<Dataset>>,
+    syncChineseAntitheticalCouplet: (total: Int, version: Int) -> Unit,
+    chineseAntitheticalCoupletResult: SyncStatus<Any>,
+    chineseAntitheticalCoupletProgress: Float,
     syncChineseExpression: (total: Int, version: Int) -> Unit,
     chineseExpressionResult: SyncStatus<Any>,
     chineseExpressionResultProgress: Float,
@@ -378,6 +392,19 @@ private fun DataScreen(
                                 progress = tongueTwistersResultProgress,
                                 onClick = { count: Int, version: Int ->
                                     syncTongueTwisters(
+                                        count,
+                                        version
+                                    )
+                                }
+                            ),
+                            Item(
+                                title = "对联",
+                                name = "chinese_antithetical_couplet",
+                                localVersion = datasetPref.chineseAntitheticalCoupletVersion,
+                                status = chineseAntitheticalCoupletResult,
+                                progress = chineseAntitheticalCoupletProgress,
+                                onClick = { count: Int, version: Int ->
+                                    syncChineseAntitheticalCouplet(
                                         count,
                                         version
                                     )

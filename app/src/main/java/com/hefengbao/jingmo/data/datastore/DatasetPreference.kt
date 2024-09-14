@@ -31,6 +31,7 @@ class DatasetPreference(
 ) {
     val datasetVersion: Flow<DatasetVersion> = context.dataset.data.map {
         DatasetVersion(
+            chineseAntitheticalCoupletVersion = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: 0,
             chineseExpressionVersion = it[PREF_CHINESE_EXPRESSION] ?: 0,
             chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE] ?: 0,
             chineseProverVersion = it[PREF_CHINESE_PROVERB] ?: 0,
@@ -48,6 +49,9 @@ class DatasetPreference(
             writingsCurrentCount = it[PREF_WRITING_CURRENT_COUNT] ?: 0
         )
     }
+
+    suspend fun setChineseAntitheticalCoupletVersion(version: Int) =
+        setInt(context, PREF_CHINESE_ANTITHETICAL_COUPLET, version)
 
     suspend fun setChineseDictionaryVersion(version: Int) =
         setInt(context, PREF_CHINESE_DICTIONARY, version)
@@ -95,6 +99,8 @@ class DatasetPreference(
         setInt(context, PREF_WRITING_CURRENT_COUNT, count)
 
     companion object {
+        private val PREF_CHINESE_ANTITHETICAL_COUPLET =
+            intPreferencesKey("key_chinese_antithetical_couplet")
         private val PREF_CHINESE_DICTIONARY = intPreferencesKey("key_dictionary")
         private val PREF_CHINESE_EXPRESSION = intPreferencesKey("key_chinese_expression")
         private val PREF_CHINESE_IDIOM = intPreferencesKey("key_idioms")

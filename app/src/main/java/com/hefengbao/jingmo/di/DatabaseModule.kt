@@ -13,6 +13,7 @@ import android.content.Context
 import androidx.room.Room.databaseBuilder
 import com.hefengbao.jingmo.common.Constant
 import com.hefengbao.jingmo.data.database.AppDatabase
+import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
 import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
@@ -45,6 +46,12 @@ object DatabaseModule {
         AppDatabase::class.java,
         Constant.DB_NAME,
     ).build()
+
+    @Provides
+    @Singleton
+    fun providesChineseAntitheticalCoupletDao(
+        database: AppDatabase
+    ): ChineseAntitheticalCoupletDao = database.antitheticalCoupletDao()
 
     @Provides
     @Singleton

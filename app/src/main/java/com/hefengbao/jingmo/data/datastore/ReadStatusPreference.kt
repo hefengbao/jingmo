@@ -31,6 +31,7 @@ class ReadStatusPreference(
 ) {
     val readStatus: Flow<ReadStatus> = context.readStatus.data.map {
         ReadStatus(
+            chineseAntitheticalCoupletLastReadId = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: 1,
             chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE] ?: 1,
             chineseLyricLastReadId = it[PREF_CHINESE_LYRIC] ?: 1,
             chineseProverbLastReadId = it[PREF_CHINESE_PROVERB] ?: 1,
@@ -44,6 +45,9 @@ class ReadStatusPreference(
             writingsLastReadId = it[PREF_WRITINGS] ?: 1,
         )
     }
+
+    suspend fun setChineseAntitheticalCoupletLastReadId(id: Int) =
+        setInt(context, PREF_CHINESE_ANTITHETICAL_COUPLET, id)
 
     suspend fun setChineseKnowledgeLastReadId(id: Int) =
         setInt(context, PREF_CHINESE_KNOWLEDGE, id)
@@ -74,6 +78,8 @@ class ReadStatusPreference(
     suspend fun setWritingsLastReadId(id: Int) = setInt(context, PREF_WRITINGS, id)
 
     companion object {
+        private val PREF_CHINESE_ANTITHETICAL_COUPLET =
+            intPreferencesKey("key_chinese_antithetical_couplet")
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_LYRIC = intPreferencesKey("key_chinese_lyric")
         private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")

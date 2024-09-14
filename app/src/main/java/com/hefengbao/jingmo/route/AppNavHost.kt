@@ -12,6 +12,18 @@ package com.hefengbao.jingmo.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletCaptureScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletReadScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletCaptureScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletReadScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletSearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterPinyinIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterRadicalIndexScreen
@@ -172,6 +184,7 @@ fun AppNavHost(
         startDestination = ROUTE_HOME_GRAPH
     ) {
         homeGraph(
+            onChineseAntitheticalCoupletClick = { navController.navigateToChineseAntitheticalCoupletIndexGraph() },
             onChineseCharacterClick = { navController.navigateToChineseCharacterIndexGraph() },
             onChineseExpressionClick = { navController.navigateToChineseExpressionGraph() },
             onChineseIdiomClick = { navController.navigateToChineseIdiomIndexGraph() },
@@ -191,6 +204,49 @@ fun AppNavHost(
             onLinksClick = { navController.navigateToLinkIndexScreen() },
             onSettingsClick = { navController.navigateToSettingsGraph() },
             nestGraph = {
+                chineseAntitheticalCoupletIndexGraph(
+                    onBackClick = navController::navigateUp,
+                    onReadMoreClick = { navController.navigateToChineseAntitheticalCoupletReadScreen() },
+                    onBookmarksClick = { navController.navigateToChineseAntitheticalCoupletBookmarksScreen() },
+                    onSearchClick = { navController.navigateToChineseAntitheticalCoupletSearchScreen() },
+                    nestGraph = {
+                        chineseAntitheticalCoupletBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = {
+                                navController.navigateToChineseAntitheticalCoupletShowScreen(
+                                    it.toString()
+                                )
+                            }
+                        )
+                        chineseAntitheticalCoupletCaptureScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        chineseAntitheticalCoupletReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = {
+                                navController.navigateToChineseAntitheticalCoupletCaptureScreen(
+                                    it.toString()
+                                )
+                            }
+                        )
+                        chineseAntitheticalCoupletShowScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = {
+                                navController.navigateToChineseAntitheticalCoupletCaptureScreen(
+                                    it.toString()
+                                )
+                            }
+                        )
+                        chineseAntitheticalCoupletSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = {
+                                navController.navigateToChineseAntitheticalCoupletShowScreen(
+                                    it.toString()
+                                )
+                            }
+                        )
+                    }
+                )
                 chineseCharacterIndexGraph(
                     onBackClick = navController::navigateUp,
                     onPinyinSearchClick = { navController.navigateToChineseCharacterPinyinIndexScreen() },

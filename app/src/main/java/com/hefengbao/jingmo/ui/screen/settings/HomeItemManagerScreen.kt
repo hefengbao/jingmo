@@ -43,6 +43,7 @@ fun HomeItemManagerRoute(
         setClassicalLiteraturePeople = { viewModel.setClassicalLiteraturePeople(it) },
         setClassicalLiteratureSentence = { viewModel.setClassicalLiteratureSentence(it) },
         setClassicalLiteratureWriting = { viewModel.setClassicalLiteratureWriting(it) },
+        setChineseAntitheticalCouplet = viewModel::setChineseAntitheticalCouplet,
         setChineseCharacter = { viewModel.setChineseCharacter(it) },
         setChineseExpression = { viewModel.setChineseExpression(it) },
         setChineseIdiom = { viewModel.setChineseIdiom(it) },
@@ -66,6 +67,7 @@ private fun HomeItemManagerScreen(
     setClassicalLiteraturePeople: (Boolean) -> Unit,
     setClassicalLiteratureSentence: (Boolean) -> Unit,
     setClassicalLiteratureWriting: (Boolean) -> Unit,
+    setChineseAntitheticalCouplet: (Boolean) -> Unit,
     setChineseCharacter: (Boolean) -> Unit,
     setChineseExpression: (Boolean) -> Unit,
     setChineseIdiom: (Boolean) -> Unit,
@@ -135,6 +137,11 @@ private fun HomeItemManagerScreen(
                 title = "绕口令",
                 checked = homeItem.chineseTongueTwister,
                 onCheckedChange = setChineseTongueTwister
+            )
+            Item(
+                title = "对联",
+                checked = homeItem.chineseAntitheticalCouplet,
+                onCheckedChange = setChineseAntitheticalCouplet
             )
             Item(
                 title = "歌词",

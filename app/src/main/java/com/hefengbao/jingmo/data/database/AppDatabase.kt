@@ -16,6 +16,7 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
 import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
@@ -29,6 +30,8 @@ import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteraturePeopleDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
+import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
@@ -71,6 +74,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
  */
 @Database(
     entities = [
+        AntitheticalCoupletEntity::class,
+        AntitheticalCoupletCollectionEntity::class,
         ClassicPoemCollectionEntity::class,
         ClassicPoemEntity::class,
         ClassicPoemFtsEntity::class,
@@ -98,7 +103,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         RiddleEntity::class,
         TongueTwisterEntity::class,
     ],
-    version = 20,
+    version = 21,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -119,6 +124,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 17, to = 18),
         AutoMigration(from = 18, to = 19, spec = AppDatabase.AutoMigration18To19::class),
         AutoMigration(from = 19, to = 20),
+        AutoMigration(from = 20, to = 21),
     ],
     exportSchema = true
 )
@@ -134,6 +140,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
     WritingQuoteListConverter::class,
 )
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun antitheticalCoupletDao(): ChineseAntitheticalCoupletDao
     abstract fun expressionDao(): ChineseExpressionDao
     abstract fun knowledgeDao(): ChineseKnowledgeDao
     abstract fun wisecrackDao(): ChineseWisecrackDao

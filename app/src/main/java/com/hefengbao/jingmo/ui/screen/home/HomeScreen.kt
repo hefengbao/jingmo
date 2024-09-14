@@ -50,6 +50,7 @@ import com.hefengbao.jingmo.data.model.HomeItem
 @Composable
 fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
+    onChineseAntitheticalCoupletClick: () -> Unit,
     onChineseCharacterClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
     onChineseIdiomClick: () -> Unit,
@@ -74,6 +75,7 @@ fun HomeRoute(
 
     HomeScreen(
         homeItem = homeItem,
+        onChineseAntitheticalCoupletClick = onChineseAntitheticalCoupletClick,
         onChineseCharacterClick = onChineseCharacterClick,
         onChineseExpressionClick = onChineseExpressionClick,
         onChineseIdiomClick = onChineseIdiomClick,
@@ -102,6 +104,7 @@ fun HomeRoute(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     homeItem: HomeItem,
+    onChineseAntitheticalCoupletClick: () -> Unit,
     onChineseCharacterClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
     onChineseIdiomClick: () -> Unit,
@@ -264,6 +267,14 @@ private fun HomeScreen(
                                 Item(
                                     title = "绕口令",
                                     onClick = onChineseTongueTwisterClick
+                                )
+                            }
+                        }
+                        if (homeItem.chineseAntitheticalCouplet) {
+                            item {
+                                Item(
+                                    title = "对联",
+                                    onClick = onChineseAntitheticalCoupletClick
                                 )
                             }
                         }
