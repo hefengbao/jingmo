@@ -12,13 +12,12 @@ package com.hefengbao.jingmo.ui.screen.chinese.expression
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
 import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepository
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.ChineseExpressionShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,14 +27,28 @@ class ExpressionShowViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val args = ChineseExpressionShowArgs(savedStateHandle)
-    private val _expression: MutableStateFlow<ExpressionEntity?> = MutableStateFlow(null)
-    val expression: SharedFlow<ExpressionEntity?> = _expression
 
-    init {
+    val expression = repository.get(args.id.toInt()).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
+    val expressionCollectionEntity = repository.isCollect(args.id.toInt()).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null
+    )
+
+    fun setUncollect(id: Int) {
         viewModelScope.launch {
-            repository.get(args.id.toInt()).collectLatest {
-                _expression.value = it
-            }
+            repository.uncollect(id)
+        }
+    }
+
+    fun setCollect(id: Int) {
+        viewModelScope.launch {
+            repository.collect(ExpressionCollectionEntity(id))
         }
     }
 }

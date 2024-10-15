@@ -18,7 +18,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,22 +35,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.util.ClipboardUtil
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.ui.component.BackgroundTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
-fun CharacterShowScreenRoute(
+fun CharacterShowRoute(
     viewModel: CharacterShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
     val character by viewModel.character.collectAsState()
+    val characterCollection by viewModel.characterCollection.collectAsState()
     val context = LocalContext.current
 
     CharacterShowScreen(
         context = context,
         onBackClick = onBackClick,
         character = character,
+        characterCollection = characterCollection,
+        setUncollect = { viewModel.setUncollect(it) },
+        setCollect = { viewModel.setCollect(it) }
     )
 }
 
@@ -57,9 +65,45 @@ private fun CharacterShowScreen(
     context: Context,
     onBackClick: () -> Unit,
     character: DictionaryEntity?,
+    characterCollection: DictionaryCollectionEntity?,
+    setUncollect: (Int) -> Unit,
+    setCollect: (Int) -> Unit
 ) {
     character?.let { entity ->
-        SimpleScaffold(onBackClick = onBackClick, title = entity.char) {
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = entity.char,
+            bottomBar = {
+                BottomAppBar {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                if (characterCollection != null) {
+                                    setUncollect(entity.id)
+                                } else {
+                                    setCollect(entity.id)
+                                }
+                            }
+                        ) {
+                            if (characterCollection != null) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.BookmarkBorder,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        ) {
             LazyColumn(
                 modifier = modifier
                     .fillMaxWidth()

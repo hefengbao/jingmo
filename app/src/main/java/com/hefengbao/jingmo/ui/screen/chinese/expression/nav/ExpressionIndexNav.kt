@@ -26,6 +26,7 @@ fun NavController.navigateToChineseExpressionGraph() {
 
 fun NavGraphBuilder.chineseExpressionGraph(
     onBackClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit,
 ) {
@@ -34,7 +35,11 @@ fun NavGraphBuilder.chineseExpressionGraph(
         route = ROUTE_GRAPH
     ) {
         composable(ROUTE) {
-            ChineseExpressionIndexRoute(onBackClick = onBackClick, onSearchClick = onSearchClick)
+            ChineseExpressionIndexRoute(
+                onBackClick = onBackClick,
+                onBookmarksClick = onBookmarksClick,
+                onSearchClick = onSearchClick
+            )
         }
 
         nestGraph()

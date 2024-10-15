@@ -24,6 +24,7 @@ fun NavController.navigateToChineseCharacterIndexGraph() {
 
 fun NavGraphBuilder.chineseCharacterIndexGraph(
     onBackClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     onPinyinSearchClick: () -> Unit,
     onRadicalClickSearch: () -> Unit,
     onStrokeSearchClick: () -> Unit,
@@ -38,6 +39,7 @@ fun NavGraphBuilder.chineseCharacterIndexGraph(
         composable(ROUTE) {
             ChineseCharacterIndexRoute(
                 onBackClick = onBackClick,
+                onBookmarksClick = onBookmarksClick,
                 onPinyinSearchClick = onPinyinSearchClick,
                 onRadicalClickSearch = onRadicalClickSearch,
                 onStrokeSearchClick = onStrokeSearchClick,

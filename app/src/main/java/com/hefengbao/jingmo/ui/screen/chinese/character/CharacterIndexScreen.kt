@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Gesture
 import androidx.compose.material.icons.filled.Spellcheck
+import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -50,6 +51,7 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 @Composable
 fun ChineseCharacterIndexRoute(
     onBackClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     onPinyinSearchClick: () -> Unit,
     onRadicalClickSearch: () -> Unit,
     onStrokeClick: () -> Unit,
@@ -58,6 +60,7 @@ fun ChineseCharacterIndexRoute(
 ) {
     ChineseCharacterIndexScreen(
         onBackClick = onBackClick,
+        onBookmarksClick = onBookmarksClick,
         onPinyinSearchClick = onPinyinSearchClick,
         onRadicalClickSearch = onRadicalClickSearch,
         onStrokeClick = onStrokeClick,
@@ -72,6 +75,7 @@ fun ChineseCharacterIndexRoute(
 private fun ChineseCharacterIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onBookmarksClick: () -> Unit,
     onPinyinSearchClick: () -> Unit,
     onRadicalClickSearch: () -> Unit,
     onStrokeClick: () -> Unit,
@@ -80,7 +84,12 @@ private fun ChineseCharacterIndexScreen(
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "汉字"
+        title = "汉字",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+        }
     ) {
         var query by remember {
             mutableStateOf("")

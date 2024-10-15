@@ -15,7 +15,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.hefengbao.jingmo.ui.screen.chinese.character.CharacterShowScreenRoute
+import com.hefengbao.jingmo.ui.screen.chinese.character.CharacterShowRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
@@ -47,6 +47,6 @@ fun NavGraphBuilder.chineseCharacterShowScreen(
             navArgument(characterShowArgsCharacterArg) { type = NavType.StringType },
         )
     ) {
-        CharacterShowScreenRoute(onBackClick = onBackClick)
+        CharacterShowRoute(onBackClick = onBackClick)
     }
 }

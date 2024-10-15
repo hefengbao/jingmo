@@ -9,10 +9,12 @@
 
 package com.hefengbao.jingmo.data.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +38,18 @@ interface ChineseDictionaryDao {
 
     @Query("select d.* from dictionary d where d.id in (select p.dictionary_id from dictionary_pinyin p where p.pinyin = :pinyin)")
     fun getByPinyin(pinyin: String): Flow<List<DictionaryEntity>>
+
+    @Query("select i.* from dictionary_collections c join dictionary i on c.id = i.id order by collected_at desc")
+    fun collections(): PagingSource<Int, DictionaryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun collect(entity: DictionaryCollectionEntity)
+
+    @Query("delete from dictionary_collections where id = :id")
+    suspend fun uncollect(id: Int)
+
+    @Query("select * from dictionary_collections where id = :id")
+    fun isCollect(id: Int): Flow<DictionaryCollectionEntity?>
 
     @Query("select count(d.id) from dictionary d")
     fun total(): Flow<Int>

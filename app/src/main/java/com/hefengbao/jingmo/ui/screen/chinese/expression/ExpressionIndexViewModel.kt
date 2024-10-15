@@ -11,6 +11,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.expression
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +38,28 @@ class ExpressionIndexViewModel @Inject constructor(
             repository.random().collectLatest {
                 _expression.value = it
             }
+        }
+    }
+
+    private val _collected: MutableStateFlow<ExpressionCollectionEntity?> = MutableStateFlow(null)
+    val collected: SharedFlow<ExpressionCollectionEntity?> = _collected
+    fun getCollected(id: Int) {
+        viewModelScope.launch {
+            repository.isCollect(id).collectLatest {
+                _collected.value = it
+            }
+        }
+    }
+
+    fun setUncollect(id: Int) {
+        viewModelScope.launch {
+            repository.uncollect(id)
+        }
+    }
+
+    fun setCollect(id: Int) {
+        viewModelScope.launch {
+            repository.collect(ExpressionCollectionEntity(id))
         }
     }
 }

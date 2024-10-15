@@ -32,8 +32,10 @@ import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
@@ -84,9 +86,11 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         WritingEntity::class,
         SentenceCollectionEntity::class,
         SentenceEntity::class,
+        ExpressionCollectionEntity::class,
         ExpressionEntity::class,
         WisecrackCollectionEntity::class,
         WisecrackEntity::class,
+        DictionaryCollectionEntity::class,
         DictionaryEntity::class,
         DictionaryPinyinEntity::class,
         IdiomCollectionEntity::class,
@@ -103,7 +107,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         RiddleEntity::class,
         TongueTwisterEntity::class,
     ],
-    version = 21,
+    version = 22,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -125,6 +129,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 18, to = 19, spec = AppDatabase.AutoMigration18To19::class),
         AutoMigration(from = 19, to = 20),
         AutoMigration(from = 20, to = 21),
+        AutoMigration(from = 21, to = 22),
     ],
     exportSchema = true
 )

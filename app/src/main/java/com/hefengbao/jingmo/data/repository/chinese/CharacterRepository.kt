@@ -9,6 +9,8 @@
 
 package com.hefengbao.jingmo.data.repository.chinese
 
+import androidx.paging.PagingData
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.character.Pinyin
 import com.hefengbao.jingmo.data.model.chinese.character.Radical
@@ -24,4 +26,8 @@ interface CharacterRepository {
     fun searchByPinyin(pinyin: String): Flow<List<DictionaryEntity>>
     fun searchByRadical(radical: String): Flow<List<DictionaryEntity>>
     fun searchByStroke(stroke: Int): Flow<List<DictionaryEntity>>
+    fun collections(): Flow<PagingData<DictionaryEntity>>
+    suspend fun collect(entity: DictionaryCollectionEntity)
+    suspend fun uncollect(id: Int)
+    fun isCollect(id: Int): Flow<DictionaryCollectionEntity?>
 }

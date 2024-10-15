@@ -24,6 +24,7 @@ import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateTo
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterPinyinIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterRadicalIndexScreen
@@ -31,6 +32,7 @@ import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterSear
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterStrokeIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterStrokeScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterPinyinIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterRadicalIndexScreen
@@ -38,9 +40,11 @@ import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCha
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterStrokeIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterStrokeScreen
+import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionGraph
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.navigateToChineseExpressionBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.navigateToChineseExpressionGraph
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.navigateToChineseExpressionSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.navigateToChineseExpressionShow
@@ -249,6 +253,7 @@ fun AppNavHost(
                 )
                 chineseCharacterIndexGraph(
                     onBackClick = navController::navigateUp,
+                    onBookmarksClick = { navController.navigateToChineseCharacterBookmarksScreen() },
                     onPinyinSearchClick = { navController.navigateToChineseCharacterPinyinIndexScreen() },
                     onRadicalClickSearch = { navController.navigateToChineseCharacterRadicalIndexScreen() },
                     onStrokeSearchClick = { navController.navigateToChineseCharacterStrokeIndexScreen() },
@@ -260,6 +265,10 @@ fun AppNavHost(
                         )
                     },
                     nestGraph = {
+                        chineseCharacterBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseCharacterShowScreen(it.toString()) },
+                        )
                         chineseCharacterPinyinIndexScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { pinyin, type ->
@@ -302,8 +311,13 @@ fun AppNavHost(
 
                 chineseExpressionGraph(
                     onBackClick = navController::navigateUp,
+                    onBookmarksClick = { navController.navigateToChineseExpressionBookmarksScreen() },
                     onSearchClick = { navController.navigateToChineseExpressionSearchScreen() },
                     nestGraph = {
+                        chineseExpressionBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = { navController.navigateToChineseExpressionShow(it) }
+                        )
                         chineseExpressionSearchScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = { navController.navigateToChineseExpressionShow(it) }

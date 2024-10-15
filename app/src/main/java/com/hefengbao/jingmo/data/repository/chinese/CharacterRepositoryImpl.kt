@@ -9,7 +9,11 @@
 
 package com.hefengbao.jingmo.data.repository.chinese
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
+import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.character.Pinyin
 import com.hefengbao.jingmo.data.model.chinese.character.Radical
@@ -835,4 +839,15 @@ class CharacterRepositoryImpl @Inject constructor(
         dao.getByRadical(radical)
 
     override fun searchByStroke(stroke: Int): Flow<List<DictionaryEntity>> = dao.getByStroke(stroke)
+
+    override fun collections(): Flow<PagingData<DictionaryEntity>> = Pager(
+        config = PagingConfig(pageSize = 30),
+        pagingSourceFactory = { dao.collections() }
+    ).flow
+
+    override suspend fun collect(entity: DictionaryCollectionEntity) = dao.collect(entity)
+
+    override suspend fun uncollect(id: Int) = dao.uncollect(id)
+
+    override fun isCollect(id: Int): Flow<DictionaryCollectionEntity?> = dao.isCollect(id)
 }
