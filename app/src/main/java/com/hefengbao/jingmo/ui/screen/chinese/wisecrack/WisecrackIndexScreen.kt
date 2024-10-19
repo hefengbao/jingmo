@@ -65,6 +65,7 @@ fun ChineseWisecrackIndexRoute(
         wisecrackCollectionEntity = chineseWisecrackCollection,
         setCollect = { viewModel.setCollect(it) },
         setUncollect = { viewModel.setUncollect(it) },
+        isCollect = { viewModel.isCollect(it) },
         onRefresh = viewModel::getRandom
     )
 }
@@ -81,6 +82,7 @@ private fun ChineseWisecrackIndexScreen(
     wisecrackCollectionEntity: WisecrackCollectionEntity?,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
+    isCollect: (Int) -> Unit,
     onRefresh: () -> Unit
 ) {
     SimpleScaffold(
@@ -142,6 +144,7 @@ private fun ChineseWisecrackIndexScreen(
         }
     ) {
         chineseCrack?.let { entity ->
+            isCollect(entity.id)
             Box(
                 modifier = modifier
                     .fillMaxSize()

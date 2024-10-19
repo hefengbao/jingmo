@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
@@ -46,7 +47,11 @@ class WisecrackIndexViewModel @Inject constructor(
     val wiseCrackCollection: SharedFlow<WisecrackCollectionEntity?> = _wiseCrackCollection
     fun isCollect(id: Int) {
         viewModelScope.launch {
-            wisecrackRepository.isCollect(id).collectLatest { _wiseCrackCollection.value = it }
+            wisecrackRepository.isCollect(id).collectLatest {
+                _wiseCrackCollection.value = it
+
+                Log.i("WisecrackIndexViewModel", it.toString())
+            }
         }
     }
 

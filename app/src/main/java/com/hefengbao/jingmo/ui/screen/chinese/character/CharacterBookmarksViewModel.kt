@@ -11,20 +11,14 @@ package com.hefengbao.jingmo.ui.screen.chinese.character
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterBookmarksViewModel @Inject constructor(
     repository: CharacterRepository
 ) : ViewModel() {
-    val items = repository.collections().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = PagingData.empty()
-    )
+    val items = repository.collections().cachedIn(viewModelScope)
 }

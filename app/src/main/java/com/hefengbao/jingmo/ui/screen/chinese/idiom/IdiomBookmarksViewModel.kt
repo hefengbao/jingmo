@@ -11,20 +11,14 @@ package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class IdiomBookmarksViewModel @Inject constructor(
     repository: IdiomRepository
 ) : ViewModel() {
-    val bookmarks = repository.collections().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = PagingData.empty()
-    )
+    val bookmarks = repository.collections().cachedIn(viewModelScope)
 }

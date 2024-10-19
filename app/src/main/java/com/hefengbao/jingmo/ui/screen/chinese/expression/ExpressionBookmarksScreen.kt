@@ -49,7 +49,8 @@ private fun ExpressionBookmarksScreen(
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
         LazyColumn(
-            modifier = modifier.padding(16.dp)
+            modifier = modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
                 items = items,

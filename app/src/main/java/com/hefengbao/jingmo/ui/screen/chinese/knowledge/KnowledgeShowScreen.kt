@@ -9,15 +9,20 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.knowledge
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
@@ -53,21 +58,27 @@ private fun LyricShowScreen(
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "知识卡片",
-            floatingActionButton = {
-                if (knowledgeCollectionEntity == null) {
-                    FloatingActionButton(onClick = { setCollect(entity.id) }) {
-                        Icon(
-                            imageVector = Icons.Default.BookmarkBorder,
-                            contentDescription = null
-                        )
-                    }
-                } else {
-                    FloatingActionButton(onClick = { setUncollect(entity.id) }) {
-                        Icon(
-                            imageVector = Icons.Default.Bookmark,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
+            bottomBar = {
+                BottomAppBar {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        if (knowledgeCollectionEntity == null) {
+                            IconButton(onClick = { setCollect(entity.id) }) {
+                                Icon(
+                                    imageVector = Icons.Default.BookmarkBorder,
+                                    contentDescription = null
+                                )
+                            }
+                        } else {
+                            IconButton(onClick = { setUncollect(entity.id) }) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
                     }
                 }
             }
