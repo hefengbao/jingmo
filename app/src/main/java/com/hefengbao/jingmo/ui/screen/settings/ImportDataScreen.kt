@@ -51,6 +51,7 @@ fun ImportRoute(
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState()
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState()
     val chineseProverbRatio by viewModel.chineseProverbRatio.collectAsState()
+    val chineseRiddleRatio by viewModel.chineseRiddleRatio.collectAsState()
     val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState()
     val dictionaryRatio by viewModel.dictionaryRatio.collectAsState()
     val idiomsRatio by viewModel.idiomsRatio.collectAsState()
@@ -67,6 +68,7 @@ fun ImportRoute(
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseProverbStatus by viewModel.chineseProverbStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseRiddleStatus by viewModel.chineseRiddleStatus.collectAsState(initial = ImportStatus.Loading)
     val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
     val dictionaryStatus by viewModel.dictionaryStatus.collectAsState(initial = ImportStatus.Loading)
     val idiomsStatus by viewModel.idiomStatus.collectAsState(initial = ImportStatus.Loading)
@@ -98,6 +100,10 @@ fun ImportRoute(
         chineseWisecracksStatus = chineseWisecracksStatus,
         chineseWisecracksUris = { viewModel.chineseWisecrack(it) },
         clearChineseWisecracks = viewModel::clearChineseWisecracks,
+        chineseRiddleRadio = chineseRiddleRatio,
+        chineseRiddleStatus = chineseRiddleStatus,
+        chineseRiddleUris = { viewModel.chineseRiddle(it) },
+        clearChineseRiddles = viewModel::clearChineseRiddle,
         classicPoemsRatio = classicPoemsRatio,
         classicPoemsStatus = classicPoemsStatus,
         classicPoemsUris = { viewModel.classicPoems(it) },
@@ -157,6 +163,10 @@ private fun ImportScreen(
     chineseWisecracksStatus: ImportStatus<Any>,
     chineseWisecracksUris: (List<Uri>) -> Unit,
     clearChineseWisecracks: () -> Unit,
+    chineseRiddleRadio: Float,
+    chineseRiddleStatus: ImportStatus<Any>,
+    chineseRiddleUris: (List<Uri>) -> Unit,
+    clearChineseRiddles: () -> Unit,
     classicPoemsRatio: Float,
     classicPoemsStatus: ImportStatus<Any>,
     classicPoemsUris: (List<Uri>) -> Unit,
@@ -211,6 +221,10 @@ private fun ImportScreen(
     val chineseWisecracksLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseWisecracksUris(it)
+        }
+    val chineseRiddleLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseRiddleUris(it)
         }
     val classicPoemsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -323,6 +337,13 @@ private fun ImportScreen(
                 launcher = chineseProverbLauncher,
                 status = chineseProverbStatus,
                 onDeleteClick = clearChineseProverbs
+            )
+            MenuItem(
+                title = "谜语",
+                ratio = chineseRiddleRadio,
+                launcher = chineseRiddleLauncher,
+                status = chineseRiddleStatus,
+                onDeleteClick = clearChineseRiddles
             )
             MenuItem(
                 title = "绕口令",

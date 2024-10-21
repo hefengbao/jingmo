@@ -11,57 +11,31 @@ package com.hefengbao.jingmo.ui.screen.chinese.riddle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import com.hefengbao.jingmo.data.repository.chinese.RiddleRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class RiddleIndexViewModel @Inject constructor(
     private val riddleRepository: RiddleRepository,
-    private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
-    private val id = MutableStateFlow(1)
+    private val _riddle: MutableStateFlow<RiddleEntity?> = MutableStateFlow(null)
+    val riddle: SharedFlow<RiddleEntity?> = _riddle
 
     init {
+        getRandom()
+    }
+
+    fun getRandom() {
         viewModelScope.launch {
-            preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.riddlesLastReadId
+            riddleRepository.random().collectLatest {
+                _riddle.value = it
             }
         }
     }
-
-    fun setCurrentId(id: Int) {
-        this.id.value = id
-
-        viewModelScope.launch {
-            preferenceRepository.setChineseRiddleLastReadId(id)
-        }
-    }
-
-    val nextId = id.flatMapLatest { riddleRepository.getNextId(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val prevId = id.flatMapLatest { riddleRepository.getPrevId(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val riddle = id.flatMapLatest { riddleRepository.get(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
 }

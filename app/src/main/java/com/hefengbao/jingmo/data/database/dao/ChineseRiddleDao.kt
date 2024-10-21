@@ -41,4 +41,7 @@ interface ChineseRiddleDao {
 
     @Query("delete from riddles")
     suspend fun clear()
+
+    @Query("select count(*) from riddles")
+    fun total(): Flow<Int>
 }

@@ -49,6 +49,7 @@ class HomePreference(
             chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
             chineseLyric = it[PREF_CHINESE_LYRIC] ?: true,
             chineseProverb = it[PREF_CHINESE_PROVERB] ?: true,
+            chineseRiddle = it[PREF_CHINESE_RIDDLE] ?: true,
             chineseTongueTwister = it[PREF_CHINESE_TONGUE_TWISTER] ?: true,
             chineseWisecrack = it[PREF_CHINESE_WISECRACK] ?: true,
             traditionalCultureColor = it[PREF_TRADITIONAL_CULTURE_COLOR] ?: true,
@@ -100,6 +101,9 @@ class HomePreference(
     suspend fun setChineseProverb(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_PROVERB, checked)
 
+    suspend fun setChineseRiddle(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_RIDDLE, checked)
+
     suspend fun setChineseTongueTwister(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_TONGUE_TWISTER, checked)
 
@@ -134,6 +138,7 @@ class HomePreference(
         private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_LYRIC = booleanPreferencesKey("key_chinese_lyric")
         private val PREF_CHINESE_PROVERB = booleanPreferencesKey("key_chinese_proverb")
+        private val PREF_CHINESE_RIDDLE = booleanPreferencesKey("key_chinese_riddle")
         private val PREF_CHINESE_TONGUE_TWISTER =
             booleanPreferencesKey("key_chinese_tongue_twister")
         private val PREF_CHINESE_WISECRACK = booleanPreferencesKey("key_chinese_wisecrack")

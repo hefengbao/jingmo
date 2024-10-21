@@ -23,6 +23,10 @@ class RiddleRepositoryImpl @Inject constructor(
 
     override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
+    override fun random(): Flow<RiddleEntity> = dao.random()
+
     override fun search(query: String): Flow<List<RiddleEntity>> =
         dao.search("%$query%")
+
+    override suspend fun clear() = dao.clear()
 }

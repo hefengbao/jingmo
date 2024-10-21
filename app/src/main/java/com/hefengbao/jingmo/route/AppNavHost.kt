@@ -92,9 +92,11 @@ import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProve
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleInfoScreen
+import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.chineseRiddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.navigateToChineseRiddleIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.navigateToChineseRiddleInfoScreen
+import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.navigateToChineseRiddleReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.riddle.nav.navigateToChineseRiddleSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.tonguetwister.nav.chineseTongueTwisterIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.tonguetwister.nav.chineseTongueTwisterShowScreen
@@ -423,10 +425,15 @@ fun AppNavHost(
                 chineseRiddleIndexGraph(
                     onBackClick = navController::navigateUp,
                     onInfoClick = { navController.navigateToChineseRiddleInfoScreen() },
+                    onReadMoreClick = { navController.navigateToChineseRiddleReadScreen() },
                     onSearchClick = { navController.navigateToChineseRiddleSearchScreen() },
                     nestGraph = {
                         chineseRiddleInfoScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        chineseRiddleReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onInfoClick = { navController.navigateToChineseRiddleInfoScreen() },
                         )
                         chineseRiddleSearchScreen(
                             onBackClick = navController::navigateUp

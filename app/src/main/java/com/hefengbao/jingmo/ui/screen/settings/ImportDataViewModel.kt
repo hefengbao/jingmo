@@ -23,6 +23,7 @@ import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
 import com.hefengbao.jingmo.data.model.chinese.Proverb
+import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
 import com.hefengbao.jingmo.data.model.chinese.asAntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseExpressionEntity
@@ -32,6 +33,7 @@ import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
 import com.hefengbao.jingmo.data.model.chinese.asProverbEntity
+import com.hefengbao.jingmo.data.model.chinese.asRiddleEntity
 import com.hefengbao.jingmo.data.model.chinese.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
 import com.hefengbao.jingmo.data.model.classicalliterature.PeopleWrapper
@@ -77,7 +79,7 @@ class ImportViewModel @Inject constructor(
     private val lyricCount = 499
     private val peopleCount = 85776
     private val poemSentencesCount = 10000
-    private val riddlesCount = 42446
+    private val chineseRiddlesCount = 42446
     private val tongueTwistersCount = 45
     private val writingsCount = 1144422
 
@@ -236,6 +238,37 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             repository.clearChineseKnowledge()
             preference.setChineseKnowledgeVersion(0)
+        }
+    }
+
+    val chineseRiddleRatio =
+        repository.chineseRiddleTotal().distinctUntilChanged().flatMapLatest {
+            MutableStateFlow(it.toFloat() / chineseRiddlesCount)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0f
+        )
+    private val _chineseRiddleStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val chineseRiddleStatus: SharedFlow<ImportStatus<Any>> = _chineseRiddleStatus
+    fun chineseRiddle(uris: List<Uri>) {
+        viewModelScope.launch {
+            _chineseRiddleStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<List<Riddle>>(readTextFromUri(it))
+                    .forEach { riddle ->
+                        repository.insertChineseRiddle(riddle.asRiddleEntity())
+                    }
+            }
+            _chineseRiddleStatus.value = ImportStatus.Finish
+        }
+    }
+
+    fun clearChineseRiddle() {
+        viewModelScope.launch {
+            repository.clearChineseRiddles()
+            preference.setChineseRiddleVersion(0)
         }
     }
 

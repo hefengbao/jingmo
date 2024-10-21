@@ -465,19 +465,17 @@ private fun DataScreen(
                                 item.status.exception?.message
                             }
 
-                            if (item.name != "riddles") {
-                                Item(
-                                    title = item.title,
-                                    subtitle = countList[key].toString(),
-                                    onClick = { item.onClick(countList[key], versionList[key]) },
-                                    enabled = item.localVersion != versionList[key] || item.status == SyncStatus.Loading,
-                                    showProgressIndicator = item.status == SyncStatus.Loading,
-                                    progress = item.progress,
-                                    error = if (item.status is SyncStatus.Error) {
-                                        item.status.exception?.message
-                                    } else null
-                                )
-                            }
+                            Item(
+                                title = item.title,
+                                subtitle = countList[key].toString(),
+                                onClick = { item.onClick(countList[key], versionList[key]) },
+                                enabled = item.localVersion != versionList[key] || item.status == SyncStatus.Loading,
+                                showProgressIndicator = item.status == SyncStatus.Loading,
+                                progress = item.progress,
+                                error = if (item.status is SyncStatus.Error) {
+                                    item.status.exception?.message
+                                } else null
+                            )
                         }
                     }
                 }

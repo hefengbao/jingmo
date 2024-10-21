@@ -17,16 +17,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ReadMore
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -45,35 +44,35 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
 @Composable
-fun RiddleIndexRoute(
-    viewModel: RiddleIndexViewModel = hiltViewModel(),
+fun RiddleReadRoute(
+    viewModel: RiddleReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
 ) {
 
-    val riddle by viewModel.riddle.collectAsState(null)
+    val riddle by viewModel.riddle.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
+    val prevId by viewModel.prevId.collectAsState()
 
-    RiddleIndexScreen(
+    RiddleReadScreen(
         onBackClick = onBackClick,
         onInfoClick = onInfoClick,
-        onSearchClick = onSearchClick,
-        onReadMoreClick = onReadMoreClick,
         riddle = riddle,
-        onRefresh = { viewModel.getRandom() }
+        setCurrentId = { viewModel.setCurrentId(it) },
+        prevId = prevId,
+        nextId = nextId
     )
 }
 
 @Composable
-private fun RiddleIndexScreen(
+private fun RiddleReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
     riddle: RiddleEntity?,
-    onRefresh: () -> Unit,
+    setCurrentId: (Int) -> Unit,
+    prevId: Int?,
+    nextId: Int?
 ) {
     var showAnswer by remember { mutableStateOf(false) }
 
@@ -81,42 +80,51 @@ private fun RiddleIndexScreen(
         onBackClick = onBackClick,
         title = "谜语",
         actions = {
-            IconButton(onClick = onReadMoreClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
-                )
-            }
-            IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜素")
-            }
             IconButton(onClick = onInfoClick) {
                 Icon(imageVector = Icons.Outlined.Info, contentDescription = "点击查看谜语知识")
             }
         },
         bottomBar = {
-            BottomAppBar(
-                actions = {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp)
+            BottomAppBar {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                        onClick = { prevId?.let(setCurrentId) },
+                        enabled = prevId != null,
+                        modifier = modifier.padding(16.dp),
                     ) {
-                        IconButton(
-                            onClick = { showAnswer = !showAnswer },
-                        ) {
-                            Icon(
-                                imageVector = if (showAnswer) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
-                                contentDescription = null
-                            )
-                        }
-
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
+                        )
                     }
-                },
-                floatingActionButton = {
-                    FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+
+                    IconButton(
+                        onClick = { showAnswer = !showAnswer },
+                        modifier = modifier.padding(16.dp),
+                    ) {
+                        Icon(
+                            imageVector = if (showAnswer) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
+                            contentDescription = null
+                        )
+                    }
+
+                    IconButton(
+                        onClick = { nextId?.let(setCurrentId) },
+                        enabled = nextId != null,
+                        modifier = modifier.padding(16.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = null
+                        )
                     }
                 }
-            )
+            }
         }
     ) {
         riddle?.let { entity ->
@@ -133,9 +141,13 @@ private fun RiddleIndexScreen(
                         onDragStarted = {},
                         onDragStopped = {
                             if (it < 0 && abs(it) > 500f) {
-                                onRefresh()
+                                nextId?.let {
+                                    setCurrentId(nextId)
+                                }
                             } else if (it > 0 && abs(it) > 500f) {
-                                onRefresh()
+                                prevId?.let {
+                                    setCurrentId(prevId)
+                                }
                             }
                         }
                     )

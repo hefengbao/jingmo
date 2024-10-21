@@ -26,6 +26,7 @@ fun NavGraphBuilder.chineseRiddleIndexGraph(
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit,
     onSearchClick: () -> Unit,
+    onReadMoreClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -38,7 +39,8 @@ fun NavGraphBuilder.chineseRiddleIndexGraph(
             RiddleIndexRoute(
                 onBackClick = onBackClick,
                 onInfoClick = onInfoClick,
-                onSearchClick = onSearchClick
+                onSearchClick = onSearchClick,
+                onReadMoreClick = onReadMoreClick
             )
         }
         nestGraph()

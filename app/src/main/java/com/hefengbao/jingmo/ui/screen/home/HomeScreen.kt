@@ -256,12 +256,14 @@ private fun HomeScreen(
                                 )
                             }
                         }
-                        /*item {
-                            Item(
-                                title = "谜语",
-                                onClick = onRiddleClick
-                            )
-                        }*/
+                        if (homeItem.chineseRiddle) {
+                            item {
+                                Item(
+                                    title = "谜语",
+                                    onClick = onChineseRiddleClick
+                                )
+                            }
+                        }
                         if (homeItem.chineseTongueTwister) {
                             item {
                                 Item(

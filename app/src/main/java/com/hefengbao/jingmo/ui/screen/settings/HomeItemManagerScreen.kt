@@ -50,6 +50,7 @@ fun HomeItemManagerRoute(
         setChineseKnowledge = { viewModel.setChineseKnowledge(it) },
         setChineseLyric = { viewModel.setChineseLyric(it) },
         setChineseProverb = { viewModel.setChineseProverb(it) },
+        setChineseRiddle = { viewModel.setChineseRiddle(it) },
         setChineseTongueTwister = { viewModel.setChineseTongueTwister(it) },
         setChineseWisecrack = { viewModel.setChineseWisecrack(it) },
         setTraditionalCultureColor = { viewModel.setTraditionalCultureColor(it) },
@@ -74,6 +75,7 @@ private fun HomeItemManagerScreen(
     setChineseKnowledge: (Boolean) -> Unit,
     setChineseLyric: (Boolean) -> Unit,
     setChineseProverb: (Boolean) -> Unit,
+    setChineseRiddle: (Boolean) -> Unit,
     setChineseTongueTwister: (Boolean) -> Unit,
     setChineseWisecrack: (Boolean) -> Unit,
     setTraditionalCultureColor: (Boolean) -> Unit,
@@ -132,6 +134,11 @@ private fun HomeItemManagerScreen(
                 title = "谚语",
                 checked = homeItem.chineseProverb,
                 onCheckedChange = setChineseProverb
+            )
+            Item(
+                title = "谜语",
+                checked = homeItem.chineseRiddle,
+                onCheckedChange = setChineseRiddle
             )
             Item(
                 title = "绕口令",
