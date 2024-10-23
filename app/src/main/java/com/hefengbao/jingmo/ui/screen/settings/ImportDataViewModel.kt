@@ -71,7 +71,7 @@ class ImportViewModel @Inject constructor(
     private val chineseAntitheticalCoupletCount = 490
     private val chineseExpressionCount = 320349
     private val chineseKnowledgeCount = 464
-    private val chineseProverbsCount = 489
+    private val chineseProverbsCount = 964
     private val chineseWisecracksCount = 14026
     private val classicPoemCount = 955
     private val dictionaryCount = 20552
