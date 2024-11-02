@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.repository.settings
 
 import com.hefengbao.jingmo.common.network.Result
+import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
@@ -26,6 +27,7 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntit
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.china.WorldCulturalHeritage
 import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
@@ -43,6 +45,8 @@ import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
 
 interface NetworkDatasourceRepository {
     suspend fun dataset(): Result<List<Dataset>>
+    suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity)
+    suspend fun syncChinaWorldCultureHeritage(): Result<List<WorldCulturalHeritage>>
     suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity)
     suspend fun syncChineseAntitheticalCouplets(): Result<List<AntitheticalCouplet>>
     suspend fun clearChineseDictionaryPinyin()

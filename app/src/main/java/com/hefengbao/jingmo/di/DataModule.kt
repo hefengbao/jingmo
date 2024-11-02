@@ -11,6 +11,8 @@ package com.hefengbao.jingmo.di
 
 import com.hefengbao.jingmo.data.repository.LinksRepository
 import com.hefengbao.jingmo.data.repository.LinksRepositoryImpl
+import com.hefengbao.jingmo.data.repository.china.WorldCultureHeritageRepository
+import com.hefengbao.jingmo.data.repository.china.WorldCultureHeritageRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.AntitheticalCoupletRepository
 import com.hefengbao.jingmo.data.repository.chinese.AntitheticalCoupletRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
@@ -63,6 +65,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {
+
+    @Binds
+    fun bindsChinaWorldCultureHeritageRepository(
+        repository: WorldCultureHeritageRepositoryImpl
+    ): WorldCultureHeritageRepository
 
     @Binds
     fun bindsChineseAntitheticalCoupletRepository(

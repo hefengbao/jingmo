@@ -17,6 +17,9 @@ import javax.inject.Inject
 class HomeItemRepositoryImpl @Inject constructor(
     private val homePreference: HomePreference
 ) : HomeItemRepository {
+    override suspend fun setChinaWorldCultureHeritage(checked: Boolean) =
+        homePreference.setChinaWorldCultureHeritage(checked)
+
     override suspend fun setChineseAntitheticalCouplet(checked: Boolean) =
         homePreference.setChineseAntitheticalCouplet(checked)
 

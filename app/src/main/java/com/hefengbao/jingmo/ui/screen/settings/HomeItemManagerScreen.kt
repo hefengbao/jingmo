@@ -39,6 +39,7 @@ fun HomeItemManagerRoute(
     HomeItemManagerScreen(
         onBackClick = onBackClick,
         homeItem = homeItem,
+        setChinaWorldCultureHeritage = viewModel::setChinaWorldCultureHeritage,
         setClassicalLiteratureClassicPoem = { viewModel.setClassicalLiteratureClassicPoem(it) },
         setClassicalLiteraturePeople = { viewModel.setClassicalLiteraturePeople(it) },
         setClassicalLiteratureSentence = { viewModel.setClassicalLiteratureSentence(it) },
@@ -64,6 +65,7 @@ private fun HomeItemManagerScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     homeItem: HomeItem,
+    setChinaWorldCultureHeritage: (Boolean) -> Unit,
     setClassicalLiteratureClassicPoem: (Boolean) -> Unit,
     setClassicalLiteraturePeople: (Boolean) -> Unit,
     setClassicalLiteratureSentence: (Boolean) -> Unit,
@@ -175,6 +177,12 @@ private fun HomeItemManagerScreen(
                 title = "颜色",
                 checked = homeItem.traditionalCultureColor,
                 onCheckedChange = setTraditionalCultureColor
+            )
+            SettingsTitle(title = "中国")
+            Item(
+                title = "世界文化遗产",
+                checked = homeItem.chinaWorldCulturalHeritage,
+                onCheckedChange = setChinaWorldCultureHeritage
             )
         }
     }

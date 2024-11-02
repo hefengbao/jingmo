@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
+import com.hefengbao.jingmo.data.model.china.WorldCulturalHeritage
+import com.hefengbao.jingmo.data.model.china.asWorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
@@ -68,6 +70,7 @@ class ImportViewModel @Inject constructor(
     private val repository: ImportRepository,
     private val preference: DatasetPreference,
 ) : ViewModel() {
+    private val chinaWorldCultureHeritageCount = 44
     private val chineseAntitheticalCoupletCount = 490
     private val chineseExpressionCount = 320349
     private val chineseKnowledgeCount = 464
@@ -82,6 +85,38 @@ class ImportViewModel @Inject constructor(
     private val chineseRiddlesCount = 42446
     private val tongueTwistersCount = 45
     private val writingsCount = 1144422
+
+    val chinaWorldCultureHeritageRatio =
+        repository.chinaChinaWorldCultureHeritageTotal().distinctUntilChanged().flatMapLatest {
+            MutableStateFlow(it.toFloat() / chinaWorldCultureHeritageCount)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0f
+        )
+    private val _chinaWorldCultureHeritageStatus: MutableStateFlow<ImportStatus<Any>> =
+        MutableStateFlow(ImportStatus.Finish)
+    val chinaWorldCultureHeritageStatus: SharedFlow<ImportStatus<Any>> =
+        _chinaWorldCultureHeritageStatus
+
+    fun chinaWorldCultureHeritage(uris: List<Uri>) {
+        viewModelScope.launch {
+            _chinaWorldCultureHeritageStatus.value = ImportStatus.Loading
+            uris.forEach {
+                json.decodeFromString<List<WorldCulturalHeritage>>(readTextFromUri(it))
+                    .forEach { worldCulturalHeritage ->
+                        repository.insertChinaWorldCultureHeritage(worldCulturalHeritage.asWorldCulturalHeritageEntity())
+                    }
+            }
+            _chinaWorldCultureHeritageStatus.value = ImportStatus.Finish
+        }
+    }
+
+    fun clearChinaWorldCultureHeritage() {
+        viewModelScope.launch {
+            repository.clearChinaWorldCultureHeritage()
+        }
+    }
 
     val chineseAntitheticalCoupletRatio =
         repository.chineseAntitheticalCoupletTotal().distinctUntilChanged().flatMapLatest {

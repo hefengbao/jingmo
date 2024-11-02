@@ -15,4 +15,11 @@
     <string name="feature_settings_dynamic_color_yes">是</string>
     <string name="feature_settings_dynamic_color_no">否</string>
     <string name="feature_settings_dismiss_dialog_button_text">确认</string>
+    <string name="open_link_something_wrong">“打开链接”设置被忽略，因为出现了错误。</string>
+    <string name="touch_to_play_video">轻触播放视频</string>
+    <string name="more">更多</string>
+    <string name="save">保存</string>
+    <string name="image_saved">图片已保存</string>
+    <string name="close">关闭</string>
+    <string name="permission_denied">权限被拒绝</string>
 </resources>

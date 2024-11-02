@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.network
 
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.china.WorldCulturalHeritage
 import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
@@ -27,6 +28,7 @@ import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
 
 interface Network {
     suspend fun dataset(): List<Dataset>
+    suspend fun chinaWorldCultureHeritage(): List<WorldCulturalHeritage>
     suspend fun chineseAntitheticalCouplets(): List<AntitheticalCouplet>
     suspend fun chineseExpressions(page: Int): ExpressionWrapper
     suspend fun chineseKnowledge(): List<ChineseKnowledge>

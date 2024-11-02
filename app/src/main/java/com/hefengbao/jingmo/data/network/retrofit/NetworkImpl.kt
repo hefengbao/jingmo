@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.network.retrofit
 
 import com.hefengbao.jingmo.data.model.Dataset
+import com.hefengbao.jingmo.data.model.china.WorldCulturalHeritage
 import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
 import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
@@ -68,6 +69,9 @@ class NetworkImpl @Inject constructor(
         .create(Api::class.java)
 
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
+
+    override suspend fun chinaWorldCultureHeritage(): List<WorldCulturalHeritage> =
+        networkApi.chinaWorldCultureHeritage()
 
     override suspend fun chineseAntitheticalCouplets(): List<AntitheticalCouplet> =
         networkApi.chineseAntitheticalCouplet()

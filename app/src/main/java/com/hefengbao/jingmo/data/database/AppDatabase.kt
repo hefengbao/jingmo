@@ -16,6 +16,7 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import com.hefengbao.jingmo.data.database.dao.ChinaWorldCulturalHeritageDao
 import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
 import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
@@ -30,6 +31,7 @@ import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteraturePeopleDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
+import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
@@ -106,8 +108,9 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         ProverbFtsEntity::class,
         RiddleEntity::class,
         TongueTwisterEntity::class,
+        WorldCulturalHeritageEntity::class,
     ],
-    version = 22,
+    version = 23,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -130,6 +133,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 19, to = 20),
         AutoMigration(from = 20, to = 21),
         AutoMigration(from = 21, to = 22),
+        AutoMigration(from = 22, to = 23),
     ],
     exportSchema = true
 )
@@ -159,6 +163,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun peopleDao(): ClassicalLiteraturePeopleDao
     abstract fun sentenceDao(): ClassicalLiteratureSentenceDao
     abstract fun writingDao(): ClassicalLiteratureWritingDao
+    abstract fun worldCulturalHeritageDao(): ChinaWorldCulturalHeritageDao
 
     @DeleteTable(
         tableName = "poems"

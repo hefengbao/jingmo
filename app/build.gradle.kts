@@ -127,6 +127,7 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.paging)
     ksp(libs.room.compiler)
+    implementation(libs.androidx.browser)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
@@ -141,10 +142,13 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.retrofit.kotlin.serialization)
 
+    implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
 
     implementation(libs.hutool)
+
+    implementation(libs.telephoto)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
@@ -157,7 +161,7 @@ dependencies {
     implementation(libs.bugly)
 
     // 暂时使用，修复 LinearProgressIndicator 调用时的 NoSuchMethodError: No virtual method androidx/compose/animation/core/KeyframesSpec  错误
-    implementation("androidx.compose.foundation:foundation:1.7.0-alpha02")
+    //implementation("androidx.compose.foundation:foundation:1.7.0-alpha02")
 
     // For AppWidgets support
     implementation(libs.androidx.glance.appwidget)

@@ -3,6 +3,7 @@ accompanist = "0.34.0"
 activity-compose = "1.8.0"
 agp = "8.5.1"
 androidx-test-ext-junit = "1.1.5"
+androidx-browser = "1.8.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-datastore-preferences = "1.0.0"
 androidx-datastore = "1.0.0"
@@ -12,7 +13,7 @@ androidx-hilt-navigation-compose = "1.0.0"
 bugly = "4.1.9.3"
 capturable = "2.0.0"
 coil = "2.6.0"
-compose-bom = "2024.01.00"
+compose-bom = "2024.05.00"
 core-ktx = "1.12.0"
 espresso-core = "3.5.1"
 hilt = "2.50"
@@ -34,7 +35,7 @@ protobuf-plugin = "0.9.3"
 room = "2.5.2"
 retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
-
+telephoto = "0.7.1"
 
 [libraries]
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
@@ -45,6 +46,7 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -57,6 +59,7 @@ ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidx-datastore-preferences" }
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
@@ -90,6 +93,7 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+telephoto = { group = "me.saket.telephoto", name = "zoomable", version.ref = "telephoto" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

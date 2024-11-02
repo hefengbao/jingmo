@@ -38,6 +38,7 @@ class HomePreference(
 ) {
     val homeItem: Flow<HomeItem> = context.home.data.map {
         HomeItem(
+            chinaWorldCulturalHeritage = it[PREF_CHINA_WORLD_CULTURE_HERITAGE] ?: true,
             classicalLiteratureClassicPoem = it[PREF_CLASSICAL_LITERATURE_CLASSIC_POEM] ?: true,
             classicalLiteraturePeople = it[PREF_CLASSICAL_LITERATURE_PEOPLE] ?: true,
             classicalLiteratureSentence = it[PREF_CLASSICAL_LITERATURE_SENTENCE] ?: true,
@@ -57,6 +58,9 @@ class HomePreference(
             traditionalCultureSolarTerm = it[PREF_TRADITIONAL_CULTURE_SOLAR_TERM] ?: true,
         )
     }
+
+    suspend fun setChinaWorldCultureHeritage(checked: Boolean) =
+        setBoolean(context, PREF_CHINA_WORLD_CULTURE_HERITAGE, checked)
 
     suspend fun setClassicalLiteratureClassicPoem(checked: Boolean) =
         setBoolean(context, PREF_CLASSICAL_LITERATURE_CLASSIC_POEM, checked)
@@ -128,6 +132,10 @@ class HomePreference(
             booleanPreferencesKey("key_traditional_culture_festival")
         private val PREF_TRADITIONAL_CULTURE_SOLAR_TERM =
             booleanPreferencesKey("key_traditional_culture_solar_term")
+
+        // 中国
+        private val PREF_CHINA_WORLD_CULTURE_HERITAGE =
+            booleanPreferencesKey("key_china_world_culture_heritage")
 
         // 汉语
         private val PREF_CHINESE_ANTITHETICAL_COUPLET =

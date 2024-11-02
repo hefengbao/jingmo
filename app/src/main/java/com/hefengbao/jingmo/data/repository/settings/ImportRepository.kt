@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.data.repository.settings
 
+import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
@@ -27,6 +28,8 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEnti
 import kotlinx.coroutines.flow.Flow
 
 interface ImportRepository {
+    suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity)
+    suspend fun clearChinaWorldCultureHeritage()
     suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity)
     suspend fun clearChineseAntitheticalCouplet()
     suspend fun insertChineseExpression(entity: ExpressionEntity)
@@ -56,6 +59,7 @@ interface ImportRepository {
     suspend fun clearClassicalLiteratureSentence()
     suspend fun insertClassicalLiteratureWriting(entity: WritingEntity)
     suspend fun clearClassicalLiteratureWritings()
+    fun chinaChinaWorldCultureHeritageTotal(): Flow<Int>
     fun chineseAntitheticalCoupletTotal(): Flow<Int>
     fun chineseExpressionTotal(): Flow<Int>
     fun chineseWisecrackTotal(): Flow<Int>

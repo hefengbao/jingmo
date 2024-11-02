@@ -10,6 +10,7 @@
 package com.hefengbao.jingmo.data.model
 
 data class HomeItem(
+    val chinaWorldCulturalHeritage: Boolean = true,
     val classicalLiteratureClassicPoem: Boolean = true,
     val classicalLiteraturePeople: Boolean = true,
     val classicalLiteratureSentence: Boolean = true,
@@ -28,6 +29,8 @@ data class HomeItem(
     val traditionalCultureFestival: Boolean = true,
     val traditionalCultureSolarTerm: Boolean = true,
 ) {
+    val chinaGroup = chinaWorldCulturalHeritage
+
     val classicalLiteratureGroup = classicalLiteratureClassicPoem ||
             classicalLiteraturePeople ||
             classicalLiteratureSentence ||

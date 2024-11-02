@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.data.repository.settings
 
+import com.hefengbao.jingmo.data.database.dao.ChinaWorldCulturalHeritageDao
 import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
 import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
@@ -23,6 +24,7 @@ import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteraturePeopleDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
+import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
@@ -42,6 +44,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ImportRepositoryImpl @Inject constructor(
+    private val chinaWorldCulturalHeritageDao: ChinaWorldCulturalHeritageDao,
     private val chineseAntitheticalCoupletDao: ChineseAntitheticalCoupletDao,
     private val chineseExpressionDao: ChineseExpressionDao,
     private val chineseWisecrackDao: ChineseWisecrackDao,
@@ -57,6 +60,12 @@ class ImportRepositoryImpl @Inject constructor(
     private val chineseTongueTwisterDao: ChineseTongueTwisterDao,
     private val classicalLiteratureWritingDao: ClassicalLiteratureWritingDao
 ) : ImportRepository {
+    override suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity) =
+        chinaWorldCulturalHeritageDao.insert(entity)
+
+    override suspend fun clearChinaWorldCultureHeritage() =
+        chinaWorldCulturalHeritageDao.clear()
+
     override suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity) =
         chineseAntitheticalCoupletDao.insert(entity)
 
@@ -143,6 +152,9 @@ class ImportRepositoryImpl @Inject constructor(
 
     override suspend fun clearClassicalLiteratureWritings() =
         classicalLiteratureWritingDao.clear()
+
+    override fun chinaChinaWorldCultureHeritageTotal(): Flow<Int> =
+        chinaWorldCulturalHeritageDao.total()
 
     override fun chineseAntitheticalCoupletTotal(): Flow<Int> =
         chineseAntitheticalCoupletDao.total()

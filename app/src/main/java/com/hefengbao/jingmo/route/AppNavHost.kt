@@ -12,6 +12,10 @@ package com.hefengbao.jingmo.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.chinaWorldCultureHeritageGraph
+import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.chinaWorldCultureHeritageShowScreen
+import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.navigateToChinaWorldCultureHeritageGraph
+import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.navigateToChinaWorldCultureHeritageShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.chineseAntitheticalCoupletIndexGraph
@@ -190,6 +194,7 @@ fun AppNavHost(
         startDestination = ROUTE_HOME_GRAPH
     ) {
         homeGraph(
+            onChinaWorldCultureHeritageClick = { navController.navigateToChinaWorldCultureHeritageGraph() },
             onChineseAntitheticalCoupletClick = { navController.navigateToChineseAntitheticalCoupletIndexGraph() },
             onChineseCharacterClick = { navController.navigateToChineseCharacterIndexGraph() },
             onChineseExpressionClick = { navController.navigateToChineseExpressionGraph() },
@@ -210,6 +215,14 @@ fun AppNavHost(
             onLinksClick = { navController.navigateToLinkIndexScreen() },
             onSettingsClick = { navController.navigateToSettingsGraph() },
             nestGraph = {
+                chinaWorldCultureHeritageGraph(
+                    onBackClick = navController::navigateUp,
+                    onItemClick = { navController.navigateToChinaWorldCultureHeritageShowScreen(it) }
+                ) {
+                    chinaWorldCultureHeritageShowScreen(
+                        onBackClick = navController::navigateUp
+                    )
+                }
                 chineseAntitheticalCoupletIndexGraph(
                     onBackClick = navController::navigateUp,
                     onReadMoreClick = { navController.navigateToChineseAntitheticalCoupletReadScreen() },

@@ -50,6 +50,7 @@ import com.hefengbao.jingmo.data.model.HomeItem
 @Composable
 fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
+    onChinaWorldCultureHeritageClick: () -> Unit,
     onChineseAntitheticalCoupletClick: () -> Unit,
     onChineseCharacterClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
@@ -75,6 +76,7 @@ fun HomeRoute(
 
     HomeScreen(
         homeItem = homeItem,
+        onChinaWorldCultureHeritageClick = onChinaWorldCultureHeritageClick,
         onChineseAntitheticalCoupletClick = onChineseAntitheticalCoupletClick,
         onChineseCharacterClick = onChineseCharacterClick,
         onChineseExpressionClick = onChineseExpressionClick,
@@ -104,6 +106,7 @@ fun HomeRoute(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     homeItem: HomeItem,
+    onChinaWorldCultureHeritageClick: () -> Unit,
     onChineseAntitheticalCoupletClick: () -> Unit,
     onChineseCharacterClick: () -> Unit,
     onChineseExpressionClick: () -> Unit,
@@ -325,6 +328,21 @@ private fun HomeScreen(
                                 Item(
                                     title = "颜色",
                                     onClick = onTraditionalCultureColorClick
+                                )
+                            }
+                        }
+                    }
+                    if (homeItem.chinaGroup) {
+                        item(
+                            span = { GridItemSpan(2) }
+                        ) {
+                            Title(text = "中国")
+                        }
+                        if (homeItem.chinaWorldCulturalHeritage) {
+                            item {
+                                Item(
+                                    title = "世界文化遗产",
+                                    onClick = onChinaWorldCultureHeritageClick
                                 )
                             }
                         }

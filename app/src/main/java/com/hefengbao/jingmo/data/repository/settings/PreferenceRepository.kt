@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PreferenceRepository {
     fun getDatasetStatus(): Flow<DatasetVersion>
+    suspend fun setChinaWorldCultureHeritageVersion(version: Int)
     suspend fun setChineseAntitheticalVersion(version: Int)
     suspend fun setChineseDictionaryVersion(version: Int)
     suspend fun setChineseExpressionVersion(version: Int)

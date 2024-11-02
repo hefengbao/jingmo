@@ -60,6 +60,12 @@ fun DataRoute(
 
     val datasetPref by viewModel.datasetPref.collectAsState(initial = DatasetVersion())
     val datasetResult by viewModel.datasetResult.collectAsState(initial = Result.Loading)
+    val chinaWorldCultureHeritageResult by viewModel.chinaWorldCultureHeritageResult.collectAsState(
+        initial = SyncStatus.NonStatus
+    )
+    val chinaWorldCultureHeritageProgress by viewModel.chinaWorldCultureHeritageProgress.collectAsState(
+        initial = 0f
+    )
     val chineseAntitheticalCoupletResult by viewModel.chineseAntitheticalCoupletResult.collectAsState(
         initial = SyncStatus.NonStatus
     )
@@ -107,6 +113,11 @@ fun DataRoute(
         onBackClick = onBackClick,
         datasetPref = datasetPref,
         datasetResult = datasetResult,
+        syncChinaWorldCultureHeritage = { total: Int, version: Int ->
+            viewModel.syncChinaWorldCultureHeritage(total, version)
+        },
+        chinaWorldCultureHeritageResult = chinaWorldCultureHeritageResult,
+        chinaWorldCultureHeritageProgress = chinaWorldCultureHeritageProgress,
         syncChineseAntitheticalCouplet = { total: Int, version: Int ->
             viewModel.syncChineseAntitheticalCouplet(total, version)
         },
@@ -189,6 +200,9 @@ private fun DataScreen(
     onBackClick: () -> Unit,
     datasetPref: DatasetVersion,
     datasetResult: Result<List<Dataset>>,
+    syncChinaWorldCultureHeritage: (total: Int, version: Int) -> Unit,
+    chinaWorldCultureHeritageResult: SyncStatus<Any>,
+    chinaWorldCultureHeritageProgress: Float,
     syncChineseAntitheticalCouplet: (total: Int, version: Int) -> Unit,
     chineseAntitheticalCoupletResult: SyncStatus<Any>,
     chineseAntitheticalCoupletProgress: Float,
@@ -433,6 +447,24 @@ private fun DataScreen(
                                     )
                                 }
                             ),
+                        )
+                    ),
+                    Group(
+                        title = "中国",
+                        items = listOf(
+                            Item(
+                                title = "世界文化遗产",
+                                name = "china_world_cultural_heritage",
+                                localVersion = datasetPref.chinaWorldCulturalHeritageVersion,
+                                status = chinaWorldCultureHeritageResult,
+                                progress = chinaWorldCultureHeritageProgress,
+                                onClick = { count, version ->
+                                    syncChinaWorldCultureHeritage(
+                                        count,
+                                        version
+                                    )
+                                }
+                            )
                         )
                     )
                 )

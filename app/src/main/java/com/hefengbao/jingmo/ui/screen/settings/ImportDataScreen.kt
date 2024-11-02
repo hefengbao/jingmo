@@ -46,6 +46,7 @@ fun ImportRoute(
     viewModel: ImportViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
+    val chinaWorldCultureHeritageRatio by viewModel.chinaWorldCultureHeritageRatio.collectAsState()
     val chineseAntitheticalCoupletRatio by viewModel.chineseAntitheticalCoupletRatio.collectAsState()
     val chineseExpressionRatio by viewModel.chineseExpressionRatio.collectAsState()
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState()
@@ -61,6 +62,9 @@ fun ImportRoute(
     val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState()
     val writingsRatio by viewModel.writingsRatio.collectAsState()
 
+    val chinaWorldCultureHeritageStatur by viewModel.chinaWorldCultureHeritageStatus.collectAsState(
+        initial = ImportStatus.Loading
+    )
     val chineseAntitheticalCoupletStatus by viewModel.chineseAntitheticalCoupletStatus.collectAsState(
         initial = ImportStatus.Loading
     )
@@ -80,6 +84,10 @@ fun ImportRoute(
 
     ImportScreen(
         onBackClick = onBackClick,
+        chinaWorldCultureHeritageRatio = chinaWorldCultureHeritageRatio,
+        chinaWorldCultureHeritageStatus = chinaWorldCultureHeritageStatur,
+        chinaWorldCultureHeritageUris = viewModel::chinaWorldCultureHeritage,
+        clearChinaWorldCultureHeritage = viewModel::clearChinaWorldCultureHeritage,
         chineseAntitheticalCoupletRatio = chineseAntitheticalCoupletRatio,
         chineseAntitheticalCoupletStatus = chineseAntitheticalCoupletStatus,
         chineseAntitheticalCoupletUris = viewModel::chineseAntitheticalCouplet,
@@ -143,6 +151,10 @@ fun ImportRoute(
 private fun ImportScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    chinaWorldCultureHeritageRatio: Float,
+    chinaWorldCultureHeritageStatus: ImportStatus<Any>,
+    chinaWorldCultureHeritageUris: (List<Uri>) -> Unit,
+    clearChinaWorldCultureHeritage: () -> Unit,
     chineseAntitheticalCoupletRatio: Float,
     chineseAntitheticalCoupletStatus: ImportStatus<Any>,
     chineseAntitheticalCoupletUris: (List<Uri>) -> Unit,
@@ -201,6 +213,10 @@ private fun ImportScreen(
     clearClassicalLiteratureWritings: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
+    val chinaWorldCultureHeritageLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chinaWorldCultureHeritageUris(it)
+        }
     val chineseAntitheticalCoupletLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseAntitheticalCoupletUris(it)
@@ -372,6 +388,14 @@ private fun ImportScreen(
                 launcher = chineseKnowledgeLauncher,
                 status = chineseKnowledgeStatus,
                 onDeleteClick = clearChineseKnowledge
+            )
+            SettingsTitle(title = "中国")
+            MenuItem(
+                title = "世界文化遗产",
+                ratio = chinaWorldCultureHeritageRatio,
+                launcher = chinaWorldCultureHeritageLauncher,
+                status = chinaWorldCultureHeritageStatus,
+                onDeleteClick = clearChinaWorldCultureHeritage
             )
         }
     }

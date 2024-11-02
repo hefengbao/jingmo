@@ -29,6 +29,7 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 11. 词典 320349 词；
 12. 歌词 499 首;
 13. 谚语 489 组；
+14. 中国的世界文化遗产 44 个；
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
