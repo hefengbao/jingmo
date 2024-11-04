@@ -52,6 +52,7 @@ fun ImportRoute(
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState()
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState()
     val chineseProverbRatio by viewModel.chineseProverbRatio.collectAsState()
+    val chineseQuotesRatio by viewModel.chineseQuotesRatio.collectAsState()
     val chineseRiddleRatio by viewModel.chineseRiddleRatio.collectAsState()
     val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState()
     val dictionaryRatio by viewModel.dictionaryRatio.collectAsState()
@@ -62,7 +63,7 @@ fun ImportRoute(
     val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState()
     val writingsRatio by viewModel.writingsRatio.collectAsState()
 
-    val chinaWorldCultureHeritageStatur by viewModel.chinaWorldCultureHeritageStatus.collectAsState(
+    val chinaWorldCultureHeritageStatus by viewModel.chinaWorldCultureHeritageStatus.collectAsState(
         initial = ImportStatus.Loading
     )
     val chineseAntitheticalCoupletStatus by viewModel.chineseAntitheticalCoupletStatus.collectAsState(
@@ -72,6 +73,7 @@ fun ImportRoute(
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseProverbStatus by viewModel.chineseProverbStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseQuotesStatus by viewModel.chineseQuotesStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseRiddleStatus by viewModel.chineseRiddleStatus.collectAsState(initial = ImportStatus.Loading)
     val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
     val dictionaryStatus by viewModel.dictionaryStatus.collectAsState(initial = ImportStatus.Loading)
@@ -85,7 +87,7 @@ fun ImportRoute(
     ImportScreen(
         onBackClick = onBackClick,
         chinaWorldCultureHeritageRatio = chinaWorldCultureHeritageRatio,
-        chinaWorldCultureHeritageStatus = chinaWorldCultureHeritageStatur,
+        chinaWorldCultureHeritageStatus = chinaWorldCultureHeritageStatus,
         chinaWorldCultureHeritageUris = viewModel::chinaWorldCultureHeritage,
         clearChinaWorldCultureHeritage = viewModel::clearChinaWorldCultureHeritage,
         chineseAntitheticalCoupletRatio = chineseAntitheticalCoupletRatio,
@@ -104,6 +106,10 @@ fun ImportRoute(
         chineseProverbStatus = chineseProverbStatus,
         chineseProverbUris = { viewModel.chineseProverb(it) },
         clearChineseProverbs = viewModel::clearChineseProverbs,
+        chineseQuotesRatio = chineseQuotesRatio,
+        chineseQuotesStatus = chineseQuotesStatus,
+        chineseQuotesUris = viewModel::chineseQuotes,
+        clearChineseQuotes = viewModel::clearChineseQuotes,
         chineseWisecracksRatio = chineseWisecrackRatio,
         chineseWisecracksStatus = chineseWisecracksStatus,
         chineseWisecracksUris = { viewModel.chineseWisecrack(it) },
@@ -171,6 +177,10 @@ private fun ImportScreen(
     chineseProverbStatus: ImportStatus<Any>,
     chineseProverbUris: (List<Uri>) -> Unit,
     clearChineseProverbs: () -> Unit,
+    chineseQuotesRatio: Float,
+    chineseQuotesStatus: ImportStatus<Any>,
+    chineseQuotesUris: (List<Uri>) -> Unit,
+    clearChineseQuotes: () -> Unit,
     chineseWisecracksRatio: Float,
     chineseWisecracksStatus: ImportStatus<Any>,
     chineseWisecracksUris: (List<Uri>) -> Unit,
@@ -233,6 +243,10 @@ private fun ImportScreen(
     val chineseProverbLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseProverbUris(it)
+        }
+    val chineseQuotesLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseQuotesUris(it)
         }
     val chineseWisecracksLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -388,6 +402,13 @@ private fun ImportScreen(
                 launcher = chineseKnowledgeLauncher,
                 status = chineseKnowledgeStatus,
                 onDeleteClick = clearChineseKnowledge
+            )
+            MenuItem(
+                title = "句子",
+                ratio = chineseQuotesRatio,
+                launcher = chineseQuotesLauncher,
+                status = chineseQuotesStatus,
+                onDeleteClick = clearChineseQuotes
             )
             SettingsTitle(title = "中国")
             MenuItem(

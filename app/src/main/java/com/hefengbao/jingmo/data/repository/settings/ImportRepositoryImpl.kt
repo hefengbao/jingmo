@@ -17,6 +17,7 @@ import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseLyricDao
 import com.hefengbao.jingmo.data.database.dao.ChineseProverbDao
+import com.hefengbao.jingmo.data.database.dao.ChineseQuoteDao
 import com.hefengbao.jingmo.data.database.dao.ChineseRiddleDao
 import com.hefengbao.jingmo.data.database.dao.ChineseTongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
@@ -33,6 +34,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
@@ -53,6 +55,7 @@ class ImportRepositoryImpl @Inject constructor(
     private val chineseIdiomDao: ChineseIdiomDao,
     private val chineseLyricDao: ChineseLyricDao,
     private val chineseProverbDao: ChineseProverbDao,
+    private val chineseQuoteDao: ChineseQuoteDao,
     private val chineseRiddleDao: ChineseRiddleDao,
     private val classicalLiteraturePeopleDao: ClassicalLiteraturePeopleDao,
     private val classicalLiteratureClassicPoemDao: ClassicalLiteratureClassicPoemDao,
@@ -95,6 +98,11 @@ class ImportRepositoryImpl @Inject constructor(
 
     override suspend fun clearChineseProverbs() =
         chineseProverbDao.clear()
+
+    override suspend fun insertChineseQuote(entity: QuoteEntity) =
+        chineseQuoteDao.insert(entity)
+
+    override suspend fun clearChineseQuotes() = chineseQuoteDao.clear()
 
     override suspend fun insertChineseDictionary(entity: DictionaryEntity) =
         chineseDictionaryDao.insert(entity)
@@ -166,6 +174,8 @@ class ImportRepositoryImpl @Inject constructor(
     override fun chineseKnowledgeTotal(): Flow<Int> = chineseKnowledgeDao.total()
 
     override fun chineseProverbTotal(): Flow<Int> = chineseProverbDao.total()
+
+    override fun chineseQuoteTotal(): Flow<Int> = chineseQuoteDao.total()
 
     override fun classicalLiteratureClassicPoemTotal(): Flow<Int> =
         classicalLiteratureClassicPoemDao.total()

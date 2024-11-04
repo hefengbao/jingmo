@@ -19,6 +19,7 @@ import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
 import com.hefengbao.jingmo.data.model.chinese.Proverb
+import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
@@ -49,6 +50,9 @@ interface Api {
 
     @GET("chinese_wisecracks.json")
     suspend fun chineseWisecracks(): List<ChineseWisecrack>
+
+    @GET("chinese_quotes.json")
+    suspend fun chineseQuotes(): List<Quote>
 
     @GET("classic_poems.json")
     suspend fun classicPoems(): List<ClassicPoem>

@@ -14,6 +14,7 @@ data class ReadStatus(
     val chineseKnowledgeLastReadId: Int,
     val chineseLyricLastReadId: Int,
     val chineseProverbLastReadId: Int,
+    val chineseQuoteLastReadId: Int,
     val chineseWisecracksLastReadId: Int,
     val classicPoemsLastReadId: Int,
     val idiomsLastReadId: Int,

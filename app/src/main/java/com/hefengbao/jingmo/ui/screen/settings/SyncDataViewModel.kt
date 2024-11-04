@@ -23,6 +23,7 @@ import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
 import com.hefengbao.jingmo.data.model.chinese.asProverbEntity
+import com.hefengbao.jingmo.data.model.chinese.asQuoteEntity
 import com.hefengbao.jingmo.data.model.chinese.asRiddleEntity
 import com.hefengbao.jingmo.data.model.chinese.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asClassicPoemEntity
@@ -202,6 +203,33 @@ class DataViewModel @Inject constructor(
                     }
                     preference.setChineseProverbVersion(version)
                     _chineseProverbResult.value = SyncStatus.Success
+                }
+            }
+        }
+    }
+
+    private val _chineseQuotesResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseQuotesResult: SharedFlow<SyncStatus<Any>> = _chineseQuotesResult
+    private val _chineseQuotesResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseQuotesResultProgress: SharedFlow<Float> = _chineseQuotesResultProgress
+    fun syncChineseQuotes(total: Int, version: Int) {
+        _chineseQuotesResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            when (val response = repository.syncChineseQuotes()) {
+                is Result.Error -> _chineseQuotesResult.value =
+                    SyncStatus.Error(response.exception)
+
+                Result.Loading -> {}
+                is Result.Success -> {
+                    var count = 0
+                    response.data.map {
+                        repository.insertChineseQuote(it.asQuoteEntity())
+                        count++
+                        _chineseQuotesResultProgress.value = count.toFloat() / total
+                    }
+                    preference.setChineseQuoteVersion(version)
+                    _chineseQuotesResult.value = SyncStatus.Success
                 }
             }
         }

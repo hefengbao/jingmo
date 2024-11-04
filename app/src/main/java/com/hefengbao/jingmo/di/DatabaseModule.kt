@@ -21,6 +21,7 @@ import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseLyricDao
 import com.hefengbao.jingmo.data.database.dao.ChineseProverbDao
+import com.hefengbao.jingmo.data.database.dao.ChineseQuoteDao
 import com.hefengbao.jingmo.data.database.dao.ChineseRiddleDao
 import com.hefengbao.jingmo.data.database.dao.ChineseTongueTwisterDao
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
@@ -101,6 +102,12 @@ object DatabaseModule {
     fun providesChineseProverbDao(
         database: AppDatabase
     ): ChineseProverbDao = database.proverbDao()
+
+    @Provides
+    @Singleton
+    fun providesChineseQuoteDao(
+        database: AppDatabase
+    ): ChineseQuoteDao = database.chineseQuoteDao()
 
     @Provides
     @Singleton

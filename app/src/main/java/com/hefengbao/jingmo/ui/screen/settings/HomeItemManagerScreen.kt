@@ -51,6 +51,7 @@ fun HomeItemManagerRoute(
         setChineseKnowledge = { viewModel.setChineseKnowledge(it) },
         setChineseLyric = { viewModel.setChineseLyric(it) },
         setChineseProverb = { viewModel.setChineseProverb(it) },
+        setChineseQuote = viewModel::setChineseQuote,
         setChineseRiddle = { viewModel.setChineseRiddle(it) },
         setChineseTongueTwister = { viewModel.setChineseTongueTwister(it) },
         setChineseWisecrack = { viewModel.setChineseWisecrack(it) },
@@ -77,6 +78,7 @@ private fun HomeItemManagerScreen(
     setChineseKnowledge: (Boolean) -> Unit,
     setChineseLyric: (Boolean) -> Unit,
     setChineseProverb: (Boolean) -> Unit,
+    setChineseQuote: (Boolean) -> Unit,
     setChineseRiddle: (Boolean) -> Unit,
     setChineseTongueTwister: (Boolean) -> Unit,
     setChineseWisecrack: (Boolean) -> Unit,
@@ -161,6 +163,11 @@ private fun HomeItemManagerScreen(
                 title = "知识卡片",
                 checked = homeItem.chineseKnowledge,
                 onCheckedChange = setChineseKnowledge
+            )
+            Item(
+                title = "句子",
+                checked = homeItem.chineseQuote,
+                onCheckedChange = setChineseQuote
             )
             SettingsTitle(title = "传统文化")
             Item(

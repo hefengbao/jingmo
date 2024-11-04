@@ -58,6 +58,7 @@ fun HomeRoute(
     onChineseKnowledgeClick: () -> Unit,
     onChineseLyricClick: () -> Unit,
     onChineseProverbClick: () -> Unit,
+    onChineseQuoteClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
     onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -84,6 +85,7 @@ fun HomeRoute(
         onChineseKnowledgeClick = onChineseKnowledgeClick,
         onChineseLyricClick = onChineseLyricClick,
         onChineseProverbClick = onChineseProverbClick,
+        onChineseQuoteClick = onChineseQuoteClick,
         onChineseRiddleClick = onChineseRiddleClick,
         onChineseTongueTwisterClick = onChineseTongueTwisterClick,
         onChineseWisecrackClick = onChineseWisecrackClick,
@@ -114,6 +116,7 @@ private fun HomeScreen(
     onChineseKnowledgeClick: () -> Unit,
     onChineseLyricClick: () -> Unit,
     onChineseProverbClick: () -> Unit,
+    onChineseQuoteClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
     onChineseTongueTwisterClick: () -> Unit,
     onChineseWisecrackClick: () -> Unit,
@@ -296,6 +299,14 @@ private fun HomeScreen(
                                 Item(
                                     title = "知识卡片",
                                     onClick = onChineseKnowledgeClick
+                                )
+                            }
+                        }
+                        if (homeItem.chineseQuote) {
+                            item {
+                                Item(
+                                    title = "句子",
+                                    onClick = onChineseQuoteClick
                                 )
                             }
                         }

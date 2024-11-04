@@ -35,6 +35,7 @@ class ReadStatusPreference(
             chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE] ?: 1,
             chineseLyricLastReadId = it[PREF_CHINESE_LYRIC] ?: 1,
             chineseProverbLastReadId = it[PREF_CHINESE_PROVERB] ?: 1,
+            chineseQuoteLastReadId = it[PREF_CHINESE_QUOTE] ?: 1,
             chineseWisecracksLastReadId = it[PREF_CHINESE_WISECRACKS] ?: 1,
             classicPoemsLastReadId = it[PREF_CLASSIC_POEMS] ?: 1,
             idiomsLastReadId = it[PREF_IDIOMS] ?: 1,
@@ -56,6 +57,8 @@ class ReadStatusPreference(
         setInt(context, PREF_CHINESE_LYRIC, id)
 
     suspend fun setChineseProverbLastReadId(id: Int) = setInt(context, PREF_CHINESE_PROVERB, id)
+
+    suspend fun setChineseQuoteLastReadId(id: Int) = setInt(context, PREF_CHINESE_QUOTE, id)
 
     suspend fun setChineseWisecracksLastReadId(id: Int) =
         setInt(context, PREF_CHINESE_WISECRACKS, id)
@@ -83,6 +86,7 @@ class ReadStatusPreference(
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_LYRIC = intPreferencesKey("key_chinese_lyric")
         private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")
+        private val PREF_CHINESE_QUOTE = intPreferencesKey("key_chinese_quote")
         private val PREF_CHINESE_WISECRACKS = intPreferencesKey("key_chinese_wisecracks")
         private val PREF_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
         private val PREF_IDIOMS = intPreferencesKey("key_idioms")

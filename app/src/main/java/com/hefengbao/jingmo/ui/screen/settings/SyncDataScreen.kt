@@ -84,6 +84,8 @@ fun DataRoute(
     val chineseProverbResultProgress by viewModel.chineseProverbResultProgress.collectAsState(
         initial = 0f
     )
+    val chineseQuotesResult by viewModel.chineseQuotesResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseQuotesResultProgress by viewModel.chineseQuotesResultProgress.collectAsState(initial = 0f)
     val chineseWisecracksResult by viewModel.chineseWisecracksResult.collectAsState(initial = SyncStatus.NonStatus)
     val chineseWisecracksResultProgress by viewModel.chineseWisecracksResultProgress.collectAsState(
         initial = 0f
@@ -138,11 +140,11 @@ fun DataRoute(
         },
         chineseProverbResult = chineseProverbResult,
         chineseProverbResultProgress = chineseProverbResultProgress,
+        syncChineseQuotes = viewModel::syncChineseQuotes,
+        chineseQuotesResult = chineseQuotesResult,
+        chineseQuotesResultProgress = chineseQuotesResultProgress,
         syncChineseWisecracks = { total: Int, version: Int ->
-            viewModel.syncChineseWisecracks(
-                total,
-                version
-            )
+            viewModel.syncChineseWisecracks(total, version)
         },
         chineseWisecracksResult = chineseWisecracksResult,
         chineseWisecracksResultProgress = chineseWisecracksResultProgress,
@@ -161,10 +163,7 @@ fun DataRoute(
         peopleResult = peopleResult,
         peopleResultProgress = peopleResultProgress,
         syncClassicPoems = { total: Int, version: Int ->
-            viewModel.syncClassicPoems(
-                total,
-                version
-            )
+            viewModel.syncClassicPoems(total, version)
         },
         classicPoemsResult = classicPoemsResult,
         classicPoemsResultProgress = classicPoemsResultProgress,
@@ -186,10 +185,7 @@ fun DataRoute(
         writingsResultProgress = writingsResultProgress,
         setWritingsPreviousPage = { viewModel.setWritingsPreviousPage(it) },
         setWritingsPreviousCount = { count: Int, total: Int ->
-            viewModel.setWritingsPreviousCount(
-                count,
-                total
-            )
+            viewModel.setWritingsPreviousCount(count, total)
         }
     )
 }
@@ -218,6 +214,9 @@ private fun DataScreen(
     syncChineseProverb: (total: Int, version: Int) -> Unit,
     chineseProverbResult: SyncStatus<Any>,
     chineseProverbResultProgress: Float,
+    syncChineseQuotes: (total: Int, version: Int) -> Unit,
+    chineseQuotesResult: SyncStatus<Any>,
+    chineseQuotesResultProgress: Float,
     syncClassicPoems: (total: Int, version: Int) -> Unit,
     classicPoemsResult: SyncStatus<Any>,
     classicPoemsResultProgress: Float,
@@ -283,10 +282,7 @@ private fun DataScreen(
                                 status = classicPoemsResult,
                                 progress = classicPoemsResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncClassicPoems(
-                                        count,
-                                        version
-                                    )
+                                    syncClassicPoems(count, version)
                                 }
                             ),
                             Item(
@@ -296,10 +292,7 @@ private fun DataScreen(
                                 status = writingsResult,
                                 progress = writingsResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncWritings(
-                                        count,
-                                        version
-                                    )
+                                    syncWritings(count, version)
                                 }
                             ),
                             Item(
@@ -309,10 +302,7 @@ private fun DataScreen(
                                 status = poemSentencesResult,
                                 progress = poemSentencesResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncPoemSentences(
-                                        count,
-                                        version
-                                    )
+                                    syncPoemSentences(count, version)
                                 }
                             ),
                             Item(
@@ -335,10 +325,7 @@ private fun DataScreen(
                                 status = dictionaryResult,
                                 progress = dictionaryResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncDictionary(
-                                        count,
-                                        version
-                                    )
+                                    syncDictionary(count, version)
                                 }
                             ),
                             Item(
@@ -348,10 +335,7 @@ private fun DataScreen(
                                 status = chineseExpressionResult,
                                 progress = chineseExpressionResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseExpression(
-                                        count,
-                                        version
-                                    )
+                                    syncChineseExpression(count, version)
                                 }
                             ),
                             Item(
@@ -369,10 +353,7 @@ private fun DataScreen(
                                 status = chineseWisecracksResult,
                                 progress = chineseWisecracksResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseWisecracks(
-                                        count,
-                                        version
-                                    )
+                                    syncChineseWisecracks(count, version)
                                 }
                             ),
                             Item(
@@ -382,10 +363,7 @@ private fun DataScreen(
                                 status = riddlesResult,
                                 progress = riddlesResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncRiddles(
-                                        count,
-                                        version
-                                    )
+                                    syncRiddles(count, version)
                                 }
                             ),
                             Item(
@@ -405,10 +383,7 @@ private fun DataScreen(
                                 status = tongueTwistersResult,
                                 progress = tongueTwistersResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncTongueTwisters(
-                                        count,
-                                        version
-                                    )
+                                    syncTongueTwisters(count, version)
                                 }
                             ),
                             Item(
@@ -418,10 +393,7 @@ private fun DataScreen(
                                 status = chineseAntitheticalCoupletResult,
                                 progress = chineseAntitheticalCoupletProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseAntitheticalCouplet(
-                                        count,
-                                        version
-                                    )
+                                    syncChineseAntitheticalCouplet(count, version)
                                 }
                             ),
                             Item(
@@ -441,10 +413,17 @@ private fun DataScreen(
                                 status = chineseKnowledgeResult,
                                 progress = chineseKnowledgeResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseKnowledge(
-                                        count,
-                                        version
-                                    )
+                                    syncChineseKnowledge(count, version)
+                                }
+                            ),
+                            Item(
+                                title = "句子",
+                                name = "chinese_quotes",
+                                localVersion = datasetPref.chineseQuoteVersion,
+                                status = chineseQuotesResult,
+                                progress = chineseQuotesResultProgress,
+                                onClick = { count: Int, version: Int ->
+                                    syncChineseQuotes(count, version)
                                 }
                             ),
                         )
@@ -459,10 +438,7 @@ private fun DataScreen(
                                 status = chinaWorldCultureHeritageResult,
                                 progress = chinaWorldCultureHeritageProgress,
                                 onClick = { count, version ->
-                                    syncChinaWorldCultureHeritage(
-                                        count,
-                                        version
-                                    )
+                                    syncChinaWorldCultureHeritage(count, version)
                                 }
                             )
                         )

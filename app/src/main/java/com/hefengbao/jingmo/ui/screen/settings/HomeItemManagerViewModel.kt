@@ -106,6 +106,12 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
+    fun setChineseQuote(checked: Boolean) {
+        viewModelScope.launch {
+            repository.setChineseQuote(checked)
+        }
+    }
+
     fun setChineseRiddle(checked: Boolean) {
         viewModelScope.launch {
             repository.setChineseRiddle(checked)
