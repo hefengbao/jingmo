@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,21 +31,20 @@ fun AntitheticalCoupletBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val antitheticalCouplets = viewModel.antitheticalCouplets.collectAsLazyPagingItems()
+    val pagingItems = viewModel.items.collectAsLazyPagingItems()
 
     AntitheticalCoupletBookmarksScreen(
         onBackClick = onBackClick,
-        antitheticalCouplets = antitheticalCouplets,
+        pagingItems = pagingItems,
         onItemClick = onItemClick
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AntitheticalCoupletBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    antitheticalCouplets: LazyPagingItems<AntitheticalCoupletEntity>,
+    pagingItems: LazyPagingItems<AntitheticalCoupletEntity>,
     onItemClick: (Int) -> Unit,
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
@@ -57,7 +55,7 @@ private fun AntitheticalCoupletBookmarksScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                items = antitheticalCouplets
+                items = pagingItems
             ) {
                 it?.let { entity ->
                     Card(onClick = { onItemClick(entity.id) }) {

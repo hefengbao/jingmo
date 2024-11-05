@@ -46,8 +46,6 @@ private fun TongueTwisterIndexScreen(
     tongueTwisters: List<TongueTwisterEntity>,
     onItemClick: (Int) -> Unit
 ) {
-    //var firstLoading by rememberSaveable { mutableStateOf(true) }
-
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "绕口令"

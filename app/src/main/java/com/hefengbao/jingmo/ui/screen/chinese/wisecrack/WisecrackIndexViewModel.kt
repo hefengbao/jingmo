@@ -16,14 +16,12 @@ import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEnti
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class WisecrackIndexViewModel @Inject constructor(
     private val wisecrackRepository: WisecrackRepository

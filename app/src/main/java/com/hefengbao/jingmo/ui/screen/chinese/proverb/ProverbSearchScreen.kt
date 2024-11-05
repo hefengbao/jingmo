@@ -37,7 +37,7 @@ fun ProverbSearchRoute(
 ) {
     val proverbEntityCollections by viewModel.proverbEntityCollections.collectAsState(initial = emptyList())
 
-    LyricSearchScreen(
+    ProverbSearchScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         onSearch = { viewModel.onQueryChange(it) },
@@ -46,7 +46,7 @@ fun ProverbSearchRoute(
 }
 
 @Composable
-private fun LyricSearchScreen(
+private fun ProverbSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,

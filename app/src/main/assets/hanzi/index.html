@@ -7,6 +7,7 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>汉字笔画</title>
     <script src="./hanzi-writer.min.js"></script>
+    <script src="./jquery-3.7.1.min.js"></script>
     <style>
         .target{
 		    width: 300px;
@@ -26,7 +27,12 @@
         width: 300,
         height: 300,
         padding: 15,
-        delayBetweenLoops: 3000
+        delayBetweenLoops: 3000,
+        charDataLoader: function(char, onComplete) {
+            $.getJSON("https://jingmo-data2.pages.dev/assets/hanzi-writer-data/" + char + ".json", function(charData) {
+                onComplete(charData);
+            });
+        }
     });
     writer.loopCharacterAnimation();
 

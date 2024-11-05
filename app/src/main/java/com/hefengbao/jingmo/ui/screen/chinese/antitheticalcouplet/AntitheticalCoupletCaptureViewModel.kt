@@ -51,11 +51,11 @@ class AntitheticalCoupletCaptureViewModel @Inject constructor(
         }
     }
 
-    private val _Colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
-    val colors: SharedFlow<List<Color>> = _Colors
+    private val _colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
+    val colors: SharedFlow<List<Color>> = _colors
     fun getColors() {
         viewModelScope.launch {
-            _Colors.value = colorRepository.list()
+            _colors.value = colorRepository.list()
         }
     }
 

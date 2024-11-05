@@ -31,8 +31,8 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Gesture
 import androidx.compose.material.icons.filled.Spellcheck
 import androidx.compose.material.icons.outlined.Bookmarks
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -134,6 +134,7 @@ private fun ChineseCharacterIndexScreen(
                 span = { GridItemSpan(3) }
             ) {
                 Column(
+                    modifier = Modifier.padding(top = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Row(
@@ -150,7 +151,7 @@ private fun ChineseCharacterIndexScreen(
                         )
                         Text(text = "字典", style = MaterialTheme.typography.titleLarge)
                     }
-                    Divider(thickness = 2.dp)
+                    HorizontalDivider(thickness = 2.dp)
                 }
             }
             item {
@@ -196,6 +197,7 @@ private fun ChineseCharacterIndexScreen(
                 span = { GridItemSpan(3) }
             ) {
                 Column(
+                    modifier = Modifier.padding(top = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Row(
@@ -204,7 +206,7 @@ private fun ChineseCharacterIndexScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(horizontal = 10.dp)
+                                .padding(horizontal = 8.dp)
                                 .width(5.dp)
                                 .height(16.dp)
                                 .align(Alignment.CenterVertically)
@@ -212,7 +214,7 @@ private fun ChineseCharacterIndexScreen(
                         )
                         Text(text = "其他", style = MaterialTheme.typography.titleLarge)
                     }
-                    Divider(thickness = 2.dp)
+                    HorizontalDivider(thickness = 2.dp)
                 }
             }
             item {

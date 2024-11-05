@@ -22,7 +22,7 @@ import javax.inject.Inject
 class AntitheticalCoupletBookmarksViewModel @Inject constructor(
     repository: AntitheticalCoupletRepository
 ) : ViewModel() {
-    val antitheticalCouplets = repository.collections().stateIn(
+    val items = repository.collections().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = PagingData.empty()

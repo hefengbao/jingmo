@@ -35,9 +35,12 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val baseUrl = "https://hefengbao.github.io/jingmo-data/api/"
+/*private const val baseUrl = "https://hefengbao.github.io/jingmo-data/api/"
 private const val baseUrl2 = "https://hefengbao.github.io/jingmo-data2/api/"
-private const val baseUrl3 = "https://hefengbao.github.io/jingmo-data3/api/"
+private const val baseUrl3 = "https://hefengbao.github.io/jingmo-data3/api/"*/
+private const val baseUrl = "https://jingmo-data.pages.dev/api/"
+private const val baseUrl2 = "https://jingmo-data2.pages.dev/api/"
+private const val baseUrl3 = "https://jingmo-data3.pages.dev/api/"
 
 @Singleton
 class NetworkImpl @Inject constructor(

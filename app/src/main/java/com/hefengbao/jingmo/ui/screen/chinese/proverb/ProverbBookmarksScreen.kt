@@ -34,7 +34,7 @@ fun ProverbBookmarksRoute(
 ) {
     val pagingItems = viewModel.proverbEntityCollections.collectAsLazyPagingItems()
 
-    LyricBookmarksScreen(
+    ProverbBookmarksScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         items = pagingItems
@@ -42,7 +42,7 @@ fun ProverbBookmarksRoute(
 }
 
 @Composable
-private fun LyricBookmarksScreen(
+private fun ProverbBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,

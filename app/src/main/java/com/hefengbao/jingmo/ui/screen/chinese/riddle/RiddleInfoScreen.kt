@@ -56,7 +56,7 @@ private fun RiddleInfoScreen(
                 )
             }
             itemsIndexed(
-                items = miges
+                items = mige
             ) { index: Int, item: Mige ->
                 Card {
                     Column(
@@ -90,7 +90,7 @@ private data class Mige(
     val desc: String
 )
 
-private val miges = listOf(
+private val mige = listOf(
     Mige(
         title = "曹娥格",
         desc = """

@@ -30,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WisecrackCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val wisecrackRepository: WisecrackRepository,
+    wisecrackRepository: WisecrackRepository,
     private val colorRepository: ColorRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
