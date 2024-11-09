@@ -80,6 +80,10 @@ fun DataRoute(
     val chineseKnowledgeResultProgress by viewModel.chineseKnowledgeResultProgress.collectAsState(
         initial = 0f
     )
+    val chineseModernPoetryResult by viewModel.chineseModernPoetryResult.collectAsState(SyncStatus.NonStatus)
+    val chineseModernPoetryResultProgress by viewModel.chineseModernPoetryResultProgress.collectAsState(
+        0f
+    )
     val chineseProverbResult by viewModel.chineseProverbResult.collectAsState(initial = SyncStatus.NonStatus)
     val chineseProverbResultProgress by viewModel.chineseProverbResultProgress.collectAsState(
         initial = 0f
@@ -135,6 +139,9 @@ fun DataRoute(
         },
         chineseKnowledgeResult = chineseKnowledgeResult,
         chineseKnowledgeResultProgress = chineseKnowledgeResultProgress,
+        syncChineseModernPoetry = viewModel::syncChineseModernPoetry,
+        chineseModernPoetryResult = chineseModernPoetryResult,
+        chineseModernPoetryResultProgress = chineseModernPoetryResultProgress,
         syncChineseProverb = { total: Int, version: Int ->
             viewModel.syncChineseProverbs(total = total, version = version)
         },
@@ -211,6 +218,9 @@ private fun DataScreen(
     syncChineseWisecracks: (total: Int, version: Int) -> Unit,
     chineseWisecracksResult: SyncStatus<Any>,
     chineseWisecracksResultProgress: Float,
+    syncChineseModernPoetry: (total: Int, version: Int) -> Unit,
+    chineseModernPoetryResult: SyncStatus<Any>,
+    chineseModernPoetryResultProgress: Float,
     syncChineseProverb: (total: Int, version: Int) -> Unit,
     chineseProverbResult: SyncStatus<Any>,
     chineseProverbResultProgress: Float,
@@ -424,6 +434,16 @@ private fun DataScreen(
                                 progress = chineseQuotesResultProgress,
                                 onClick = { count: Int, version: Int ->
                                     syncChineseQuotes(count, version)
+                                }
+                            ),
+                            Item(
+                                title = "诗歌",
+                                name = "chinese_modern_poetry",
+                                localVersion = datasetPref.chineseModernPoetryVersion,
+                                status = chineseModernPoetryResult,
+                                progress = chineseModernPoetryResultProgress,
+                                onClick = { count: Int, version: Int ->
+                                    syncChineseModernPoetry(count, version)
                                 }
                             ),
                         )

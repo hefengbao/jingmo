@@ -18,6 +18,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
@@ -74,6 +75,9 @@ interface Api {
     suspend fun people(
         @Path("page") page: Int
     ): PeopleWrapper
+
+    @GET("chinese_modern_poetry.json")
+    suspend fun chineseModernPoetry(): List<ModernPoetry>
 
     @GET("proverbs.json")
     suspend fun chineseProverb(): List<Proverb>

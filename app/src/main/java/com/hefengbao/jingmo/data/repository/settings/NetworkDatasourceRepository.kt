@@ -18,6 +18,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
@@ -36,6 +37,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
@@ -63,6 +65,8 @@ interface NetworkDatasourceRepository {
     suspend fun syncChineseKnowledge(): Result<List<ChineseKnowledge>>
     suspend fun insertChineseLyric(entity: LyricEntity)
     suspend fun syncChineseLyrics(): Result<List<Lyric>>
+    suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity)
+    suspend fun syncChineseModernPoetry(): Result<List<ModernPoetry>>
     suspend fun insertChineseProverb(entity: ProverbEntity)
     suspend fun syncChineseProverbs(): Result<List<Proverb>>
     suspend fun insertChineseQuote(entity: QuoteEntity)

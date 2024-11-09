@@ -18,6 +18,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
@@ -84,6 +85,9 @@ class NetworkImpl @Inject constructor(
         networkApi.chineseExpressions(page)
 
     override suspend fun chineseKnowledge(): List<ChineseKnowledge> = networkApi.chineseKnowledge()
+
+    override suspend fun chineseModernPoetry(): List<ModernPoetry> =
+        networkApi.chineseModernPoetry()
 
     override suspend fun chineseWisecracks(): List<ChineseWisecrack> =
         networkApi.chineseWisecracks()

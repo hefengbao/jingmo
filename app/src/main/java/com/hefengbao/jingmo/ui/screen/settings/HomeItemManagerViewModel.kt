@@ -100,6 +100,12 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
+    fun setChineseModernPoetry(checked: Boolean) {
+        viewModelScope.launch {
+            repository.setChineseModernPoetry(checked)
+        }
+    }
+
     fun setChineseProverb(checked: Boolean) {
         viewModelScope.launch {
             repository.setChineseProverb(checked)

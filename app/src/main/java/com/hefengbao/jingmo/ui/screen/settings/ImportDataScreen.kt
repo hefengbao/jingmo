@@ -51,6 +51,7 @@ fun ImportRoute(
     val chineseExpressionRatio by viewModel.chineseExpressionRatio.collectAsState()
     val chineseWisecrackRatio by viewModel.chineseWisecrackRatio.collectAsState()
     val chineseKnowledgeRatio by viewModel.chineseKnowledgeRatio.collectAsState()
+    val chineseModernPoetryRatio by viewModel.chineseModernPoetryRatio.collectAsState()
     val chineseProverbRatio by viewModel.chineseProverbRatio.collectAsState()
     val chineseQuotesRatio by viewModel.chineseQuotesRatio.collectAsState()
     val chineseRiddleRatio by viewModel.chineseRiddleRatio.collectAsState()
@@ -72,6 +73,7 @@ fun ImportRoute(
     val chineseExpressionStatus by viewModel.chineseExpressionStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseKnowledgeStatus by viewModel.chineseKnowledgeStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseWisecracksStatus by viewModel.chineseWisecrackStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseModernPoetryStatus by viewModel.chineseModernPoetryStatus.collectAsState(ImportStatus.Loading)
     val chineseProverbStatus by viewModel.chineseProverbStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseQuotesStatus by viewModel.chineseQuotesStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseRiddleStatus by viewModel.chineseRiddleStatus.collectAsState(initial = ImportStatus.Loading)
@@ -102,6 +104,10 @@ fun ImportRoute(
         chineseKnowledgeStatus = chineseKnowledgeStatus,
         chineseKnowledgeUris = { viewModel.chineseKnowledge(it) },
         clearChineseKnowledge = viewModel::clearChineseKnowledge,
+        chineseModernPoetryRatio = chineseModernPoetryRatio,
+        chineseModernPoetryStatus = chineseModernPoetryStatus,
+        chineseModernPoetryUris = viewModel::chineseModernPoetry,
+        clearChineseModernPoetry = viewModel::clearChineseModernPoetry,
         chineseProverbRatio = chineseProverbRatio,
         chineseProverbStatus = chineseProverbStatus,
         chineseProverbUris = { viewModel.chineseProverb(it) },
@@ -173,6 +179,10 @@ private fun ImportScreen(
     chineseKnowledgeStatus: ImportStatus<Any>,
     chineseKnowledgeUris: (List<Uri>) -> Unit,
     clearChineseKnowledge: () -> Unit,
+    chineseModernPoetryRatio: Float,
+    chineseModernPoetryStatus: ImportStatus<Any>,
+    chineseModernPoetryUris: (List<Uri>) -> Unit,
+    clearChineseModernPoetry: () -> Unit,
     chineseProverbRatio: Float,
     chineseProverbStatus: ImportStatus<Any>,
     chineseProverbUris: (List<Uri>) -> Unit,
@@ -239,6 +249,10 @@ private fun ImportScreen(
     val chineseKnowledgeLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseKnowledgeUris(it)
+        }
+    val chineseModernPoetryLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
+            chineseModernPoetryUris(it)
         }
     val chineseProverbLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
@@ -409,6 +423,13 @@ private fun ImportScreen(
                 launcher = chineseQuotesLauncher,
                 status = chineseQuotesStatus,
                 onDeleteClick = clearChineseQuotes
+            )
+            MenuItem(
+                title = "诗歌",
+                ratio = chineseModernPoetryRatio,
+                launcher = chineseModernPoetryLauncher,
+                status = chineseModernPoetryStatus,
+                onDeleteClick = clearChineseModernPoetry
             )
             SettingsTitle(title = "中国")
             MenuItem(

@@ -50,7 +50,7 @@ fun QuoteReadRoute(
     val nextId by viewModel.nextId.collectAsState()
     val prevId by viewModel.prevId.collectAsState()
 
-    ProverbReadScreen(
+    QuoteReadScreen(
         onBackClick = onBackClick,
         entity = entity,
         collectionEntity = collectionEntity,
@@ -63,7 +63,7 @@ fun QuoteReadRoute(
 }
 
 @Composable
-private fun ProverbReadScreen(
+private fun QuoteReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     entity: QuoteEntity?,

@@ -49,6 +49,7 @@ class HomePreference(
             chineseIdiom = it[PREF_CHINESE_IDIOM] ?: true,
             chineseKnowledge = it[PREF_CHINESE_KNOWLEDGE] ?: true,
             chineseLyric = it[PREF_CHINESE_LYRIC] ?: true,
+            chineseModernPoetry = it[PREF_CHINESE_MODERN_POETRY] ?: true,
             chineseProverb = it[PREF_CHINESE_PROVERB] ?: true,
             chineseQuote = it[PREF_CHINESE_QUOTE] ?: true,
             chineseRiddle = it[PREF_CHINESE_RIDDLE] ?: true,
@@ -103,6 +104,9 @@ class HomePreference(
     suspend fun setChineseLyric(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_LYRIC, checked)
 
+    suspend fun setChineseModernPoetry(checked: Boolean) =
+        setBoolean(context, PREF_CHINESE_MODERN_POETRY, checked)
+
     suspend fun setChineseProverb(checked: Boolean) =
         setBoolean(context, PREF_CHINESE_PROVERB, checked)
 
@@ -149,6 +153,7 @@ class HomePreference(
         private val PREF_CHINESE_IDIOM = booleanPreferencesKey("key_chinese_idiom")
         private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_LYRIC = booleanPreferencesKey("key_chinese_lyric")
+        private val PREF_CHINESE_MODERN_POETRY = booleanPreferencesKey("key_chinese_modern_poetry")
         private val PREF_CHINESE_PROVERB = booleanPreferencesKey("key_chinese_proverb")
         private val PREF_CHINESE_QUOTE = booleanPreferencesKey("key_chinese_quote")
         private val PREF_CHINESE_RIDDLE = booleanPreferencesKey("key_chinese_riddle")

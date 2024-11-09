@@ -84,6 +84,16 @@ import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricIn
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryReadScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetrySearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryIndexGraph
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryReadScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetrySearchScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.chineseProverbReadScreen
@@ -211,6 +221,7 @@ fun AppNavHost(
             onChineseIdiomClick = { navController.navigateToChineseIdiomIndexGraph() },
             onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
             onChineseLyricClick = { navController.navigateToChineseLyricIndexGraph() },
+            onChineseModernPoetryClick = navController::navigateToChineseModernPoetryIndexGraph,
             onChineseProverbClick = { navController.navigateToChineseProverbIndexGraph() },
             onChineseQuoteClick = navController::navigateToChineseQuoteIndexGraph,
             onChineseRiddleClick = { navController.navigateToChineseRiddleIndexGraph() },
@@ -420,6 +431,28 @@ fun AppNavHost(
                             onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
                         )
                         chineseLyricShowScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                    }
+                )
+                chineseModernPoetryIndexGraph(
+                    onBackClick = navController::navigateUp,
+                    onBookmarksClick = navController::navigateToChineseModernPoetryBookmarksScreen,
+                    onReadMoreClick = navController::navigateToChineseModernPoetryReadScreen,
+                    onSearchClick = navController::navigateToChineseModernPoetrySearchScreen,
+                    nestGraph = {
+                        chineseModernPoetryBookmarksScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = navController::navigateToChineseModernPoetryShowScreen
+                        )
+                        chineseModernPoetryReadScreen(
+                            onBackClick = navController::navigateUp
+                        )
+                        chineseModernPoetrySearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onItemClick = navController::navigateToChineseModernPoetryShowScreen
+                        )
+                        chineseModernPoetryShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

@@ -34,6 +34,7 @@ class ReadStatusPreference(
             chineseAntitheticalCoupletLastReadId = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: 1,
             chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE] ?: 1,
             chineseLyricLastReadId = it[PREF_CHINESE_LYRIC] ?: 1,
+            chineseModernPoetryLastReadId = it[PREF_CHINESE_MODERN_POETRY] ?: 1,
             chineseProverbLastReadId = it[PREF_CHINESE_PROVERB] ?: 1,
             chineseQuoteLastReadId = it[PREF_CHINESE_QUOTE] ?: 1,
             chineseWisecracksLastReadId = it[PREF_CHINESE_WISECRACKS] ?: 1,
@@ -55,6 +56,9 @@ class ReadStatusPreference(
 
     suspend fun setChineseLyricLastReadId(id: Int) =
         setInt(context, PREF_CHINESE_LYRIC, id)
+
+    suspend fun setChineseModernPoetryLastReadId(id: Int) =
+        setInt(context, PREF_CHINESE_MODERN_POETRY, id)
 
     suspend fun setChineseProverbLastReadId(id: Int) = setInt(context, PREF_CHINESE_PROVERB, id)
 
@@ -84,6 +88,7 @@ class ReadStatusPreference(
         private val PREF_CHINESE_ANTITHETICAL_COUPLET =
             intPreferencesKey("key_chinese_antithetical_couplet")
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
+        private val PREF_CHINESE_MODERN_POETRY = intPreferencesKey("key_chinese_modern_poetry")
         private val PREF_CHINESE_LYRIC = intPreferencesKey("key_chinese_lyric")
         private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")
         private val PREF_CHINESE_QUOTE = intPreferencesKey("key_chinese_quote")

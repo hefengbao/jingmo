@@ -18,6 +18,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
@@ -33,8 +34,9 @@ interface Network {
     suspend fun chineseAntitheticalCouplets(): List<AntitheticalCouplet>
     suspend fun chineseExpressions(page: Int): ExpressionWrapper
     suspend fun chineseKnowledge(): List<ChineseKnowledge>
-    suspend fun chineseWisecracks(): List<ChineseWisecrack>
+    suspend fun chineseModernPoetry(): List<ModernPoetry>
     suspend fun chineseQuotes(): List<Quote>
+    suspend fun chineseWisecracks(): List<ChineseWisecrack>
     suspend fun classicPoems(): List<ClassicPoem>
     suspend fun dictionary(page: Int): DictionaryWrapper
     suspend fun lyrics(): List<Lyric>

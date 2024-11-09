@@ -38,6 +38,9 @@ class HomeItemRepositoryImpl @Inject constructor(
     override suspend fun setChineseLyric(checked: Boolean) =
         homePreference.setChineseLyric(checked)
 
+    override suspend fun setChineseModernPoetry(checked: Boolean) =
+        homePreference.setChineseModernPoetry(checked)
+
     override suspend fun setChineseProverb(checked: Boolean) =
         homePreference.setChineseProverb(checked)
 

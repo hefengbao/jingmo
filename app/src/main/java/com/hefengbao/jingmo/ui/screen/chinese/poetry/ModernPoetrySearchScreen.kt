@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-package com.hefengbao.jingmo.ui.screen.chinese.quote
+package com.hefengbao.jingmo.ui.screen.chinese.poetry
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,18 +27,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
-fun QuoteSearchRoute(
-    viewModel: QuoteSearchViewModel = hiltViewModel(),
+fun ModernPoetrySearchRoute(
+    viewModel: ModernPoetrySearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
     val items by viewModel.entities.collectAsState(initial = emptyList())
 
-    QuoteSearchScreen(
+    ModernPoetrySearchScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         onSearch = { viewModel.onQueryChange(it) },
@@ -47,12 +47,12 @@ fun QuoteSearchRoute(
 }
 
 @Composable
-private fun QuoteSearchScreen(
+private fun ModernPoetrySearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,
-    items: List<QuoteEntity>
+    items: List<ModernPoetryEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")

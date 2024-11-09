@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-package com.hefengbao.jingmo.ui.screen.chinese.quote
+package com.hefengbao.jingmo.ui.screen.chinese.poetry
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -34,15 +34,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.quote.components.QuotePanel
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.components.ModernPoetryPanel
 import kotlin.math.abs
 
 @Composable
-fun QuoteIndexRoute(
-    viewModel: QuoteIndexViewModel = hiltViewModel(),
+fun ModernPoetryIndexRoute(
+    viewModel: ModernPoetryIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
@@ -51,7 +51,7 @@ fun QuoteIndexRoute(
     val entity by viewModel.entity.collectAsState(initial = null)
     val collectionEntity by viewModel.collectionEntity.collectAsState(initial = null)
 
-    QuoteIndexScreen(
+    ModernPoetryIndexScreen(
         onBackClick = onBackClick,
         onBookmarksClick = onBookmarksClick,
         onReadMoreClick = onReadMoreClick,
@@ -66,14 +66,14 @@ fun QuoteIndexRoute(
 }
 
 @Composable
-private fun QuoteIndexScreen(
+private fun ModernPoetryIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
-    entity: QuoteEntity?,
-    collectionEntity: QuoteCollectionEntity?,
+    entity: ModernPoetryEntity?,
+    collectionEntity: ModernPoetryCollectionEntity?,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
     onRefresh: () -> Unit,
@@ -149,7 +149,7 @@ private fun QuoteIndexScreen(
                     }
                 )
         ) {
-            entity?.let { entity -> QuotePanel(entity = entity) }
+            entity?.let { entity -> ModernPoetryPanel(entity = entity) }
         }
     }
 }

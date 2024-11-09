@@ -20,6 +20,7 @@ interface HomeItemRepository {
     suspend fun setChineseIdiom(checked: Boolean)
     suspend fun setChineseKnowledge(checked: Boolean)
     suspend fun setChineseLyric(checked: Boolean)
+    suspend fun setChineseModernPoetry(checked: Boolean)
     suspend fun setChineseProverb(checked: Boolean)
     suspend fun setChineseQuote(checked: Boolean)
     suspend fun setChineseRiddle(checked: Boolean)

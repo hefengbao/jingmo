@@ -35,6 +35,7 @@ class DatasetPreference(
             chineseAntitheticalCoupletVersion = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: 0,
             chineseExpressionVersion = it[PREF_CHINESE_EXPRESSION] ?: 0,
             chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE] ?: 0,
+            chineseModernPoetryVersion = it[PREF_CHINESE_MODERN_POETRY] ?: 0,
             chineseProverVersion = it[PREF_CHINESE_PROVERB] ?: 0,
             chineseQuoteVersion = it[PREF_CHINESE_QUOTE] ?: 0,
             chineseWisecracksVersion = it[PREF_CHINESE_WISECRACK] ?: 0,
@@ -72,6 +73,9 @@ class DatasetPreference(
 
     suspend fun setChineseLyricVersion(version: Int) =
         setInt(context, PREF_CHINESE_LYRIC, version)
+
+    suspend fun setChineseModernPoetryVersion(version: Int) =
+        setInt(context, PREF_CHINESE_MODERN_POETRY, version)
 
     suspend fun setChineseProverbVersion(version: Int) =
         setInt(context, PREF_CHINESE_PROVERB, version)
@@ -116,6 +120,7 @@ class DatasetPreference(
         private val PREF_CHINESE_IDIOM = intPreferencesKey("key_idioms")
         private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
         private val PREF_CHINESE_LYRIC = intPreferencesKey("key_lyrics")
+        private val PREF_CHINESE_MODERN_POETRY = intPreferencesKey("key_chinese_modern_poetry")
         private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")
         private val PREF_CHINESE_QUOTE = intPreferencesKey("key_chinese_quotes")
         private val PREF_CHINESE_RIDDLE = intPreferencesKey("key_riddles")

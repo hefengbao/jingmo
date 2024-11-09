@@ -25,6 +25,8 @@ import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
 import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
 import com.hefengbao.jingmo.data.repository.chinese.LyricRepositoryImpl
+import com.hefengbao.jingmo.data.repository.chinese.ModernPoetryRepository
+import com.hefengbao.jingmo.data.repository.chinese.ModernPoetryRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.ProverbRepository
 import com.hefengbao.jingmo.data.repository.chinese.ProverbRepositoryImpl
 import com.hefengbao.jingmo.data.repository.chinese.QuoteRepository
@@ -92,6 +94,11 @@ interface DataModule {
     fun bindsChineseExpressionRepository(
         chineseExpressionRepositoryImpl: ExpressionRepositoryImpl
     ): ExpressionRepository
+
+    @Binds
+    fun bindsChineseModernPoetryRepository(
+        repositoryImpl: ModernPoetryRepositoryImpl
+    ): ModernPoetryRepository
 
     @Binds
     fun bindsChineseQuoteRepository(

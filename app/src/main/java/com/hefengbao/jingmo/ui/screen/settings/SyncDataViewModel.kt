@@ -22,6 +22,7 @@ import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
 import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
+import com.hefengbao.jingmo.data.model.chinese.asModernPoetryEntity
 import com.hefengbao.jingmo.data.model.chinese.asProverbEntity
 import com.hefengbao.jingmo.data.model.chinese.asQuoteEntity
 import com.hefengbao.jingmo.data.model.chinese.asRiddleEntity
@@ -176,6 +177,33 @@ class DataViewModel @Inject constructor(
 
                     preference.setChineseKnowledgeVersion(version)
                     _chineseKnowledgeResult.value = SyncStatus.Success
+                }
+            }
+        }
+    }
+
+    private val _chineseModernPoetryResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseModernPoetryResult: SharedFlow<SyncStatus<Any>> = _chineseModernPoetryResult
+    private val _chineseModernPoetryResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseModernPoetryResultProgress: SharedFlow<Float> = _chineseModernPoetryResultProgress
+    fun syncChineseModernPoetry(total: Int, version: Int) {
+        _chineseModernPoetryResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            when (val response = repository.syncChineseModernPoetry()) {
+                is Result.Error -> _chineseModernPoetryResult.value =
+                    SyncStatus.Error(response.exception)
+
+                Result.Loading -> {}
+                is Result.Success -> {
+                    var count = 0
+                    response.data.map {
+                        repository.insertChineseModernPoetry(it.asModernPoetryEntity())
+                        count++
+                        _chineseModernPoetryResultProgress.value = count.toFloat() / total
+                    }
+                    preference.setChineseModernPoetryVersion(version)
+                    _chineseModernPoetryResult.value = SyncStatus.Success
                 }
             }
         }

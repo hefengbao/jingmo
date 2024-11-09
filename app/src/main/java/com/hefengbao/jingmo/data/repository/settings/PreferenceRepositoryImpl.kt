@@ -46,6 +46,9 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setChineseLyricVersion(version: Int) =
         dataset.setChineseLyricVersion(version)
 
+    override suspend fun setChineseModernPoetryVersion(version: Int) =
+        dataset.setChineseModernPoetryVersion(version)
+
     override suspend fun setChineseProverbVersion(version: Int) =
         dataset.setChineseProverbVersion(version)
 
@@ -85,6 +88,9 @@ class PreferenceRepositoryImpl @Inject constructor(
         readStatus.setChineseAntitheticalCoupletLastReadId(id)
 
     override suspend fun setChineseIdiomLastReadId(id: Int) = readStatus.setIdiomsLastReadId(id)
+
+    override suspend fun setChineseModernPoetryLastReadId(id: Int) =
+        readStatus.setChineseModernPoetryLastReadId(id)
 
     override suspend fun setChineseQuoteLastReadId(id: Int) =
         readStatus.setChineseQuoteLastReadId(id)

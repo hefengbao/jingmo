@@ -57,6 +57,7 @@ fun HomeRoute(
     onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseLyricClick: () -> Unit,
+    onChineseModernPoetryClick: () -> Unit,
     onChineseProverbClick: () -> Unit,
     onChineseQuoteClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
@@ -84,6 +85,7 @@ fun HomeRoute(
         onChineseIdiomClick = onChineseIdiomClick,
         onChineseKnowledgeClick = onChineseKnowledgeClick,
         onChineseLyricClick = onChineseLyricClick,
+        onChineseModernPoetryClick = onChineseModernPoetryClick,
         onChineseProverbClick = onChineseProverbClick,
         onChineseQuoteClick = onChineseQuoteClick,
         onChineseRiddleClick = onChineseRiddleClick,
@@ -115,6 +117,7 @@ private fun HomeScreen(
     onChineseIdiomClick: () -> Unit,
     onChineseKnowledgeClick: () -> Unit,
     onChineseLyricClick: () -> Unit,
+    onChineseModernPoetryClick: () -> Unit,
     onChineseProverbClick: () -> Unit,
     onChineseQuoteClick: () -> Unit,
     onChineseRiddleClick: () -> Unit,
@@ -307,6 +310,14 @@ private fun HomeScreen(
                                 Item(
                                     title = "句子",
                                     onClick = onChineseQuoteClick
+                                )
+                            }
+                        }
+                        if (homeItem.chineseModernPoetry) {
+                            item {
+                                Item(
+                                    title = "诗歌",
+                                    onClick = onChineseModernPoetryClick
                                 )
                             }
                         }

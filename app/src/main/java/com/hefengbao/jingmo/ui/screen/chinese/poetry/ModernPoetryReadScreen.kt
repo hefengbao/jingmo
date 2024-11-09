@@ -1,111 +1,102 @@
 /*
- * This file is part of the 京墨（jingmo）APP.
+ *  This file is part of the 京墨（jingmo）APP.
  *
  * (c) 贺丰宝（hefengbao） <hefengbao@foxmail.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
  */
 
-package com.hefengbao.jingmo.ui.screen.chinese.quote
+package com.hefengbao.jingmo.ui.screen.chinese.poetry
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ReadMore
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.ui.screen.chinese.quote.components.QuotePanel
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.components.ModernPoetryPanel
 import kotlin.math.abs
 
 @Composable
-fun QuoteIndexRoute(
-    viewModel: QuoteIndexViewModel = hiltViewModel(),
+fun ModernPoetryReadRoute(
+    viewModel: ModernPoetryReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
 ) {
-    val entity by viewModel.entity.collectAsState(initial = null)
-    val collectionEntity by viewModel.collectionEntity.collectAsState(initial = null)
+    val entity by viewModel.entity.collectAsState()
+    val collectionEntity by viewModel.collectionEntity.collectAsState()
+    val nextId by viewModel.nextId.collectAsState()
+    val prevId by viewModel.prevId.collectAsState()
 
-    QuoteIndexScreen(
+    ModernPoetryReadScreen(
         onBackClick = onBackClick,
-        onBookmarksClick = onBookmarksClick,
-        onReadMoreClick = onReadMoreClick,
-        onSearchClick = onSearchClick,
         entity = entity,
         collectionEntity = collectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        onRefresh = { viewModel.random() },
-        isCollect = { viewModel.isCollect(it) }
+        nextId = nextId,
+        prevId = prevId,
+        setCurrentId = viewModel::setCurrentId,
+        setCollect = viewModel::collect,
+        setUncollect = viewModel::uncollect
     )
 }
 
 @Composable
-private fun QuoteIndexScreen(
+private fun ModernPoetryReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onBookmarksClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    entity: QuoteEntity?,
-    collectionEntity: QuoteCollectionEntity?,
+    entity: ModernPoetryEntity?,
+    collectionEntity: ModernPoetryCollectionEntity?,
+    nextId: Int?,
+    prevId: Int?,
+    setCurrentId: (Int) -> Unit,
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit,
-    onRefresh: () -> Unit,
-    isCollect: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "谚语",
-        actions = {
-            IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")
-            }
-            IconButton(onClick = onReadMoreClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
-                )
-            }
-            IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
-            }
-        },
         bottomBar = {
             entity?.let {
-
-                isCollect(entity.id)
-
                 BottomAppBar(
                     actions = {
                         Row(
-                            modifier = modifier.padding(horizontal = 16.dp)
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
+                            IconButton(
+                                onClick = { prevId?.let(setCurrentId) },
+                                enabled = prevId != null
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                    contentDescription = null
+                                )
+                            }
                             if (collectionEntity != null) {
                                 IconButton(onClick = { setUncollect(entity.id) }) {
                                     Icon(
@@ -122,11 +113,15 @@ private fun QuoteIndexScreen(
                                     )
                                 }
                             }
-                        }
-                    },
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = onRefresh) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
+                            IconButton(
+                                onClick = { nextId?.let(setCurrentId) },
+                                enabled = nextId != null
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 )
@@ -142,14 +137,14 @@ private fun QuoteIndexScreen(
                     onDragStarted = {},
                     onDragStopped = { velocity ->
                         if (velocity < 0 && abs(velocity) > 500f) {
-                            onRefresh()
+                            nextId?.let(setCurrentId)
                         } else if (velocity > 0 && abs(velocity) > 500f) {
-                            onRefresh()
+                            prevId?.let(setCurrentId)
                         }
                     }
                 )
         ) {
-            entity?.let { entity -> QuotePanel(entity = entity) }
+            entity?.let { entity -> ModernPoetryPanel(entity = entity) }
         }
     }
 }

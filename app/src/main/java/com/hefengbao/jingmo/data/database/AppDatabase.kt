@@ -23,6 +23,7 @@ import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
 import com.hefengbao.jingmo.data.database.dao.ChineseLyricDao
+import com.hefengbao.jingmo.data.database.dao.ChineseModernPoetryDao
 import com.hefengbao.jingmo.data.database.dao.ChineseProverbDao
 import com.hefengbao.jingmo.data.database.dao.ChineseQuoteDao
 import com.hefengbao.jingmo.data.database.dao.ChineseRiddleDao
@@ -48,6 +49,9 @@ import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeFtsEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricFtsEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryFtsEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbFtsEntity
@@ -107,6 +111,9 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         LyricCollectionEntity::class,
         LyricEntity::class,
         LyricFtsEntity::class,
+        ModernPoetryCollectionEntity::class,
+        ModernPoetryEntity::class,
+        ModernPoetryFtsEntity::class,
         ProverbEntity::class,
         ProverbCollectionEntity::class,
         ProverbFtsEntity::class,
@@ -117,7 +124,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         TongueTwisterEntity::class,
         WorldCulturalHeritageEntity::class,
     ],
-    version = 24,
+    version = 25,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -142,6 +149,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 21, to = 22),
         AutoMigration(from = 22, to = 23),
         AutoMigration(from = 23, to = 24),
+        AutoMigration(from = 24, to = 25),
     ],
     exportSchema = true
 )
@@ -158,6 +166,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun antitheticalCoupletDao(): ChineseAntitheticalCoupletDao
+    abstract fun chineseModernPoetryDao(): ChineseModernPoetryDao
     abstract fun chineseQuoteDao(): ChineseQuoteDao
     abstract fun expressionDao(): ChineseExpressionDao
     abstract fun knowledgeDao(): ChineseKnowledgeDao

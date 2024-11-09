@@ -20,6 +20,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
@@ -38,6 +39,7 @@ import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
 import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
 import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
 import com.hefengbao.jingmo.data.model.chinese.Lyric
+import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
@@ -115,6 +117,13 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun syncChineseLyrics(): Result<List<Lyric>> = safeApiCall {
         network.lyrics()
+    }
+
+    override suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity) =
+        database.chineseModernPoetryDao().insert(entity)
+
+    override suspend fun syncChineseModernPoetry(): Result<List<ModernPoetry>> = safeApiCall {
+        network.chineseModernPoetry()
     }
 
     override suspend fun insertChineseProverb(entity: ProverbEntity) =
