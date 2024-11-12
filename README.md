@@ -49,11 +49,10 @@ Android 8.0 及以上
 
 ## 赞助(赠人玫瑰，手有余香。)
 
-微信：
-![](screenshot/wechatpay.png)
-
-支付宝：
-![](screenshot/alipay.jpg)
+<div style=" display: flex;justify-content: space-between;">
+<img src="screenshot/wechatpay.png" style="width: 45%" alt="微信赞赏码">
+<img src="screenshot/alipay.jpg" style="width: 45%" alt="支付宝赞赏码">
+</div>
 
 | 平台   | 时间         | 用户      | 金额  |
 |------|------------|---------|-----|
