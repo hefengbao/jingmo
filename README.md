@@ -134,6 +134,8 @@ keyPassword=
 
 [https://github.com/dengxiuqi/ChineseLyrics](https://github.com/dengxiuqi/ChineseLyrics)
 
+[lunar是一个支持阳历、阴历、佛历和道历的日历工具库](https://github.com/6tail/lunar-java)
+
 ~本项目使用的数据位于 `app/src/main/assets` 目录下，有需要的请自取😀~
 
 1.6.0 及之前，本项目使用的数据位于 `app/src/main/assets` 目录下，1.6.1 及以后，放在如下仓库里: `hefengbao/jingmo-data`、`hefengbao/jingmo-data2`、`hefengbao/jingmo-data3`, 具体在 `gh-pages` 分支。
