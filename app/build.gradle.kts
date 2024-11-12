@@ -136,6 +136,7 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.dataStore.core)
+    implementation(libs.kotlinx.datetime)
     //implementation(libs.protobuf.kotlin.lite)
     implementation(libs.capturable)
     implementation(libs.retrofit)
@@ -145,6 +146,8 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
+
+    implementation(libs.lunar)
 
     implementation(libs.hutool)
 

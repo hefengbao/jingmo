@@ -192,6 +192,8 @@ import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsGraph
 import com.hefengbao.jingmo.ui.screen.settings.nav.privacyScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsDataScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsGraph
+import com.hefengbao.jingmo.ui.screen.traditionalculture.calendar.nav.navigateToTraditionalCultureCalendarGraph
+import com.hefengbao.jingmo.ui.screen.traditionalculture.calendar.nav.traditionalCultureCalendarGraph
 import com.hefengbao.jingmo.ui.screen.traditionalculture.color.nav.navigateToTraditionalCultureColorIndexGraph
 import com.hefengbao.jingmo.ui.screen.traditionalculture.color.nav.navigateToTraditionalCultureColorShowScreen
 import com.hefengbao.jingmo.ui.screen.traditionalculture.color.nav.traditionalCultureColorIndexGraph
@@ -231,6 +233,7 @@ fun AppNavHost(
             onClassicalLiteraturePeopleClick = { navController.navigateToClassicalLiteraturePeopleGraph() },
             onClassicalLiteratureSentenceClick = { navController.navigateToClassicalLiteratureSentenceIndexGraph() },
             onClassicalLiteratureWritingClick = { navController.navigateToClassicalLiteratureWritingIndexGraph() },
+            onTraditionalCultureCalendarClick = navController::navigateToTraditionalCultureCalendarGraph,
             onTraditionalCultureColorClick = { navController.navigateToTraditionalCultureColorIndexGraph() },
             onTraditionalCultureFestivalClick = { navController.navigateToTraditionalCultureFestivalIndexGraph() },
             onTraditionalCultureSolarTermsClick = { navController.navigateToTraditionalCultureSolarTermIndexGraph() },
@@ -690,6 +693,10 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp
                         )
                     }
+                )
+                traditionalCultureCalendarGraph(
+                    onBackClick = navController::navigateUp,
+                    nestGraph = {}
                 )
                 traditionalCultureColorIndexGraph(
                     onBackClick = navController::navigateUp,

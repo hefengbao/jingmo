@@ -67,6 +67,7 @@ fun HomeRoute(
     onClassicalLiteraturePeopleClick: () -> Unit,
     onClassicalLiteratureSentenceClick: () -> Unit,
     onClassicalLiteratureWritingClick: () -> Unit,
+    onTraditionalCultureCalendarClick: () -> Unit,
     onTraditionalCultureColorClick: () -> Unit,
     onTraditionalCultureFestivalClick: () -> Unit,
     onTraditionalCultureSolarTermsClick: () -> Unit,
@@ -95,6 +96,7 @@ fun HomeRoute(
         onClassicalLiteraturePeopleClick = onClassicalLiteraturePeopleClick,
         onClassicalLiteratureSentenceClick = onClassicalLiteratureSentenceClick,
         onClassicalLiteratureWritingClick = onClassicalLiteratureWritingClick,
+        onTraditionalCultureCalendarClick = onTraditionalCultureCalendarClick,
         onTraditionalCultureColorClick = onTraditionalCultureColorClick,
         onTraditionalCultureFestivalClick = onTraditionalCultureFestivalClick,
         onTraditionalCultureSolarTermsClick = onTraditionalCultureSolarTermsClick,
@@ -127,6 +129,7 @@ private fun HomeScreen(
     onClassicalLiteraturePeopleClick: () -> Unit,
     onClassicalLiteratureSentenceClick: () -> Unit,
     onClassicalLiteratureWritingClick: () -> Unit,
+    onTraditionalCultureCalendarClick: () -> Unit,
     onTraditionalCultureColorClick: () -> Unit,
     onTraditionalCultureFestivalClick: () -> Unit,
     onTraditionalCultureSolarTermsClick: () -> Unit,
@@ -352,6 +355,12 @@ private fun HomeScreen(
                                     onClick = onTraditionalCultureColorClick
                                 )
                             }
+                        }
+                        item {
+                            Item(
+                                title = "老黄历",
+                                onClick = onTraditionalCultureCalendarClick
+                            )
                         }
                     }
                     if (homeItem.chinaGroup) {
