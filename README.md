@@ -1,12 +1,23 @@
+<div align="center">
+      <div align="center">
+        <img src="./app/src/main/ic_launcher-playstore.png" alt="Logo" height="200">
+      </div>
+    
 # 京墨
+    
+    <div>
+        <img alt="GitHub Release" src="https://img.shields.io/github/v/release/hefengbao/jingmo?display_name=release&style=for-the-badge">
+        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/hefengbao/jingmo/total?style=for-the-badge">
+        <img alt="License" src="https://img.shields.io/github/license/hefengbao/jingmo?style=for-the-badge">
+    </div>
+    
+    <p align="center"><font>第三方轻小说文库客户端，使用MD3风格，更简洁，更清爽</font></p>
+
+</div>
+
+## 预览
 
 ![](screenshot/v1.13.0.png)
-
-## 仓库
-
-Github:[https://github.com/hefengbao/jingmo](https://github.com/hefengbao/jingmo)
-
-Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ## 介绍
 
@@ -46,6 +57,12 @@ Android 8.0 及以上
 1. 经常使用 Github 或 Gitee 的同学，可点个 "Star"。
 
 2. 关注微信公众号『NowInLife』或者 B 站『NowInLife』获取最新更新，一般会在公众号发布一篇更新说明，在 B 站发布新功能演示视频。
+
+## 仓库
+
+Github:[https://github.com/hefengbao/jingmo](https://github.com/hefengbao/jingmo)
+
+Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 
 ## 赞助(赠人玫瑰，手有余香。)
 
