@@ -1,17 +1,17 @@
 <div align="center">
-      <div align="center">
-        <img src="./app/src/main/ic_launcher-playstore.png" alt="Logo" height="200">
-      </div>
+<div align="center">
+<img src="./screenshot/logo.png" alt="Logo" height="200">
+</div>
     
 # 京墨
     
-    <div>
-        <img alt="GitHub Release" src="https://img.shields.io/github/v/release/hefengbao/jingmo?display_name=release&style=for-the-badge">
-        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/hefengbao/jingmo/total?style=for-the-badge">
-        <img alt="License" src="https://img.shields.io/github/license/hefengbao/jingmo?style=for-the-badge">
-    </div>
-    
-    <p align="center"><font>第三方轻小说文库客户端，使用MD3风格，更简洁，更清爽</font></p>
+<div>
+<img alt="GitHub Release" src="https://img.shields.io/github/v/release/hefengbao/jingmo?display_name=release&style=for-the-badge">
+<img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/hefengbao/jingmo/total?style=for-the-badge">
+<img alt="License" src="https://img.shields.io/github/license/hefengbao/jingmo?style=for-the-badge">
+</div>
+
+<p align="center"><font>第三方轻小说文库客户端，使用MD3风格，更简洁，更清爽</font></p>
 
 </div>
 
