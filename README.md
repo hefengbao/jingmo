@@ -11,8 +11,6 @@
 <img alt="License" src="https://img.shields.io/github/license/hefengbao/jingmo?style=for-the-badge">
 </div>
 
-<p align="center"><font>第三方轻小说文库客户端，使用MD3风格，更简洁，更清爽</font></p>
-
 </div>
 
 ## 预览
