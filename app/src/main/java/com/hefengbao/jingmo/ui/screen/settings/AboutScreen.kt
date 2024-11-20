@@ -60,7 +60,7 @@ fun AboutScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     context: Context,
-    version: String
+    version: String?
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "关于") {
         SelectionContainer {

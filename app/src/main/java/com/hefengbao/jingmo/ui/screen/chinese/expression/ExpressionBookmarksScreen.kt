@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -51,9 +50,9 @@ private fun ExpressionBookmarksScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                items = items,
-            ) { entity: ExpressionEntity? ->
-                entity?.let { item ->
+                count = items.itemCount,
+            ) {
+                items[it]?.let { item ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { onItemClick(item.id) }

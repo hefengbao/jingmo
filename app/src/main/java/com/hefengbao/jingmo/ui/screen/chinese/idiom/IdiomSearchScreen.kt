@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
@@ -77,14 +76,14 @@ private fun IdiomSearchScreen(
             state = rememberLazyListState()
         ) {
             items(
-                items = idioms
+                count = idioms.itemCount
             ) {
-                it?.let { entity ->
+                idioms[it]?.let { entity ->
                     Text(
                         modifier = modifier
                             .fillMaxWidth()
                             .clickable {
-                                onItemClick(it.id)
+                                onItemClick(entity.id)
                             }
                             .padding(16.dp),
                         text = entity.word,

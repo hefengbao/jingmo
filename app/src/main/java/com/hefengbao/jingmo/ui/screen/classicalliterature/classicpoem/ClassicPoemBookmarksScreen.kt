@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -50,25 +49,25 @@ private fun ClassicPoemBookmarksScreen(
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
         LazyColumn {
-            itemsIndexed(
-                items = poems
-            ) { _: Int, entity: ClassicPoemEntity? ->
-                entity?.let {
+            items(
+                count = poems.itemCount
+            ) {
+                poems[it]?.let { entity ->
                     Column(
                         modifier = modifier
                             .fillMaxWidth()
                             .clickable {
-                                onReadClick(it.id)
+                                onReadClick(entity.id)
                             }
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text(text = it.title)
+                        Text(text = entity.title)
                         Text(
-                            text = "${it.dynasty}·${it.writer}",
+                            text = "${entity.dynasty}·${entity.writer}",
                             style = MaterialTheme.typography.titleSmall
                         )
                         Text(
-                            text = it.collection,
+                            text = entity.collection,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 brush = null,
                                 alpha = .5f

@@ -54,7 +54,7 @@ private fun WorldCultureHeritageIndexScreen(
     onItemClick: (Int) -> Unit,
     list: List<WorldCulturalHeritageEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "中国的世界文化遗产") {
+    SimpleScaffold(onBackClick = onBackClick, title = "中国的世界遗产") {
         LazyColumn(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)

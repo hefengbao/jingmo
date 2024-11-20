@@ -48,7 +48,6 @@ fun QuoteSearchRoute(
 
 @Composable
 private fun QuoteSearchScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,

@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -45,17 +44,16 @@ fun ModernPoetryBookmarksRoute(
 
 @Composable
 private fun ModernPoetryBookmarksScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     items: LazyPagingItems<ModernPoetryEntity>
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
         LazyColumn {
-            itemsIndexed(
-                items = items
-            ) { _: Int, entity: ModernPoetryEntity? ->
-                entity?.let {
+            items(
+                count = items.itemCount
+            ) {
+                items[it]?.let { entity ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()

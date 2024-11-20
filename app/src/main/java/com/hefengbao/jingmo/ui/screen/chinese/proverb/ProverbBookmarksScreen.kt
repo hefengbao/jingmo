@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -50,11 +49,10 @@ private fun ProverbBookmarksScreen(
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
         LazyColumn {
-            itemsIndexed(
-                items = items
-            ) { _: Int, entity: ProverbEntity? ->
-                entity?.let {
-
+            items(
+                count = items.itemCount
+            ) {
+                items[it]?.let { entity ->
                     Column(
                         modifier = modifier
                             .fillMaxWidth()

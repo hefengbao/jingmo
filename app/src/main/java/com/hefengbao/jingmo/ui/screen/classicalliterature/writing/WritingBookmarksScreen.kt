@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -60,14 +59,14 @@ private fun WritingBookmarksScreen(
             modifier = modifier.fillMaxWidth()
         ) {
             items(
-                items = writings
+                count = writings.itemCount
             ) {
-                it?.let { entity ->
+                writings[it]?.let { entity ->
                     Column(
                         modifier = modifier
                             .fillMaxWidth()
                             .clickable {
-                                onItemClick(it.id)
+                                onItemClick(entity.id)
                             }
                             .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)

@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -59,9 +58,9 @@ private fun SentenceBookmarksScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                items = bookmarks
+                count = bookmarks.itemCount
             ) {
-                it?.let { entity ->
+                bookmarks[it]?.let { entity ->
                     Card(
                         modifier = modifier.fillMaxWidth()
                     ) {

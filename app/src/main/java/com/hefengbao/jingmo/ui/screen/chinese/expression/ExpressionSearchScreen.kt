@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
@@ -63,16 +62,16 @@ private fun ChineseExpressionSearchScreen(
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
-            itemsIndexed(
-                items = expressions
-            ) { _: Int, entity: ExpressionEntity? ->
-                entity?.let {
+            items(
+                count = expressions.itemCount
+            ) {
+                expressions[it]?.let { entity ->
                     Text(
-                        text = it.word,
+                        text = entity.word,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                onItemClick(it.id)
+                                onItemClick(entity.id)
                             }
                             .padding(16.dp, 8.dp)
                     )

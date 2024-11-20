@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -44,17 +43,16 @@ fun QuoteBookmarksRoute(
 
 @Composable
 private fun QuoteBookmarksScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     items: LazyPagingItems<QuoteEntity>
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
         LazyColumn {
-            itemsIndexed(
-                items = items
-            ) { _: Int, entity: QuoteEntity? ->
-                entity?.let {
+            items(
+                count = items.itemCount
+            ) {
+                items[it]?.let { entity ->
                     Card(
                         modifier = Modifier.padding(16.dp),
                         onClick = { onItemClick(entity.id) }

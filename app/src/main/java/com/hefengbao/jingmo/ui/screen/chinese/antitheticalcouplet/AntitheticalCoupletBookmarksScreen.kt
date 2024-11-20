@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -55,9 +54,9 @@ private fun AntitheticalCoupletBookmarksScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                items = pagingItems
+                count = pagingItems.itemCount
             ) {
-                it?.let { entity ->
+                pagingItems[it]?.let { entity ->
                     Card(onClick = { onItemClick(entity.id) }) {
                         Text(
                             modifier = Modifier

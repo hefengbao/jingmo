@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -48,10 +47,10 @@ private fun KnowledgeBookmarksScreen(
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
         LazyColumn {
-            itemsIndexed(
-                items = items
-            ) { _: Int, entity: KnowledgeEntity? ->
-                entity?.let {
+            items(
+                count = items.itemCount
+            ) {
+                items[it]?.let { entity ->
                     Card(
                         modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp),
                         onClick = { onItemClick(entity.id) }

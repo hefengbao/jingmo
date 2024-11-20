@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -50,9 +49,9 @@ private fun IdiomBookmarksScreen(
     SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
         LazyColumn {
             items(
-                items = bookmarks
+                count = bookmarks.itemCount
             ) {
-                it?.let { entity ->
+                bookmarks[it]?.let { entity ->
                     Text(
                         modifier = modifier
                             .fillMaxWidth()

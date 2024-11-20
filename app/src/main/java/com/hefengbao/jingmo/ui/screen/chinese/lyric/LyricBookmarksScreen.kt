@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -51,10 +50,10 @@ private fun LyricBookmarksScreen(
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
         LazyColumn {
-            itemsIndexed(
-                items = items
-            ) { _: Int, entity: LyricEntity? ->
-                entity?.let {
+            items(
+                count = items.itemCount
+            ) {
+                items[it]?.let { entity ->
                     var text = ""
                     if (entity.writer != null) {
                         text += "填词：${entity.writer}"

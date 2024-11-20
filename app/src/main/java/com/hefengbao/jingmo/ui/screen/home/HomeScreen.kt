@@ -372,7 +372,7 @@ private fun HomeScreen(
                         if (homeItem.chinaWorldCulturalHeritage) {
                             item {
                                 Item(
-                                    title = "世界文化遗产",
+                                    title = "世界遗产名录",
                                     onClick = onChinaWorldCultureHeritageClick
                                 )
                             }

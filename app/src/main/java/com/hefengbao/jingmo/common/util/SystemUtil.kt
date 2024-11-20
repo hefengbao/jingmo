@@ -94,7 +94,7 @@ object SystemUtil {
         }
     }
 
-    fun getVersionName(context: Context): String {
+    fun getVersionName(context: Context): String? {
         val packageName = context.packageName
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.packageManager.getPackageInfo(

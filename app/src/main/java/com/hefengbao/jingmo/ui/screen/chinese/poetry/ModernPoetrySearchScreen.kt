@@ -48,7 +48,6 @@ fun ModernPoetrySearchRoute(
 
 @Composable
 private fun ModernPoetrySearchScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,
