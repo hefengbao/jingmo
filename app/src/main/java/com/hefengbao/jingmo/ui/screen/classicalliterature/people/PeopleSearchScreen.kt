@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -79,21 +80,38 @@ private fun PeopleSearchScreen(
                     GridItemSpan(3)
                 }
             ) {
+
                 SearchBar(
-                    query = query,
-                    onQueryChange = { query = it },
-                    onSearch = {
-                        if (it.isNotEmpty()) {
-                            onSearch(it)
-                            keyboard?.hide()
-                        }
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            query = query,
+                            onQueryChange = { query = it },
+                            onSearch = {
+                                if (it.isNotEmpty()) {
+                                    onSearch(it)
+                                    keyboard?.hide()
+                                }
+                            },
+                            expanded = false,
+                            onExpandedChange = {},
+                            enabled = true,
+                            placeholder = {
+                                Text(text = "请输入")
+                            },
+                            leadingIcon = null,
+                            trailingIcon = null,
+                            interactionSource = null,
+                        )
                     },
-                    active = false,
-                    onActiveChange = {},
-                    placeholder = {
-                        Text(text = "请输入")
-                    }
-                ) {}
+                    expanded = false,
+                    onExpandedChange = {},
+                    modifier = Modifier,
+                    shape = SearchBarDefaults.inputFieldShape,
+                    tonalElevation = SearchBarDefaults.TonalElevation,
+                    shadowElevation = SearchBarDefaults.ShadowElevation,
+                    windowInsets = SearchBarDefaults.windowInsets,
+                    content = {}
+                )
             }
 
             if (query.isNotEmpty()) {

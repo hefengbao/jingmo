@@ -30,6 +30,7 @@ interface HomeItemRepository {
     suspend fun setClassicalLiteraturePeople(checked: Boolean)
     suspend fun setClassicalLiteratureSentence(checked: Boolean)
     suspend fun setClassicalLiteratureWriting(checked: Boolean)
+    suspend fun setTraditionalCultureCalendar(checked: Boolean)
     suspend fun setTraditionalCultureColor(checked: Boolean)
     suspend fun setTraditionalCultureFestival(checked: Boolean)
     suspend fun setTraditionalCultureSolarTerm(checked: Boolean)

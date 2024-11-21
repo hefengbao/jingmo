@@ -34,7 +34,7 @@ class RiddleReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.riddlesLastReadId
+                id.value = it.chineseRiddlesLastReadId
             }
         }
     }

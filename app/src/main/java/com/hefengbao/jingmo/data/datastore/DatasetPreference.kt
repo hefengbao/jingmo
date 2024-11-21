@@ -32,24 +32,24 @@ class DatasetPreference(
     val datasetVersion: Flow<DatasetVersion> = context.dataset.data.map {
         DatasetVersion(
             chinaWorldCulturalHeritageVersion = it[PREF_CHINA_WORLD_CULTURE_HERITAGE] ?: 0,
+            chineseDictionaryVersion = it[PREF_CHINESE_DICTIONARY] ?: 0,
             chineseAntitheticalCoupletVersion = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: 0,
             chineseExpressionVersion = it[PREF_CHINESE_EXPRESSION] ?: 0,
+            chineseIdiomsVersion = it[PREF_CHINESE_IDIOM] ?: 0,
             chineseKnowledgeVersion = it[PREF_CHINESE_KNOWLEDGE] ?: 0,
+            chineseLyricVersion = it[PREF_CHINESE_LYRIC] ?: 0,
             chineseModernPoetryVersion = it[PREF_CHINESE_MODERN_POETRY] ?: 0,
             chineseProverVersion = it[PREF_CHINESE_PROVERB] ?: 0,
             chineseQuoteVersion = it[PREF_CHINESE_QUOTE] ?: 0,
+            chineseRiddlesVersion = it[PREF_CHINESE_RIDDLE] ?: 0,
+            chineseTongueTwistersVersion = it[PREF_CHINESE_TONGUE_TWISTER] ?: 0,
             chineseWisecracksVersion = it[PREF_CHINESE_WISECRACK] ?: 0,
-            classicPoemsVersion = it[PREF_CLASSICAL_LITERATURE_CLASSIC_POEM] ?: 0,
-            dictionaryVersion = it[PREF_CHINESE_DICTIONARY] ?: 0,
-            idiomsVersion = it[PREF_CHINESE_IDIOM] ?: 0,
-            lyricVersion = it[PREF_CHINESE_LYRIC] ?: 0,
-            peopleVersion = it[PREF_CLASSICAL_LITERATURE_PEOPLE] ?: 0,
-            poemSentencesVersion = it[PREF_CLASSICAL_LITERATURE_SENTENCE] ?: 0,
-            riddlesVersion = it[PREF_CHINESE_RIDDLE] ?: 0,
-            tongueTwistersVersion = it[PREF_CHINESE_TONGUE_TWISTER] ?: 0,
-            writingsVersion = it[PREF_CLASSICAL_LITERATURE_WRITING] ?: 0,
-            writingsCurrentPage = it[PREF_WRITING_CURRENT_PAGE] ?: 1,
-            writingsCurrentCount = it[PREF_WRITING_CURRENT_COUNT] ?: 0
+            classicCultureClassicPoemsVersion = it[PREF_CLASSICAL_LITERATURE_CLASSIC_POEM] ?: 0,
+            classicCulturePeopleVersion = it[PREF_CLASSICAL_LITERATURE_PEOPLE] ?: 0,
+            classicCultureSentencesVersion = it[PREF_CLASSICAL_LITERATURE_SENTENCE] ?: 0,
+            classicCultureWritingsVersion = it[PREF_CLASSICAL_LITERATURE_WRITING] ?: 0,
+            classicCultureWritingsCurrentPage = it[PREF_WRITING_CURRENT_PAGE] ?: 1,
+            classicCultureWritingsCurrentCount = it[PREF_WRITING_CURRENT_COUNT] ?: 0
         )
     }
 

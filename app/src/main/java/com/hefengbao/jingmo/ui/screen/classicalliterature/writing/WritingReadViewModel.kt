@@ -38,7 +38,7 @@ class WritingReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.writingsLastReadId
+                id.value = it.classicLiteratureWritingsLastReadId
             }
         }
     }

@@ -20,18 +20,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
 fun WritingSearchRoute(
@@ -77,7 +68,6 @@ fun WritingSearchRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun WritingSearchScreen(
     modifier: Modifier = Modifier,
@@ -89,85 +79,47 @@ private fun WritingSearchScreen(
     query: String,
     onQueryChange: (String) -> Unit,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "返回"
-                        )
+    SimpleSearchScaffold(
+        onBackClick = onBackClick,
+        query = query,
+        onQueryChange = onQueryChange,
+        onSearch = {},
+        actions = {},
+        floatingActionButton = {},
+        placeholder = "请输入作者或关键词",
+    ) {
+        if (query.isEmpty()) {
+            LazyVerticalGrid(
+                modifier = modifier.padding(16.dp),
+                columns = GridCells.Fixed(3),
+            ) {
+                item(
+                    span = {
+                        GridItemSpan(3)
                     }
-                },
-                title = {
-                    SearchBar(
-                        query = query,
-                        onQueryChange = onQueryChange,
-                        onSearch = {},
-                        active = false,
-                        onActiveChange = {},
-                        placeholder = {
-                            Text(text = "请输入作者或关键词")
-                        },
-                        trailingIcon = {
-                            if (query.isNotEmpty()) {
-                                IconButton(
-                                    onClick = {
-                                        onQueryChange("")
-                                        onTypeChange("keyword")
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Clear,
-                                        contentDescription = "清除"
-                                    )
-                                }
-                            }
-                        }
-                    ) {
-
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
-        Surface(
-            modifier = modifier.padding(paddingValues)
-        ) {
-            if (query.isEmpty()) {
-                LazyVerticalGrid(
-                    modifier = modifier.padding(16.dp),
-                    columns = GridCells.Fixed(3),
                 ) {
-                    item(
-                        span = {
-                            GridItemSpan(3)
+                    Text(
+                        text = "作者推荐",
+                        modifier = modifier.padding(8.dp),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+                items(
+                    items = recommendList
+                ) {
+                    Text(text = it, modifier = modifier
+                        .clickable {
+                            onTypeChange("author")
+                            onQueryChange(it)
                         }
-                    ) {
-                        Text(
-                            text = "作者推荐",
-                            modifier = modifier.padding(8.dp),
-                            style = MaterialTheme.typography.headlineMedium
-                        )
-                    }
-                    items(
-                        items = recommendList
-                    ) {
-                        Text(text = it, modifier = modifier
-                            .clickable {
-                                onTypeChange("author")
-                                onQueryChange(it)
-                            }
-                            .padding(8.dp))
-                    }
+                        .padding(8.dp))
                 }
-            } else {
-                if (writings.itemCount == 0) {
-                    Text(text = "没有查找到数据 /(ㄒoㄒ)/~~")
-                }
-                List(writings = writings, onItemClick = onItemClick)
             }
+        } else {
+            if (writings.itemCount == 0) {
+                Text(text = "没有查找到数据 /(ㄒoㄒ)/~~", modifier = Modifier.padding(16.dp))
+            }
+            List(writings = writings, onItemClick = onItemClick)
         }
     }
 }

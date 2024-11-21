@@ -87,7 +87,8 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setChineseAntitheticalCoupletLastReadId(id: Int) =
         readStatus.setChineseAntitheticalCoupletLastReadId(id)
 
-    override suspend fun setChineseIdiomLastReadId(id: Int) = readStatus.setIdiomsLastReadId(id)
+    override suspend fun setChineseIdiomLastReadId(id: Int) =
+        readStatus.setChineseIdiomsLastReadId(id)
 
     override suspend fun setChineseModernPoetryLastReadId(id: Int) =
         readStatus.setChineseModernPoetryLastReadId(id)
@@ -98,25 +99,26 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setChineseKnowledgeLastReadId(id: Int) =
         readStatus.setChineseKnowledgeLastReadId(id)
 
-    override suspend fun setChineseRiddleLastReadId(id: Int) = readStatus.setRiddlesLastReadId(id)
+    override suspend fun setChineseRiddleLastReadId(id: Int) =
+        readStatus.setChineseRiddlesLastReadId(id)
 
     override suspend fun setChineseTongueTwisterLastReadId(id: Int) =
-        readStatus.setTongueTwistersLastReadId(id)
+        readStatus.setChineseTongueTwistersLastReadId(id)
 
     override suspend fun setChineseWisecrackLastReadId(id: Int) =
         readStatus.setChineseWisecracksLastReadId(id)
 
     override suspend fun setClassicalLiteratureClassicPoemLastReadId(id: Int) =
-        readStatus.setClassicPoemsLastReadId(id)
+        readStatus.setClassicLiteratureClassicPoemsLastReadId(id)
 
     override suspend fun setClassicalLiteraturePeopleLastReadId(id: Int) =
-        readStatus.setPeopleLastReadId(id)
+        readStatus.setClassicLiteraturePeopleLastReadId(id)
 
     override suspend fun setClassicalLiteratureSentenceLastReadId(id: Int) =
-        readStatus.setPoemSentencesLastReadId(id)
+        readStatus.setClassicLiteratureSentencesLastReadId(id)
 
     override suspend fun setClassicalLiteratureWritingLastReadId(id: Int) =
-        readStatus.setWritingsLastReadId(id)
+        readStatus.setClassicLiteratureWritingsLastReadId(id)
 
     override fun getAppStatus(): Flow<AppStatus> = app.appStatus
 

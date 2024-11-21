@@ -27,6 +27,7 @@ data class HomeItem(
     val chineseRiddle: Boolean = true,
     val chineseTongueTwister: Boolean = true,
     val chineseWisecrack: Boolean = true,
+    val traditionalCultureCalendar: Boolean = true,
     val traditionalCultureColor: Boolean = true,
     val traditionalCultureFestival: Boolean = true,
     val traditionalCultureSolarTerm: Boolean = true,
@@ -51,7 +52,8 @@ data class HomeItem(
             chineseTongueTwister ||
             chineseWisecrack
 
-    val traditionalCultureGroup = traditionalCultureColor ||
+    val traditionalCultureGroup = traditionalCultureCalendar ||
+            traditionalCultureColor ||
             traditionalCultureFestival ||
             traditionalCultureSolarTerm
 }

@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -46,38 +47,50 @@ fun SimpleSearchScaffold(
             TopAppBar(
                 title = {
                     SearchBar(
-                        query = query,
-                        onQueryChange = onQueryChange,
-                        onSearch = {
-                            onSearch(it)
-                            keyboard?.let {
-                                keyboard.hide()
-                            }
+                        inputField = {
+                            SearchBarDefaults.InputField(
+                                query = query,
+                                onQueryChange = onQueryChange,
+                                onSearch = {
+                                    onSearch(it)
+                                    keyboard?.let {
+                                        keyboard.hide()
+                                    }
+                                },
+                                expanded = false,
+                                onExpandedChange = {},
+                                enabled = true,
+                                placeholder = {
+                                    Text(text = placeholder)
+                                },
+                                leadingIcon = {
+                                    IconButton(onClick = onBackClick) {
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                            contentDescription = "返回"
+                                        )
+                                    }
+                                },
+                                trailingIcon = {
+                                    if (query.isNotEmpty()) {
+                                        IconButton(onClick = { onQueryChange("") }) {
+                                            Icon(
+                                                imageVector = Icons.Default.Clear,
+                                                contentDescription = "清除"
+                                            )
+                                        }
+                                    }
+                                },
+                            )
                         },
-                        active = false,
-                        onActiveChange = {},
-                        placeholder = {
-                            Text(text = placeholder)
-                        },
-                        trailingIcon = {
-                            if (query.isNotEmpty()) {
-                                IconButton(onClick = { onQueryChange("") }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Clear,
-                                        contentDescription = "清除"
-                                    )
-                                }
-                            }
-                        }
+                        expanded = false,
+                        onExpandedChange = {},
+                        modifier = Modifier,
+                        shape = SearchBarDefaults.inputFieldShape,
+                        tonalElevation = SearchBarDefaults.TonalElevation,
+                        shadowElevation = SearchBarDefaults.ShadowElevation,
+                        windowInsets = SearchBarDefaults.windowInsets,
                     ) {}
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "返回"
-                        )
-                    }
                 },
                 actions = actions
             )

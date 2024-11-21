@@ -36,7 +36,7 @@ class IdiomReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.idiomsLastReadId
+                id.value = it.chineseIdiomsLastReadId
             }
         }
     }

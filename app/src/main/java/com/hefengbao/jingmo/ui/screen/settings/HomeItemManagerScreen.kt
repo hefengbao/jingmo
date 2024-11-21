@@ -56,6 +56,7 @@ fun HomeItemManagerRoute(
         setChineseRiddle = { viewModel.setChineseRiddle(it) },
         setChineseTongueTwister = { viewModel.setChineseTongueTwister(it) },
         setChineseWisecrack = { viewModel.setChineseWisecrack(it) },
+        setTraditionalCultureCalendar = viewModel::setTraditionalCultureCalendar,
         setTraditionalCultureColor = { viewModel.setTraditionalCultureColor(it) },
         setTraditionalCultureFestival = { viewModel.setTraditionalCultureFestival(it) },
         setTraditionalCultureSolarTerm = { viewModel.setTraditionalCultureSolarTerm(it) },
@@ -84,6 +85,7 @@ private fun HomeItemManagerScreen(
     setChineseRiddle: (Boolean) -> Unit,
     setChineseTongueTwister: (Boolean) -> Unit,
     setChineseWisecrack: (Boolean) -> Unit,
+    setTraditionalCultureCalendar: (Boolean) -> Unit,
     setTraditionalCultureColor: (Boolean) -> Unit,
     setTraditionalCultureFestival: (Boolean) -> Unit,
     setTraditionalCultureSolarTerm: (Boolean) -> Unit,
@@ -192,9 +194,14 @@ private fun HomeItemManagerScreen(
                 checked = homeItem.traditionalCultureColor,
                 onCheckedChange = setTraditionalCultureColor
             )
+            Item(
+                title = "老黄历",
+                checked = homeItem.traditionalCultureCalendar,
+                onCheckedChange = setTraditionalCultureCalendar
+            )
             SettingsTitle(title = "中国")
             Item(
-                title = "世界文化遗产",
+                title = "世界遗产",
                 checked = homeItem.chinaWorldCulturalHeritage,
                 onCheckedChange = setChinaWorldCultureHeritage
             )

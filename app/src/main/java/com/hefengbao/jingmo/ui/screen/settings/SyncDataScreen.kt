@@ -288,7 +288,7 @@ private fun DataScreen(
                             Item(
                                 title = "经典诗文",
                                 name = "classic_poems",
-                                localVersion = datasetPref.classicPoemsVersion,
+                                localVersion = datasetPref.classicCultureClassicPoemsVersion,
                                 status = classicPoemsResult,
                                 progress = classicPoemsResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -298,7 +298,7 @@ private fun DataScreen(
                             Item(
                                 title = "诗文",
                                 name = "writings",
-                                localVersion = datasetPref.writingsVersion,
+                                localVersion = datasetPref.classicCultureWritingsVersion,
                                 status = writingsResult,
                                 progress = writingsResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -308,7 +308,7 @@ private fun DataScreen(
                             Item(
                                 title = "诗文名句",
                                 name = "poem_sentences",
-                                localVersion = datasetPref.poemSentencesVersion,
+                                localVersion = datasetPref.classicCultureSentencesVersion,
                                 status = poemSentencesResult,
                                 progress = poemSentencesResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -318,7 +318,7 @@ private fun DataScreen(
                             Item(
                                 title = "人物",
                                 name = "people",
-                                localVersion = datasetPref.peopleVersion,
+                                localVersion = datasetPref.classicCulturePeopleVersion,
                                 status = peopleResult,
                                 progress = peopleResultProgress,
                                 onClick = { count: Int, version: Int -> syncPeople(count, version) }
@@ -331,7 +331,7 @@ private fun DataScreen(
                             Item(
                                 title = "汉字",
                                 name = "dictionary",
-                                localVersion = datasetPref.dictionaryVersion,
+                                localVersion = datasetPref.chineseDictionaryVersion,
                                 status = dictionaryResult,
                                 progress = dictionaryResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -351,7 +351,7 @@ private fun DataScreen(
                             Item(
                                 title = "成语",
                                 name = "idioms",
-                                localVersion = datasetPref.idiomsVersion,
+                                localVersion = datasetPref.chineseIdiomsVersion,
                                 status = idiomsResult,
                                 progress = idiomsResultProgress,
                                 onClick = { count: Int, version: Int -> syncIdioms(count, version) }
@@ -369,7 +369,7 @@ private fun DataScreen(
                             Item(
                                 title = "谜语",
                                 name = "riddles",
-                                localVersion = datasetPref.riddlesVersion,
+                                localVersion = datasetPref.chineseRiddlesVersion,
                                 status = riddlesResult,
                                 progress = riddlesResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -389,7 +389,7 @@ private fun DataScreen(
                             Item(
                                 title = "绕口令",
                                 name = "tongue_twisters",
-                                localVersion = datasetPref.tongueTwistersVersion,
+                                localVersion = datasetPref.chineseTongueTwistersVersion,
                                 status = tongueTwistersResult,
                                 progress = tongueTwistersResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -409,7 +409,7 @@ private fun DataScreen(
                             Item(
                                 title = "歌词",
                                 name = "lyrics",
-                                localVersion = datasetPref.lyricVersion,
+                                localVersion = datasetPref.chineseLyricVersion,
                                 status = lyricResult,
                                 progress = lyricResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -465,14 +465,14 @@ private fun DataScreen(
                     )
                 )
 
-                LaunchedEffect(datasetPref.writingsVersion) {
+                LaunchedEffect(datasetPref.classicCultureWritingsVersion) {
                     val writingsIndex = nameList.indexOfFirst { it == "writings" }
                     // 诗文续传逻辑,设为上次的进度
-                    if (datasetPref.writingsVersion != versionList[writingsIndex]) {
-                        if (datasetPref.writingsCurrentCount != countList[writingsIndex]) {
-                            setWritingsPreviousPage(datasetPref.writingsCurrentPage)
+                    if (datasetPref.classicCultureWritingsVersion != versionList[writingsIndex]) {
+                        if (datasetPref.classicCultureWritingsCurrentCount != countList[writingsIndex]) {
+                            setWritingsPreviousPage(datasetPref.classicCultureWritingsCurrentPage)
                             setWritingsPreviousCount(
-                                datasetPref.writingsCurrentCount,
+                                datasetPref.classicCultureWritingsCurrentCount,
                                 countList[writingsIndex]
                             )
                         }

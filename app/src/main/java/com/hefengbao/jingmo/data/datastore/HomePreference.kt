@@ -55,6 +55,7 @@ class HomePreference(
             chineseRiddle = it[PREF_CHINESE_RIDDLE] ?: true,
             chineseTongueTwister = it[PREF_CHINESE_TONGUE_TWISTER] ?: true,
             chineseWisecrack = it[PREF_CHINESE_WISECRACK] ?: true,
+            traditionalCultureCalendar = it[PREF_TRADITIONAL_CULTURE_CALENDAR] ?: true,
             traditionalCultureColor = it[PREF_TRADITIONAL_CULTURE_COLOR] ?: true,
             traditionalCultureFestival = it[PREF_TRADITIONAL_CULTURE_FESTIVAL] ?: true,
             traditionalCultureSolarTerm = it[PREF_TRADITIONAL_CULTURE_SOLAR_TERM] ?: true,
@@ -76,6 +77,8 @@ class HomePreference(
     suspend fun setClassicalLiteratureWriting(checked: Boolean) =
         setBoolean(context, PREF_CLASSICAL_LITERATURE_WRITING, checked)
 
+    suspend fun setTraditionalCultureCalendar(checked: Boolean) =
+        setBoolean(context, PREF_TRADITIONAL_CULTURE_CALENDAR, checked)
 
     suspend fun setTraditionalCultureColor(checked: Boolean) =
         setBoolean(context, PREF_TRADITIONAL_CULTURE_COLOR, checked)
@@ -134,6 +137,8 @@ class HomePreference(
             booleanPreferencesKey("key_classical_literature_writing")
 
         //传统文化 traditional_culture TRADITIONAL_CULTURE
+        private val PREF_TRADITIONAL_CULTURE_CALENDAR =
+            booleanPreferencesKey("key_traditional_calendar")
         private val PREF_TRADITIONAL_CULTURE_COLOR =
             booleanPreferencesKey("key_traditional_culture_color")
         private val PREF_TRADITIONAL_CULTURE_FESTIVAL =

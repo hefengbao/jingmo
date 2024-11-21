@@ -35,7 +35,7 @@ class SentenceReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.poemSentencesLastReadId
+                id.value = it.classicLiteratureSentencesLastReadId
             }
         }
     }

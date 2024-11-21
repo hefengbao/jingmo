@@ -68,6 +68,9 @@ class HomeItemRepositoryImpl @Inject constructor(
     override suspend fun setClassicalLiteratureWriting(checked: Boolean) =
         homePreference.setClassicalLiteratureWriting(checked)
 
+    override suspend fun setTraditionalCultureCalendar(checked: Boolean) =
+        homePreference.setTraditionalCultureCalendar(checked)
+
     override suspend fun setTraditionalCultureColor(checked: Boolean) =
         homePreference.setTraditionalCultureColor(checked)
 

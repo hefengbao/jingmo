@@ -136,6 +136,12 @@ class HomeItemManagerViewModel @Inject constructor(
         }
     }
 
+    fun setTraditionalCultureCalendar(checked: Boolean) {
+        viewModelScope.launch {
+            repository.setTraditionalCultureCalendar(checked)
+        }
+    }
+
     fun setTraditionalCultureColor(checked: Boolean) {
         viewModelScope.launch {
             repository.setTraditionalCultureColor(checked)
