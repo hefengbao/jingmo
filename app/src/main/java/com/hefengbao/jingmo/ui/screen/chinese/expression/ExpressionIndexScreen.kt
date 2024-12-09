@@ -85,19 +85,19 @@ private fun ChineseExpressionIndexScreen(
     setCollect: (Int) -> Unit,
     setUncollect: (Int) -> Unit
 ) {
-    expression?.let { entity ->
-        SimpleScaffold(
-            onBackClick = onBackClick,
-            title = "词语",
-            actions = {
-                IconButton(onClick = onBookmarksClick) {
-                    Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
-                }
-                IconButton(onClick = onSearchClick) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "查询按钮")
-                }
-            },
-            bottomBar = {
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "词语",
+        actions = {
+            IconButton(onClick = onBookmarksClick) {
+                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "查询按钮")
+            }
+        },
+        bottomBar = {
+            expression?.let { entity ->
                 BottomAppBar(
                     actions = {
                         Row(
@@ -137,30 +137,32 @@ private fun ChineseExpressionIndexScreen(
                     }
                 )
             }
-        ) {
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .draggable(
-                        state = rememberDraggableState {},
-                        orientation = Orientation.Horizontal,
-                        onDragStarted = {},
-                        onDragStopped = { velocity ->
-                            if (velocity < 0 && abs(velocity) > 500f) {
-                                onRefreshClick()
-                            } else if (velocity > 0 && abs(velocity) > 500f) {
-                                onRefreshClick()
-                            }
+        }
+    ) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .draggable(
+                    state = rememberDraggableState {},
+                    orientation = Orientation.Horizontal,
+                    onDragStarted = {},
+                    onDragStopped = { velocity ->
+                        if (velocity < 0 && abs(velocity) > 500f) {
+                            onRefreshClick()
+                        } else if (velocity > 0 && abs(velocity) > 500f) {
+                            onRefreshClick()
                         }
-                    )
+                    }
+                )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState())
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
+                expression?.let { entity ->
                     ExpressionPanel(entity = entity)
                 }
             }
