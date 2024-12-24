@@ -57,7 +57,7 @@ private fun QuoteShowScreen(
     entity?.let {
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "谚语",
+            title = "句子",
             bottomBar = {
                 BottomAppBar {
                     Row(

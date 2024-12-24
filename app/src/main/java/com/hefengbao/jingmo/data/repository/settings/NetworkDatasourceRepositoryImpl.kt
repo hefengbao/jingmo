@@ -62,17 +62,17 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity) =
         database.worldCulturalHeritageDao().insert(entity)
 
-    override suspend fun syncChinaWorldCultureHeritage(): Result<List<WorldCulturalHeritage>> =
+    override suspend fun syncChinaWorldCultureHeritage(version: Int): Result<List<WorldCulturalHeritage>> =
         safeApiCall {
-            network.chinaWorldCultureHeritage()
+            network.chinaWorldCultureHeritage(version)
         }
 
     override suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity) =
         database.antitheticalCoupletDao().insert(entity)
 
-    override suspend fun syncChineseAntitheticalCouplets(): Result<List<AntitheticalCouplet>> =
+    override suspend fun syncChineseAntitheticalCouplets(version: Int): Result<List<AntitheticalCouplet>> =
         safeApiCall {
-            network.chineseAntitheticalCouplets()
+            network.chineseAntitheticalCouplets(version)
         }
 
     override suspend fun clearChineseDictionaryPinyin() =
@@ -84,21 +84,26 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChineseDictionaryPinyin(entity: DictionaryPinyinEntity) =
         database.dictionaryDao().insertDictionaryPinyin(entity)
 
-    override suspend fun syncChineseDictionary(page: Int): Result<DictionaryWrapper> = safeApiCall {
-        network.dictionary(page)
-    }
+    override suspend fun syncChineseDictionary(version: Int, page: Int): Result<DictionaryWrapper> =
+        safeApiCall {
+            network.chineseDictionary(version, page)
+        }
 
     override suspend fun insertChineseExpression(entity: ExpressionEntity) =
         database.expressionDao().insert(entity)
 
-    override suspend fun syncChineseExpressions(page: Int): Result<ExpressionWrapper> =
+    override suspend fun syncChineseExpressions(
+        version: Int,
+        page: Int
+    ): Result<ExpressionWrapper> =
         safeApiCall {
-            network.chineseExpressions(page)
+            network.chineseExpressions(version, page)
         }
 
-    override suspend fun syncChineseIdioms(page: Int): Result<IdiomWrapper> = safeApiCall {
-        network.idioms(page)
-    }
+    override suspend fun syncChineseIdioms(version: Int, page: Int): Result<IdiomWrapper> =
+        safeApiCall {
+            network.chineseIdioms(version, page)
+        }
 
     override suspend fun insertChineseIdiom(entity: IdiomEntity) {
         database.idiomDao().insert(entity)
@@ -108,57 +113,61 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         database.knowledgeDao().insert(entity)
     }
 
-    override suspend fun syncChineseKnowledge(): Result<List<ChineseKnowledge>> = safeApiCall {
-        network.chineseKnowledge()
-    }
+    override suspend fun syncChineseKnowledge(version: Int): Result<List<ChineseKnowledge>> =
+        safeApiCall {
+            network.chineseKnowledge(version)
+        }
 
     override suspend fun insertChineseLyric(entity: LyricEntity) =
         database.lyricDao().insert(entity)
 
-    override suspend fun syncChineseLyrics(): Result<List<Lyric>> = safeApiCall {
-        network.lyrics()
+    override suspend fun syncChineseLyrics(version: Int): Result<List<Lyric>> = safeApiCall {
+        network.chineseLyrics(version)
     }
 
     override suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity) =
         database.chineseModernPoetryDao().insert(entity)
 
-    override suspend fun syncChineseModernPoetry(): Result<List<ModernPoetry>> = safeApiCall {
-        network.chineseModernPoetry()
-    }
+    override suspend fun syncChineseModernPoetry(version: Int): Result<List<ModernPoetry>> =
+        safeApiCall {
+            network.chineseModernPoetry(version)
+        }
 
     override suspend fun insertChineseProverb(entity: ProverbEntity) =
         database.proverbDao().insert(entity)
 
-    override suspend fun syncChineseProverbs(): Result<List<Proverb>> = safeApiCall {
-        network.chineseProverbs()
+    override suspend fun syncChineseProverbs(version: Int): Result<List<Proverb>> = safeApiCall {
+        network.chineseProverbs(version)
     }
 
     override suspend fun insertChineseQuote(entity: QuoteEntity) =
         database.chineseQuoteDao().insert(entity)
 
-    override suspend fun syncChineseQuotes(): Result<List<Quote>> = safeApiCall {
-        network.chineseQuotes()
+    override suspend fun syncChineseQuotes(version: Int): Result<List<Quote>> = safeApiCall {
+        network.chineseQuotes(version)
     }
 
     override suspend fun insertChineseRiddle(entity: RiddleEntity) {
         database.riddleDao().insert(entity)
     }
 
-    override suspend fun syncChineseRiddles(): Result<List<Riddle>> = safeApiCall {
-        network.riddles()
+    override suspend fun syncChineseRiddles(version: Int): Result<List<Riddle>> = safeApiCall {
+        network.chineseRiddles(version)
     }
 
     override suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity) {
         database.tongueTwisterDao().insert(entity)
     }
 
-    override suspend fun syncChineseTongueTwisters(): Result<List<TongueTwister>> = safeApiCall {
-        network.tongueTwisters()
-    }
+    override suspend fun syncChineseTongueTwisters(version: Int): Result<List<TongueTwister>> =
+        safeApiCall {
+            network.chineseTongueTwisters(version)
+        }
 
-    override suspend fun syncChineseWisecracks(): Result<List<ChineseWisecrack>> = safeApiCall {
-        network.chineseWisecracks()
-    }
+    override suspend fun syncChineseWisecracks(version: Int): Result<List<ChineseWisecrack>> =
+        safeApiCall {
+            network.chineseWisecracks(version)
+        }
 
     override suspend fun insertChineseWisecrack(entity: WisecrackEntity) {
         database.wisecrackDao().insert(entity)
@@ -167,35 +176,44 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertClassicalLiteratureClassicPoem(entity: ClassicPoemEntity) =
         database.classicPoemDao().insert(entity)
 
-    override suspend fun syncClassicalLiteratureClassicPoems(): Result<List<ClassicPoem>> =
+    override suspend fun syncClassicalLiteratureClassicPoems(version: Int): Result<List<ClassicPoem>> =
         safeApiCall {
-            network.classicPoems()
+            network.classicalLiteratureClassicPoems(version)
         }
 
     override suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity) {
         database.peopleDao().insert(entity)
     }
 
-    override suspend fun syncClassicalLiteraturePeople(page: Int): Result<PeopleWrapper> =
+    override suspend fun syncClassicalLiteraturePeople(
+        version: Int,
+        page: Int
+    ): Result<PeopleWrapper> =
         safeApiCall {
-            network.people(page)
+            network.classicalLiteraturePeople(version, page)
         }
 
     override suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity) {
         database.sentenceDao().insert(entity)
     }
 
-    override suspend fun syncClassicalLiteratureSentence(): Result<List<PoemSentence>> =
+    override suspend fun syncClassicalLiteratureSentence(version: Int): Result<List<PoemSentence>> =
         safeApiCall {
-            network.poemSentences()
+            network.classicalLiteratureSentences(version)
         }
 
     override suspend fun insertClassicalLiteratureWriting(entity: WritingEntity) {
         database.writingDao().insert(entity)
     }
 
-    override suspend fun syncClassicalLiteratureWritings(page: Int): Result<WritingWrapper> =
+    override suspend fun insertClassicalLiteratureWriting(entities: List<WritingEntity>) =
+        database.writingDao().insert(entities)
+
+    override suspend fun syncClassicalLiteratureWritings(
+        version: Int,
+        page: Int
+    ): Result<WritingWrapper> =
         safeApiCall {
-            network.writings(page)
+            network.classicalLiteratureWritings(version, page)
         }
 }

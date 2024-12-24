@@ -55,14 +55,15 @@ fun ImportRoute(
     val chineseProverbRatio by viewModel.chineseProverbRatio.collectAsState()
     val chineseQuotesRatio by viewModel.chineseQuotesRatio.collectAsState()
     val chineseRiddleRatio by viewModel.chineseRiddleRatio.collectAsState()
-    val classicPoemsRatio by viewModel.classicPoemsRatio.collectAsState()
-    val dictionaryRatio by viewModel.dictionaryRatio.collectAsState()
-    val idiomsRatio by viewModel.idiomsRatio.collectAsState()
-    val lyricRatio by viewModel.lyricRatio.collectAsState()
-    val peopleRatio by viewModel.peopleRatio.collectAsState()
-    val poemSentenceRatio by viewModel.poemSentencesRatio.collectAsState()
-    val tongueTwistersRatio by viewModel.tongueTwistersRatio.collectAsState()
-    val writingsRatio by viewModel.writingsRatio.collectAsState()
+    val chineseDictionaryRatio by viewModel.chineseDictionaryRatio.collectAsState()
+    val chineseIdiomsRatio by viewModel.chineseIdiomsRatio.collectAsState()
+    val chineseLyricRatio by viewModel.chineseLyricRatio.collectAsState()
+    val chineseTongueTwistersRatio by viewModel.chineseTongueTwistersRatio.collectAsState()
+
+    val classicalLiteraturePeopleRatio by viewModel.peopleRatio.collectAsState()
+    val classicalLiteratureClassicPoemsRatio by viewModel.classicPoemsRatio.collectAsState()
+    val classicalLiteratureSentenceRatio by viewModel.poemSentencesRatio.collectAsState()
+    val classicalLiteratureWritingsRatio by viewModel.writingsRatio.collectAsState()
 
     val chinaWorldCultureHeritageStatus by viewModel.chinaWorldCultureHeritageStatus.collectAsState(
         initial = ImportStatus.Loading
@@ -77,14 +78,14 @@ fun ImportRoute(
     val chineseProverbStatus by viewModel.chineseProverbStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseQuotesStatus by viewModel.chineseQuotesStatus.collectAsState(initial = ImportStatus.Loading)
     val chineseRiddleStatus by viewModel.chineseRiddleStatus.collectAsState(initial = ImportStatus.Loading)
-    val classicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
-    val dictionaryStatus by viewModel.dictionaryStatus.collectAsState(initial = ImportStatus.Loading)
-    val idiomsStatus by viewModel.idiomStatus.collectAsState(initial = ImportStatus.Loading)
-    val lyricStatus by viewModel.lyricStatus.collectAsState(initial = ImportStatus.Loading)
-    val poemSentencesStatus by viewModel.poemSentenceStatus.collectAsState(initial = ImportStatus.Loading)
-    val peopleStatus by viewModel.peopleStatus.collectAsState(initial = ImportStatus.Loading)
-    val tongueTwistersStatus by viewModel.tongueTwisterStatus.collectAsState(initial = ImportStatus.Loading)
-    val writingsStatus by viewModel.writingStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseDictionaryStatus by viewModel.chineseDictionaryStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseIdiomsStatus by viewModel.chineseIdiomStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseLyricStatus by viewModel.chineseLyricStatus.collectAsState(initial = ImportStatus.Loading)
+    val chineseTongueTwistersStatus by viewModel.chineseTongueTwisterStatus.collectAsState(initial = ImportStatus.Loading)
+    val classicalLiteratureClassicPoemsStatus by viewModel.classicPoemsStatus.collectAsState(initial = ImportStatus.Loading)
+    val classicalLiteratureSentencesStatus by viewModel.poemSentenceStatus.collectAsState(initial = ImportStatus.Loading)
+    val classicalLiteraturePeopleStatus by viewModel.peopleStatus.collectAsState(initial = ImportStatus.Loading)
+    val classicalLiteratureWritingsStatus by viewModel.writingStatus.collectAsState(initial = ImportStatus.Loading)
 
     ImportScreen(
         onBackClick = onBackClick,
@@ -124,37 +125,37 @@ fun ImportRoute(
         chineseRiddleStatus = chineseRiddleStatus,
         chineseRiddleUris = { viewModel.chineseRiddle(it) },
         clearChineseRiddles = viewModel::clearChineseRiddle,
-        classicPoemsRatio = classicPoemsRatio,
-        classicPoemsStatus = classicPoemsStatus,
-        classicPoemsUris = { viewModel.classicPoems(it) },
-        clearClassicPoems = viewModel::clearClassicalLiteratureClassicPoems,
-        dictionaryRatio = dictionaryRatio,
-        dictionaryStatus = dictionaryStatus,
-        dictionaryUris = { viewModel.dictionary(it) },
+        chineseDictionaryRatio = chineseDictionaryRatio,
+        chineseDictionaryStatus = chineseDictionaryStatus,
+        chineseDictionaryUris = { viewModel.dictionary(it) },
         clearChineseDictionaries = viewModel::clearChineseDictionaries,
-        idiomsRatio = idiomsRatio,
-        idiomsStatus = idiomsStatus,
-        idiomsUris = { viewModel.idioms(it) },
+        chineseIdiomsRatio = chineseIdiomsRatio,
+        chineseIdiomsStatus = chineseIdiomsStatus,
+        chineseIdiomsUris = { viewModel.idioms(it) },
         clearChineseIdioms = viewModel::clearChineseIdioms,
-        lyricRatio = lyricRatio,
-        lyricStatus = lyricStatus,
-        lyricUris = { viewModel.lyrics(it) },
+        chineseLyricRatio = chineseLyricRatio,
+        chineseLyricStatus = chineseLyricStatus,
+        chineseLyricUris = { viewModel.lyrics(it) },
         clearChineseLyrics = viewModel::clearChineseLyrics,
-        peopleRatio = peopleRatio,
-        peopleStatus = peopleStatus,
-        peopleUris = { viewModel.people(it) },
-        clearClassicalLiteraturePeople = viewModel::clearClassicalLiteraturePeople,
-        poemSentencesRatio = poemSentenceRatio,
-        poemSentencesStatus = poemSentencesStatus,
-        poemSentencesUris = { viewModel.poemSentences(it) },
-        clearClassicalLiteratureSentence = viewModel::clearClassicalLiteratureSentence,
-        tongueTwistersRatio = tongueTwistersRatio,
-        tongueTwistersStatus = tongueTwistersStatus,
-        tongueTwistersUris = { viewModel.tongueTwisters(it) },
+        chineseTongueTwistersRatio = chineseTongueTwistersRatio,
+        chineseTongueTwistersStatus = chineseTongueTwistersStatus,
+        chineseTongueTwistersUris = { viewModel.tongueTwisters(it) },
         clearChineseTongueTwisters = viewModel::clearChineseTongueTwisters,
-        writingsRatio = writingsRatio,
-        writingsStatus = writingsStatus,
-        writingsUris = { viewModel.writings(it) },
+        classicalLiteratureClassicPoemsRatio = classicalLiteratureClassicPoemsRatio,
+        classicalLiteratureClassicPoemsStatus = classicalLiteratureClassicPoemsStatus,
+        classicalLiteratureClassicPoemsUris = { viewModel.classicPoems(it) },
+        clearClassicalLiteratureClassicPoems = viewModel::clearClassicalLiteratureClassicPoems,
+        classicalLiteraturePeopleRatio = classicalLiteraturePeopleRatio,
+        classicalLiteraturePeopleStatus = classicalLiteraturePeopleStatus,
+        classicalLiteraturePeopleUris = { viewModel.people(it) },
+        clearClassicalLiteraturePeople = viewModel::clearClassicalLiteraturePeople,
+        classicalLiteratureSentencesRatio = classicalLiteratureSentenceRatio,
+        classicalLiteratureSentencesStatus = classicalLiteratureSentencesStatus,
+        classicalLiteratureSentencesUris = { viewModel.poemSentences(it) },
+        clearClassicalLiteratureSentence = viewModel::clearClassicalLiteratureSentence,
+        classicalLiteratureWritingsRatio = classicalLiteratureWritingsRatio,
+        classicalLiteratureWritingsStatus = classicalLiteratureWritingsStatus,
+        classicalLiteratureWritingsUris = { viewModel.writings(it) },
         clearClassicalLiteratureWritings = viewModel::clearClassicalLiteratureWritings
     )
 }
@@ -199,37 +200,37 @@ private fun ImportScreen(
     chineseRiddleStatus: ImportStatus<Any>,
     chineseRiddleUris: (List<Uri>) -> Unit,
     clearChineseRiddles: () -> Unit,
-    classicPoemsRatio: Float,
-    classicPoemsStatus: ImportStatus<Any>,
-    classicPoemsUris: (List<Uri>) -> Unit,
-    clearClassicPoems: () -> Unit,
-    dictionaryRatio: Float,
-    dictionaryStatus: ImportStatus<Any>,
-    dictionaryUris: (List<Uri>) -> Unit,
+    chineseDictionaryRatio: Float,
+    chineseDictionaryStatus: ImportStatus<Any>,
+    chineseDictionaryUris: (List<Uri>) -> Unit,
     clearChineseDictionaries: () -> Unit,
-    idiomsRatio: Float,
-    idiomsStatus: ImportStatus<Any>,
-    idiomsUris: (List<Uri>) -> Unit,
+    chineseIdiomsRatio: Float,
+    chineseIdiomsStatus: ImportStatus<Any>,
+    chineseIdiomsUris: (List<Uri>) -> Unit,
     clearChineseIdioms: () -> Unit,
-    lyricRatio: Float,
-    lyricStatus: ImportStatus<Any>,
-    lyricUris: (List<Uri>) -> Unit,
+    chineseLyricRatio: Float,
+    chineseLyricStatus: ImportStatus<Any>,
+    chineseLyricUris: (List<Uri>) -> Unit,
     clearChineseLyrics: () -> Unit,
-    peopleRatio: Float,
-    peopleStatus: ImportStatus<Any>,
-    peopleUris: (List<Uri>) -> Unit,
-    clearClassicalLiteraturePeople: () -> Unit,
-    poemSentencesRatio: Float,
-    poemSentencesStatus: ImportStatus<Any>,
-    poemSentencesUris: (List<Uri>) -> Unit,
-    clearClassicalLiteratureSentence: () -> Unit,
-    tongueTwistersRatio: Float,
-    tongueTwistersStatus: ImportStatus<Any>,
-    tongueTwistersUris: (List<Uri>) -> Unit,
+    chineseTongueTwistersRatio: Float,
+    chineseTongueTwistersStatus: ImportStatus<Any>,
+    chineseTongueTwistersUris: (List<Uri>) -> Unit,
     clearChineseTongueTwisters: () -> Unit,
-    writingsRatio: Float,
-    writingsStatus: ImportStatus<Any>,
-    writingsUris: (List<Uri>) -> Unit,
+    classicalLiteratureClassicPoemsRatio: Float,
+    classicalLiteratureClassicPoemsStatus: ImportStatus<Any>,
+    classicalLiteratureClassicPoemsUris: (List<Uri>) -> Unit,
+    clearClassicalLiteratureClassicPoems: () -> Unit,
+    classicalLiteraturePeopleRatio: Float,
+    classicalLiteraturePeopleStatus: ImportStatus<Any>,
+    classicalLiteraturePeopleUris: (List<Uri>) -> Unit,
+    clearClassicalLiteraturePeople: () -> Unit,
+    classicalLiteratureSentencesRatio: Float,
+    classicalLiteratureSentencesStatus: ImportStatus<Any>,
+    classicalLiteratureSentencesUris: (List<Uri>) -> Unit,
+    clearClassicalLiteratureSentence: () -> Unit,
+    classicalLiteratureWritingsRatio: Float,
+    classicalLiteratureWritingsStatus: ImportStatus<Any>,
+    classicalLiteratureWritingsUris: (List<Uri>) -> Unit,
     clearClassicalLiteratureWritings: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
@@ -270,37 +271,37 @@ private fun ImportScreen(
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
             chineseRiddleUris(it)
         }
-    val classicPoemsLauncher =
+    val classicalLiteratureClassicPoemsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            classicPoemsUris(it)
+            classicalLiteratureClassicPoemsUris(it)
         }
-    val dictionaryLauncher =
+    val chineseDictionaryLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            dictionaryUris(it)
+            chineseDictionaryUris(it)
         }
-    val idiomsLauncher =
+    val chineseIdiomsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            idiomsUris(it)
+            chineseIdiomsUris(it)
         }
-    val lyricLauncher =
+    val chineseLyricLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            lyricUris(it)
+            chineseLyricUris(it)
         }
-    val peopleLauncher =
+    val classicalLiteraturePeopleLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            peopleUris(it)
+            classicalLiteraturePeopleUris(it)
         }
-    val poemSentencesLauncher =
+    val classicalLiteratureSentencesLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            poemSentencesUris(it)
+            classicalLiteratureSentencesUris(it)
         }
-    val tongueTwistersLauncher =
+    val chineseTongueTwistersLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            tongueTwistersUris(it)
+            chineseTongueTwistersUris(it)
         }
-    val writingsLauncher =
+    val classicalLiteratureWritingsLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenMultipleDocuments()) {
-            writingsUris(it)
+            classicalLiteratureWritingsUris(it)
         }
 
     SimpleScaffold(
@@ -320,45 +321,45 @@ private fun ImportScreen(
             SettingsTitle(title = "古诗文")
             MenuItem(
                 title = "经典诗文",
-                ratio = classicPoemsRatio,
-                launcher = classicPoemsLauncher,
-                status = classicPoemsStatus,
-                onDeleteClick = clearClassicPoems
+                ratio = classicalLiteratureClassicPoemsRatio,
+                launcher = classicalLiteratureClassicPoemsLauncher,
+                status = classicalLiteratureClassicPoemsStatus,
+                onDeleteClick = clearClassicalLiteratureClassicPoems
             )
             MenuItem(
                 title = "诗文",
-                ratio = writingsRatio,
-                launcher = writingsLauncher,
-                status = writingsStatus,
+                ratio = classicalLiteratureWritingsRatio,
+                launcher = classicalLiteratureWritingsLauncher,
+                status = classicalLiteratureWritingsStatus,
                 onDeleteClick = clearClassicalLiteratureWritings
             )
             MenuItem(
                 title = "诗文名句",
-                ratio = poemSentencesRatio,
-                launcher = poemSentencesLauncher,
-                status = poemSentencesStatus,
+                ratio = classicalLiteratureSentencesRatio,
+                launcher = classicalLiteratureSentencesLauncher,
+                status = classicalLiteratureSentencesStatus,
                 onDeleteClick = clearClassicalLiteratureSentence
             )
             MenuItem(
                 title = "人物",
-                ratio = peopleRatio,
-                launcher = peopleLauncher,
-                status = peopleStatus,
+                ratio = classicalLiteraturePeopleRatio,
+                launcher = classicalLiteraturePeopleLauncher,
+                status = classicalLiteraturePeopleStatus,
                 onDeleteClick = clearClassicalLiteraturePeople
             )
             SettingsTitle(title = "现代汉语")
             MenuItem(
                 title = "汉字",
-                ratio = dictionaryRatio,
-                launcher = dictionaryLauncher,
-                status = dictionaryStatus,
+                ratio = chineseDictionaryRatio,
+                launcher = chineseDictionaryLauncher,
+                status = chineseDictionaryStatus,
                 onDeleteClick = clearChineseDictionaries
             )
             MenuItem(
                 title = "成语",
-                ratio = idiomsRatio,
-                launcher = idiomsLauncher,
-                status = idiomsStatus,
+                ratio = chineseIdiomsRatio,
+                launcher = chineseIdiomsLauncher,
+                status = chineseIdiomsStatus,
                 onDeleteClick = clearChineseIdioms
             )
             MenuItem(
@@ -391,9 +392,9 @@ private fun ImportScreen(
             )
             MenuItem(
                 title = "绕口令",
-                ratio = tongueTwistersRatio,
-                launcher = tongueTwistersLauncher,
-                status = tongueTwistersStatus,
+                ratio = chineseTongueTwistersRatio,
+                launcher = chineseTongueTwistersLauncher,
+                status = chineseTongueTwistersStatus,
                 onDeleteClick = clearChineseTongueTwisters
             )
             MenuItem(
@@ -405,9 +406,9 @@ private fun ImportScreen(
             )
             MenuItem(
                 title = "歌词",
-                ratio = lyricRatio,
-                launcher = lyricLauncher,
-                status = lyricStatus,
+                ratio = chineseLyricRatio,
+                launcher = chineseLyricLauncher,
+                status = chineseLyricStatus,
                 onDeleteClick = clearChineseLyrics
             )
             MenuItem(

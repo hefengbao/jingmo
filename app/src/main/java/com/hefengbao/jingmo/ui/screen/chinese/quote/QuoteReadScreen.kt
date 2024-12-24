@@ -76,7 +76,7 @@ private fun QuoteReadScreen(
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谚语",
+        title = "句子",
         bottomBar = {
             entity?.let {
                 BottomAppBar(

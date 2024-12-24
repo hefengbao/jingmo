@@ -12,6 +12,7 @@ package com.hefengbao.jingmo.data.repository.classicalliterature
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
 
 interface WritingRepository {
@@ -26,4 +27,5 @@ interface WritingRepository {
     suspend fun collect(entity: WritingCollectionEntity)
     suspend fun uncollect(writingId: Int)
     fun isCollect(id: Int): Flow<WritingCollectionEntity?>
+    fun getIdTitle(query: String): Flow<PagingData<IdTitle>>
 }

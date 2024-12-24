@@ -77,20 +77,20 @@ class ImportViewModel @Inject constructor(
     private val chinaWorldCultureHeritageCount = 44
     private val chineseAntitheticalCoupletCount = 490
     private val chineseExpressionCount = 320349
-    private val chineseKnowledgeCount = 464
-    private val chineseModernPoetryCount = 45
+    private val chineseKnowledgeCount = 465
+    private val chineseModernPoetryCount = 62
     private val chineseProverbsCount = 964
     private val chineseQuotesCount = 362
     private val chineseWisecracksCount = 14026
-    private val classicPoemCount = 955
-    private val dictionaryCount = 20552
-    private val idiomsCount = 49639
-    private val lyricCount = 499
-    private val peopleCount = 85776
-    private val poemSentencesCount = 10000
+    private val chineseDictionaryCount = 20552
+    private val chineseIdiomsCount = 49639
+    private val chineseLyricCount = 499
     private val chineseRiddlesCount = 42446
-    private val tongueTwistersCount = 45
-    private val writingsCount = 1144422
+    private val chineseTongueTwistersCount = 45
+    private val classicalLiteratureClassicPoemCount = 955
+    private val classicalLiteraturePeopleCount = 126830
+    private val classicalLiteratureSentencesCount = 10000
+    private val classicalLiteratureWritingsCount = 1430340
 
     val chinaWorldCultureHeritageRatio =
         repository.chinaChinaWorldCultureHeritageTotal().distinctUntilChanged().flatMapLatest {
@@ -377,7 +377,7 @@ class ImportViewModel @Inject constructor(
 
     val classicPoemsRatio =
         repository.classicalLiteratureClassicPoemTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / classicPoemCount)
+            MutableStateFlow(it.toFloat() / classicalLiteratureClassicPoemCount)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -405,16 +405,17 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val dictionaryRatio = repository.chineseDictionaryTotal().distinctUntilChanged().flatMapLatest {
-        MutableStateFlow(it.toFloat() / dictionaryCount)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = 0f
-    )
+    val chineseDictionaryRatio =
+        repository.chineseDictionaryTotal().distinctUntilChanged().flatMapLatest {
+            MutableStateFlow(it.toFloat() / chineseDictionaryCount)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0f
+        )
     private val _dictionaryStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val dictionaryStatus: SharedFlow<ImportStatus<Any>> = _dictionaryStatus
+    val chineseDictionaryStatus: SharedFlow<ImportStatus<Any>> = _dictionaryStatus
     fun dictionary(uris: List<Uri>) {
         viewModelScope.launch {
             _dictionaryStatus.value = ImportStatus.Loading
@@ -442,8 +443,8 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val idiomsRatio = repository.chineseIdiomTotal().distinctUntilChanged().flatMapLatest {
-        MutableStateFlow(it.toFloat() / idiomsCount)
+    val chineseIdiomsRatio = repository.chineseIdiomTotal().distinctUntilChanged().flatMapLatest {
+        MutableStateFlow(it.toFloat() / chineseIdiomsCount)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -451,7 +452,7 @@ class ImportViewModel @Inject constructor(
     )
     private val _idiomStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val idiomStatus: SharedFlow<ImportStatus<Any>> = _idiomStatus
+    val chineseIdiomStatus: SharedFlow<ImportStatus<Any>> = _idiomStatus
     fun idioms(uris: List<Uri>) {
         viewModelScope.launch {
             _idiomStatus.value = ImportStatus.Loading
@@ -471,8 +472,8 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val lyricRatio = repository.chineseLyricTotal().distinctUntilChanged().flatMapLatest {
-        MutableStateFlow(it.toFloat() / lyricCount)
+    val chineseLyricRatio = repository.chineseLyricTotal().distinctUntilChanged().flatMapLatest {
+        MutableStateFlow(it.toFloat() / chineseLyricCount)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -480,7 +481,7 @@ class ImportViewModel @Inject constructor(
     )
     private val _lyricStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val lyricStatus: SharedFlow<ImportStatus<Any>> = _lyricStatus
+    val chineseLyricStatus: SharedFlow<ImportStatus<Any>> = _lyricStatus
     fun lyrics(uris: List<Uri>) {
         viewModelScope.launch {
             _lyricStatus.value = ImportStatus.Loading
@@ -502,7 +503,7 @@ class ImportViewModel @Inject constructor(
 
     val peopleRatio =
         repository.classicalLiteraturePeopleTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / peopleCount)
+            MutableStateFlow(it.toFloat() / classicalLiteraturePeopleCount)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -532,7 +533,7 @@ class ImportViewModel @Inject constructor(
 
     val poemSentencesRatio =
         repository.classicalLiteratureSentenceTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / poemSentencesCount)
+            MutableStateFlow(it.toFloat() / classicalLiteratureSentencesCount)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -561,9 +562,9 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val tongueTwistersRatio =
+    val chineseTongueTwistersRatio =
         repository.chineseTongueTwistersTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / tongueTwistersCount)
+            MutableStateFlow(it.toFloat() / chineseTongueTwistersCount)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -571,7 +572,7 @@ class ImportViewModel @Inject constructor(
         )
     private val _tongueTwisterStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val tongueTwisterStatus: SharedFlow<ImportStatus<Any>> = _tongueTwisterStatus
+    val chineseTongueTwisterStatus: SharedFlow<ImportStatus<Any>> = _tongueTwisterStatus
     fun tongueTwisters(uris: List<Uri>) {
         viewModelScope.launch {
             _tongueTwisterStatus.value = ImportStatus.Loading
@@ -594,7 +595,7 @@ class ImportViewModel @Inject constructor(
 
     val writingsRatio =
         repository.classicalLiteratureWritingTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / writingsCount)
+            MutableStateFlow(it.toFloat() / classicalLiteratureWritingsCount)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

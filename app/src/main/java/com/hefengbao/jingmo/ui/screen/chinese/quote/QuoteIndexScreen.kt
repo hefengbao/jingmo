@@ -81,7 +81,7 @@ private fun QuoteIndexScreen(
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谚语",
+        title = "句子",
         actions = {
             IconButton(onClick = onBookmarksClick) {
                 Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")

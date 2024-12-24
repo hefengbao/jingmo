@@ -57,7 +57,7 @@ private fun ModernPoetryShowScreen(
     entity?.let {
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "谚语",
+            title = "诗歌",
             bottomBar = {
                 BottomAppBar {
                     Row(

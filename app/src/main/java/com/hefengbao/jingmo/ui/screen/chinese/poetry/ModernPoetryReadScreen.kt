@@ -76,7 +76,7 @@ private fun ModernPoetryReadScreen(
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谚语",
+        title = "诗歌",
         bottomBar = {
             entity?.let {
                 BottomAppBar(

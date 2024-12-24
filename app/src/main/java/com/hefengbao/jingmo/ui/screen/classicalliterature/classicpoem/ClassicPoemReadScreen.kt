@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -17,18 +18,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -38,12 +45,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.model.IdTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.components.ClassicPoemPanel
 import kotlinx.coroutines.launch
@@ -58,6 +70,7 @@ fun ClassicPoemReadRoute(
     val prevId by viewModel.prevId.collectAsState()
     val nextId by viewModel.nextId.collectAsState()
     val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState()
+    val idTitles = viewModel.idTitles.collectAsLazyPagingItems()
 
     ClassicPoemReadScreen(
         onBackClick = onBackClick,
@@ -69,6 +82,8 @@ fun ClassicPoemReadRoute(
         prevId = prevId,
         nextId = nextId,
         classicPoemCollectionEntity = classicPoemCollectionEntity,
+        idTitles = idTitles,
+        setQuery = viewModel::setQuery
     )
 }
 
@@ -84,7 +99,9 @@ private fun ClassicPoemReadScreen(
     classicPoemEntity: ClassicPoemEntity?,
     prevId: Int?,
     nextId: Int?,
-    classicPoemCollectionEntity: ClassicPoemCollectionEntity?
+    classicPoemCollectionEntity: ClassicPoemCollectionEntity?,
+    idTitles: LazyPagingItems<IdTitle>,
+    setQuery: (String) -> Unit,
 ) {
     val annotationSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showAnnotationBottomSheet by remember { mutableStateOf(false) }
@@ -94,6 +111,8 @@ private fun ClassicPoemReadScreen(
     var showPoemBottomSheet by remember { mutableStateOf(false) }
     val state = rememberLazyListState()
     val scope = rememberCoroutineScope()
+    var showIndexBottomSheet by remember { mutableStateOf(false) }
+    var query by rememberSaveable { mutableStateOf("") }
 
     classicPoemEntity?.let { entity ->
         LaunchedEffect(entity) {
@@ -105,6 +124,13 @@ private fun ClassicPoemReadScreen(
         SimpleScaffold(
             onBackClick = onBackClick,
             title = entity.title,
+            actions = {
+                IconButton(
+                    onClick = { showIndexBottomSheet = true }
+                ) {
+                    Icon(imageVector = Icons.Outlined.Menu, contentDescription = "目录")
+                }
+            },
             bottomBar = {
                 BottomAppBar {
                     Row(
@@ -199,6 +225,56 @@ private fun ClassicPoemReadScreen(
                     poemSheetState = poemSheetState,
                     onPoemBottomSheetDismiss = { showPoemBottomSheet = false }
                 )
+
+                if (showIndexBottomSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showIndexBottomSheet = false },
+                    ) {
+                        LazyColumn {
+                            item {
+                                SearchBar(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp),
+                                    inputField = {
+                                        SearchBarDefaults.InputField(
+                                            query = query,
+                                            onQueryChange = {
+                                                query = it
+                                                setQuery(it)
+                                            },
+                                            onSearch = {},
+                                            onExpandedChange = {},
+                                            expanded = false
+                                        )
+                                    },
+                                    expanded = false,
+                                    onExpandedChange = {},
+                                    content = {}
+                                )
+                            }
+
+                            items(
+                                count = idTitles.itemCount
+                            ) { index ->
+                                val idTitle = idTitles[index]
+
+                                idTitle?.let {
+                                    Text(
+                                        text = idTitle.title,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                setCurrentId(idTitle.id)
+                                                showIndexBottomSheet = false
+                                            }
+                                            .padding(16.dp, 8.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

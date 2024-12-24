@@ -81,7 +81,7 @@ private fun ModernPoetryIndexScreen(
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谚语",
+        title = "诗歌",
         actions = {
             IconButton(onClick = onBookmarksClick) {
                 Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")

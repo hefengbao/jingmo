@@ -70,6 +70,7 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCol
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingFtsEntity
 import com.hefengbao.jingmo.data.database.util.IntListConverter
 import com.hefengbao.jingmo.data.database.util.PeopleAliasListConverter
 import com.hefengbao.jingmo.data.database.util.PeopleDetailListConverter
@@ -94,6 +95,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         PeopleEntity::class,
         WritingCollectionEntity::class,
         WritingEntity::class,
+        WritingFtsEntity::class,
         SentenceCollectionEntity::class,
         SentenceEntity::class,
         ExpressionCollectionEntity::class,
@@ -124,7 +126,7 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         TongueTwisterEntity::class,
         WorldCulturalHeritageEntity::class,
     ],
-    version = 25,
+    version = 27,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -150,6 +152,8 @@ import com.hefengbao.jingmo.data.database.util.WritingQuoteListConverter
         AutoMigration(from = 22, to = 23),
         AutoMigration(from = 23, to = 24),
         AutoMigration(from = 24, to = 25),
+        AutoMigration(from = 25, to = 26, spec = AppDatabase.AutoMigration25To26::class),
+        AutoMigration(from = 26, to = 27),
     ],
     exportSchema = true
 )
@@ -216,4 +220,9 @@ abstract class AppDatabase : RoomDatabase() {
         tableName = "chinese_knowledge"
     )
     class AutoMigration18To19 : AutoMigrationSpec
+
+    @DeleteTable(
+        tableName = "writings"
+    )
+    class AutoMigration25To26 : AutoMigrationSpec
 }

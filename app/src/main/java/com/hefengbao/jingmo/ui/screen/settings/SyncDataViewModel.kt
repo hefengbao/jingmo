@@ -64,7 +64,7 @@ class DataViewModel @Inject constructor(
     fun syncChinaWorldCultureHeritage(total: Int, version: Int) {
         viewModelScope.launch {
             var count = 0
-            when (val response = repository.syncChinaWorldCultureHeritage()) {
+            when (val response = repository.syncChinaWorldCultureHeritage(version)) {
                 is Result.Error -> {
                     _chinaWorldCultureHeritageResult.value = SyncStatus.Error(response.exception)
                 }
@@ -97,7 +97,7 @@ class DataViewModel @Inject constructor(
         _chineseAntitheticalCoupletResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var count = 0
-            when (val response = repository.syncChineseAntitheticalCouplets()) {
+            when (val response = repository.syncChineseAntitheticalCouplets(version)) {
                 is Result.Error -> {
                     _chineseAntitheticalCoupletResult.value = SyncStatus.Error(response.exception)
                 }
@@ -128,7 +128,7 @@ class DataViewModel @Inject constructor(
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncChineseExpressions(page)) {
+                when (val response = repository.syncChineseExpressions(version, page)) {
                     is Result.Error -> {
                         _chineseExpressionResult.value = SyncStatus.Error(response.exception)
                     }
@@ -162,7 +162,7 @@ class DataViewModel @Inject constructor(
     fun syncChineseKnowledge(total: Int, version: Int) {
         _chineseKnowledgeResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseKnowledge()) {
+            when (val response = repository.syncChineseKnowledge(version)) {
                 is Result.Error -> _chineseKnowledgeResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -190,7 +190,7 @@ class DataViewModel @Inject constructor(
     fun syncChineseModernPoetry(total: Int, version: Int) {
         _chineseModernPoetryResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseModernPoetry()) {
+            when (val response = repository.syncChineseModernPoetry(version)) {
                 is Result.Error -> _chineseModernPoetryResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -217,7 +217,7 @@ class DataViewModel @Inject constructor(
     fun syncChineseProverbs(total: Int, version: Int) {
         _chineseProverbResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseProverbs()) {
+            when (val response = repository.syncChineseProverbs(version)) {
                 is Result.Error -> _chineseProverbResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -244,7 +244,7 @@ class DataViewModel @Inject constructor(
     fun syncChineseQuotes(total: Int, version: Int) {
         _chineseQuotesResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseQuotes()) {
+            when (val response = repository.syncChineseQuotes(version)) {
                 is Result.Error -> _chineseQuotesResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -271,7 +271,7 @@ class DataViewModel @Inject constructor(
     fun syncChineseWisecracks(total: Int, version: Int) {
         _chineseWisecracksResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseWisecracks()) {
+            when (val response = repository.syncChineseWisecracks(version)) {
                 is Result.Error -> _chineseWisecracksResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -296,7 +296,7 @@ class DataViewModel @Inject constructor(
     val dictionaryResult: SharedFlow<SyncStatus<Any>> = _dictionaryResult
     private val _dictionaryResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val dictionaryResultProgress: SharedFlow<Float> = _dictionaryResultProgress
-    fun syncDictionary(total: Int, version: Int) {
+    fun syncChineseDictionary(total: Int, version: Int) {
         viewModelScope.launch {
             repository.clearChineseDictionaryPinyin()
         }
@@ -305,7 +305,7 @@ class DataViewModel @Inject constructor(
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncChineseDictionary(page)) {
+                when (val response = repository.syncChineseDictionary(version, page)) {
                     is Result.Error -> _dictionaryResult.value =
                         SyncStatus.Error(response.exception)
 
@@ -343,14 +343,14 @@ class DataViewModel @Inject constructor(
     val idiomsResult: SharedFlow<SyncStatus<Any>> = _idiomsResult
     private val _idiomsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val idiomsResultProgress: SharedFlow<Float> = _idiomsResultProgress
-    fun syncIdioms(total: Int, version: Int) {
+    fun syncChineseIdioms(total: Int, version: Int) {
         _idiomsResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
 
             while (page != null) {
-                when (val response = repository.syncChineseIdioms(page)) {
+                when (val response = repository.syncChineseIdioms(version, page)) {
                     is Result.Error -> {
                         _idiomsResult.value = SyncStatus.Error(response.exception)
                     }
@@ -383,10 +383,10 @@ class DataViewModel @Inject constructor(
     val lyricResult: SharedFlow<SyncStatus<Any>> = _lyricResult
     private val _lyricResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val lyricResultProgress: SharedFlow<Float> = _lyricResultProgress
-    fun syncLyric(total: Int, version: Int) {
+    fun syncChineseLyric(total: Int, version: Int) {
         _lyricResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseLyrics()) {
+            when (val response = repository.syncChineseLyrics(version)) {
                 is Result.Error -> {
                     _lyricResult.value = SyncStatus.Error(response.exception)
                 }
@@ -413,13 +413,13 @@ class DataViewModel @Inject constructor(
     val peopleResult: SharedFlow<SyncStatus<Any>> = _peopleResult
     private val _peopleResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val peopleResultProgress: SharedFlow<Float> = _peopleResultProgress
-    fun syncPeople(total: Int, version: Int) {
+    fun syncClassicalLiteraturePeople(total: Int, version: Int) {
         _peopleResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncClassicalLiteraturePeople(page)) {
+                when (val response = repository.syncClassicalLiteraturePeople(version, page)) {
                     is Result.Error -> _peopleResult.value = SyncStatus.Error(response.exception)
                     Result.Loading -> {}
                     is Result.Success -> {
@@ -447,10 +447,10 @@ class DataViewModel @Inject constructor(
     val classicPoemsResult: SharedFlow<SyncStatus<Any>> = _classicPoemsResult
     private val _classicPoemsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val classicPoemsResultProgress: SharedFlow<Float> = _classicPoemsResultProgress
-    fun syncClassicPoems(total: Int, version: Int) {
+    fun syncClassicalLiteratureClassicPoems(total: Int, version: Int) {
         _classicPoemsResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncClassicalLiteratureClassicPoems()) {
+            when (val response = repository.syncClassicalLiteratureClassicPoems(version)) {
                 is Result.Error -> {
                     _classicPoemsResult.value = SyncStatus.Error(response.exception)
                 }
@@ -476,10 +476,10 @@ class DataViewModel @Inject constructor(
     val poemSentencesResult: SharedFlow<SyncStatus<Any>> = _poemSentencesResult
     private val _poemSentencesResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val poemSentencesResultProgress: SharedFlow<Float> = _poemSentencesResultProgress
-    fun syncPoemSentences(total: Int, version: Int) {
+    fun syncClassicalLiteratureSentences(total: Int, version: Int) {
         _poemSentencesResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncClassicalLiteratureSentence()) {
+            when (val response = repository.syncClassicalLiteratureSentence(version)) {
                 is Result.Error -> {
                     _poemSentencesResult.value = SyncStatus.Error(response.exception)
                 }
@@ -505,10 +505,10 @@ class DataViewModel @Inject constructor(
     val riddlesResult: SharedFlow<SyncStatus<Any>> = _riddlesResult
     private val _riddlesResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val riddlesResultProgress: SharedFlow<Float> = _riddlesResultProgress
-    fun syncRiddles(total: Int, version: Int) {
+    fun syncChineseRiddles(total: Int, version: Int) {
         _riddlesResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseRiddles()) {
+            when (val response = repository.syncChineseRiddles(version)) {
                 is Result.Error -> _riddlesResult.value = SyncStatus.Error(response.exception)
                 Result.Loading -> {}
                 is Result.Success -> {
@@ -531,10 +531,10 @@ class DataViewModel @Inject constructor(
     val tongueTwisterResult: SharedFlow<SyncStatus<Any>> = _tongueTwistersResult
     private val _tongueTwistersResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val tongueTwistersResultProgress: SharedFlow<Float> = _tongueTwistersResultProgress
-    fun syncTongueTwisters(total: Int, version: Int) {
+    fun syncChineseTongueTwisters(total: Int, version: Int) {
         _tongueTwistersResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseTongueTwisters()) {
+            when (val response = repository.syncChineseTongueTwisters(version)) {
                 is Result.Error -> _tongueTwistersResult.value =
                     SyncStatus.Error(response.exception)
 
@@ -572,29 +572,32 @@ class DataViewModel @Inject constructor(
             writingCurrentCount.value.toFloat() / total
     }
 
-    fun syncWritings(total: Int, version: Int) {
+    fun syncClassicalLiteratureWritings(total: Int, version: Int) {
         _writingsResult.value = SyncStatus.Loading
 
         viewModelScope.launch {
 
             while (writingCurrentPage.value != 0) {
-                when (val response =
-                    repository.syncClassicalLiteratureWritings(writingCurrentPage.value)) {
+                when (
+                    val response = repository.syncClassicalLiteratureWritings(
+                        version,
+                        writingCurrentPage.value
+                    )
+                ) {
                     is Result.Error -> _writingsResult.value == SyncStatus.Error(response.exception)
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertClassicalLiteratureWriting(it.asWritingEntity())
-                            writingCurrentCount.value++
-                            _writingsResultProgress.value =
-                                writingCurrentCount.value.toFloat() / total
-                        }
+                        repository.insertClassicalLiteratureWriting(response.data.data.map { it.asWritingEntity() })
+
+                        writingCurrentCount.value += response.data.data.size
+                        _writingsResultProgress.value = writingCurrentCount.value.toFloat() / total
+
                         // 记录进度
                         preference.setClassicalLiteratureWritingCurrentPage(writingCurrentPage.value)
                         preference.setClassicalLiteratureWritingCurrentCount(writingCurrentCount.value)
 
                         if (response.data.nextPage != null) {
-                            writingCurrentPage.value++
+                            writingCurrentPage.value = response.data.nextPage
                         } else {
                             writingCurrentPage.value = 0
                         }

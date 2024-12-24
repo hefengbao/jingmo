@@ -16,5 +16,5 @@ import kotlinx.serialization.Serializable
 data class WritingWrapper(
     val data: List<Writing>,
     @SerialName("next_page")
-    val nextPage: String?
+    val nextPage: Int?
 )

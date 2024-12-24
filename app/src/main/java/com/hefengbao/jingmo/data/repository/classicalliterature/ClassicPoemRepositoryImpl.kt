@@ -15,6 +15,7 @@ import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -49,4 +50,9 @@ class ClassicPoemRepositoryImpl @Inject constructor(
 
     override fun search(query: String): Flow<List<ClassicPoemEntity>> =
         classicalLiteratureClassicPoemDao.search(query)
+
+    override fun getIdTitle(query: String): Flow<PagingData<IdTitle>> = Pager(
+        config = PagingConfig(30),
+        pagingSourceFactory = { classicalLiteratureClassicPoemDao.getIdTitle("%${query}%") }
+    ).flow
 }

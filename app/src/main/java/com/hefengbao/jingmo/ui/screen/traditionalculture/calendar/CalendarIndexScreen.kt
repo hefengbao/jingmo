@@ -207,21 +207,17 @@ fun CalendarIndexScreen(
                 }
             }
 
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Text(text = "宜", color = Color.Green)
-                    Text(text = lunar.dayYi.joinToString(" "))
-                }
-            }
-
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Text(text = "忌", color = Color.Red)
-                    Text(text = lunar.dayJi.joinToString(" "))
+            lunar.nextJieQi?.let {
+                item {
+                    Item(
+                        title = "下一节气",
+                        titleDescr = "${it.name} ${it.solar.toYmdHms()}",
+                        showDescr = showJieqiDescr,
+                        onShowDescrClick = { showJieqiDescr = !showJieqiDescr },
+                        descr = """
+                            二十四节气包括十二节（立春、惊蛰、清明、立夏、芒种、小暑、立秋、白露、寒露、立冬、大雪、小寒）和十二气（雨水、春分、谷雨、小满、夏至、大暑、处暑、秋分、霜降、小雪、冬至、大寒）。
+                        """.trimIndent()
+                    )
                 }
             }
 
@@ -331,6 +327,24 @@ fun CalendarIndexScreen(
                         每个节气持续15天左右，每隔5天为一候，因此从节气日开始，分别为初候、二候、三候。
                     """.trimIndent()
                 )
+            }
+
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(text = "宜", color = Color.Green)
+                    Text(text = lunar.dayYi.joinToString(" "))
+                }
+            }
+
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(text = "忌", color = Color.Red)
+                    Text(text = lunar.dayJi.joinToString(" "))
+                }
             }
 
             item {

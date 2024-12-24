@@ -30,21 +30,21 @@ import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
 
 interface Network {
     suspend fun dataset(): List<Dataset>
-    suspend fun chinaWorldCultureHeritage(): List<WorldCulturalHeritage>
-    suspend fun chineseAntitheticalCouplets(): List<AntitheticalCouplet>
-    suspend fun chineseExpressions(page: Int): ExpressionWrapper
-    suspend fun chineseKnowledge(): List<ChineseKnowledge>
-    suspend fun chineseModernPoetry(): List<ModernPoetry>
-    suspend fun chineseQuotes(): List<Quote>
-    suspend fun chineseWisecracks(): List<ChineseWisecrack>
-    suspend fun classicPoems(): List<ClassicPoem>
-    suspend fun dictionary(page: Int): DictionaryWrapper
-    suspend fun lyrics(): List<Lyric>
-    suspend fun idioms(page: Int): IdiomWrapper
-    suspend fun people(page: Int): PeopleWrapper
-    suspend fun poemSentences(): List<PoemSentence>
-    suspend fun chineseProverbs(): List<Proverb>
-    suspend fun riddles(): List<Riddle>
-    suspend fun tongueTwisters(): List<TongueTwister>
-    suspend fun writings(page: Int): WritingWrapper
+    suspend fun chinaWorldCultureHeritage(version: Int): List<WorldCulturalHeritage>
+    suspend fun chineseAntitheticalCouplets(version: Int): List<AntitheticalCouplet>
+    suspend fun chineseExpressions(version: Int, page: Int): ExpressionWrapper
+    suspend fun chineseKnowledge(version: Int): List<ChineseKnowledge>
+    suspend fun chineseModernPoetry(version: Int): List<ModernPoetry>
+    suspend fun chineseQuotes(version: Int): List<Quote>
+    suspend fun chineseWisecracks(version: Int): List<ChineseWisecrack>
+    suspend fun chineseDictionary(version: Int, page: Int): DictionaryWrapper
+    suspend fun chineseLyrics(version: Int): List<Lyric>
+    suspend fun chineseIdioms(version: Int, page: Int): IdiomWrapper
+    suspend fun chineseProverbs(version: Int): List<Proverb>
+    suspend fun chineseRiddles(version: Int): List<Riddle>
+    suspend fun chineseTongueTwisters(version: Int): List<TongueTwister>
+    suspend fun classicalLiteratureClassicPoems(version: Int): List<ClassicPoem>
+    suspend fun classicalLiteraturePeople(version: Int, page: Int): PeopleWrapper
+    suspend fun classicalLiteratureSentences(version: Int): List<PoemSentence>
+    suspend fun classicalLiteratureWritings(version: Int, page: Int): WritingWrapper
 }

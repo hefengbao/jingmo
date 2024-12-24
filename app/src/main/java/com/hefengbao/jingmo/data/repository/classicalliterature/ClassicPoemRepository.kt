@@ -12,6 +12,7 @@ package com.hefengbao.jingmo.data.repository.classicalliterature
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
 
 interface ClassicPoemRepository {
@@ -26,4 +27,5 @@ interface ClassicPoemRepository {
     fun isCollect(id: Int): Flow<ClassicPoemCollectionEntity?>
     fun collections(): Flow<PagingData<ClassicPoemEntity>>
     fun search(query: String): Flow<List<ClassicPoemEntity>>
+    fun getIdTitle(query: String): Flow<PagingData<IdTitle>>
 }

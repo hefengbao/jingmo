@@ -42,14 +42,18 @@ data class Writing(
     val authorId: Int?,
     @SerialName("AuthorDate")
     val authorDate: String?,
+    @SerialName("AuthorYears")
+    val authorYears: String?,
     @SerialName("AuthorPlace")
     val authorPlace: String?,
     @SerialName("Type")
     val type: String,
     @SerialName("TypeDetail")
-    val typeDetail: String,
+    val typeDetail: String?,
     @SerialName("Rhyme")
     val rhyme: String?,
+    @SerialName("FirstClauseRhyme")
+    val firstClauseRhyme: String?,
     @SerialName("Title")
     val title: Clause,
     @SerialName("SubTitle")
@@ -67,25 +71,27 @@ data class Writing(
 )
 
 fun Writing.asWritingEntity() = WritingEntity(
-    id,
-    groupIndex,
-    classes,
-    froms,
-    allusions,
-    pictures,
-    dynasty,
-    author,
-    authorId,
-    authorDate,
-    authorPlace,
-    type,
-    typeDetail,
-    rhyme,
-    title,
-    subtitle,
-    tuneId,
-    preface,
-    clauses,
-    note,
-    comments
+    id = id,
+    groupIndex = groupIndex,
+    classes = classes,
+    froms = froms,
+    allusions = allusions,
+    pictures = pictures,
+    dynasty = dynasty,
+    author = author,
+    authorId = authorId,
+    authorDate = authorDate,
+    authorYears = authorYears,
+    authorPlace = authorPlace,
+    type = type,
+    typeDetail = typeDetail,
+    rhyme = type,
+    firstClauseRhyme = firstClauseRhyme,
+    title = title,
+    subtitle = subtitle,
+    tuneId = tuneId,
+    preface = preface,
+    clauses = clauses,
+    note = note,
+    comments = comments
 )

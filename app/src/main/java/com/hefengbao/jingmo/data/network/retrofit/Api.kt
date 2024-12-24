@@ -35,64 +35,93 @@ interface Api {
     @GET("dataset.json")
     suspend fun dataset(): List<Dataset>
 
-    @GET("china_world_cultural_heritage.json")
-    suspend fun chinaWorldCultureHeritage(): List<WorldCulturalHeritage>
+    @GET("china_world_cultural_heritage_v{version}.json")
+    suspend fun chinaWorldCultureHeritage(
+        @Path("version") version: Int,
+    ): List<WorldCulturalHeritage>
 
-    @GET("expressions_{page}.json")
-    suspend fun chineseExpressions(
-        @Path("page") page: Int
-    ): ExpressionWrapper
+    @GET("chinese_antithetical_couplet_v{version}.json")
+    suspend fun chineseAntitheticalCouplet(
+        @Path("version") version: Int,
+    ): List<AntitheticalCouplet>
 
-    @GET("chinese_antithetical_couplet.json")
-    suspend fun chineseAntitheticalCouplet(): List<AntitheticalCouplet>
-
-    @GET("chinese_knowledge.json")
-    suspend fun chineseKnowledge(): List<ChineseKnowledge>
-
-    @GET("chinese_wisecracks.json")
-    suspend fun chineseWisecracks(): List<ChineseWisecrack>
-
-    @GET("chinese_quotes.json")
-    suspend fun chineseQuotes(): List<Quote>
-
-    @GET("classic_poems.json")
-    suspend fun classicPoems(): List<ClassicPoem>
-
-    @GET("dict_{page}.json")
-    suspend fun dictionary(
+    @GET("chinese_dict_v{version}_{page}.json")
+    suspend fun chineseDictionary(
+        @Path("version") version: Int,
         @Path("page") page: Int
     ): DictionaryWrapper
 
-    @GET("idioms_v2_{page}.json")
-    suspend fun idioms(
+    @GET("chinese_expressions_v{version}_{page}.json")
+    suspend fun chineseExpressions(
+        @Path("version") version: Int,
+        @Path("page") page: Int
+    ): ExpressionWrapper
+
+    @GET("chinese_idioms_v{version}_{page}.json")
+    suspend fun chineseIdioms(
+        @Path("version") version: Int,
         @Path("page") page: Int
     ): IdiomWrapper
 
-    @GET("lyrics.json")
-    suspend fun lyrics(): List<Lyric>
+    @GET("chinese_knowledge_v{version}.json")
+    suspend fun chineseKnowledge(
+        @Path("version") version: Int,
+    ): List<ChineseKnowledge>
 
-    @GET("people_{page}.json")
-    suspend fun people(
+    @GET("chinese_lyrics_v{version}.json")
+    suspend fun chineseLyrics(
+        @Path("version") version: Int,
+    ): List<Lyric>
+
+    @GET("chinese_modern_poetry_v{version}.json")
+    suspend fun chineseModernPoetry(
+        @Path("version") version: Int,
+    ): List<ModernPoetry>
+
+    @GET("classical_literature_classic_poems_v{version}.json")
+    suspend fun classicalLiteratureClassicPoems(
+        @Path("version") version: Int,
+    ): List<ClassicPoem>
+
+    @GET("chinese_proverbs_v{version}.json")
+    suspend fun chineseProverbs(
+        @Path("version") version: Int,
+    ): List<Proverb>
+
+    @GET("chinese_quotes_v{version}.json")
+    suspend fun chineseQuotes(
+        @Path("version") version: Int,
+    ): List<Quote>
+
+    @GET("chinese_riddles_v{version}.json")
+    suspend fun chineseRiddles(
+        @Path("version") version: Int,
+    ): List<Riddle>
+
+    @GET("chinese_tongue_twisters_v{version}.json")
+    suspend fun chineseTongueTwisters(
+        @Path("version") version: Int,
+    ): List<TongueTwister>
+
+    @GET("chinese_wisecracks_v{version}.json")
+    suspend fun chineseWisecracks(
+        @Path("version") version: Int,
+    ): List<ChineseWisecrack>
+
+    @GET("classical_literature_people_v{version}_{page}.json")
+    suspend fun classicalLiteraturePeople(
+        @Path("version") version: Int,
         @Path("page") page: Int
     ): PeopleWrapper
 
-    @GET("chinese_modern_poetry.json")
-    suspend fun chineseModernPoetry(): List<ModernPoetry>
+    @GET("classical_literature_sentences_v{version}.json")
+    suspend fun classicalLiteratureSentences(
+        @Path("version") version: Int,
+    ): List<PoemSentence>
 
-    @GET("proverbs.json")
-    suspend fun chineseProverb(): List<Proverb>
-
-    @GET("poem_sentences.json")
-    suspend fun poemSentences(): List<PoemSentence>
-
-    @GET("riddles.json")
-    suspend fun riddles(): List<Riddle>
-
-    @GET("tongue_twisters.json")
-    suspend fun tongueTwisters(): List<TongueTwister>
-
-    @GET("writings_{page}.json")
-    suspend fun writings(
+    @GET("classical_literature_writings_v{version}_{page}.json")
+    suspend fun classicalLiteratureWritings(
+        @Path("version") version: Int,
         @Path("page") page: Int
     ): WritingWrapper
 }

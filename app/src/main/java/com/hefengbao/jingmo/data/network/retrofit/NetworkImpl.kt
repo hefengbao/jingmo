@@ -75,42 +75,54 @@ class NetworkImpl @Inject constructor(
 
     override suspend fun dataset(): List<Dataset> = networkApi.dataset()
 
-    override suspend fun chinaWorldCultureHeritage(): List<WorldCulturalHeritage> =
-        networkApi.chinaWorldCultureHeritage()
+    override suspend fun chinaWorldCultureHeritage(version: Int): List<WorldCulturalHeritage> =
+        networkApi.chinaWorldCultureHeritage(version)
 
-    override suspend fun chineseAntitheticalCouplets(): List<AntitheticalCouplet> =
-        networkApi.chineseAntitheticalCouplet()
+    override suspend fun chineseAntitheticalCouplets(version: Int): List<AntitheticalCouplet> =
+        networkApi.chineseAntitheticalCouplet(version)
 
-    override suspend fun chineseExpressions(page: Int): ExpressionWrapper =
-        networkApi.chineseExpressions(page)
+    override suspend fun chineseExpressions(version: Int, page: Int): ExpressionWrapper =
+        networkApi.chineseExpressions(version, page)
 
-    override suspend fun chineseKnowledge(): List<ChineseKnowledge> = networkApi.chineseKnowledge()
+    override suspend fun chineseKnowledge(version: Int): List<ChineseKnowledge> =
+        networkApi.chineseKnowledge(version)
 
-    override suspend fun chineseModernPoetry(): List<ModernPoetry> =
-        networkApi.chineseModernPoetry()
+    override suspend fun chineseModernPoetry(version: Int): List<ModernPoetry> =
+        networkApi.chineseModernPoetry(version)
 
-    override suspend fun chineseWisecracks(): List<ChineseWisecrack> =
-        networkApi.chineseWisecracks()
+    override suspend fun chineseQuotes(version: Int): List<Quote> =
+        networkApi.chineseQuotes(version)
 
-    override suspend fun chineseQuotes(): List<Quote> = networkApi.chineseQuotes()
+    override suspend fun chineseWisecracks(version: Int): List<ChineseWisecrack> =
+        networkApi.chineseWisecracks(version)
 
-    override suspend fun classicPoems(): List<ClassicPoem> = networkApi.classicPoems()
+    override suspend fun chineseDictionary(version: Int, page: Int): DictionaryWrapper =
+        networkApi.chineseDictionary(version, page)
 
-    override suspend fun dictionary(page: Int): DictionaryWrapper = networkApi.dictionary(page)
+    override suspend fun chineseLyrics(version: Int): List<Lyric> =
+        networkApi.chineseLyrics(version)
 
-    override suspend fun lyrics(): List<Lyric> = networkApi.lyrics()
+    override suspend fun chineseIdioms(version: Int, page: Int): IdiomWrapper =
+        networkApi.chineseIdioms(version, page)
 
-    override suspend fun idioms(page: Int): IdiomWrapper = networkApi.idioms(page)
+    override suspend fun chineseProverbs(version: Int): List<Proverb> =
+        networkApi.chineseProverbs(version)
 
-    override suspend fun people(page: Int): PeopleWrapper = networkApi.people(page)
+    override suspend fun chineseRiddles(version: Int): List<Riddle> =
+        networkApi.chineseRiddles(version)
 
-    override suspend fun poemSentences(): List<PoemSentence> = networkApi.poemSentences()
+    override suspend fun chineseTongueTwisters(version: Int): List<TongueTwister> =
+        networkApi.chineseTongueTwisters(version)
 
-    override suspend fun chineseProverbs(): List<Proverb> = networkApi.chineseProverb()
+    override suspend fun classicalLiteratureClassicPoems(version: Int): List<ClassicPoem> =
+        networkApi.classicalLiteratureClassicPoems(version)
 
-    override suspend fun riddles(): List<Riddle> = networkApi.riddles()
+    override suspend fun classicalLiteraturePeople(version: Int, page: Int): PeopleWrapper =
+        networkApi.classicalLiteraturePeople(version, page)
 
-    override suspend fun tongueTwisters(): List<TongueTwister> = networkApi.tongueTwisters()
+    override suspend fun classicalLiteratureSentences(version: Int): List<PoemSentence> =
+        networkApi.classicalLiteratureSentences(version)
 
-    override suspend fun writings(page: Int): WritingWrapper = networkApi3.writings(page)
+    override suspend fun classicalLiteratureWritings(version: Int, page: Int): WritingWrapper =
+        networkApi3.classicalLiteratureWritings(version, page)
 }

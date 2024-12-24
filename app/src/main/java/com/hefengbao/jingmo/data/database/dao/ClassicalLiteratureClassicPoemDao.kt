@@ -17,6 +17,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -57,4 +58,7 @@ interface ClassicalLiteratureClassicPoemDao {
 
     @Query("delete from classic_poems")
     suspend fun clear()
+
+    @Query("select id,title from classic_poems where title like :query order by id asc")
+    fun getIdTitle(query: String): PagingSource<Int, IdTitle>
 }

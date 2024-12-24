@@ -15,6 +15,7 @@ import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -61,4 +62,9 @@ class WritingRepositoryImpl @Inject constructor(
 
     override fun isCollect(id: Int): Flow<WritingCollectionEntity?> =
         classicalLiteratureWritingDao.isCollect(id)
+
+    override fun getIdTitle(query: String): Flow<PagingData<IdTitle>> = Pager(
+        config = PagingConfig(pageSize = 30),
+        pagingSourceFactory = { classicalLiteratureWritingDao.getIdTitle("%${query}%") }
+    ).flow
 }

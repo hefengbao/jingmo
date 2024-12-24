@@ -11,21 +11,24 @@ package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
 class WritingReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
@@ -34,6 +37,7 @@ class WritingReadViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var id = MutableStateFlow(1)
+    private var query = MutableStateFlow("")
 
     init {
         viewModelScope.launch {
@@ -45,6 +49,10 @@ class WritingReadViewModel @Inject constructor(
 
     fun setCurrentId(id: Int) {
         this.id.value = id
+    }
+
+    fun setQuery(query: String) {
+        this.query.value = query
     }
 
     val writing = id.flatMapLatest {
@@ -96,4 +104,8 @@ class WritingReadViewModel @Inject constructor(
             preferenceRepository.setClassicalLiteratureWritingLastReadId(id)
         }
     }
+
+    val idTitles = query.debounce(500).flatMapLatest {
+        writingRepository.getIdTitle(it)
+    }.cachedIn(viewModelScope)
 }
