@@ -39,7 +39,7 @@ interface ClassicalLiteratureWritingDao {
     @Query("select * from writings join writing_fts on writing_fts.rowid = writings.id where writing_fts match :query")
     fun search(query: String): PagingSource<Int, WritingEntity>
 
-    @Query("select * from writings where author match :author order by id asc")
+    @Query("select * from writings where author like '%'|| :author || '%' order by id asc")
     fun searchByAuthor(author: String): PagingSource<Int, WritingEntity>
 
     @Query("select id from writings where rowid > :id order by id asc limit 1")
@@ -68,4 +68,7 @@ interface ClassicalLiteratureWritingDao {
 
     @Query("select Id as id, title2 as title from writings where title2 like :query order by id asc")
     fun getIdTitle(query: String): PagingSource<Int, IdTitle>
+
+    @Query("select max(id) from writings")
+    fun getMaxId(): Flow<Int>
 }

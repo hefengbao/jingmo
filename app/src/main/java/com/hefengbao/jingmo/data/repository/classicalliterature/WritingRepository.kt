@@ -28,4 +28,5 @@ interface WritingRepository {
     suspend fun uncollect(writingId: Int)
     fun isCollect(id: Int): Flow<WritingCollectionEntity?>
     fun getIdTitle(query: String): Flow<PagingData<IdTitle>>
+    fun getMaxId(): Flow<Int>
 }

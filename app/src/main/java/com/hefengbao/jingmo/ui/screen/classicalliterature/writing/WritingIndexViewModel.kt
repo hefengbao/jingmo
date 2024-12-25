@@ -27,15 +27,25 @@ class WritingIndexViewModel @Inject constructor(
     val json: Json,
     private val writingRepository: WritingRepository
 ) : ViewModel() {
+    private var maxId = 1000000
+
     init {
-        getRandomWriting()
+        viewModelScope.launch {
+            writingRepository.getMaxId().collectLatest {
+                maxId = if (it == 0) 1 else it
+                getRandomWriting()
+            }
+        }
     }
 
     private val _writing: MutableStateFlow<WritingEntity?> = MutableStateFlow(null)
     val writing: SharedFlow<WritingEntity?> = _writing
     fun getRandomWriting() {
+
         viewModelScope.launch {
-            writingRepository.random().collectLatest {
+            writingRepository.get(
+                (1..maxId).random()
+            ).collectLatest {
                 _writing.value = it
             }
         }

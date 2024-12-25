@@ -20,51 +20,53 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class WritingRepositoryImpl @Inject constructor(
-    private val classicalLiteratureWritingDao: ClassicalLiteratureWritingDao
+    private val dao: ClassicalLiteratureWritingDao
 ) : WritingRepository {
-    override fun get(id: Int): Flow<WritingEntity> = classicalLiteratureWritingDao.get(id)
+    override fun get(id: Int): Flow<WritingEntity> = dao.get(id)
 
-    override fun random(): Flow<WritingEntity> = classicalLiteratureWritingDao.random()
+    override fun random(): Flow<WritingEntity> = dao.random()
 
     override fun list(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { classicalLiteratureWritingDao.list() }
+        pagingSourceFactory = { dao.list() }
     ).flow
 
     override fun search(query: String): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { classicalLiteratureWritingDao.search("*$query*") }
+        pagingSourceFactory = { dao.search(query) }
     ).flow
 
     override fun searchByAuthor(author: String): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            classicalLiteratureWritingDao.searchByAuthor(author)
+            dao.searchByAuthor(author)
         }
     ).flow
 
-    override fun getNextId(id: Int): Flow<Int?> = classicalLiteratureWritingDao.getNextId(id)
+    override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
-    override fun getPrevId(id: Int): Flow<Int?> = classicalLiteratureWritingDao.getPrevId(id)
+    override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
     override fun collections(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            classicalLiteratureWritingDao.collections()
+            dao.collections()
         }
     ).flow
 
     override suspend fun collect(entity: WritingCollectionEntity) =
-        classicalLiteratureWritingDao.collect(entity)
+        dao.collect(entity)
 
     override suspend fun uncollect(writingId: Int) =
-        classicalLiteratureWritingDao.uncollect(writingId)
+        dao.uncollect(writingId)
 
     override fun isCollect(id: Int): Flow<WritingCollectionEntity?> =
-        classicalLiteratureWritingDao.isCollect(id)
+        dao.isCollect(id)
 
     override fun getIdTitle(query: String): Flow<PagingData<IdTitle>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { classicalLiteratureWritingDao.getIdTitle("%${query}%") }
+        pagingSourceFactory = { dao.getIdTitle("%${query}%") }
     ).flow
+
+    override fun getMaxId(): Flow<Int> = dao.getMaxId()
 }
