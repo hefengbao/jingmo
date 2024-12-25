@@ -15,7 +15,7 @@
 
 ## 预览
 
-![](screenshot/v1.13.0.png)
+![](screenshot/v1.14.0.png)
 
 ## 介绍
 
