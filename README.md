@@ -85,6 +85,7 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 | 公众号  | 2024-02-19 | F       | ￥5  |
 | 公众号  | 2024-03-03 | 七月流火    | ￥9  |
 | 公众号  | 2024-03-15 | 帅蜀黍     | ￥9  |
+| 公众号  | 2024-12-26 | yuebao  | ￥5  |
 
 感谢各位的支持！！！
 
