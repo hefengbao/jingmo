@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
+import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.model.AppStatus
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
@@ -28,29 +30,32 @@ fun WritingCaptureRoute(
 ) {
     val writing by viewModel.writing.collectAsState()
     val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val dataStatus = viewModel.appStatus
+    val appStatus by viewModel.appStatus.collectAsState(null)
 
     LaunchedEffect(Unit) {
         viewModel.getColors()
     }
 
-    WritingCaptureScreen(
-        onBackClick = onBackClick,
-        writing = writing,
-        defaultColor = if (dataStatus.captureTextColor == "white") Color.White else Color.Black,
-        onColorChange = { viewModel.setCaptureColor(if (it == Color.White) "white" else "black") },
-        defaultBackgroundColor = dataStatus.captureBackgroundColor,
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors
-    )
+    appStatus?.let { status: AppStatus ->
+        Log.i("WritingCaptureRoute", appStatus.toString())
+        WritingCaptureScreen(
+            onBackClick = onBackClick,
+            writing = writing,
+            textColor = status.captureTextColor,
+            onTextColorChange = { viewModel.setCaptureColor(it) },
+            backgroundColor = status.captureBackgroundColor,
+            onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
+            colors = chineseColors
+        )
+    }
 }
 
 @Composable
 private fun WritingCaptureScreen(
     onBackClick: () -> Unit,
-    defaultColor: Color,
-    onColorChange: (Color) -> Unit,
-    defaultBackgroundColor: String,
+    textColor: String,
+    onTextColorChange: (String) -> Unit,
+    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
     writing: WritingEntity?,
     colors: List<ChineseColor>
@@ -58,11 +63,15 @@ private fun WritingCaptureScreen(
     CaptureScaffold(
         colors = colors,
         onBackClick = onBackClick,
-        defaultColor = defaultColor,
-        onColorChange = onColorChange,
-        defaultBackgroundColor = defaultBackgroundColor,
+        textColor = textColor,
+        onTextColorChange = onTextColorChange,
+        backgroundColor = backgroundColor,
         onBackgroundColorChange = onBackgroundColorChange
-    ) { color, _ ->
+    ) {
+
+        val tColor = if (textColor == "white") Color.White else Color.Black
+
+        Log.i("WritingCaptureScreen", "颜色改变了, $textColor, $tColor")
         writing?.let { entity ->
             val content = buildString {
                 entity.clauses.mapIndexed { _, clause ->
@@ -81,17 +90,17 @@ private fun WritingCaptureScreen(
             Text(
                 text = entity.title.content,
                 style = MaterialTheme.typography.titleLarge,
-                color = color
+                color = tColor
             )
             Text(
                 text = "${entity.dynasty}·${entity.author}",
                 style = MaterialTheme.typography.titleSmall,
-                color = color
+                color = tColor
             )
             Text(
                 text = content,
                 style = MaterialTheme.typography.bodyLarge,
-                color = color
+                color = tColor
             )
         }
     }

@@ -22,7 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,13 +36,22 @@ class WritingCaptureViewModel @Inject constructor(
 ) : ViewModel() {
     private val args: WritingCaptureArgs = WritingCaptureArgs(savedStateHandle)
 
-    lateinit var appStatus: AppStatus
+    private val _appStatus: MutableStateFlow<AppStatus?> = MutableStateFlow(null)
+    val appStatus: SharedFlow<AppStatus?> = _appStatus
 
     init {
         viewModelScope.launch {
-            appStatus = preferenceRepository.getAppStatus().first()
+            preferenceRepository.getAppStatus().collectLatest {
+                _appStatus.value = it
+            }
         }
     }
+
+    /* val appStatus: SharedFlow<AppStatus?> = preferenceRepository.getAppStatus().stateIn(
+         scope = viewModelScope,
+         initialValue = null,
+         started = SharingStarted.WhileSubscribed(5_000),
+     )*/
 
     val writing = writingRepository.get(args.poemId.toInt()).stateIn(
         scope = viewModelScope,
@@ -50,11 +59,11 @@ class WritingCaptureViewModel @Inject constructor(
         initialValue = null
     )
 
-    private val _Colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
-    val colors: SharedFlow<List<Color>> = _Colors
+    private val _colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
+    val colors: SharedFlow<List<Color>> = _colors
     fun getColors() {
         viewModelScope.launch {
-            _Colors.value = colorRepository.list()
+            _colors.value = colorRepository.list()
         }
     }
 

@@ -22,7 +22,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Photo
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -89,7 +89,7 @@ private fun IdiomReadScreen(
             title = "成语",
             actions = {
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
-                    Icon(imageVector = Icons.Default.Photo, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
                 }
             },
             bottomBar = {

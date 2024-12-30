@@ -43,7 +43,7 @@
             android:value="web" />
 
         <receiver
-            android:name=".widgets.IdiomWidgetReceiver"
+            android:name=".widgets.ChineseIdiomWidgetReceiver"
             android:exported="false"
             android:label="@string/widget_idiom">
             <intent-filter>
@@ -54,7 +54,7 @@
                 android:resource="@xml/idiom_widget_info" />
         </receiver>
         <receiver
-            android:name=".widgets.PoemWidgetReceiver"
+            android:name=".widgets.ClassicalLiteraturePoemWidgetReceiver"
             android:exported="false"
             android:label="@string/widget_poem">
             <intent-filter>
@@ -65,7 +65,7 @@
                 android:resource="@xml/poem_widget_info" />
         </receiver>
         <receiver
-            android:name=".widgets.PoemSentenceWidgetReceiver"
+            android:name=".widgets.ClassicalLiteratureSentenceWidgetReceiver"
             android:exported="false"
             android:label="@string/widget_poem_sentence">
             <intent-filter>

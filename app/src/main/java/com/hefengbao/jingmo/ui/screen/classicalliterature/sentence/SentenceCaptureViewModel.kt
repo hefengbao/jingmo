@@ -18,12 +18,11 @@ import com.hefengbao.jingmo.data.model.traditionalculture.Color
 import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
-import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.PoemSentenceCaptureArgs
+import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.ClassicalLiteratureSentenceCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,28 +33,32 @@ class SentenceCaptureViewModel @Inject constructor(
     private val colorRepository: ColorRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
-    private val args: PoemSentenceCaptureArgs = PoemSentenceCaptureArgs(savedStateHandle)
+    private val args: ClassicalLiteratureSentenceCaptureArgs =
+        ClassicalLiteratureSentenceCaptureArgs(savedStateHandle)
 
-    private val _poemSentence: MutableStateFlow<SentenceEntity?> = MutableStateFlow(null)
-    val poemSentence: SharedFlow<SentenceEntity?> = _poemSentence
+    private val _sentence: MutableStateFlow<SentenceEntity?> = MutableStateFlow(null)
+    val sentence: SharedFlow<SentenceEntity?> = _sentence
 
-    lateinit var appStatus: AppStatus
+    private val _appStatus: MutableStateFlow<AppStatus?> = MutableStateFlow(null)
+    val appStatus: SharedFlow<AppStatus?> = _appStatus
 
     init {
         viewModelScope.launch {
-            appStatus = preferenceRepository.getAppStatus().first()
+            preferenceRepository.getAppStatus().collectLatest {
+                _appStatus.value = it
+            }
 
-            sentenceRepository.get(args.poemSentenceId.toInt()).collectLatest {
-                _poemSentence.value = it
+            sentenceRepository.get(args.id.toInt()).collectLatest {
+                _sentence.value = it
             }
         }
     }
 
-    private val _Colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
-    val colors: SharedFlow<List<Color>> = _Colors
+    private val _colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
+    val colors: SharedFlow<List<Color>> = _colors
     fun getColors() {
         viewModelScope.launch {
-            _Colors.value = colorRepository.list()
+            _colors.value = colorRepository.list()
         }
     }
 

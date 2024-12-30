@@ -24,10 +24,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReadMore
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -113,7 +113,7 @@ private fun SentenceIndexScreen(
             }
             sentence?.let {
                 IconButton(onClick = { onCaptureClick(sentence.id) }) {
-                    Icon(imageVector = Icons.Default.Photo, contentDescription = "生成图片")
+                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = "生成图片")
                 }
             }
         },

@@ -22,7 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,11 +36,14 @@ class WisecrackCaptureViewModel @Inject constructor(
 ) : ViewModel() {
     private val args: ChineseWisecrackCaptureArgs = ChineseWisecrackCaptureArgs(savedStateHandle)
 
-    lateinit var appStatus: AppStatus
+    private val _appStatus: MutableStateFlow<AppStatus?> = MutableStateFlow(null)
+    val appStatus: SharedFlow<AppStatus?> = _appStatus
 
     init {
         viewModelScope.launch {
-            appStatus = preferenceRepository.getAppStatus().first()
+            preferenceRepository.getAppStatus().collectLatest {
+                _appStatus.value = it
+            }
         }
     }
 

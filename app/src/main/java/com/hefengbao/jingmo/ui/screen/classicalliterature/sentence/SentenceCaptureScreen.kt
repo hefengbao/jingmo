@@ -35,44 +35,49 @@ fun SentenceCaptureRoute(
     viewModel: SentenceCaptureViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val poemSentence by viewModel.poemSentence.collectAsState(initial = null)
+    val sentence by viewModel.sentence.collectAsState(initial = null)
     val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val dataStatus = viewModel.appStatus
+    val appStatus by viewModel.appStatus.collectAsState(null)
 
     LaunchedEffect(Unit) {
         viewModel.getColors()
     }
-    SentenceCaptureScreen(
-        onBackClick = onBackClick,
-        poemSentence = poemSentence,
-        defaultColor = if (dataStatus.captureTextColor == "white") Color.White else Color.Black,
-        onColorChange = { viewModel.setCaptureColor(if (it == Color.White) "white" else "black") },
-        defaultBackgroundColor = dataStatus.captureBackgroundColor,
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors
-    )
+
+    appStatus?.let { status ->
+        SentenceCaptureScreen(
+            onBackClick = onBackClick,
+            sentence = sentence,
+            textColor = status.captureTextColor,
+            onTextColorChange = { viewModel.setCaptureColor(it) },
+            backgroundColor = status.captureBackgroundColor,
+            onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
+            colors = chineseColors
+        )
+    }
 }
 
 @Composable
 private fun SentenceCaptureScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    defaultColor: Color,
-    onColorChange: (Color) -> Unit,
-    defaultBackgroundColor: String,
+    textColor: String,
+    onTextColorChange: (String) -> Unit,
+    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    poemSentence: SentenceEntity?,
+    sentence: SentenceEntity?,
     colors: List<ChineseColor>
 ) {
     CaptureScaffold(
         colors = colors,
         onBackClick = onBackClick,
-        defaultColor = defaultColor,
-        onColorChange = onColorChange,
-        defaultBackgroundColor = defaultBackgroundColor,
+        textColor = textColor,
+        onTextColorChange = onTextColorChange,
+        backgroundColor = backgroundColor,
         onBackgroundColorChange = onBackgroundColorChange
-    ) { color, _ ->
-        poemSentence?.let { entity ->
+    ) {
+        val tColor = if (textColor == "white") Color.White else Color.Black
+
+        sentence?.let { entity ->
             Row(
                 modifier = modifier
                     .fillMaxSize()
@@ -90,7 +95,7 @@ private fun SentenceCaptureScreen(
                                 Text(
                                     text = char.toString(),
                                     style = TextStyle.Default.copy(fontSize = 24.sp),
-                                    color = color
+                                    color = tColor
                                 )
                             }
                         }
@@ -101,7 +106,7 @@ private fun SentenceCaptureScreen(
                         .replace("》", "﹂")
                         .toCharArray()
                         .map {
-                            Text(text = it.toString(), color = color)
+                            Text(text = it.toString(), color = tColor)
                         }
                 }
             }

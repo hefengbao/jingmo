@@ -10,8 +10,8 @@
 package com.hefengbao.jingmo.ui.component
 
 import android.Manifest
+import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -31,13 +31,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.SaveAlt
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TextFormat
+import androidx.compose.material.icons.outlined.SaveAlt
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -62,6 +60,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -76,7 +75,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.util.FileUtil
-import dev.shreyaspatil.capturable.Capturable
+import dev.shreyaspatil.capturable.capturable
 import dev.shreyaspatil.capturable.controller.rememberCaptureController
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -85,18 +84,18 @@ import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class,
-    ExperimentalComposeApi::class
+    ExperimentalComposeUiApi::class, ExperimentalComposeApi::class,
 )
 @Composable
 fun CaptureScaffold(
     modifier: Modifier = Modifier,
     colors: List<ChineseColor>,
     onBackClick: () -> Unit,
-    defaultColor: Color,
-    onColorChange: (Color) -> Unit,
-    defaultBackgroundColor: String,
+    textColor: String,
+    onTextColorChange: (String) -> Unit,
+    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    content: @Composable (color: Color, backgroundColor: String) -> Unit
+    content: @Composable () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -104,16 +103,14 @@ fun CaptureScaffold(
 
     val context = LocalContext.current
 
+    var bitmap: ImageBitmap? by remember { mutableStateOf(null) }
+
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
             initialValue = SheetValue.Hidden,
             skipHiddenState = false
         )
     )
-
-    var backgroundColor by remember { mutableStateOf(defaultBackgroundColor) }
-
-    var color by remember { mutableStateOf(defaultColor) }
 
     val writeStoragePermissionState = rememberPermissionState(
         permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -143,30 +140,30 @@ fun CaptureScaffold(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {
-                        // Android 10 以下需要存储权限
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                            if (writeStoragePermissionState.status.isGranted) {
-                                captureController.captureAsync()
-                            } else {
-                                if (writeStoragePermissionState.status.shouldShowRationale) {
-                                    shouldShowRationale = true
-                                } else {
-                                    writeStoragePermissionState.launchPermissionRequest()
+                    IconButton(
+                        onClick = {
+                            val bitmapAsync = captureController.captureAsync()
+
+                            try {
+                                coroutineScope.launch {
+                                    bitmap = bitmapAsync.await()
                                 }
+                            } catch (error: Throwable) {
+                                Toast.makeText(context, "${error.message}", Toast.LENGTH_LONG)
+                                    .show()
                             }
-                        } else {
-                            captureController.captureAsync()
                         }
-                    }) {
-                        Icon(imageVector = Icons.Default.SaveAlt, contentDescription = null)
+                    ) {
+                        Icon(imageVector = Icons.Outlined.SaveAlt, contentDescription = null)
                     }
-                    IconButton(onClick = {
-                        coroutineScope.launch {
-                            scaffoldState.bottomSheetState.expand()
+                    IconButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                scaffoldState.bottomSheetState.expand()
+                            }
                         }
-                    }) {
-                        Icon(imageVector = Icons.Default.Settings, contentDescription = null)
+                    ) {
+                        Icon(imageVector = Icons.Outlined.Settings, contentDescription = null)
                     }
                 }
             )
@@ -190,8 +187,7 @@ fun CaptureScaffold(
                             modifier = modifier
                                 .background(Color.LightGray)
                                 .clickable {
-                                    color = Color.White
-                                    onColorChange(Color.White)
+                                    onTextColorChange("white")
                                 }
                                 .padding(16.dp),
                             imageVector = Icons.Default.TextFormat,
@@ -202,8 +198,7 @@ fun CaptureScaffold(
                             modifier = modifier
                                 .background(Color.LightGray)
                                 .clickable {
-                                    color = Color.Black
-                                    onColorChange(Color.Black)
+                                    onTextColorChange("black")
                                 }
                                 .padding(16.dp),
                             imageVector = Icons.Default.TextFormat,
@@ -232,7 +227,6 @@ fun CaptureScaffold(
                                         .width(100.dp)
                                         .fillMaxHeight()
                                         .clickable {
-                                            backgroundColor = item.hex
                                             onBackgroundColorChange(item.hex)
                                         },
                                     contentAlignment = Alignment.Center
@@ -248,60 +242,32 @@ fun CaptureScaffold(
             }
         },
     ) { paddingValues ->
-        Capturable(
-            controller = captureController,
-            onCaptured = { imageBitmap: ImageBitmap?, throwable: Throwable? ->
-                if (imageBitmap != null) {
-                    val localDateTime = LocalDateTime.now()
-                    val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
-
-                    if (FileUtil.saveImageToStorage(
-                            context,
-                            imageBitmap.asAndroidBitmap(),
-                            "jingmo_${dateTimeFormatter.format(localDateTime)}.jpg"
-                        )
-                    ) {
-                        Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                if (throwable != null) {
-                    Log.e("CaptureScaffold", throwable.message.toString())
-                    Toast.makeText(context, "保存失败 ${throwable.message}", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            },
+        Column(
             modifier = modifier
+                .capturable(captureController)
                 .fillMaxWidth()
                 .padding(paddingValues)
-                .verticalScroll(
-                    rememberScrollState()
-                )
+                .background(Color(backgroundColor.toColorInt()))
+                .padding(32.dp, 96.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
+            content.invoke()
+            Image(
                 modifier = modifier
                     .fillMaxWidth()
-                    .background(Color(backgroundColor.toColorInt()))
-                    .padding(32.dp, 96.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                content(color, backgroundColor)
-                Image(
-                    modifier = modifier
-                        .padding(16.dp)
-                        .size(64.dp),
-                    painter = painterResource(
-                        id = if (color == Color.White) {
-                            R.drawable.ic_nowinlife_white
-                        } else {
-                            R.drawable.ic_nowinlife_black
-                        }
-                    ),
-                    contentDescription = null
-                )
-            }
+                    .padding(16.dp)
+                    .size(64.dp),
+                alignment = Alignment.Center,
+                painter = painterResource(
+                    id = if (textColor == "white") {
+                        R.drawable.ic_nowinlife_white
+                    } else {
+                        R.drawable.ic_nowinlife_black
+                    }
+                ),
+                contentDescription = null
+            )
         }
     }
 
@@ -325,5 +291,38 @@ fun CaptureScaffold(
                 }
             }
         }
+    }
+
+    bitmap?.let { image ->
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            if (writeStoragePermissionState.status.isGranted) {
+                saveImage(context, image)
+            } else {
+                if (writeStoragePermissionState.status.shouldShowRationale) {
+                    shouldShowRationale = true
+                } else {
+                    writeStoragePermissionState.launchPermissionRequest()
+                }
+            }
+        } else {
+            saveImage(context, image)
+        }
+    }
+
+
+}
+
+private fun saveImage(context: Context, bitmap: ImageBitmap) {
+    val localDateTime = LocalDateTime.now()
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+    if (FileUtil.saveImageToStorage(
+            context,
+            bitmap.asAndroidBitmap(),
+            "jingmo_${dateTimeFormatter.format(localDateTime)}.jpg"
+        )
+    ) {
+        Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show()
+    } else {
+        Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show()
     }
 }

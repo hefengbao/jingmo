@@ -39,30 +39,32 @@ fun IdiomCaptureRoute(
 ) {
     val idiom by viewModel.idiom.collectAsState(initial = null)
     val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val dataStatus = viewModel.appStatus
+    val appStatus by viewModel.appStatus.collectAsState(null)
 
     LaunchedEffect(Unit) {
         viewModel.getColors()
     }
 
-    IdiomCaptureScreen(
-        onBackClick = onBackClick,
-        idiom = idiom,
-        defaultColor = if (dataStatus.captureTextColor == "white") Color.White else Color.Black,
-        onColorChange = { viewModel.setCaptureColor(if (it == Color.White) "white" else "black") },
-        defaultBackgroundColor = dataStatus.captureBackgroundColor,
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors
-    )
+    appStatus?.let { status ->
+        IdiomCaptureScreen(
+            onBackClick = onBackClick,
+            idiom = idiom,
+            textColor = status.captureTextColor,
+            onTextColorChange = { viewModel.setCaptureColor(it) },
+            backgroundColor = status.captureBackgroundColor,
+            onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
+            colors = chineseColors
+        )
+    }
 }
 
 @Composable
 private fun IdiomCaptureScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    defaultColor: Color,
-    onColorChange: (Color) -> Unit,
-    defaultBackgroundColor: String,
+    textColor: String,
+    onTextColorChange: (String) -> Unit,
+    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
     idiom: IdiomEntity?,
     colors: List<ChineseColor>
@@ -70,11 +72,13 @@ private fun IdiomCaptureScreen(
     CaptureScaffold(
         colors = colors,
         onBackClick = onBackClick,
-        defaultColor = defaultColor,
-        onColorChange = onColorChange,
-        defaultBackgroundColor = defaultBackgroundColor,
+        textColor = textColor,
+        onTextColorChange = onTextColorChange,
+        backgroundColor = backgroundColor,
         onBackgroundColorChange = onBackgroundColorChange
-    ) { color, _ ->
+    ) {
+        val tColor = if (textColor == "white") Color.White else Color.Black
+
         idiom?.let {
             Column(
                 modifier = modifier
@@ -88,12 +92,12 @@ private fun IdiomCaptureScreen(
                     Text(
                         text = idiom.pinyin,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = color
+                        color = tColor
                     )
                     Text(
                         text = idiom.word,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = color
+                        color = tColor
                     )
                 }
                 idiom.explanation?.let {
@@ -102,11 +106,11 @@ private fun IdiomCaptureScreen(
                     ) {
                         Title(
                             text = "释义",
-                            color = color,
+                            color = tColor,
                         )
                         Text(
                             text = it,
-                            color = color
+                            color = tColor
                         )
                     }
                 }
@@ -115,7 +119,7 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "出处", color = color)
+                        Title(text = "出处", color = tColor)
 
                         val text = buildAnnotatedString {
                             source.text?.let { append(it) }
@@ -126,7 +130,7 @@ private fun IdiomCaptureScreen(
                             }
                         }
 
-                        Text(text = text, color = color)
+                        Text(text = text, color = tColor)
                     }
                 }
 
@@ -134,7 +138,7 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "名著用例", color = color)
+                        Title(text = "名著用例", color = tColor)
 
                         val text = buildAnnotatedString {
                             quote.text?.let { append(it) }
@@ -145,7 +149,7 @@ private fun IdiomCaptureScreen(
                             }
                         }
 
-                        Text(text = text, color = color)
+                        Text(text = text, color = tColor)
                     }
                 }
 
@@ -153,8 +157,8 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "用法介绍", color = color)
-                        Text(text = it, color = color)
+                        Title(text = "用法介绍", color = tColor)
+                        Text(text = it, color = tColor)
                     }
                 }
 
@@ -162,7 +166,7 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "示例", color = color)
+                        Title(text = "示例", color = tColor)
 
                         val text = buildAnnotatedString {
                             example.text?.let { append(it) }
@@ -173,7 +177,7 @@ private fun IdiomCaptureScreen(
                             }
                         }
 
-                        Text(text = text, color = color)
+                        Text(text = text, color = tColor)
                     }
                 }
 
@@ -181,8 +185,8 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "同义成语", color = color)
-                        Text(text = it.joinToString("、"), color = color)
+                        Title(text = "同义成语", color = tColor)
+                        Text(text = it.joinToString("、"), color = tColor)
                     }
                 }
 
@@ -190,8 +194,8 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "反义成语", color = color)
-                        Text(text = it.joinToString("、"), color = color)
+                        Title(text = "反义成语", color = tColor)
+                        Text(text = it.joinToString("、"), color = tColor)
                     }
                 }
 
@@ -199,9 +203,9 @@ private fun IdiomCaptureScreen(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Title(text = "成语故事", color = color)
+                        Title(text = "成语故事", color = tColor)
                         list.forEach {
-                            Text(text = it, color = color)
+                            Text(text = it, color = tColor)
                         }
                     }
                 }

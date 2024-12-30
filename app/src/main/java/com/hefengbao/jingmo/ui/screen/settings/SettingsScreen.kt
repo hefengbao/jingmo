@@ -53,7 +53,7 @@ fun SettingsRoute(
         onDataClick = onDataClick,
         onHomeItemManagerClick = onHomeItemManagerClick,
         onImportClick = onImportClick,
-        onPrivacyClick = onPrivacyClick,
+        onPrivacyClick = onPrivacyClick
     )
 }
 

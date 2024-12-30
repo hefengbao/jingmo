@@ -25,8 +25,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -118,7 +118,7 @@ private fun WritingReadScreen(
             title = "诗文",
             actions = {
                 IconButton(onClick = { onCaptureClick(it.id) }) {
-                    Icon(imageVector = Icons.Default.Photo, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
                 }
                 IconButton(onClick = { showIndexBottomSheet = true }) {
                     Icon(imageVector = Icons.Outlined.Menu, contentDescription = "目录")

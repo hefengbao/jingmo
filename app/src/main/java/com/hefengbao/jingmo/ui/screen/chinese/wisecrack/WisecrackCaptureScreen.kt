@@ -34,29 +34,31 @@ fun ChineseWisecrackCaptureRoute(
 ) {
     val chineseWisecrack by viewModel.chineseWisecrack.collectAsState()
     val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val dataStatus = viewModel.appStatus
+    val appStatus by viewModel.appStatus.collectAsState(null)
 
     LaunchedEffect(Unit) {
         viewModel.getColors()
     }
 
-    ChineseWisecrackCaptureScreen(
-        onBackClick = onBackClick,
-        chineseWisecrack = chineseWisecrack,
-        defaultColor = if (dataStatus.captureTextColor == "white") Color.White else Color.Black,
-        onColorChange = { viewModel.setCaptureColor(if (it == Color.White) "white" else "black") },
-        defaultBackgroundColor = dataStatus.captureBackgroundColor,
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors
-    )
+    appStatus?.let { status ->
+        ChineseWisecrackCaptureScreen(
+            onBackClick = onBackClick,
+            chineseWisecrack = chineseWisecrack,
+            textColor = status.captureTextColor,
+            onTextColorChange = { viewModel.setCaptureColor(it) },
+            backgroundColor = status.captureBackgroundColor,
+            onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
+            colors = chineseColors
+        )
+    }
 }
 
 @Composable
 private fun ChineseWisecrackCaptureScreen(
     onBackClick: () -> Unit,
-    defaultColor: Color,
-    onColorChange: (Color) -> Unit,
-    defaultBackgroundColor: String,
+    textColor: String,
+    onTextColorChange: (String) -> Unit,
+    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
     chineseWisecrack: WisecrackEntity?,
     colors: List<ChineseColor>
@@ -64,11 +66,12 @@ private fun ChineseWisecrackCaptureScreen(
     CaptureScaffold(
         colors = colors,
         onBackClick = onBackClick,
-        defaultColor = defaultColor,
-        onColorChange = onColorChange,
-        defaultBackgroundColor = defaultBackgroundColor,
+        textColor = textColor,
+        onTextColorChange = onTextColorChange,
+        backgroundColor = backgroundColor,
         onBackgroundColorChange = onBackgroundColorChange
-    ) { color, _ ->
+    ) {
+        val tColor = if (textColor == "white") Color.White else Color.Black
         chineseWisecrack?.let { entity ->
             Column(
                 modifier = Modifier
@@ -79,12 +82,12 @@ private fun ChineseWisecrackCaptureScreen(
                 Text(
                     text = entity.riddle,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = color
+                    color = tColor
                 )
                 Text(
                     text = "—— ${entity.answer}",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = color
+                    color = tColor
                 )
             }
         }

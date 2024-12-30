@@ -22,15 +22,15 @@ import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val poemSentenceCaptureIdArg = "poemSentenceId"
+internal const val captureIdArg = "id"
 private const val base = "classical_literature_sentence_capture"
-private const val ROUTE = "$base/{$poemSentenceCaptureIdArg}"
+private const val ROUTE = "$base/{$captureIdArg}"
 
-internal class PoemSentenceCaptureArgs(val poemSentenceId: String) {
+internal class ClassicalLiteratureSentenceCaptureArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[poemSentenceCaptureIdArg]),
+                    checkNotNull(savedStateHandle[captureIdArg]),
                     UTF_8.name()
                 )
             )
@@ -49,7 +49,7 @@ fun NavGraphBuilder.classicalLiteratureSentenceCaptureScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(poemSentenceCaptureIdArg) { type = NavType.StringType }
+            navArgument(captureIdArg) { type = NavType.StringType }
         )
     ) {
         SentenceCaptureRoute(

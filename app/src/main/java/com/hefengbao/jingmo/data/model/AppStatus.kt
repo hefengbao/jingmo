@@ -18,5 +18,5 @@ data class AppStatus(
     val themeBrand: ThemeBrand,
     val darkThemeConfig: DarkThemeConfig,
     val useDynamicColor: Boolean,
-    val showSyncDataTip: Boolean
+    val showSyncDataTip: Boolean,
 )

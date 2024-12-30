@@ -33,30 +33,32 @@ fun AntitheticalCoupletCaptureRoute(
 ) {
     val antitheticalCouplet by viewModel.antitheticalCouplet.collectAsState(initial = null)
     val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val dataStatus = viewModel.appStatus
+    val appStatus by viewModel.appStatus.collectAsState(null)
 
     LaunchedEffect(Unit) {
         viewModel.getColors()
     }
 
-    AntitheticalCoupletCaptureScreen(
-        onBackClick = onBackClick,
-        antitheticalCouplet = antitheticalCouplet,
-        defaultColor = if (dataStatus.captureTextColor == "white") Color.White else Color.Black,
-        onColorChange = { viewModel.setCaptureColor(if (it == Color.White) "white" else "black") },
-        defaultBackgroundColor = dataStatus.captureBackgroundColor,
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors
-    )
+    appStatus?.let { status ->
+        AntitheticalCoupletCaptureScreen(
+            onBackClick = onBackClick,
+            antitheticalCouplet = antitheticalCouplet,
+            textColor = status.captureTextColor,
+            onTextColorChange = { viewModel.setCaptureColor(it) },
+            backgroundColor = status.captureBackgroundColor,
+            onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
+            colors = chineseColors
+        )
+    }
 }
 
 @Composable
 private fun AntitheticalCoupletCaptureScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    defaultColor: Color,
-    onColorChange: (Color) -> Unit,
-    defaultBackgroundColor: String,
+    textColor: String,
+    onTextColorChange: (String) -> Unit,
+    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
     antitheticalCouplet: AntitheticalCoupletEntity?,
     colors: List<ChineseColor>
@@ -64,11 +66,12 @@ private fun AntitheticalCoupletCaptureScreen(
     CaptureScaffold(
         colors = colors,
         onBackClick = onBackClick,
-        defaultColor = defaultColor,
-        onColorChange = onColorChange,
-        defaultBackgroundColor = defaultBackgroundColor,
+        textColor = textColor,
+        onTextColorChange = onTextColorChange,
+        backgroundColor = backgroundColor,
         onBackgroundColorChange = onBackgroundColorChange
-    ) { color, _ ->
+    ) {
+        val tColor = if (textColor == "white") Color.White else Color.Black
         antitheticalCouplet?.let {
             Column(
                 modifier = modifier
@@ -81,7 +84,7 @@ private fun AntitheticalCoupletCaptureScreen(
                 ) {
                     Text(
                         text = antitheticalCouplet.body,
-                        color = color
+                        color = tColor
                     )
                 }
             }

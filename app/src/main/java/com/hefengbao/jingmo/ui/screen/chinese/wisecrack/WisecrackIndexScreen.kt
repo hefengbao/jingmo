@@ -21,10 +21,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReadMore
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Photo
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -99,11 +99,11 @@ private fun ChineseWisecrackIndexScreen(
                 )
             }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.Search, contentDescription = null)
             }
             chineseCrack?.let { entity ->
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
-                    Icon(imageVector = Icons.Default.Photo, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
                 }
             }
         },

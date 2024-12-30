@@ -19,68 +19,68 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PreferenceRepositoryImpl @Inject constructor(
-    private val app: AppPreference,
-    private val dataset: DatasetPreference,
+    private val appStatus: AppPreference,
+    private val datasetStatus: DatasetPreference,
     private val readStatus: ReadStatusPreference,
 ) : PreferenceRepository {
-    override fun getDatasetStatus(): Flow<DatasetVersion> = dataset.datasetVersion
+    override fun getDatasetStatus(): Flow<DatasetVersion> = datasetStatus.datasetVersion
 
     override suspend fun setChinaWorldCultureHeritageVersion(version: Int) =
-        dataset.setChinsWorldCultureHeritageVersion(version)
+        datasetStatus.setChinsWorldCultureHeritageVersion(version)
 
     override suspend fun setChineseAntitheticalVersion(version: Int) =
-        dataset.setChineseAntitheticalCoupletVersion(version)
+        datasetStatus.setChineseAntitheticalCoupletVersion(version)
 
     override suspend fun setChineseDictionaryVersion(version: Int) =
-        dataset.setChineseDictionaryVersion(version)
+        datasetStatus.setChineseDictionaryVersion(version)
 
     override suspend fun setChineseExpressionVersion(version: Int) =
-        dataset.setChineseExpressionVersion(version)
+        datasetStatus.setChineseExpressionVersion(version)
 
     override suspend fun setChineseIdiomVersion(version: Int) =
-        dataset.setChineseIdiomVersion(version)
+        datasetStatus.setChineseIdiomVersion(version)
 
     override suspend fun setChineseKnowledgeVersion(version: Int) =
-        dataset.setChineseKnowledgeVersion(version)
+        datasetStatus.setChineseKnowledgeVersion(version)
 
     override suspend fun setChineseLyricVersion(version: Int) =
-        dataset.setChineseLyricVersion(version)
+        datasetStatus.setChineseLyricVersion(version)
 
     override suspend fun setChineseModernPoetryVersion(version: Int) =
-        dataset.setChineseModernPoetryVersion(version)
+        datasetStatus.setChineseModernPoetryVersion(version)
 
     override suspend fun setChineseProverbVersion(version: Int) =
-        dataset.setChineseProverbVersion(version)
+        datasetStatus.setChineseProverbVersion(version)
 
     override suspend fun setChineseQuoteVersion(version: Int) =
-        dataset.setChineseQuoteVersion(version)
+        datasetStatus.setChineseQuoteVersion(version)
 
     override suspend fun setChineseRiddleVersion(version: Int) =
-        dataset.setChineseRiddleVersion(version)
+        datasetStatus.setChineseRiddleVersion(version)
 
     override suspend fun setChineseTongueTwisterVersion(version: Int) =
-        dataset.setChineseTongueTwisterVersion(version)
+        datasetStatus.setChineseTongueTwisterVersion(version)
 
     override suspend fun setChineseWisecracksVersion(version: Int) =
-        dataset.setChineseWisecrackVersion(version)
+        datasetStatus.setChineseWisecrackVersion(version)
 
     override suspend fun setClassicalLiteratureClassicPoemsVersion(version: Int) =
-        dataset.setClassicalLiteratureClassicPoemVersion(version)
+        datasetStatus.setClassicalLiteratureClassicPoemVersion(version)
 
     override suspend fun setClassicalLiteraturePeopleVersion(version: Int) =
-        dataset.setClassicalLiteraturePeopleVersion(version)
+        datasetStatus.setClassicalLiteraturePeopleVersion(version)
 
     override suspend fun setClassicalLiteratureSentenceVersion(version: Int) =
-        dataset.setClassicalLiteratureSentenceVersion(version)
+        datasetStatus.setClassicalLiteratureSentenceVersion(version)
 
     override suspend fun setClassicalLiteratureWritingVersion(version: Int) =
-        dataset.setClassicalLiteratureWritingVersion(version)
+        datasetStatus.setClassicalLiteratureWritingVersion(version)
 
     override suspend fun setClassicalLiteratureWritingCurrentPage(page: Int) =
-        dataset.setClassicalLiteratureWritingCurrentPage(page)
+        datasetStatus.setClassicalLiteratureWritingCurrentPage(page)
 
     override suspend fun setClassicalLiteratureWritingCurrentCount(count: Int) =
-        dataset.setClassicalLiteratureWritingCurrentCount(count)
+        datasetStatus.setClassicalLiteratureWritingCurrentCount(count)
 
     override fun getReadStatus(): Flow<ReadStatus> = readStatus.readStatus
 
@@ -120,12 +120,12 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setClassicalLiteratureWritingLastReadId(id: Int) =
         readStatus.setClassicLiteratureWritingsLastReadId(id)
 
-    override fun getAppStatus(): Flow<AppStatus> = app.appStatus
+    override fun getAppStatus(): Flow<AppStatus> = appStatus.appStatus
 
-    override suspend fun setCaptureTextColor(color: String) = app.setCaptureTextColor(color)
+    override suspend fun setCaptureTextColor(color: String) = appStatus.setCaptureTextColor(color)
 
     override suspend fun setCaptureBackgroundColor(color: String) =
-        app.setCaptureBackgroundColor(color)
+        appStatus.setCaptureBackgroundColor(color)
 
-    override suspend fun setShowSyncDataTip(show: Boolean) = app.setShowSyncDataTip(show)
+    override suspend fun setShowSyncDataTip(show: Boolean) = appStatus.setShowSyncDataTip(show)
 }
