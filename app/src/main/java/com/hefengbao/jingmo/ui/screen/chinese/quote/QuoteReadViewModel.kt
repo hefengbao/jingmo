@@ -35,7 +35,7 @@ class QuoteReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preference.readStatus.collectLatest {
-                id.value = it.chineseProverbLastReadId
+                id.value = it.chineseQuoteLastReadId
             }
         }
     }

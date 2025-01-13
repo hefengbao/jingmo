@@ -35,7 +35,7 @@ class ModernPoetryReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preference.readStatus.collectLatest {
-                id.value = it.chineseProverbLastReadId
+                id.value = it.chineseModernPoetryLastReadId
             }
         }
     }
@@ -43,7 +43,7 @@ class ModernPoetryReadViewModel @Inject constructor(
     fun setCurrentId(id: Int) {
         this.id.value = id
 
-        viewModelScope.launch { preference.setChineseQuoteLastReadId(id) }
+        viewModelScope.launch { preference.setChineseModernPoetryLastReadId(id) }
     }
 
     val entity = id.flatMapLatest { repository.get(it) }.stateIn(

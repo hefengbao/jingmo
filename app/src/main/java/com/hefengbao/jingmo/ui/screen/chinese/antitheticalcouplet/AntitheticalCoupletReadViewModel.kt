@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
@@ -43,7 +44,6 @@ class AntitheticalCoupletReadViewModel @Inject constructor(
 
     fun setCurrentId(id: Int) {
         this.id.value = id
-
         setLastReadId(id)
     }
 
@@ -93,7 +93,7 @@ class AntitheticalCoupletReadViewModel @Inject constructor(
 
     private fun setLastReadId(id: Int) {
         viewModelScope.launch {
-            preferenceRepository.setChineseIdiomLastReadId(id)
+            preferenceRepository.setChineseAntitheticalCoupletLastReadId(id)
         }
     }
 }
