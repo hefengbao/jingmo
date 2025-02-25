@@ -445,7 +445,7 @@ class ClassB (){
 }
 ```
 
-如果需要初始化类的比较多，就会很繁琐。通过注解简化这个过程：
+如果需要初始化类的比较多，就会很繁琐。通过依赖注入简化这个过程：
 
 ```kotlin
 class ClassA(){
@@ -459,9 +459,9 @@ class ClassB @Inject constructor (a: ClassA){
 }
 ```
 
-官方提供的 Hilt 库，可以方便的实现注解功能。
+官方提供的 Hilt 库，可以方便的实现依赖注入功能。
 
-官方提供了 `@HiltAndroidApp`,`@AndroidEntryPoint`,`@HiltViewModel` 注解，继承自系统的类直接添加对应的注解即可:
+官方提供了 `@HiltAndroidApp`,`@AndroidEntryPoint`,`@HiltViewModel` 注解，继承自系统的类直接添加对应的注解即可实现:
 
 ```kotlin
 @HiltAndroidApp
