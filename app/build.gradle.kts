@@ -19,6 +19,14 @@ val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties()
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
+val localPropertiesFile: File = rootProject.file("local.properties")
+val localProperties = Properties()
+localProperties.load(FileInputStream(localPropertiesFile))
+
+val bugly = localProperties["bugly"] as String
+val userAgreementUrl = localProperties["user_agreement_url"] as String
+val userAgreementVersion = 1 // 用户协议变动时 +1
+
 android {
     namespace = "com.hefengbao.jingmo"
     compileSdk = 35
@@ -28,8 +36,8 @@ android {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
         targetSdk = 35
-        versionCode = 20
-        versionName = "1.14.2"
+        versionCode = 1_015_000
+        versionName = "1.15.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -67,6 +75,9 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
+            buildConfigField("String","BUGLY", bugly)
+            buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
+            buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
         }
         release {
             isMinifyEnabled = true
@@ -84,6 +95,9 @@ android {
                     }
                 }
             }
+            buildConfigField("String","BUGLY", bugly)
+            buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
+            buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
         }
     }
     compileOptions {

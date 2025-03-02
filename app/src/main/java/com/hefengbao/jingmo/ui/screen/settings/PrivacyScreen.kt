@@ -9,6 +9,8 @@
 
 package com.hefengbao.jingmo.ui.screen.settings
 
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,11 +20,16 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.LinkAnnotation
@@ -31,6 +38,9 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.hefengbao.jingmo.BuildConfig
+import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun PrivacyRoute(
@@ -39,63 +49,38 @@ fun PrivacyRoute(
     PrivacyScreen(onBackClick = onBackClick)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PrivacyScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "隐私政策")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = "隐私政策"
+    ){
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val uriHandler = LocalUriHandler.current
+            AndroidView(
+                factory = { context ->
+                    WebView(context).apply {
+                        settings.javaScriptEnabled = true
+                        settings.domStorageEnabled = true  // 启用 DOM 存储
+                        settings.loadWithOverviewMode = true  // 适应屏幕大小
+                        settings.useWideViewPort = true  // 启用广泛视图模式
 
-            val content = """
-                本应用使用腾讯 Bugly 提供的异常上报、运营统计功能，该 SDK 的隐私政策请查看：
-            """.trimIndent()
+                        // 设置 WebViewClient 以防止外部浏览器打开链接
+                        webViewClient = object : WebViewClient(){
+                            override fun onPageFinished(view: WebView?, url: String?) {
+                                super.onPageFinished(view, url)
+                            }
+                        }
 
-            Text(text = content)
-
-            val text = buildAnnotatedString {
-                withLink(
-                    LinkAnnotation.Url(
-                        "https://privacy.qq.com/document/preview/fc748b3d96224fdb825ea79e132c1a56",
-                        TextLinkStyles(style = SpanStyle(color = MaterialTheme.colorScheme.primary))
-                    ) {
-                        val url = (it as LinkAnnotation.Url).url
-                        uriHandler.openUri(url)
+                        loadUrl(BuildConfig.USER_AGREEMENT_URL)
                     }
-                ) {
-                    append("《Bugly SDK个人信息保护规则》")
                 }
-            }
-
-            Text(
-                text = text
             )
-
-            Text(text = "除此之外，不收集存储任何用户信息。")
         }
     }
 }

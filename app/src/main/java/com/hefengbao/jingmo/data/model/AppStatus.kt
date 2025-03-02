@@ -9,6 +9,7 @@
 
 package com.hefengbao.jingmo.data.model
 
+import com.hefengbao.jingmo.BuildConfig
 import com.hefengbao.jingmo.data.model.theme.DarkThemeConfig
 import com.hefengbao.jingmo.data.model.theme.ThemeBrand
 
@@ -19,4 +20,7 @@ data class AppStatus(
     val darkThemeConfig: DarkThemeConfig,
     val useDynamicColor: Boolean,
     val showSyncDataTip: Boolean,
-)
+    val userAgreementVersion: Int,
+) {
+    val showUserAgreementTip = userAgreementVersion < BuildConfig.USER_AGREEMENT_VERSION
+}

@@ -14,6 +14,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.hefengbao.jingmo.common.Constant
@@ -59,7 +60,8 @@ class AppPreference(
                 it[PREF_DARK_THEME_CONFIG] ?: DarkThemeConfig.FOLLOW_SYSTEM.name
             ),
             useDynamicColor = it[PREF_USE_DYNAMIC_COLOR] ?: false,
-            showSyncDataTip = it[PREF_SHOW_SYNC_DATA_TIP] ?: true
+            showSyncDataTip = it[PREF_SHOW_SYNC_DATA_TIP] ?: true,
+            userAgreementVersion = it[PREF_USER_AGREEMENT_VERSION] ?: 0,
         )
     }
 
@@ -81,6 +83,9 @@ class AppPreference(
     suspend fun setShowSyncDataTip(show: Boolean) =
         setBoolean(context, PREF_SHOW_SYNC_DATA_TIP, show)
 
+    suspend fun setUserAgreementVersion(version: Int) =
+        setInt(context, PREF_USER_AGREEMENT_VERSION, version)
+
     companion object {
         private val PREF_CAPTURE_TEXT_COLOR = stringPreferencesKey("key_capture_text_color")
         private val PREF_CAPTURE_BACKGROUND_COLOR =
@@ -89,5 +94,6 @@ class AppPreference(
         private val PREF_DARK_THEME_CONFIG = stringPreferencesKey("key_dark_theme_config")
         private val PREF_USE_DYNAMIC_COLOR = booleanPreferencesKey("key_use_dynamic_color")
         private val PREF_SHOW_SYNC_DATA_TIP = booleanPreferencesKey("key_show_sync_data_tip")
+        private val PREF_USER_AGREEMENT_VERSION = intPreferencesKey("key_user_agreement_version")
     }
 }

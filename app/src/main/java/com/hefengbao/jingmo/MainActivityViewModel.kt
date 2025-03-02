@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    preferenceRepository: PreferenceRepository
+    private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
     init {
         // 只是为了把 preference 数据加载到内存
@@ -44,6 +44,7 @@ class MainActivityViewModel @Inject constructor(
                 themeBrand = it.themeBrand,
                 darkThemeConfig = it.darkThemeConfig,
                 useDynamicColor = it.useDynamicColor,
+                showUserAgreementTip = it.showUserAgreementTip
             )
         )
     }.stateIn(
@@ -58,6 +59,12 @@ class MainActivityViewModel @Inject constructor(
         viewModelScope.launch {
             delay(1500)
             _showLanding.value = false
+        }
+    }
+
+    fun updateUserAgreementVersion() {
+        viewModelScope.launch {
+            preferenceRepository.setUserAgreementVersion(BuildConfig.USER_AGREEMENT_VERSION)
         }
     }
 }

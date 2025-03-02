@@ -54,4 +54,5 @@ interface PreferenceRepository {
     suspend fun setCaptureTextColor(color: String)
     suspend fun setCaptureBackgroundColor(color: String)
     suspend fun setShowSyncDataTip(show: Boolean)
+    suspend fun setUserAgreementVersion(version: Int)
 }

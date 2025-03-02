@@ -9,7 +9,6 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity

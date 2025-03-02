@@ -128,4 +128,7 @@ class PreferenceRepositoryImpl @Inject constructor(
         appStatus.setCaptureBackgroundColor(color)
 
     override suspend fun setShowSyncDataTip(show: Boolean) = appStatus.setShowSyncDataTip(show)
+
+    override suspend fun setUserAgreementVersion(version: Int) =
+        appStatus.setUserAgreementVersion(version)
 }

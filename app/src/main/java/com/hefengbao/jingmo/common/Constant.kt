@@ -15,6 +15,4 @@ object Constant {
     const val DATASTORE_DATASET_NAME = "jingmo_dataset"
     const val DATASTORE_READ_STATUS_NAME = "jingmo_read_status"
     const val DATASTORE_HOME = "jingmo_home"
-
-    const val URI = "https://hefengbao.github.io/jingmo"
 }
