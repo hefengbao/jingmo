@@ -29,13 +29,13 @@ val userAgreementVersion = 1 // 用户协议变动时 +1
 
 android {
     namespace = "com.hefengbao.jingmo"
-    compileSdk = 35
+    compileSdk = 36
     buildToolsVersion = "35.0.0"
 
     defaultConfig {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1_015_000
         versionName = "1.15.0"
 

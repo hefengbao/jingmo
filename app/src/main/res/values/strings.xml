@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">京墨</string>
+    <string name="app_name">京墨文库</string>
     <string name="widget_idiom">成语</string>
     <string name="widget_poem">诗文</string>
     <string name="widget_poem_sentence">诗文名句</string>
