@@ -62,7 +62,7 @@ class SentenceWidget(
 
     @Composable
     private fun Content(modifier: GlanceModifier = GlanceModifier) {
-        val sentence by repository.random().collectAsState(initial = null)
+        val sentence by repository.getRandom().collectAsState(initial = null)
         Column(
             modifier = modifier.fillMaxSize()
                 .background(GlanceTheme.colors.background)

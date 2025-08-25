@@ -40,12 +40,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
@@ -58,12 +61,12 @@ fun SentenceIndexRoute(
     onReadMoreClick: () -> Unit,
     onSearchItemClick: () -> Unit,
 ) {
-    val sentence by viewModel.sentenceEntity.collectAsState(initial = null)
-    val sentenceCollectionEntity by viewModel.sentenceCollectionEntity.collectAsState(initial = null)
+    val sentenceEntity by viewModel.sentenceEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
-    LaunchedEffect(sentence) {
-        sentence?.let {
-            viewModel.isCollected(it.id)
+    sentenceEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            viewModel.isBookmarked(entity.id, Category.ClassicalLiteratureSentence.model)
         }
     }
 
@@ -73,11 +76,16 @@ fun SentenceIndexRoute(
         onReadMoreClick = onReadMoreClick,
         onCaptureClick = onCaptureClick,
         onSearchClick = onSearchItemClick,
-        sentence = sentence,
-        sentenceCollectionEntity = sentenceCollectionEntity,
+        sentenceEntity = sentenceEntity,
+        bookmarkEntity = bookmarkEntity,
         onRefresh = viewModel::getRandom,
-        setCollect = viewModel::setCollect,
-        setUncollect = viewModel::setUncollect
+        addBookmark = { viewModel.addBookmark(it, Category.ClassicalLiteratureSentence.model) },
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ClassicalLiteratureSentence.model
+            )
+        }
     )
 }
 
@@ -89,32 +97,41 @@ private fun SentenceIndexScreen(
     onCaptureClick: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
-    sentence: SentenceEntity?,
-    sentenceCollectionEntity: SentenceCollectionEntity?,
+    sentenceEntity: SentenceEntity?,
+    bookmarkEntity: BookmarkEntity?,
     onRefresh: () -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "诗文名句",
+        title = stringResource(R.string.classicalliterature_sentence),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
-            IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
-            }
-            sentence?.let {
-                IconButton(onClick = { onCaptureClick(sentence.id) }) {
-                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = "生成图片")
+            sentenceEntity?.let {
+                IconButton(onClick = { onCaptureClick(sentenceEntity.id) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
                 }
+            }
+            IconButton(onClick = onSearchClick) {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
@@ -125,25 +142,25 @@ private fun SentenceIndexScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                sentence?.let {
-                                    if (sentenceCollectionEntity != null) {
-                                        setUncollect(it.id)
+                                sentenceEntity?.let {
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(it.id)
                                     } else {
-                                        setCollect(it.id)
+                                        addBookmark(it.id)
                                     }
                                 }
                             }
                         ) {
-                            if (sentenceCollectionEntity != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -151,7 +168,10 @@ private fun SentenceIndexScreen(
                 },
                 floatingActionButton = {
                     FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.refresh)
+                        )
                     }
                 }
             )
@@ -173,7 +193,7 @@ private fun SentenceIndexScreen(
                     }
                 )
         ) {
-            sentence?.let {
+            sentenceEntity?.let {
                 Row(
                     modifier = modifier
                         .fillMaxSize()
@@ -184,7 +204,7 @@ private fun SentenceIndexScreen(
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                        sentence.content.split("，", "。", "？", "！", "、").map {
+                        sentenceEntity.content.split("，", "。", "？", "！", "、").map {
 
                             Column {
                                 it.toCharArray().map { char ->
@@ -197,7 +217,7 @@ private fun SentenceIndexScreen(
                         }
                     }
                     Column {
-                        sentence.from.replace("《", "﹁")
+                        sentenceEntity.from.replace("《", "﹁")
                             .replace("》", "﹂")
                             .toCharArray()
                             .map { text ->

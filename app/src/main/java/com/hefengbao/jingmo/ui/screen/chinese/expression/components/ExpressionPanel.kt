@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 
 @Composable
 fun ExpressionPanel(
@@ -33,7 +33,7 @@ fun ExpressionPanel(
         Text(text = entity.word, style = MaterialTheme.typography.displaySmall)
     }
     entity.explanation?.let {
-        BackgroundTitle(title = "释义")
+        EmphasizedTitle(title = "释义")
         Text(text = it)
     }
 }

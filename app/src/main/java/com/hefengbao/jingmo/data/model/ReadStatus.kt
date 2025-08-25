@@ -11,17 +11,17 @@ package com.hefengbao.jingmo.data.model
 
 data class ReadStatus(
     val chineseAntitheticalCoupletLastReadId: Int,
-    val chineseIdiomsLastReadId: Int,
+    val chineseIdiomLastReadId: Int,
     val chineseKnowledgeLastReadId: Int,
     val chineseLyricLastReadId: Int,
     val chineseModernPoetryLastReadId: Int,
     val chineseProverbLastReadId: Int,
     val chineseQuoteLastReadId: Int,
-    val chineseRiddlesLastReadId: Int,
-    val chineseTongueTwistersLastReadId: Int,
-    val chineseWisecracksLastReadId: Int,
-    val classicLiteratureClassicPoemsLastReadId: Int,
+    val chineseRiddleLastReadId: Int,
+    val chineseTongueTwisterLastReadId: Int,
+    val chineseWisecrackLastReadId: Int,
+    val classicLiteratureClassicPoemLastReadId: Int,
     val classicLiteraturePeopleLastReadId: Int,
-    val classicLiteratureSentencesLastReadId: Int,
+    val classicLiteratureSentenceLastReadId: Int,
     val classicLiteratureWritingsLastReadId: Int,
 )

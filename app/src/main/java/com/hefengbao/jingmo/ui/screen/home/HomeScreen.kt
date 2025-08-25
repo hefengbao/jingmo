@@ -11,11 +11,8 @@ package com.hefengbao.jingmo.ui.screen.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -36,10 +33,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -163,7 +157,10 @@ private fun HomeScreen(
                         Icon(imageVector = Icons.Default.Link, contentDescription = "链接")
                     }
                     IconButton(onClick = onSettingsClick) {
-                        Icon(imageVector = Icons.Default.Settings, contentDescription = "设置")
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
                     }
                 }
             )
@@ -185,12 +182,12 @@ private fun HomeScreen(
                         item(
                             span = { GridItemSpan(2) }
                         ) {
-                            Title(text = "古诗文")
+                            Title(title = stringResource(R.string.classicalliterature))
                         }
                         if (homeItem.classicalLiteratureClassicPoem) {
                             item {
                                 Item(
-                                    title = "经典诗文",
+                                    title = stringResource(R.string.classicalliterature_classicpoem),
                                     onClick = onClassicalLiteratureClassicPoemClick
                                 )
                             }
@@ -198,7 +195,7 @@ private fun HomeScreen(
                         if (homeItem.classicalLiteratureWriting) {
                             item {
                                 Item(
-                                    title = "诗文",
+                                    title = stringResource(R.string.classicalliterature_writing),
                                     onClick = onClassicalLiteratureWritingClick
                                 )
                             }
@@ -206,7 +203,7 @@ private fun HomeScreen(
                         if (homeItem.classicalLiteratureSentence) {
                             item {
                                 Item(
-                                    title = "诗文名句",
+                                    title = stringResource(R.string.classicalliterature_sentence),
                                     onClick = onClassicalLiteratureSentenceClick
                                 )
                             }
@@ -216,7 +213,7 @@ private fun HomeScreen(
                     if (homeItem.classicalLiteraturePeople) {
                         item {
                             Item(
-                                title = "人物",
+                                title = stringResource(R.string.classicalliterature_people),
                                 onClick = onClassicalLiteraturePeopleClick
                             )
                         }
@@ -226,12 +223,12 @@ private fun HomeScreen(
                         item(
                             span = { GridItemSpan(2) }
                         ) {
-                            Title(text = "现代汉语")
+                            Title(title = stringResource(R.string.chinese))
                         }
                         if (homeItem.chineseCharacter) {
                             item {
                                 Item(
-                                    title = "汉字",
+                                    title = stringResource(R.string.chinese_character),
                                     onClick = onChineseCharacterClick
                                 )
                             }
@@ -239,7 +236,7 @@ private fun HomeScreen(
                         if (homeItem.chineseExpression) {
                             item {
                                 Item(
-                                    title = "词语",
+                                    title = stringResource(R.string.chinese_expression),
                                     onClick = onChineseExpressionClick
                                 )
                             }
@@ -247,7 +244,7 @@ private fun HomeScreen(
                         if (homeItem.chineseIdiom) {
                             item {
                                 Item(
-                                    title = "成语",
+                                    title = stringResource(R.string.chinese_idiom),
                                     onClick = onChineseIdiomClick
                                 )
                             }
@@ -255,7 +252,7 @@ private fun HomeScreen(
                         if (homeItem.chineseWisecrack) {
                             item {
                                 Item(
-                                    title = "歇后语",
+                                    title = stringResource(R.string.chinese_wisecrack),
                                     onClick = onChineseWisecrackClick
                                 )
                             }
@@ -263,7 +260,7 @@ private fun HomeScreen(
                         if (homeItem.chineseProverb) {
                             item {
                                 Item(
-                                    title = "谚语",
+                                    title = stringResource(R.string.chinese_proverb),
                                     onClick = onChineseProverbClick
                                 )
                             }
@@ -271,7 +268,7 @@ private fun HomeScreen(
                         if (homeItem.chineseRiddle) {
                             item {
                                 Item(
-                                    title = "谜语",
+                                    title = stringResource(R.string.chinese_riddle),
                                     onClick = onChineseRiddleClick
                                 )
                             }
@@ -279,7 +276,7 @@ private fun HomeScreen(
                         if (homeItem.chineseTongueTwister) {
                             item {
                                 Item(
-                                    title = "绕口令",
+                                    title = stringResource(R.string.chinese_tonguetwister),
                                     onClick = onChineseTongueTwisterClick
                                 )
                             }
@@ -287,7 +284,7 @@ private fun HomeScreen(
                         if (homeItem.chineseAntitheticalCouplet) {
                             item {
                                 Item(
-                                    title = "对联",
+                                    title = stringResource(R.string.chinese_antitheticalcouplet),
                                     onClick = onChineseAntitheticalCoupletClick
                                 )
                             }
@@ -295,23 +292,15 @@ private fun HomeScreen(
                         if (homeItem.chineseLyric) {
                             item {
                                 Item(
-                                    title = "歌词",
+                                    title = stringResource(R.string.chinese_lyric),
                                     onClick = onChineseLyricClick
-                                )
-                            }
-                        }
-                        if (homeItem.chineseKnowledge) {
-                            item {
-                                Item(
-                                    title = "知识卡片",
-                                    onClick = onChineseKnowledgeClick
                                 )
                             }
                         }
                         if (homeItem.chineseQuote) {
                             item {
                                 Item(
-                                    title = "句子",
+                                    title = stringResource(R.string.chinese_quote),
                                     onClick = onChineseQuoteClick
                                 )
                             }
@@ -319,8 +308,16 @@ private fun HomeScreen(
                         if (homeItem.chineseModernPoetry) {
                             item {
                                 Item(
-                                    title = "诗歌",
+                                    title = stringResource(R.string.chinese_modernpoetry),
                                     onClick = onChineseModernPoetryClick
+                                )
+                            }
+                        }
+                        if (homeItem.chineseKnowledge) {
+                            item {
+                                Item(
+                                    title = stringResource(R.string.chinese_knowledge),
+                                    onClick = onChineseKnowledgeClick
                                 )
                             }
                         }
@@ -330,12 +327,12 @@ private fun HomeScreen(
                         item(
                             span = { GridItemSpan(2) }
                         ) {
-                            Title(text = "传统文化")
+                            Title(title = stringResource(R.string.traditionalculture))
                         }
                         if (homeItem.traditionalCultureFestival) {
                             item {
                                 Item(
-                                    title = "节日",
+                                    title = stringResource(R.string.traditionalculture_festival),
                                     onClick = onTraditionalCultureFestivalClick
                                 )
                             }
@@ -343,7 +340,7 @@ private fun HomeScreen(
                         if (homeItem.traditionalCultureSolarTerm) {
                             item {
                                 Item(
-                                    title = "节气",
+                                    title = stringResource(R.string.traditionalculture_solarterm),
                                     onClick = onTraditionalCultureSolarTermsClick
                                 )
                             }
@@ -351,14 +348,14 @@ private fun HomeScreen(
                         if (homeItem.traditionalCultureColor) {
                             item {
                                 Item(
-                                    title = "颜色",
+                                    title = stringResource(R.string.traditionalculture_color),
                                     onClick = onTraditionalCultureColorClick
                                 )
                             }
                         }
                         item {
                             Item(
-                                title = "老黄历",
+                                title = stringResource(R.string.traditionalculture_calendar),
                                 onClick = onTraditionalCultureCalendarClick
                             )
                         }
@@ -367,12 +364,12 @@ private fun HomeScreen(
                         item(
                             span = { GridItemSpan(2) }
                         ) {
-                            Title(text = "中国")
+                            Title(title = stringResource(R.string.china))
                         }
                         if (homeItem.chinaWorldCulturalHeritage) {
                             item {
                                 Item(
-                                    title = "世界遗产名录",
+                                    title = stringResource(R.string.china_worldcultureheritage),
                                     onClick = onChinaWorldCultureHeritageClick
                                 )
                             }
@@ -413,9 +410,9 @@ private fun Item(
 
 @Composable
 private fun Title(
-    text: String
+    title: String
 ) {
-    val color = MaterialTheme.colorScheme.primary
+    /*val color = MaterialTheme.colorScheme.primary
     Row(
         modifier = Modifier.padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -437,6 +434,14 @@ private fun Title(
             text = text,
             style = MaterialTheme.typography.titleMedium
         )
-    }
+    }*/
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp, 8.dp),
+        text = title,
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = .5f),
+    )
 }
 

@@ -9,13 +9,15 @@
 
 package com.hefengbao.jingmo.data.model
 
+import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 import com.hefengbao.jingmo.BuildConfig
 import com.hefengbao.jingmo.data.model.theme.DarkThemeConfig
 import com.hefengbao.jingmo.data.model.theme.ThemeBrand
 
 data class AppStatus(
-    val captureTextColor: String,
-    val captureBackgroundColor: String,
+    val captureTextColorString: String,
+    val captureBackgroundColorString: String,
     val themeBrand: ThemeBrand,
     val darkThemeConfig: DarkThemeConfig,
     val useDynamicColor: Boolean,
@@ -23,4 +25,6 @@ data class AppStatus(
     val userAgreementVersion: Int,
 ) {
     val showUserAgreementTip = userAgreementVersion < BuildConfig.USER_AGREEMENT_VERSION
+    val captureTextColor = Color(captureTextColorString.toColorInt())
+    val captureBackgroundColor = Color(captureBackgroundColorString.toColorInt())
 }

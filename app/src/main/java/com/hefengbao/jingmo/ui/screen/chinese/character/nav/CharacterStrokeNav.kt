@@ -12,20 +12,24 @@ package com.hefengbao.jingmo.ui.screen.chinese.character.nav
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.hefengbao.jingmo.ui.screen.chinese.character.ChineseCharacterStrokeRoute
+import com.hefengbao.jingmo.ui.screen.chinese.character.CharacterStrokeRoute
 
 private const val ROUTE = "chinese_character_stroke"
 
 fun NavController.navigateToChineseCharacterStrokeScreen() {
-    this.navigate(ROUTE)
+    this.navigate(ROUTE) {
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.chineseCharacterStrokeScreen(
     onBackClick: () -> Unit,
+    onItemClick: (String, String) -> Unit,
 ) {
     composable(ROUTE) {
-        ChineseCharacterStrokeRoute(
-            onBackClick = onBackClick
+        CharacterStrokeRoute(
+            onBackClick = onBackClick,
+            onItemClick = onItemClick
         )
     }
 }

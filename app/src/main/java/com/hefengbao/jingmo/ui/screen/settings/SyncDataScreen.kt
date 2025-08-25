@@ -41,16 +41,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.network.Result
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.DatasetVersion
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.settings.components.SettingsTitle
 
 @Composable
-fun DataRoute(
+fun SyncDataRoute(
     viewModel: DataViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
@@ -88,42 +91,52 @@ fun DataRoute(
     val chineseProverbResultProgress by viewModel.chineseProverbResultProgress.collectAsState(
         initial = 0f
     )
-    val chineseQuotesResult by viewModel.chineseQuotesResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseQuotesResultProgress by viewModel.chineseQuotesResultProgress.collectAsState(initial = 0f)
-    val chineseWisecracksResult by viewModel.chineseWisecracksResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseWisecracksResultProgress by viewModel.chineseWisecracksResultProgress.collectAsState(
+    val chineseQuoteResult by viewModel.chineseQuoteResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseQuoteResultProgress by viewModel.chineseQuoteResultProgress.collectAsState(initial = 0f)
+    val chineseWisecrackResult by viewModel.chineseWisecrackResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseWisecrackResultProgress by viewModel.chineseWisecrackResultProgress.collectAsState(
         initial = 0f
     )
-    val chineseDictionaryResult by viewModel.dictionaryResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseDictionaryResultProgress by viewModel.dictionaryResultProgress.collectAsState(initial = 0f)
-    val chineseIdiomsResult by viewModel.idiomsResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseIdiomsResultProgress by viewModel.idiomsResultProgress.collectAsState(initial = 0f)
-    val chineseLyricResult by viewModel.lyricResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseLyricResultProgress by viewModel.lyricResultProgress.collectAsState(initial = 0f)
-    val chineseRiddlesResult by viewModel.riddlesResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseRiddlesResultProgress by viewModel.riddlesResultProgress.collectAsState(initial = 0f)
-    val chineseTongueTwistersResult by viewModel.tongueTwisterResult.collectAsState(initial = SyncStatus.NonStatus)
-    val chineseTongueTwistersResultProgress by viewModel.tongueTwistersResultProgress.collectAsState(
+    val chineseCharacterResult by viewModel.chineseCharacterResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseCharacterResultProgress by viewModel.chineseCharacterResultProgress.collectAsState(
         initial = 0f
     )
-    val classicalLiteratureClassicPoemsResult by viewModel.classicPoemsResult.collectAsState(initial = SyncStatus.NonStatus)
-    val classicalLiteratureClassicPoemsResultProgress by viewModel.classicPoemsResultProgress.collectAsState(
+    val chineseIdiomResult by viewModel.chineseIdiomResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseIdiomResultProgress by viewModel.chineseIdiomResultProgress.collectAsState(initial = 0f)
+    val chineseLyricResult by viewModel.chineseLyricResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseLyricResultProgress by viewModel.chineseLyricResultProgress.collectAsState(initial = 0f)
+    val chineseRiddleResult by viewModel.chineseRiddleResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseRiddleResultProgress by viewModel.chineseRiddleResultProgress.collectAsState(initial = 0f)
+    val chineseTongueTwisterResult by viewModel.chineseTongueTwisterResult.collectAsState(initial = SyncStatus.NonStatus)
+    val chineseTongueTwisterResultProgress by viewModel.chineseTongueTwisterResultProgress.collectAsState(
         initial = 0f
     )
-    val classicalLiteraturePeopleResult by viewModel.peopleResult.collectAsState(initial = SyncStatus.NonStatus)
-    val classicalLiteraturePeopleResultProgress by viewModel.peopleResultProgress.collectAsState(
+    val classicalLiteratureClassicPoemResult by viewModel.classicalLiteratureClassicPoemResult.collectAsState(
+        initial = SyncStatus.NonStatus
+    )
+    val classicalLiteratureClassicPoemResultProgress by viewModel.classicalLiteratureClassicPoemResultProgress.collectAsState(
         initial = 0f
     )
-    val classicalLiteratureSentencesResult by viewModel.poemSentencesResult.collectAsState(initial = SyncStatus.NonStatus)
-    val classicalLiteratureSentencesResultProgress by viewModel.poemSentencesResultProgress.collectAsState(
+    val classicalLiteraturePeopleResult by viewModel.classicalLiteraturePeopleResult.collectAsState(
+        initial = SyncStatus.NonStatus
+    )
+    val classicalLiteraturePeopleResultProgress by viewModel.classicalLiteraturePeopleResultProgress.collectAsState(
         initial = 0f
     )
-    val classicalLiteratureWritingsResult by viewModel.writingsResult.collectAsState(initial = SyncStatus.NonStatus)
-    val classicalLiteratureWritingsResultProgress by viewModel.writingsResultProgress.collectAsState(
+    val classicalLiteratureSentenceResult by viewModel.classicalLiteratureSentenceResult.collectAsState(
+        initial = SyncStatus.NonStatus
+    )
+    val classicalLiteratureSentenceResultProgress by viewModel.classicalLiteratureSentenceResultProgress.collectAsState(
+        initial = 0f
+    )
+    val classicalLiteratureWritingResult by viewModel.classicalLiteratureWritingResult.collectAsState(
+        initial = SyncStatus.NonStatus
+    )
+    val classicalLiteratureWritingResultProgress by viewModel.classicalLiteratureWritingResultProgress.collectAsState(
         initial = 0f
     )
 
-    DataScreen(
+    SyncDataScreen(
         onBackClick = onBackClick,
         datasetPref = datasetPref,
         datasetResult = datasetResult,
@@ -155,83 +168,70 @@ fun DataRoute(
         },
         chineseProverbResult = chineseProverbResult,
         chineseProverbResultProgress = chineseProverbResultProgress,
-        syncChineseQuotes = viewModel::syncChineseQuotes,
-        chineseQuotesResult = chineseQuotesResult,
-        chineseQuotesResultProgress = chineseQuotesResultProgress,
-        syncChineseWisecracks = { total: Int, version: Int ->
-            viewModel.syncChineseWisecracks(total, version)
+        syncChineseQuote = viewModel::syncChineseQuote,
+        chineseQuoteResult = chineseQuoteResult,
+        chineseQuoteResultProgress = chineseQuoteResultProgress,
+        syncChineseWisecrack = { total: Int, version: Int ->
+            viewModel.syncChineseWisecrack(total, version)
         },
-        chineseWisecracksResult = chineseWisecracksResult,
-        chineseWisecracksResultProgress = chineseWisecracksResultProgress,
-        syncDictionary = { total: Int, version: Int ->
-            viewModel.syncChineseDictionary(total, version)
+        chineseWisecrackResult = chineseWisecrackResult,
+        chineseWisecrackResultProgress = chineseWisecrackResultProgress,
+        syncChineseCharacter = { total: Int, version: Int ->
+            viewModel.syncChineseCharacter(total, version)
         },
-        chineseDictionaryResult = chineseDictionaryResult,
-        chineseDictionaryResultProgress = chineseDictionaryResultProgress,
-        syncChineseIdioms = { total: Int, version: Int ->
-            viewModel.syncChineseIdioms(
-                total,
-                version
-            )
+        chineseCharacterResult = chineseCharacterResult,
+        chineseCharacterResultProgress = chineseCharacterResultProgress,
+        syncChineseIdiom = { total: Int, version: Int ->
+            viewModel.syncChineseIdiom(total, version)
         },
-        chineseIdiomsResult = chineseIdiomsResult,
-        chineseIdiomsResultProgress = chineseIdiomsResultProgress,
+        chineseIdiomResult = chineseIdiomResult,
+        chineseIdiomResultProgress = chineseIdiomResultProgress,
         syncChineseLyric = { total: Int, version: Int ->
-            viewModel.syncChineseLyric(
-                total,
-                version
-            )
+            viewModel.syncChineseLyric(total, version)
         },
         chineseLyricResult = chineseLyricResult,
         chineseLyricResultProgress = chineseLyricResultProgress,
-        syncChineseRiddles = { total: Int, version: Int ->
-            viewModel.syncChineseRiddles(
-                total,
-                version
-            )
+        syncChineseRiddle = { total: Int, version: Int ->
+            viewModel.syncChineseRiddle(total, version)
         },
-        chineseRiddlesResult = chineseRiddlesResult,
-        chineseRiddlesResultProgress = chineseRiddlesResultProgress,
-        syncChineseTongueTwisters = { total: Int, version: Int ->
-            viewModel.syncChineseTongueTwisters(total, version)
+        chineseRiddleResult = chineseRiddleResult,
+        chineseRiddleResultProgress = chineseRiddleResultProgress,
+        syncChineseTongueTwister = { total: Int, version: Int ->
+            viewModel.syncChineseTongueTwister(total, version)
         },
-        chineseTongueTwistersResult = chineseTongueTwistersResult,
-        chineseTongueTwistersResultProgress = chineseTongueTwistersResultProgress,
+        chineseTongueTwisterResult = chineseTongueTwisterResult,
+        chineseTongueTwisterResultProgress = chineseTongueTwisterResultProgress,
         syncClassicalLiteraturePeople = { total: Int, version: Int ->
-            viewModel.syncClassicalLiteraturePeople(
-                total,
-                version
-            )
+            viewModel.syncClassicalLiteraturePeople(total, version)
         },
         classicalLiteraturePeopleResult = classicalLiteraturePeopleResult,
         classicalLiteraturePeopleResultProgress = classicalLiteraturePeopleResultProgress,
-        syncClassicalLiteratureClassicPoems = { total: Int, version: Int ->
-            viewModel.syncClassicalLiteratureClassicPoems(total, version)
+        syncClassicalLiteratureClassicPoem = { total: Int, version: Int ->
+            viewModel.syncClassicalLiteratureClassicPoem(total, version)
         },
-        classicalLiteratureClassicPoemsResult = classicalLiteratureClassicPoemsResult,
-        classicalLiteratureClassicPoemsResultProgress = classicalLiteratureClassicPoemsResultProgress,
-        syncClassicalLiteratureSentences = { total: Int, version: Int ->
-            viewModel.syncClassicalLiteratureSentences(total, version)
+        classicalLiteratureClassicPoemResult = classicalLiteratureClassicPoemResult,
+        classicalLiteratureClassicPoemResultProgress = classicalLiteratureClassicPoemResultProgress,
+        syncClassicalLiteratureSentence = { total: Int, version: Int ->
+            viewModel.syncClassicalLiteratureSentence(total, version)
         },
-        classicalLiteratureSentencesResult = classicalLiteratureSentencesResult,
-        classicalLiteratureSentencesResultProgress = classicalLiteratureSentencesResultProgress,
-        syncClassicalLiteratureWritings = { total: Int, version: Int ->
-            viewModel.syncClassicalLiteratureWritings(
-                total,
-                version
-            )
+        classicalLiteratureSentenceResult = classicalLiteratureSentenceResult,
+        classicalLiteratureSentenceResultProgress = classicalLiteratureSentenceResultProgress,
+        syncClassicalLiteratureWriting = { total: Int, version: Int ->
+            viewModel.syncClassicalLiteratureWriting(total, version)
         },
-        classicalLiteratureWritingsResult = classicalLiteratureWritingsResult,
-        classicalLiteratureWritingsResultProgress = classicalLiteratureWritingsResultProgress,
-        setWritingsPreviousPage = { viewModel.setWritingsPreviousPage(it) },
-        setWritingsPreviousCount = { count: Int, total: Int ->
-            viewModel.setWritingsPreviousCount(count, total)
+        classicalLiteratureWritingResult = classicalLiteratureWritingResult,
+        classicalLiteratureWritingResultProgress = classicalLiteratureWritingResultProgress,
+        setClassicalLiteratureWritingPreviousPage = {
+            viewModel.setClassicalLiteratureWritingPreviousPage(it)
+        },
+        setClassicalLiteratureWritingPreviousCount = { count: Int, total: Int ->
+            viewModel.setClassicalLiteratureWritingPreviousCount(count, total)
         }
     )
 }
 
 @Composable
-private fun DataScreen(
+private fun SyncDataScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     datasetPref: DatasetVersion,
@@ -248,47 +248,47 @@ private fun DataScreen(
     syncChineseKnowledge: (total: Int, version: Int) -> Unit,
     chineseKnowledgeResult: SyncStatus<Any>,
     chineseKnowledgeResultProgress: Float,
-    syncChineseWisecracks: (total: Int, version: Int) -> Unit,
-    chineseWisecracksResult: SyncStatus<Any>,
-    chineseWisecracksResultProgress: Float,
+    syncChineseWisecrack: (total: Int, version: Int) -> Unit,
+    chineseWisecrackResult: SyncStatus<Any>,
+    chineseWisecrackResultProgress: Float,
     syncChineseModernPoetry: (total: Int, version: Int) -> Unit,
     chineseModernPoetryResult: SyncStatus<Any>,
     chineseModernPoetryResultProgress: Float,
     syncChineseProverb: (total: Int, version: Int) -> Unit,
     chineseProverbResult: SyncStatus<Any>,
     chineseProverbResultProgress: Float,
-    syncChineseQuotes: (total: Int, version: Int) -> Unit,
-    chineseQuotesResult: SyncStatus<Any>,
-    chineseQuotesResultProgress: Float,
-    syncClassicalLiteratureClassicPoems: (total: Int, version: Int) -> Unit,
-    classicalLiteratureClassicPoemsResult: SyncStatus<Any>,
-    classicalLiteratureClassicPoemsResultProgress: Float,
-    syncDictionary: (total: Int, version: Int) -> Unit,
-    chineseDictionaryResult: SyncStatus<Any>,
-    chineseDictionaryResultProgress: Float,
-    syncChineseIdioms: (total: Int, version: Int) -> Unit,
-    chineseIdiomsResult: SyncStatus<Any>,
-    chineseIdiomsResultProgress: Float,
+    syncChineseQuote: (total: Int, version: Int) -> Unit,
+    chineseQuoteResult: SyncStatus<Any>,
+    chineseQuoteResultProgress: Float,
+    syncClassicalLiteratureClassicPoem: (total: Int, version: Int) -> Unit,
+    classicalLiteratureClassicPoemResult: SyncStatus<Any>,
+    classicalLiteratureClassicPoemResultProgress: Float,
+    syncChineseCharacter: (total: Int, version: Int) -> Unit,
+    chineseCharacterResult: SyncStatus<Any>,
+    chineseCharacterResultProgress: Float,
+    syncChineseIdiom: (total: Int, version: Int) -> Unit,
+    chineseIdiomResult: SyncStatus<Any>,
+    chineseIdiomResultProgress: Float,
     syncChineseLyric: (total: Int, version: Int) -> Unit,
     chineseLyricResult: SyncStatus<Any>,
     chineseLyricResultProgress: Float,
-    syncChineseRiddles: (total: Int, version: Int) -> Unit,
-    chineseRiddlesResult: SyncStatus<Any>,
-    chineseRiddlesResultProgress: Float,
-    syncChineseTongueTwisters: (total: Int, version: Int) -> Unit,
-    chineseTongueTwistersResult: SyncStatus<Any>,
-    chineseTongueTwistersResultProgress: Float,
+    syncChineseRiddle: (total: Int, version: Int) -> Unit,
+    chineseRiddleResult: SyncStatus<Any>,
+    chineseRiddleResultProgress: Float,
+    syncChineseTongueTwister: (total: Int, version: Int) -> Unit,
+    chineseTongueTwisterResult: SyncStatus<Any>,
+    chineseTongueTwisterResultProgress: Float,
     syncClassicalLiteraturePeople: (total: Int, version: Int) -> Unit,
     classicalLiteraturePeopleResult: SyncStatus<Any>,
     classicalLiteraturePeopleResultProgress: Float,
-    syncClassicalLiteratureSentences: (total: Int, version: Int) -> Unit,
-    classicalLiteratureSentencesResult: SyncStatus<Any>,
-    classicalLiteratureSentencesResultProgress: Float,
-    syncClassicalLiteratureWritings: (total: Int, version: Int) -> Unit,
-    classicalLiteratureWritingsResult: SyncStatus<Any>,
-    classicalLiteratureWritingsResultProgress: Float,
-    setWritingsPreviousPage: (Int) -> Unit,
-    setWritingsPreviousCount: (count: Int, total: Int) -> Unit
+    syncClassicalLiteratureSentence: (total: Int, version: Int) -> Unit,
+    classicalLiteratureSentenceResult: SyncStatus<Any>,
+    classicalLiteratureSentenceResultProgress: Float,
+    syncClassicalLiteratureWriting: (total: Int, version: Int) -> Unit,
+    classicalLiteratureWritingResult: SyncStatus<Any>,
+    classicalLiteratureWritingResultProgress: Float,
+    setClassicalLiteratureWritingPreviousPage: (Int) -> Unit,
+    setClassicalLiteratureWritingPreviousCount: (count: Int, total: Int) -> Unit
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
@@ -316,69 +316,66 @@ private fun DataScreen(
 
                 val items = listOf(
                     Group(
-                        title = "古诗文",
+                        title = stringResource(R.string.classicalliterature),
                         items = listOf(
                             Item(
-                                title = "经典诗文",
-                                name = "classic_poems",
-                                localVersion = datasetPref.classicCultureClassicPoemsVersion,
-                                status = classicalLiteratureClassicPoemsResult,
-                                progress = classicalLiteratureClassicPoemsResultProgress,
+                                title = stringResource(R.string.classicalliterature_classicpoem),
+                                name = Category.ClassicalLiteratureClassicPoem.model,
+                                localVersion = datasetPref.classicLiteratureClassicPoemVersion,
+                                status = classicalLiteratureClassicPoemResult,
+                                progress = classicalLiteratureClassicPoemResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncClassicalLiteratureClassicPoems(count, version)
+                                    syncClassicalLiteratureClassicPoem(count, version)
                                 }
                             ),
                             Item(
-                                title = "诗文",
-                                name = "writings",
-                                localVersion = datasetPref.classicCultureWritingsVersion,
-                                status = classicalLiteratureWritingsResult,
-                                progress = classicalLiteratureWritingsResultProgress,
+                                title = stringResource(R.string.classicalliterature_writing),
+                                name = Category.ClassicalLiteratureWriting.model,
+                                localVersion = datasetPref.classicLiteratureWritingVersion,
+                                status = classicalLiteratureWritingResult,
+                                progress = classicalLiteratureWritingResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncClassicalLiteratureWritings(count, version)
+                                    syncClassicalLiteratureWriting(count, version)
                                 }
                             ),
                             Item(
-                                title = "诗文名句",
-                                name = "poem_sentences",
-                                localVersion = datasetPref.classicCultureSentencesVersion,
-                                status = classicalLiteratureSentencesResult,
-                                progress = classicalLiteratureSentencesResultProgress,
+                                title = stringResource(R.string.classicalliterature_sentence),
+                                name = Category.ClassicalLiteratureSentence.model,
+                                localVersion = datasetPref.classicLiteratureSentenceVersion,
+                                status = classicalLiteratureSentenceResult,
+                                progress = classicalLiteratureSentenceResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncClassicalLiteratureSentences(count, version)
+                                    syncClassicalLiteratureSentence(count, version)
                                 }
                             ),
                             Item(
-                                title = "人物",
-                                name = "people",
-                                localVersion = datasetPref.classicCulturePeopleVersion,
+                                title = stringResource(R.string.classicalliterature_people),
+                                name = Category.ClassicalLiteraturePeople.model,
+                                localVersion = datasetPref.classicLiteraturePeopleVersion,
                                 status = classicalLiteraturePeopleResult,
                                 progress = classicalLiteraturePeopleResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncClassicalLiteraturePeople(
-                                        count,
-                                        version
-                                    )
+                                    syncClassicalLiteraturePeople(count, version)
                                 }
                             )
                         ),
                     ),
                     Group(
-                        title = "现代汉语",
+                        title = stringResource(R.string.chinese),
                         items = listOf(
                             Item(
                                 title = "汉字",
-                                name = "dictionary",
-                                localVersion = datasetPref.chineseDictionaryVersion,
-                                status = chineseDictionaryResult,
-                                progress = chineseDictionaryResultProgress,
+                                name = Category.ChineseCharacter.model,
+                                localVersion = datasetPref.chineseCharacterVersion,
+                                status = chineseCharacterResult,
+                                progress = chineseCharacterResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncDictionary(count, version)
+                                    syncChineseCharacter(count, version)
                                 }
                             ),
                             Item(
-                                title = "词语",
-                                name = "expressions",
+                                title = stringResource(R.string.chinese_expression),
+                                name = Category.ChineseExpression.model,
                                 localVersion = datasetPref.chineseExpressionVersion,
                                 status = chineseExpressionResult,
                                 progress = chineseExpressionResultProgress,
@@ -387,42 +384,39 @@ private fun DataScreen(
                                 }
                             ),
                             Item(
-                                title = "成语",
-                                name = "idioms",
-                                localVersion = datasetPref.chineseIdiomsVersion,
-                                status = chineseIdiomsResult,
-                                progress = chineseIdiomsResultProgress,
+                                title = stringResource(R.string.chinese_idiom),
+                                name = Category.ChineseIdiom.model,
+                                localVersion = datasetPref.chineseIdiomVersion,
+                                status = chineseIdiomResult,
+                                progress = chineseIdiomResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseIdioms(
-                                        count,
-                                        version
-                                    )
+                                    syncChineseIdiom(count, version)
                                 }
                             ),
                             Item(
-                                title = "歇后语",
-                                name = "chinese_wisecracks",
-                                localVersion = datasetPref.chineseWisecracksVersion,
-                                status = chineseWisecracksResult,
-                                progress = chineseWisecracksResultProgress,
+                                title = stringResource(R.string.chinese_wisecrack),
+                                name = Category.ChineseWisecrack.model,
+                                localVersion = datasetPref.chineseWisecrackVersion,
+                                status = chineseWisecrackResult,
+                                progress = chineseWisecrackResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseWisecracks(count, version)
+                                    syncChineseWisecrack(count, version)
                                 }
                             ),
                             Item(
-                                title = "谜语",
-                                name = "riddles",
-                                localVersion = datasetPref.chineseRiddlesVersion,
-                                status = chineseRiddlesResult,
-                                progress = chineseRiddlesResultProgress,
+                                title = stringResource(R.string.chinese_riddle),
+                                name = Category.ChineseRiddle.model,
+                                localVersion = datasetPref.chineseRiddleVersion,
+                                status = chineseRiddleResult,
+                                progress = chineseRiddleResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseRiddles(count, version)
+                                    syncChineseRiddle(count, version)
                                 }
                             ),
                             Item(
-                                title = "谚语",
-                                name = "proverbs",
-                                localVersion = datasetPref.chineseProverVersion,
+                                title = stringResource(R.string.chinese_proverb),
+                                name = Category.ChineseProverb.model,
+                                localVersion = datasetPref.chineseProverbVersion,
                                 status = chineseProverbResult,
                                 progress = chineseProverbResultProgress,
                                 onClick = { count: Int, version: Int ->
@@ -430,18 +424,18 @@ private fun DataScreen(
                                 }
                             ),
                             Item(
-                                title = "绕口令",
-                                name = "tongue_twisters",
-                                localVersion = datasetPref.chineseTongueTwistersVersion,
-                                status = chineseTongueTwistersResult,
-                                progress = chineseTongueTwistersResultProgress,
+                                title = stringResource(R.string.chinese_tonguetwister),
+                                name = Category.ChineseTongueTwister.model,
+                                localVersion = datasetPref.chineseTongueTwisterVersion,
+                                status = chineseTongueTwisterResult,
+                                progress = chineseTongueTwisterResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseTongueTwisters(count, version)
+                                    syncChineseTongueTwister(count, version)
                                 }
                             ),
                             Item(
-                                title = "对联",
-                                name = "chinese_antithetical_couplet",
+                                title = stringResource(R.string.chinese_antitheticalcouplet),
+                                name = Category.ChineseAntitheticalCouplet.model,
                                 localVersion = datasetPref.chineseAntitheticalCoupletVersion,
                                 status = chineseAntitheticalCoupletResult,
                                 progress = chineseAntitheticalCoupletProgress,
@@ -450,8 +444,8 @@ private fun DataScreen(
                                 }
                             ),
                             Item(
-                                title = "歌词",
-                                name = "lyrics",
+                                title = stringResource(R.string.chinese_lyric),
+                                name = Category.ChineseLyric.model,
                                 localVersion = datasetPref.chineseLyricVersion,
                                 status = chineseLyricResult,
                                 progress = chineseLyricResultProgress,
@@ -460,8 +454,8 @@ private fun DataScreen(
                                 }
                             ),
                             Item(
-                                title = "知识卡片",
-                                name = "chinese_knowledge",
+                                title = stringResource(R.string.chinese_knowledge),
+                                name = Category.ChineseKnowledge.model,
                                 localVersion = datasetPref.chineseKnowledgeVersion,
                                 status = chineseKnowledgeResult,
                                 progress = chineseKnowledgeResultProgress,
@@ -470,18 +464,18 @@ private fun DataScreen(
                                 }
                             ),
                             Item(
-                                title = "句子",
-                                name = "chinese_quotes",
+                                title = stringResource(R.string.chinese_quote),
+                                name = Category.ChineseQuote.model,
                                 localVersion = datasetPref.chineseQuoteVersion,
-                                status = chineseQuotesResult,
-                                progress = chineseQuotesResultProgress,
+                                status = chineseQuoteResult,
+                                progress = chineseQuoteResultProgress,
                                 onClick = { count: Int, version: Int ->
-                                    syncChineseQuotes(count, version)
+                                    syncChineseQuote(count, version)
                                 }
                             ),
                             Item(
-                                title = "诗歌",
-                                name = "chinese_modern_poetry",
+                                title = stringResource(R.string.chinese_modernpoetry),
+                                name = Category.ChineseModernPoetry.model,
                                 localVersion = datasetPref.chineseModernPoetryVersion,
                                 status = chineseModernPoetryResult,
                                 progress = chineseModernPoetryResultProgress,
@@ -492,11 +486,11 @@ private fun DataScreen(
                         )
                     ),
                     Group(
-                        title = "中国",
+                        title = stringResource(R.string.china),
                         items = listOf(
                             Item(
-                                title = "世界文化遗产",
-                                name = "china_world_cultural_heritage",
+                                title = stringResource(R.string.china_worldcultureheritage),
+                                name = Category.ChinaWorldCulturalHeritage.model,
                                 localVersion = datasetPref.chinaWorldCulturalHeritageVersion,
                                 status = chinaWorldCultureHeritageResult,
                                 progress = chinaWorldCultureHeritageProgress,
@@ -508,14 +502,15 @@ private fun DataScreen(
                     )
                 )
 
-                LaunchedEffect(datasetPref.classicCultureWritingsVersion) {
-                    val writingsIndex = nameList.indexOfFirst { it == "writings" }
+                LaunchedEffect(datasetPref.classicLiteratureWritingVersion) {
+                    val writingsIndex =
+                        nameList.indexOfFirst { it == Category.ClassicalLiteratureWriting.model }
                     // 诗文续传逻辑,设为上次的进度
-                    if (datasetPref.classicCultureWritingsVersion != versionList[writingsIndex]) {
-                        if (datasetPref.classicCultureWritingsCurrentCount != countList[writingsIndex]) {
-                            setWritingsPreviousPage(datasetPref.classicCultureWritingsCurrentPage)
-                            setWritingsPreviousCount(
-                                datasetPref.classicCultureWritingsCurrentCount,
+                    if (datasetPref.classicLiteratureWritingVersion != versionList[writingsIndex]) {
+                        if (datasetPref.classicLiteratureWritingCurrentCount != countList[writingsIndex]) {
+                            setClassicalLiteratureWritingPreviousPage(if (datasetPref.classicLiteratureWritingCurrentPage != 0) datasetPref.classicLiteratureWritingCurrentPage else 1)
+                            setClassicalLiteratureWritingPreviousCount(
+                                datasetPref.classicLiteratureWritingCurrentCount,
                                 countList[writingsIndex]
                             )
                         }
@@ -584,7 +579,7 @@ private fun TipDialog() {
                 Text(text = "提示")
             },
             text = {
-                Text(text = "数据量大，预计需要半小时以上时间，建议在电量充足、流量充足的空闲时间同步数据！建议一个一个同步,不然可能因占用太多内存而被系统杀死进程。")
+                Text(text = "数据量大（尤其是【诗文】数据，可以考虑最后同步），预计需要数小时，建议在电量充足、流量充足的空闲时间同步数据！建议一个一个同步,不然可能因占用太多内存而被系统杀死进程。")
             }
         )
     }

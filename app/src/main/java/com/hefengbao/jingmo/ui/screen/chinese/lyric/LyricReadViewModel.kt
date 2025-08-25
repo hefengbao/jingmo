@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.lyric
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.LyricRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,9 +27,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class LyricReadViewModel @Inject constructor(
-    private val repository: LyricRepository,
+    bookmarkRepository: BookmarkRepository,
+    private val lyricRepository: LyricRepository,
     private val preference: ReadStatusPreference
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val id = MutableStateFlow(1)
 
     init {
@@ -48,39 +49,21 @@ class LyricReadViewModel @Inject constructor(
         }
     }
 
-    val lyric = id.flatMapLatest { repository.get(it) }.stateIn(
+    val lyricEntity = id.flatMapLatest { lyricRepository.get(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
 
-    val lyricCollection = id.flatMapLatest { repository.isCollect(it) }.stateIn(
+    val prevId = id.flatMapLatest { lyricRepository.prevId(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
 
-    val prevId = id.flatMapLatest { repository.prevId(it) }.stateIn(
+    val nextId = id.flatMapLatest { lyricRepository.nextId(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
-
-    val nextId = id.flatMapLatest { repository.nextId(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed((5_000)),
-        initialValue = null
-    )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(LyricCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

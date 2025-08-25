@@ -10,14 +10,13 @@
 package com.hefengbao.jingmo.data.database.entity.chinese
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
  * 歇后语书签
  */
-@Entity(tableName = "chinese_wisecrack_collections", indices = [Index("collected_at")])
+//@Entity(tableName = "chinese_wisecrack_collections", indices = [Index("collected_at")])
+@Deprecated("")
 data class WisecrackCollectionEntity(
     @PrimaryKey
     val id: Int

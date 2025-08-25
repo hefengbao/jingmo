@@ -9,9 +9,9 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,14 +28,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SentenceReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val sentenceRepository: SentenceRepository
-) : ViewModel() {
+    private val sentenceRepository: SentenceRepository,
+    bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
     private var id = MutableStateFlow(1)
 
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.classicLiteratureSentencesLastReadId
+                id.value = it.classicLiteratureSentenceLastReadId
             }
         }
     }
@@ -50,16 +51,8 @@ class SentenceReadViewModel @Inject constructor(
         }
     }
 
-    val sentence = id.flatMapLatest {
+    val sentenceEntity = id.flatMapLatest {
         sentenceRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val sentenceCollectionEntity = id.flatMapLatest {
-        sentenceRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -81,16 +74,4 @@ class SentenceReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            sentenceRepository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            sentenceRepository.collect(SentenceCollectionEntity(id))
-        }
-    }
 }

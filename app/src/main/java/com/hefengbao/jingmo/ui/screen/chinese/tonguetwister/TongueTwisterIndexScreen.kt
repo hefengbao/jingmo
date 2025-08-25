@@ -19,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -30,11 +32,11 @@ fun TongueTwisterIndexRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val tongueTwisters by viewModel.tongueTwisters.collectAsState(initial = emptyList())
+    val tongueTwisterEntities by viewModel.tongueTwisterEntities.collectAsState(initial = emptyList())
 
     TongueTwisterIndexScreen(
         onBackClick = onBackClick,
-        tongueTwisters = tongueTwisters,
+        tongueTwisterEntities = tongueTwisterEntities,
         onItemClick = onItemClick
     )
 }
@@ -43,18 +45,18 @@ fun TongueTwisterIndexRoute(
 private fun TongueTwisterIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    tongueTwisters: List<TongueTwisterEntity>,
+    tongueTwisterEntities: List<TongueTwisterEntity>,
     onItemClick: (Int) -> Unit
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "绕口令"
+        title = stringResource(R.string.chinese_tonguetwister)
     ) {
         LazyColumn(
             modifier = modifier.fillMaxWidth()
         ) {
             itemsIndexed(
-                items = tongueTwisters,
+                items = tongueTwisterEntities,
                 key = { _: Int, item: TongueTwisterEntity -> item.id }
             ) { _: Int, item: TongueTwisterEntity ->
                 Text(
@@ -62,7 +64,6 @@ private fun TongueTwisterIndexScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .clickable {
-                            //firstLoading = false
                             onItemClick(item.id)
                         }
                         .padding(16.dp)

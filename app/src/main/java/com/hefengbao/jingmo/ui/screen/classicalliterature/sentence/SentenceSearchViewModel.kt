@@ -28,12 +28,13 @@ class SentenceSearchViewModel @Inject constructor(
     private val repository: SentenceRepository
 ) : ViewModel() {
     private val query = MutableStateFlow("")
+
     fun search(query: String) {
         this.query.value = query
     }
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    val sentences = query.debounce(200)
+    val sentenceEntities = query.debounce(200)
         .distinctUntilChanged()
         .filter { return@filter it.isNotEmpty() }
         .flatMapLatest { repository.search(it) }

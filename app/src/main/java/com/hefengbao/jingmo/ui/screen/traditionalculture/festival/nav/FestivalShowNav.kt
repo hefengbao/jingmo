@@ -29,8 +29,8 @@ internal class FestivalShowArgs(val festivalId: String) {
             this(URLDecoder.decode(checkNotNull(savedStateHandle[festivalShowIdArg]), UTF_8.name()))
 }
 
-fun NavController.navigateToTraditionalCultureFestivalShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToTraditionalCultureFestivalShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }

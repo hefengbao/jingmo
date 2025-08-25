@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseQuoteDao
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,16 +22,11 @@ class QuoteRepositoryImpl @Inject constructor(
 ) : QuoteRepository {
     override suspend fun insert(entity: QuoteEntity) = dao.insert(entity)
 
-    override fun get(id: Int): Flow<QuoteEntity> = dao.get(id)
+    override fun get(id: Int): Flow<QuoteEntity?> = dao.get(id)
 
-    override fun random(): Flow<QuoteEntity> = dao.random()
+    override fun getRandom(): Flow<QuoteEntity?> = dao.random()
 
     override fun search(query: String): Flow<List<QuoteEntity>> = dao.search(query)
-
-    override fun collections(): Flow<PagingData<QuoteEntity>> = Pager(
-        config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { dao.collections() }
-    ).flow
 
     override fun total(): Flow<Int> = dao.total()
 
@@ -40,9 +34,8 @@ class QuoteRepositoryImpl @Inject constructor(
 
     override fun nextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
-    override fun isCollect(id: Int): Flow<QuoteCollectionEntity?> = dao.isCollect(id)
-
-    override suspend fun collect(entity: QuoteCollectionEntity) = dao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = dao.uncollect(id)
+    override fun bookmarks(): Flow<PagingData<QuoteEntity>> = Pager(
+        config = PagingConfig(pageSize = 30),
+        pagingSourceFactory = { dao.bookmarks() }
+    ).flow
 }

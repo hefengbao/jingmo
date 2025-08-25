@@ -10,24 +10,21 @@
 package com.hefengbao.jingmo.data.repository.chinese
 
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
-import com.hefengbao.jingmo.data.model.chinese.character.Pinyin
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
 import com.hefengbao.jingmo.data.model.chinese.character.Radical
 import com.hefengbao.jingmo.data.model.chinese.character.Stroke
+import com.hefengbao.jingmo.data.model.chinese.character.Syllable
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
-    fun pinyins(): List<Pinyin>
+    suspend fun syllables(): List<Syllable>
     fun radicals(): List<Radical>
     fun strokes(): List<Stroke>
-    fun get(id: Int): Flow<DictionaryEntity>
-    fun search(character: String): Flow<List<DictionaryEntity>>
-    fun searchByPinyin(pinyin: String): Flow<List<DictionaryEntity>>
-    fun searchByRadical(radical: String): Flow<List<DictionaryEntity>>
-    fun searchByStroke(stroke: Int): Flow<List<DictionaryEntity>>
-    fun collections(): Flow<PagingData<DictionaryEntity>>
-    suspend fun collect(entity: DictionaryCollectionEntity)
-    suspend fun uncollect(id: Int)
-    fun isCollect(id: Int): Flow<DictionaryCollectionEntity?>
+    fun getRandom(): Flow<CharacterEntity?>
+    fun get(id: Int): Flow<CharacterEntity?>
+    fun search(character: String): Flow<List<CharacterEntity>>
+    fun searchByPinyin(pinyin: String): Flow<List<CharacterEntity>>
+    fun searchByRadical(radical: String): Flow<List<CharacterEntity>>
+    fun searchByStroke(stroke: Int): Flow<List<CharacterEntity>>
+    fun bookmarks(): Flow<PagingData<CharacterEntity>>
 }

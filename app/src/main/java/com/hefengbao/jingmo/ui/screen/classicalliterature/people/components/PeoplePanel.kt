@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 
 @Composable
 fun PeoplePanel(
@@ -86,7 +86,7 @@ fun PeoplePanel(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(text = people.name, style = MaterialTheme.typography.titleMedium)
-                BackgroundTitle(title = "生卒年月")
+                EmphasizedTitle(title = "生卒年月")
                 Text(text = birthAndDeath)
             }
         }
@@ -96,7 +96,7 @@ fun PeoplePanel(
                 modifier = modifier.padding(16.dp, 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                BackgroundTitle(title = "主要生活朝代")
+                EmphasizedTitle(title = "主要生活朝代")
                 Text(text = people.dynasty)
             }
         }
@@ -124,7 +124,7 @@ fun PeoplePanel(
                     modifier = modifier.padding(16.dp, 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "别称")
+                    EmphasizedTitle(title = "别称")
                     Text(text = aliases)
                 }
             }
@@ -136,7 +136,7 @@ fun PeoplePanel(
                     modifier = modifier.padding(16.dp, 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "标签")
+                    EmphasizedTitle(title = "标签")
                     Text(text = people.titles.joinToString("、"))
                 }
             }
@@ -148,7 +148,7 @@ fun PeoplePanel(
                     modifier = modifier.padding(16.dp, 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "家乡")
+                    EmphasizedTitle(title = "家乡")
                     Text(text = people.hometown.map { return@map it.name }
                         .joinToString("、"))
                 }
@@ -158,7 +158,7 @@ fun PeoplePanel(
         if (!people.details.isNullOrEmpty()) {
             item {
                 Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    BackgroundTitle(title = "人物资料")
+                    EmphasizedTitle(title = "人物资料")
                 }
             }
 

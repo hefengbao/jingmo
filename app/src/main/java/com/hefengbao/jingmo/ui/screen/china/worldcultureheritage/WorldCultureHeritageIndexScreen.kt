@@ -25,10 +25,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -54,7 +56,10 @@ private fun WorldCultureHeritageIndexScreen(
     onItemClick: (Int) -> Unit,
     list: List<WorldCulturalHeritageEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "中国的世界遗产") {
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = stringResource(R.string.china_worldcultureheritage)
+    ) {
         LazyColumn(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)

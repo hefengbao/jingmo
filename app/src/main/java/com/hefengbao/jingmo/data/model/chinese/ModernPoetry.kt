@@ -13,6 +13,9 @@ import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * 诗歌
+ */
 @Serializable
 data class ModernPoetry(
     val id: Int,

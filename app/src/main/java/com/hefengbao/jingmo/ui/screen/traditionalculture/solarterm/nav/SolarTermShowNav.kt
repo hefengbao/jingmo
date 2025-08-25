@@ -35,8 +35,8 @@ internal class SolarTermShowArgs(val solarTermId: String) {
             )
 }
 
-fun NavController.navigateToTraditionalCultureSolarTermShowScreen(id: String) {
-    val encodeId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToTraditionalCultureSolarTermShowScreen(id: Int) {
+    val encodeId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodeId") {
         launchSingleTop = true
     }

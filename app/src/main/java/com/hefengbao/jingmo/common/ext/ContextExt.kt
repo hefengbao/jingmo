@@ -46,7 +46,7 @@ fun Context.installLatestApk() {
         val contentUri = FileProvider.getUriForFile(this, getFileProvider(), getLatestApk())
         val intent = Intent(Intent.ACTION_VIEW).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setDataAndType(contentUri, "application/vnd.android.package-archive")
         }
         if (packageManager.queryIntentActivities(intent, 0).size > 0) {
@@ -76,7 +76,7 @@ fun Context.openURL(
     if (!url.isNullOrBlank()) {
         val uri = url.trim { it.isWhitespace() || it == '\n' }.toUri()
         val intent = Intent(Intent.ACTION_VIEW, uri)
-        val customTabsIntent = CustomTabsIntent.Builder().setShowTitle(true).build()
+        CustomTabsIntent.Builder().setShowTitle(true).build()
         try {
             val intents = packageManager.run {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

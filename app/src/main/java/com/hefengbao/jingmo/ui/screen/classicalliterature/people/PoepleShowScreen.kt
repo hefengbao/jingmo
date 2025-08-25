@@ -22,24 +22,24 @@ fun PeopleShowRoute(
     viewModel: PeopleShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    val people by viewModel.people.collectAsState(initial = null)
+    val peopleEntity by viewModel.peopleEntity.collectAsState(initial = null)
 
     PeopleShowScreen(
         onBackClick = onBackClick,
-        people = people
+        peopleEntity = peopleEntity
     )
 }
 
 @Composable
 private fun PeopleShowScreen(
     onBackClick: () -> Unit,
-    people: PeopleEntity?
+    peopleEntity: PeopleEntity?
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
         title = "人物资料"
     ) {
-        people?.let {
+        peopleEntity?.let {
             PeoplePanel(people = it)
         }
     }

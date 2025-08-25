@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ExpressionWrapper(
-    val data: List<ChineseExpression>,
+    val data: List<Expression>,
     @SerialName("next_page")
     val nextPage: String?
 )

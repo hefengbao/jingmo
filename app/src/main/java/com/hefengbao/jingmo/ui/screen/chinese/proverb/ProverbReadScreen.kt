@@ -28,14 +28,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.components.ProverbPanel
 import kotlin.math.abs
@@ -45,20 +47,21 @@ fun ProverbReadRoute(
     viewModel: ProverbReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    val proverb by viewModel.proverb.collectAsState()
-    val proverbCollection by viewModel.proverbCollection.collectAsState()
+    val proverbEntity by viewModel.proverbEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
     val nextId by viewModel.nextId.collectAsState()
     val prevId by viewModel.prevId.collectAsState()
 
     ProverbReadScreen(
         onBackClick = onBackClick,
-        proverb = proverb,
-        proverbCollection = proverbCollection,
+        proverbEntity = proverbEntity,
+        bookmarkEntity = bookmarkEntity,
         nextId = nextId,
         prevId = prevId,
         setCurrentId = viewModel::setCurrentId,
-        setCollect = viewModel::collect,
-        setUncollect = viewModel::uncollect
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseProverb.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseProverb.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseProverb.model) }
     )
 }
 
@@ -66,19 +69,21 @@ fun ProverbReadRoute(
 private fun ProverbReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    proverb: ProverbEntity?,
-    proverbCollection: ProverbCollectionEntity?,
+    proverbEntity: ProverbEntity?,
+    bookmarkEntity: BookmarkEntity?,
     nextId: Int?,
     prevId: Int?,
     setCurrentId: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit
 ) {
-    SimpleScaffold(
-        onBackClick = onBackClick,
-        title = "谚语",
-        bottomBar = {
-            proverb?.let {
+    proverbEntity?.let { entity ->
+        LaunchedEffect(entity) { isBookmarked(entity.id) }
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = "谚语",
+            bottomBar = {
                 BottomAppBar(
                     actions = {
                         Row(
@@ -97,8 +102,8 @@ private fun ProverbReadScreen(
                                     contentDescription = null
                                 )
                             }
-                            if (proverbCollection != null) {
-                                IconButton(onClick = { setUncollect(proverb.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
                                         contentDescription = null,
@@ -106,7 +111,7 @@ private fun ProverbReadScreen(
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(proverb.id) }) {
+                                IconButton(onClick = { addBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
                                         contentDescription = null
@@ -126,25 +131,25 @@ private fun ProverbReadScreen(
                     }
                 )
             }
-        }
-    ) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .draggable(
-                    state = rememberDraggableState {},
-                    orientation = Orientation.Horizontal,
-                    onDragStarted = {},
-                    onDragStopped = { velocity ->
-                        if (velocity < 0 && abs(velocity) > 500f) {
-                            nextId?.let(setCurrentId)
-                        } else if (velocity > 0 && abs(velocity) > 500f) {
-                            prevId?.let(setCurrentId)
-                        }
-                    }
-                )
         ) {
-            proverb?.let { entity -> ProverbPanel(entity = entity) }
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = { velocity ->
+                            if (velocity < 0 && abs(velocity) > 500f) {
+                                nextId?.let(setCurrentId)
+                            } else if (velocity > 0 && abs(velocity) > 500f) {
+                                prevId?.let(setCurrentId)
+                            }
+                        }
+                    )
+            ) {
+                ProverbPanel(entity = entity)
+            }
         }
     }
 }

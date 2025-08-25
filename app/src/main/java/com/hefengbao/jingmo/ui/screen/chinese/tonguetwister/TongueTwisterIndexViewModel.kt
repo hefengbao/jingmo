@@ -24,8 +24,8 @@ class TongueTwisterIndexViewModel @Inject constructor(
     repository: TongueTwisterRepository,
 ) : ViewModel() {
 
-    val tongueTwisters: SharedFlow<List<TongueTwisterEntity>> =
-        repository.search().stateIn(
+    val tongueTwisterEntities: SharedFlow<List<TongueTwisterEntity>> =
+        repository.list().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = emptyList()

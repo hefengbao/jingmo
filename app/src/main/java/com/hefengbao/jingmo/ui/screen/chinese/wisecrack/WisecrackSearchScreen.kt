@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,11 +34,11 @@ fun ChineseWisecrackSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (id: Int) -> Unit
 ) {
-    val list by viewModel.searchWisecrackList.collectAsState(initial = emptyList())
+    val wisecrackEntities by viewModel.wisecrackEntities.collectAsState(initial = emptyList())
 
     ChineseWisecrackSearchScreen(
         onBackClick = onBackClick,
-        list = list,
+        wisecrackEntities = wisecrackEntities,
         onSearch = { viewModel.search(it) },
         onItemClick = onItemClick
     )
@@ -48,7 +48,7 @@ fun ChineseWisecrackSearchRoute(
 private fun ChineseWisecrackSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    list: List<WisecrackEntity>,
+    wisecrackEntities: List<WisecrackEntity>,
     onSearch: (String) -> Unit,
     onItemClick: (id: Int) -> Unit
 ) {
@@ -72,7 +72,7 @@ private fun ChineseWisecrackSearchScreen(
                 .fillMaxWidth(),
         ) {
             itemsIndexed(
-                items = list,
+                items = wisecrackEntities,
             ) { index, item ->
                 Text(
                     modifier = modifier
@@ -83,8 +83,8 @@ private fun ChineseWisecrackSearchScreen(
                         .fillMaxWidth(),
                     text = item.riddle,
                 )
-                if (index != list.lastIndex) {
-                    Divider(thickness = 0.5.dp)
+                if (index != wisecrackEntities.lastIndex) {
+                    HorizontalDivider(thickness = 0.5.dp)
                 }
             }
         }

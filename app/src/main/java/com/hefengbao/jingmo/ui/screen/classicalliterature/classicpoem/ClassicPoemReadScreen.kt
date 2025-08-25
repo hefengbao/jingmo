@@ -49,12 +49,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.data.model.IdTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.components.ClassicPoemPanel
@@ -69,19 +72,30 @@ fun ClassicPoemReadRoute(
     val classicPoemEntity by viewModel.classicPoemEntity.collectAsState()
     val prevId by viewModel.prevId.collectAsState()
     val nextId by viewModel.nextId.collectAsState()
-    val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
     val idTitles = viewModel.idTitles.collectAsLazyPagingItems()
+
+    classicPoemEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            viewModel.isBookmarked(entity.id, Category.ClassicalLiteratureClassicPoem.model)
+        }
+    }
 
     ClassicPoemReadScreen(
         onBackClick = onBackClick,
         setCurrentId = { viewModel.setCurrentId(it) },
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
+        addBookmark = { viewModel.addBookmark(it, Category.ClassicalLiteratureClassicPoem.model) },
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ClassicalLiteratureClassicPoem.model
+            )
+        },
         setLastReadId = { viewModel.setLastReadId(it) },
         classicPoemEntity = classicPoemEntity,
         prevId = prevId,
         nextId = nextId,
-        classicPoemCollectionEntity = classicPoemCollectionEntity,
+        bookmarkEntity = bookmarkEntity,
         idTitles = idTitles,
         setQuery = viewModel::setQuery
     )
@@ -93,13 +107,13 @@ private fun ClassicPoemReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     setCurrentId: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
     setLastReadId: (Int) -> Unit,
     classicPoemEntity: ClassicPoemEntity?,
     prevId: Int?,
     nextId: Int?,
-    classicPoemCollectionEntity: ClassicPoemCollectionEntity?,
+    bookmarkEntity: BookmarkEntity?,
     idTitles: LazyPagingItems<IdTitle>,
     setQuery: (String) -> Unit,
 ) {
@@ -117,6 +131,8 @@ private fun ClassicPoemReadScreen(
     classicPoemEntity?.let { entity ->
         LaunchedEffect(entity) {
             setLastReadId(entity.id)
+        }
+        LaunchedEffect(entity) {
             scope.launch {
                 state.animateScrollToItem(0)
             }
@@ -144,7 +160,7 @@ private fun ClassicPoemReadScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = "上一个"
+                                contentDescription = stringResource(R.string.previous)
                             )
                         }
                         OutlinedButton(
@@ -166,18 +182,18 @@ private fun ClassicPoemReadScreen(
                         OutlinedButton(onClick = { showPoemBottomSheet = true }) {
                             Text(text = "文")
                         }
-                        if (classicPoemCollectionEntity == null) {
-                            IconButton(onClick = { setCollect(entity.id) }) {
+                        if (bookmarkEntity == null) {
+                            IconButton(onClick = { addBookmark(entity.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         } else {
-                            IconButton(onClick = { setUncollect(entity.id) }) {
+                            IconButton(onClick = { cancelBookmark(entity.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
@@ -189,7 +205,7 @@ private fun ClassicPoemReadScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                contentDescription = "下一个"
+                                contentDescription = stringResource(R.string.next)
                             )
                         }
                     }

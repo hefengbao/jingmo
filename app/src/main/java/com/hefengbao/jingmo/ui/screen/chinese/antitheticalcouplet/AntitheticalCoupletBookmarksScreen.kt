@@ -17,10 +17,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -30,11 +32,12 @@ fun AntitheticalCoupletBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val pagingItems = viewModel.items.collectAsLazyPagingItems()
+    val antitheticalCoupletEntities =
+        viewModel.antitheticalCoupletEntities.collectAsLazyPagingItems()
 
     AntitheticalCoupletBookmarksScreen(
         onBackClick = onBackClick,
-        pagingItems = pagingItems,
+        antitheticalCoupletEntities = antitheticalCoupletEntities,
         onItemClick = onItemClick
     )
 }
@@ -43,10 +46,13 @@ fun AntitheticalCoupletBookmarksRoute(
 private fun AntitheticalCoupletBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    pagingItems: LazyPagingItems<AntitheticalCoupletEntity>,
+    antitheticalCoupletEntities: LazyPagingItems<AntitheticalCoupletEntity>,
     onItemClick: (Int) -> Unit,
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
+    SimpleScaffold(
+        onBackClick = onBackClick,
+        title = stringResource(R.string.bookmarks)
+    ) {
         LazyColumn(
             modifier = modifier
                 .fillMaxWidth()
@@ -54,9 +60,9 @@ private fun AntitheticalCoupletBookmarksScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                count = pagingItems.itemCount
+                count = antitheticalCoupletEntities.itemCount
             ) {
-                pagingItems[it]?.let { entity ->
+                antitheticalCoupletEntities[it]?.let { entity ->
                     Card(onClick = { onItemClick(entity.id) }) {
                         Text(
                             modifier = Modifier

@@ -16,11 +16,11 @@ import com.hefengbao.jingmo.ui.screen.settings.AboutRoute
 
 private const val ROUTE_ABOUT = "about"
 
-fun NavController.navigateToAboutScreen() {
+fun NavController.navigateToSettingsAboutScreen() {
     this.navigate(ROUTE_ABOUT)
 }
 
-fun NavGraphBuilder.aboutScreen(
+fun NavGraphBuilder.settingsAboutScreen(
     onBackClick: () -> Unit
 ) {
     composable(ROUTE_ABOUT) {

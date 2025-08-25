@@ -10,9 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.character
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.CharacterShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,40 +21,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterShowViewModel @Inject constructor(
     private val repository: CharacterRepository,
+    private val bookmarkRepository: BookmarkRepository,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val args = CharacterShowArgs(savedStateHandle)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val character = MutableStateFlow(args.id).flatMapLatest {
+    val characterEntity = MutableStateFlow(args.id).flatMapLatest {
         repository.get(it.toInt())
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    val characterCollection = repository.isCollect(args.id.toInt()).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(DictionaryCollectionEntity(id))
-        }
-    }
 }

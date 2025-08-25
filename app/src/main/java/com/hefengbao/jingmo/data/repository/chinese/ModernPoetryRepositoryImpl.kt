@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseModernPoetryDao
-import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,16 +22,11 @@ class ModernPoetryRepositoryImpl @Inject constructor(
 ) : ModernPoetryRepository {
     override suspend fun insert(entity: ModernPoetryEntity) = dao.insert(entity)
 
-    override fun get(id: Int): Flow<ModernPoetryEntity> = dao.get(id)
+    override fun get(id: Int): Flow<ModernPoetryEntity?> = dao.get(id)
 
-    override fun random(): Flow<ModernPoetryEntity> = dao.random()
+    override fun getRandom(): Flow<ModernPoetryEntity?> = dao.random()
 
     override fun search(query: String): Flow<List<ModernPoetryEntity>> = dao.search(query)
-
-    override fun collections(): Flow<PagingData<ModernPoetryEntity>> = Pager(
-        pagingSourceFactory = { dao.collections() },
-        config = PagingConfig(pageSize = 30)
-    ).flow
 
     override fun total(): Flow<Int> = dao.total()
 
@@ -40,9 +34,8 @@ class ModernPoetryRepositoryImpl @Inject constructor(
 
     override fun nextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
-    override fun isCollect(id: Int): Flow<ModernPoetryCollectionEntity?> = dao.isCollect(id)
-
-    override suspend fun collect(entity: ModernPoetryCollectionEntity) = dao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = dao.uncollect(id)
+    override fun bookmarks(): Flow<PagingData<ModernPoetryEntity>> = Pager(
+        pagingSourceFactory = { dao.bookmarks() },
+        config = PagingConfig(pageSize = 30)
+    ).flow
 }

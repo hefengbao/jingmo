@@ -10,18 +10,14 @@
 package com.hefengbao.jingmo.data.repository.chinese
 
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import kotlinx.coroutines.flow.Flow
 
 interface WisecrackRepository {
-    fun get(id: Int): Flow<WisecrackEntity>
-    fun random(): Flow<WisecrackEntity>
+    fun get(id: Int): Flow<WisecrackEntity?>
+    fun getRandom(): Flow<WisecrackEntity?>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
     fun search(query: String): Flow<List<WisecrackEntity>>
-    fun collections(): Flow<PagingData<WisecrackEntity>>
-    suspend fun collect(entity: WisecrackCollectionEntity)
-    suspend fun uncollect(id: Int)
-    fun isCollect(id: Int): Flow<WisecrackCollectionEntity?>
+    fun bookmarks(): Flow<PagingData<WisecrackEntity>>
 }

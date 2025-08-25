@@ -31,14 +31,14 @@ class PeopleSearchViewModel @Inject constructor(
         _recommendList.value = peopleRepository.recommendList()
     }
 
-    private val _searchResult: MutableStateFlow<List<PeopleEntity>> =
+    private val _peopleEntities: MutableStateFlow<List<PeopleEntity>> =
         MutableStateFlow(emptyList())
-    val searchResult: SharedFlow<List<PeopleEntity>> = _searchResult
+    val peopleEntities: SharedFlow<List<PeopleEntity>> = _peopleEntities
 
     fun search(string: String) {
         viewModelScope.launch {
             peopleRepository.search(string).collectLatest {
-                _searchResult.value = it
+                _peopleEntities.value = it
             }
         }
     }

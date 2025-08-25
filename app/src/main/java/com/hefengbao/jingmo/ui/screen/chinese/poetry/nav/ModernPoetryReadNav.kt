@@ -21,9 +21,13 @@ fun NavController.navigateToChineseModernPoetryReadScreen() {
 }
 
 fun NavGraphBuilder.chineseModernPoetryReadScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(ROUTE) {
-        ModernPoetryReadRoute(onBackClick = onBackClick)
+        ModernPoetryReadRoute(
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick
+        )
     }
 }

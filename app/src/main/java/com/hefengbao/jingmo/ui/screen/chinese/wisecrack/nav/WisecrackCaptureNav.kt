@@ -22,22 +22,22 @@ import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val chineseWisecrackCaptureIdArg = "chineseWisecrackId"
+internal const val captureIdArg = "chineseWisecrackId"
 private const val base = "chinese_wisecrack_capture"
-private const val ROUTE = "$base/{$chineseWisecrackCaptureIdArg}"
+private const val ROUTE = "$base/{$captureIdArg}"
 
 internal class ChineseWisecrackCaptureArgs(val chineseWisecrackId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[chineseWisecrackCaptureIdArg]),
+                    checkNotNull(savedStateHandle[captureIdArg]),
                     UTF_8.name()
                 )
             )
 }
 
-fun NavController.navigateToChineseWisecrackCaptureScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseWisecrackCaptureScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
@@ -49,7 +49,7 @@ fun NavGraphBuilder.chineseWisecrackCaptureScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(chineseWisecrackCaptureIdArg) { type = NavType.StringType }
+            navArgument(captureIdArg) { type = NavType.StringType }
         )
     ) {
         ChineseWisecrackCaptureRoute(

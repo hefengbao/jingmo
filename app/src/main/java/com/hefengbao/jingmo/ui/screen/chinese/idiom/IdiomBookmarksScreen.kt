@@ -17,10 +17,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -30,11 +32,11 @@ fun IdiomBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val bookmarks = viewModel.bookmarks.collectAsLazyPagingItems()
+    val idiomEntities = viewModel.idiomEntities.collectAsLazyPagingItems()
 
     IdiomBookmarksScreen(
         onBackClick = onBackClick,
-        bookmarks = bookmarks,
+        idiomEntities = idiomEntities,
         onItemClick = onItemClick
     )
 }
@@ -43,15 +45,15 @@ fun IdiomBookmarksRoute(
 private fun IdiomBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    bookmarks: LazyPagingItems<IdiomEntity>,
+    idiomEntities: LazyPagingItems<IdiomEntity>,
     onItemClick: (Int) -> Unit,
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn {
             items(
-                count = bookmarks.itemCount
+                count = idiomEntities.itemCount
             ) {
-                bookmarks[it]?.let { entity ->
+                idiomEntities[it]?.let { entity ->
                     Text(
                         modifier = modifier
                             .fillMaxWidth()

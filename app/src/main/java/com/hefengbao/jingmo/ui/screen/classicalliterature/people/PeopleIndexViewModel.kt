@@ -25,13 +25,17 @@ class PeopleIndexViewModel @Inject constructor(
     private val peopleRepository: PeopleRepository
 ) : ViewModel() {
 
-    private val _people: MutableStateFlow<PeopleEntity?> = MutableStateFlow(null)
-    val people: SharedFlow<PeopleEntity?> = _people
+    init {
+        getRandom()
+    }
 
-    fun getRandomPeople() {
+    private val _peopleEntity: MutableStateFlow<PeopleEntity?> = MutableStateFlow(null)
+    val peopleEntity: SharedFlow<PeopleEntity?> = _peopleEntity
+
+    fun getRandom() {
         viewModelScope.launch {
-            peopleRepository.random().collectLatest {
-                _people.value = it
+            peopleRepository.getRandom().collectLatest {
+                _peopleEntity.value = it
             }
         }
     }

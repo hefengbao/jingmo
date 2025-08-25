@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.poetry
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.ModernPoetryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,44 +23,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ModernPoetryIndexViewModel @Inject constructor(
-    private val repository: ModernPoetryRepository
-) : ViewModel() {
+    private val repository: ModernPoetryRepository,
+    bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
     init {
         random()
     }
 
-    private val _entity: MutableStateFlow<ModernPoetryEntity?> = MutableStateFlow(null)
-    val entity: SharedFlow<ModernPoetryEntity?> = _entity
+    private val _poetryEntity: MutableStateFlow<ModernPoetryEntity?> = MutableStateFlow(null)
+    val poetryEntity: SharedFlow<ModernPoetryEntity?> = _poetryEntity
 
     fun random() {
         viewModelScope.launch {
-            repository.random().collectLatest {
-                _entity.value = it
+            repository.getRandom().collectLatest {
+                _poetryEntity.value = it
             }
-        }
-    }
-
-    private val _collectionEntity: MutableStateFlow<ModernPoetryCollectionEntity?> =
-        MutableStateFlow(null)
-    val collectionEntity: SharedFlow<ModernPoetryCollectionEntity?> = _collectionEntity
-
-    fun isCollect(id: Int) {
-        viewModelScope.launch {
-            repository.isCollect(id).collectLatest {
-                _collectionEntity.value = it
-            }
-        }
-    }
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(ModernPoetryCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
         }
     }
 }

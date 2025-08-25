@@ -10,72 +10,29 @@
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.model.AppStatus
-import com.hefengbao.jingmo.data.model.traditionalculture.Color
+import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.WritingCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WritingCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val writingRepository: WritingRepository,
-    private val colorRepository: ColorRepository,
-    private val preferenceRepository: PreferenceRepository
-) : ViewModel() {
+    writingRepository: WritingRepository,
+    colorRepository: ColorRepository,
+    preferenceRepository: PreferenceRepository
+) : CaptureViewModel(colorRepository, preferenceRepository) {
     private val args: WritingCaptureArgs = WritingCaptureArgs(savedStateHandle)
 
-    private val _appStatus: MutableStateFlow<AppStatus?> = MutableStateFlow(null)
-    val appStatus: SharedFlow<AppStatus?> = _appStatus
-
-    init {
-        viewModelScope.launch {
-            preferenceRepository.getAppStatus().collectLatest {
-                _appStatus.value = it
-            }
-        }
-    }
-
-    /* val appStatus: SharedFlow<AppStatus?> = preferenceRepository.getAppStatus().stateIn(
-         scope = viewModelScope,
-         initialValue = null,
-         started = SharingStarted.WhileSubscribed(5_000),
-     )*/
-
-    val writing = writingRepository.get(args.poemId.toInt()).stateIn(
+    val writingEntity = writingRepository.get(args.poemId.toInt()).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    private val _colors: MutableStateFlow<List<Color>> = MutableStateFlow(emptyList())
-    val colors: SharedFlow<List<Color>> = _colors
-    fun getColors() {
-        viewModelScope.launch {
-            _colors.value = colorRepository.list()
-        }
-    }
-
-    fun setCaptureColor(color: String) {
-        viewModelScope.launch {
-            preferenceRepository.setCaptureTextColor(color)
-        }
-    }
-
-    fun setCaptureBackgroundColor(color: String) {
-        viewModelScope.launch {
-            preferenceRepository.setCaptureBackgroundColor(color)
-        }
-    }
 }

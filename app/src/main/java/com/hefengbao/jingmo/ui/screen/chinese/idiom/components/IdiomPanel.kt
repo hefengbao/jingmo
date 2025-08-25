@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 
 @Composable
 fun IdiomPanel(
@@ -57,7 +57,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "释义")
+                    EmphasizedTitle(title = "释义")
                     Text(
                         text = it,
                     )
@@ -68,7 +68,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "出处")
+                    EmphasizedTitle(title = "出处")
 
                     val text = buildAnnotatedString {
                         source.text?.let { append(it) }
@@ -87,7 +87,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "名著用例")
+                    EmphasizedTitle(title = "名著用例")
 
                     val text = buildAnnotatedString {
                         quote.text?.let { append(it) }
@@ -106,7 +106,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "用法介绍")
+                    EmphasizedTitle(title = "用法介绍")
                     Text(text = it)
                 }
             }
@@ -115,7 +115,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "示例")
+                    EmphasizedTitle(title = "示例")
 
                     val text = buildAnnotatedString {
                         example.text?.let { append(it) }
@@ -134,7 +134,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "同义成语")
+                    EmphasizedTitle(title = "同义成语")
                     Text(text = it.joinToString("、"))
                 }
             }
@@ -143,7 +143,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "反义成语")
+                    EmphasizedTitle(title = "反义成语")
                     Text(text = it.joinToString("、"))
                 }
             }
@@ -152,7 +152,7 @@ fun IdiomPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "成语故事")
+                    EmphasizedTitle(title = "成语故事")
                     list.forEach {
                         Text(text = it)
                     }

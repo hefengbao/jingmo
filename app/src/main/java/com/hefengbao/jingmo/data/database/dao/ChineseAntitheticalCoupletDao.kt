@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,39 +22,30 @@ interface ChineseAntitheticalCoupletDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: AntitheticalCoupletEntity)
 
-    @Query("select * from chinese_antithetical_couplets where id = :id")
-    fun get(id: Int): Flow<AntitheticalCoupletEntity>
+    @Query("select * from chinese_antitheticalcouplet where id = :id")
+    fun get(id: Int): Flow<AntitheticalCoupletEntity?>
 
-    @Query("select a.* from chinese_antithetical_couplets a where a.id = (select id from chinese_antithetical_couplets order by random() limit 1)")
-    fun random(): Flow<AntitheticalCoupletEntity>
+    @Query("select a.* from chinese_antitheticalcouplet a where a.id = (select id from chinese_antitheticalcouplet order by random() limit 1)")
+    fun random(): Flow<AntitheticalCoupletEntity?>
 
-    @Query("select id from chinese_antithetical_couplets where id > :id order by id asc limit 1")
+    @Query("select id from chinese_antitheticalcouplet where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
 
-    @Query("select id from chinese_antithetical_couplets where id < :id order by id desc limit 1")
+    @Query("select id from chinese_antitheticalcouplet where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Query("select * from chinese_antithetical_couplets order by id asc")
+    @Query("select * from chinese_antitheticalcouplet order by id asc")
     fun list(): PagingSource<Int, AntitheticalCoupletEntity>
 
-    @Query("select * from chinese_antithetical_couplets where body like :query order by id asc")
+    @Query("select * from chinese_antitheticalcouplet where body like :query order by id asc")
     fun search(query: String): PagingSource<Int, AntitheticalCoupletEntity>
 
-    @Query("select i.* from chinese_antithetical_couplet_collections c join chinese_antithetical_couplets i on c.id = i.id order by collected_at desc")
-    fun collections(): PagingSource<Int, AntitheticalCoupletEntity>
+    @Query("select a.* from bookmarks b join chinese_antitheticalcouplet a on b.bookmarkable_id = a.id and bookmarkable_model = 'chinese_antitheticalcouplet' order by b.id desc")
+    fun bookmarks(): PagingSource<Int, AntitheticalCoupletEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun collect(entity: AntitheticalCoupletCollectionEntity)
-
-    @Query("delete from chinese_antithetical_couplet_collections where id = :id")
-    suspend fun uncollect(id: Int)
-
-    @Query("select * from chinese_antithetical_couplet_collections where id = :id")
-    fun isCollect(id: Int): Flow<AntitheticalCoupletCollectionEntity?>
-
-    @Query("select count(*) from chinese_antithetical_couplets")
+    @Query("select count(*) from chinese_antitheticalcouplet")
     fun total(): Flow<Int>
 
-    @Query("delete from chinese_antithetical_couplets")
+    @Query("delete from chinese_antitheticalcouplet")
     suspend fun clear()
 }

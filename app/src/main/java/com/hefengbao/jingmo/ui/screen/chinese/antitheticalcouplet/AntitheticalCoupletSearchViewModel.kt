@@ -32,7 +32,7 @@ class AntitheticalCoupletSearchViewModel @Inject constructor(
     }
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-    var antitheticalCouplets = queryStateFlow
+    var antitheticalCoupletEntities = queryStateFlow
         .debounce(200)
         .distinctUntilChanged()
         .flatMapLatest {

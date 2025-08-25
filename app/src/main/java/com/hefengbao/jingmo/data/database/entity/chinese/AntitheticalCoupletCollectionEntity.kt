@@ -10,14 +10,13 @@
 package com.hefengbao.jingmo.data.database.entity.chinese
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
  * 对联书签
  */
-@Entity(tableName = "chinese_antithetical_couplet_collections", indices = [Index("collected_at")])
+//@Entity(tableName = "chinese_antithetical_couplet_collections", indices = [Index("collected_at")])
+@Deprecated("")
 data class AntitheticalCoupletCollectionEntity(
     @PrimaryKey
     val id: Int

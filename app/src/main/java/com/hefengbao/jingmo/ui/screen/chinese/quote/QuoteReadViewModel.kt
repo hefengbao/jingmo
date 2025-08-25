@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.quote
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.QuoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,9 +27,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class QuoteReadViewModel @Inject constructor(
-    private val repository: QuoteRepository,
+    bookmarkRepository: BookmarkRepository,
+    private val quoteRepository: QuoteRepository,
     private val preference: ReadStatusPreference,
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val id = MutableStateFlow(1)
 
     init {
@@ -46,39 +47,21 @@ class QuoteReadViewModel @Inject constructor(
         viewModelScope.launch { preference.setChineseQuoteLastReadId(id) }
     }
 
-    val entity = id.flatMapLatest { repository.get(it) }.stateIn(
+    val quoteEntity = id.flatMapLatest { quoteRepository.get(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
 
-    val collectionEntity = id.flatMapLatest { repository.isCollect(it) }.stateIn(
+    val prevId = id.flatMapLatest { quoteRepository.prevId(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
 
-    val prevId = id.flatMapLatest { repository.prevId(it) }.stateIn(
+    val nextId = id.flatMapLatest { quoteRepository.nextId(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
-
-    val nextId = id.flatMapLatest { repository.nextId(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed((5_000)),
-        initialValue = null
-    )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(QuoteCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

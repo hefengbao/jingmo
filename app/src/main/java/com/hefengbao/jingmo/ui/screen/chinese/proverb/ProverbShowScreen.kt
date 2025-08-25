@@ -19,13 +19,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.components.ProverbPanel
 
@@ -35,14 +37,15 @@ fun ProverbShowRoute(
     onBackClick: () -> Unit,
 ) {
     val proverbEntity by viewModel.proverbEntity.collectAsState(initial = null)
-    val proverbCollectionEntity by viewModel.proverbCollectionEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     ProverbShowScreen(
         onBackClick = onBackClick,
         proverbEntity = proverbEntity,
-        proverbCollectionEntity = proverbCollectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) }
+        bookmarkEntity = bookmarkEntity,
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseProverb.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseProverb.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseProverb.model) }
     )
 }
 
@@ -50,11 +53,13 @@ fun ProverbShowRoute(
 private fun ProverbShowScreen(
     onBackClick: () -> Unit,
     proverbEntity: ProverbEntity?,
-    proverbCollectionEntity: ProverbCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit
 ) {
     proverbEntity?.let { entity ->
+        LaunchedEffect(entity) { isBookmarked(entity.id) }
         SimpleScaffold(
             onBackClick = onBackClick,
             title = "谚语",
@@ -63,15 +68,15 @@ private fun ProverbShowScreen(
                     Row(
                         modifier = Modifier.padding(horizontal = 16.dp)
                     ) {
-                        if (proverbCollectionEntity == null) {
-                            IconButton(onClick = { setCollect(entity.id) }) {
+                        if (bookmarkEntity == null) {
+                            IconButton(onClick = { addBookmark(entity.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
                                     contentDescription = null
                                 )
                             }
                         } else {
-                            IconButton(onClick = { setUncollect(entity.id) }) {
+                            IconButton(onClick = { cancelBookmark(entity.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
                                     contentDescription = null,

@@ -20,17 +20,17 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
-internal const val characterSearchListArgsTypeArg = "type"
-internal const val characterSearchListArgsQueryArg = "query"
+internal const val searchTypeArg = "type"
+internal const val searchQueryArg = "query"
 private const val base = "chinese_character_search_list"
 private const val ROUTE =
-    "$base/{$characterSearchListArgsQueryArg}/{$characterSearchListArgsTypeArg}"
+    "$base/{$searchQueryArg}/{$searchTypeArg}"
 
 internal class CharacterSearchListArgs(val type: String, val query: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
-                URLDecoder.decode(savedStateHandle[characterSearchListArgsTypeArg], UTF_8.name()),
-                URLDecoder.decode(savedStateHandle[characterSearchListArgsQueryArg], UTF_8.name())
+                URLDecoder.decode(savedStateHandle[searchTypeArg], UTF_8.name()),
+                URLDecoder.decode(savedStateHandle[searchQueryArg], UTF_8.name())
             )
 }
 
@@ -44,13 +44,13 @@ fun NavController.navigateToChineseCharacterSearchListScreen(type: String, query
 
 fun NavGraphBuilder.chineseCharacterSearchListScreen(
     onBackClick: () -> Unit,
-    onItemClick: (String) -> Unit,
+    onItemClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(characterSearchListArgsQueryArg) { type = NavType.StringType },
-            navArgument(characterSearchListArgsTypeArg) { type = NavType.StringType },
+            navArgument(searchQueryArg) { type = NavType.StringType },
+            navArgument(searchTypeArg) { type = NavType.StringType },
         )
     ) {
         CharacterSearchListRoute(onBackClick = onBackClick, onItemClick = onItemClick)

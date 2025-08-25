@@ -34,12 +34,12 @@ fun RiddleSearchRoute(
     viewModel: RiddleSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val list by viewModel.list.collectAsState(initial = emptyList())
+    val riddleEntities by viewModel.riddleEntities.collectAsState(initial = emptyList())
 
     RiddleSearchScreen(
         onBackClick = onBackClick,
         onSearch = { viewModel.search(it) },
-        list = list
+        riddleEntities = riddleEntities
     )
 }
 
@@ -48,7 +48,7 @@ private fun RiddleSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSearch: (String) -> Unit,
-    list: List<RiddleEntity>
+    riddleEntities: List<RiddleEntity>
 ) {
     var query by remember { mutableStateOf("") }
 
@@ -68,7 +68,7 @@ private fun RiddleSearchScreen(
                 .fillMaxWidth()
         ) {
             itemsIndexed(
-                items = list
+                items = riddleEntities
             ) { _: Int, item: RiddleEntity ->
                 Card(
                     modifier = modifier

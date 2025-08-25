@@ -23,21 +23,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
 fun CharacterSearchListRoute(
     viewModel: CharacterSearchListViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (String) -> Unit,
+    onItemClick: (Int) -> Unit,
 ) {
-    val characters by viewModel.characters.collectAsState(initial = emptyList())
+    val characterEntities by viewModel.characterEntities.collectAsState(initial = emptyList())
 
     CharacterSearchListScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        characters = characters,
+        characterEntities = characterEntities,
         query = viewModel.query,
         type = viewModel.type
     )
@@ -47,8 +47,8 @@ fun CharacterSearchListRoute(
 private fun CharacterSearchListScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onItemClick: (String) -> Unit,
-    characters: List<DictionaryEntity>,
+    onItemClick: (Int) -> Unit,
+    characterEntities: List<CharacterEntity>,
     query: String,
     type: String
 ) {
@@ -63,13 +63,13 @@ private fun CharacterSearchListScreen(
                 .padding(16.dp)
         ) {
             itemsIndexed(
-                items = characters
-            ) { _: Int, item: DictionaryEntity ->
+                items = characterEntities
+            ) { _: Int, item: CharacterEntity ->
                 Text(
-                    text = item.char,
+                    text = item.character,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onItemClick(item.id.toString()) }
+                        .clickable { onItemClick(item.id) }
                         .padding(vertical = 16.dp),
                     textAlign = TextAlign.Center,
                 )

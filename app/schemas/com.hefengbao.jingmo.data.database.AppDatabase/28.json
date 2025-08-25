@@ -1,0 +1,1332 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 28,
+    "identityHash": "2412a5b26577fb716d940031b4486839",
+    "entities": [
+      {
+        "tableName": "bookmarks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `bookmarkable_id` INTEGER NOT NULL, `bookmarkable_model` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bookmarkableId",
+            "columnName": "bookmarkable_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bookmarkableModel",
+            "columnName": "bookmarkable_model",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "china_worldcultureheritage",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `type` TEXT, `year` TEXT NOT NULL, `year2` TEXT, `level` TEXT NOT NULL, `address` TEXT NOT NULL, `image` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "year2",
+            "columnName": "year2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_antitheticalcouplet",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `body` TEXT NOT NULL, `description` TEXT, `image` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "body",
+            "columnName": "body",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_character",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `character` TEXT NOT NULL, `character2` TEXT, `pinyin` TEXT, `radical` TEXT, `stroke` INTEGER, `wubi` TEXT, `explanations` TEXT, `explanations2` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "character",
+            "columnName": "character",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "character2",
+            "columnName": "character2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "pinyin",
+            "columnName": "pinyin",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "radical",
+            "columnName": "radical",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "stroke",
+            "columnName": "stroke",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "wubi",
+            "columnName": "wubi",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "explanations",
+            "columnName": "explanations",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "explanations2",
+            "columnName": "explanations2",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_expression",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `word` TEXT NOT NULL, `pinyin` TEXT NOT NULL, `explanation` TEXT, `similar` TEXT, `opposite` TEXT, `usage` TEXT, `story` TEXT, `notice` TEXT, `source_text` TEXT, `source_book` TEXT, `quote_text` TEXT, `quote_book` TEXT, `example_text` TEXT, `example_book` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "word",
+            "columnName": "word",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pinyin",
+            "columnName": "pinyin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "explanation",
+            "columnName": "explanation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "similar",
+            "columnName": "similar",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "opposite",
+            "columnName": "opposite",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "usage",
+            "columnName": "usage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "story",
+            "columnName": "story",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "notice",
+            "columnName": "notice",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "source.text",
+            "columnName": "source_text",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "source.book",
+            "columnName": "source_book",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quote.text",
+            "columnName": "quote_text",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quote.book",
+            "columnName": "quote_book",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "example.text",
+            "columnName": "example_text",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "example.book",
+            "columnName": "example_book",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_idiom",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `word` TEXT NOT NULL, `pinyin` TEXT NOT NULL, `abbr` TEXT NOT NULL, `explanation` TEXT, `similar` TEXT, `opposite` TEXT, `usage` TEXT, `story` TEXT, `notice` TEXT, `source_text` TEXT, `source_book` TEXT, `quote_text` TEXT, `quote_book` TEXT, `example_text` TEXT, `example_book` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "word",
+            "columnName": "word",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pinyin",
+            "columnName": "pinyin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "abbr",
+            "columnName": "abbr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "explanation",
+            "columnName": "explanation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "similar",
+            "columnName": "similar",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "opposite",
+            "columnName": "opposite",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "usage",
+            "columnName": "usage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "story",
+            "columnName": "story",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "notice",
+            "columnName": "notice",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "source.text",
+            "columnName": "source_text",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "source.book",
+            "columnName": "source_book",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quote.text",
+            "columnName": "quote_text",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quote.book",
+            "columnName": "quote_book",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "example.text",
+            "columnName": "example_text",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "example.book",
+            "columnName": "example_book",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_knowledge",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `content` TEXT NOT NULL, `label` TEXT NOT NULL, `url` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_knowledge_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`content` TEXT NOT NULL, tokenize=icu, content=`chinese_knowledge`)",
+        "fields": [
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "chinese_knowledge",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_knowledge_fts_BEFORE_UPDATE BEFORE UPDATE ON `chinese_knowledge` BEGIN DELETE FROM `chinese_knowledge_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_knowledge_fts_BEFORE_DELETE BEFORE DELETE ON `chinese_knowledge` BEGIN DELETE FROM `chinese_knowledge_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_knowledge_fts_AFTER_UPDATE AFTER UPDATE ON `chinese_knowledge` BEGIN INSERT INTO `chinese_knowledge_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_knowledge_fts_AFTER_INSERT AFTER INSERT ON `chinese_knowledge` BEGIN INSERT INTO `chinese_knowledge_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END"
+        ]
+      },
+      {
+        "tableName": "chinese_lyric",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `writer` TEXT, `singer` TEXT, `content` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "writer",
+            "columnName": "writer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "singer",
+            "columnName": "singer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_lyric_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`title` TEXT NOT NULL, `writer` TEXT, `singer` TEXT, `content` TEXT NOT NULL, tokenize=icu, content=`chinese_lyric`)",
+        "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "writer",
+            "columnName": "writer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "singer",
+            "columnName": "singer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "chinese_lyric",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_lyric_fts_BEFORE_UPDATE BEFORE UPDATE ON `chinese_lyric` BEGIN DELETE FROM `chinese_lyric_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_lyric_fts_BEFORE_DELETE BEFORE DELETE ON `chinese_lyric` BEGIN DELETE FROM `chinese_lyric_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_lyric_fts_AFTER_UPDATE AFTER UPDATE ON `chinese_lyric` BEGIN INSERT INTO `chinese_lyric_fts`(`docid`, `title`, `writer`, `singer`, `content`) VALUES (NEW.`rowid`, NEW.`title`, NEW.`writer`, NEW.`singer`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_lyric_fts_AFTER_INSERT AFTER INSERT ON `chinese_lyric` BEGIN INSERT INTO `chinese_lyric_fts`(`docid`, `title`, `writer`, `singer`, `content`) VALUES (NEW.`rowid`, NEW.`title`, NEW.`writer`, NEW.`singer`, NEW.`content`); END"
+        ]
+      },
+      {
+        "tableName": "chinese_modernpoetry",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `content` TEXT NOT NULL, `zhu` TEXT, `yi` TEXT, `shang` TEXT, `author_info` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "zhu",
+            "columnName": "zhu",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "yi",
+            "columnName": "yi",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "shang",
+            "columnName": "shang",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authorInfo",
+            "columnName": "author_info",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_modernpoetry_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`content` TEXT NOT NULL, tokenize=icu, content=`chinese_modernpoetry`)",
+        "fields": [
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "chinese_modernpoetry",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_modernpoetry_fts_BEFORE_UPDATE BEFORE UPDATE ON `chinese_modernpoetry` BEGIN DELETE FROM `chinese_modernpoetry_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_modernpoetry_fts_BEFORE_DELETE BEFORE DELETE ON `chinese_modernpoetry` BEGIN DELETE FROM `chinese_modernpoetry_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_modernpoetry_fts_AFTER_UPDATE AFTER UPDATE ON `chinese_modernpoetry` BEGIN INSERT INTO `chinese_modernpoetry_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_modernpoetry_fts_AFTER_INSERT AFTER INSERT ON `chinese_modernpoetry` BEGIN INSERT INTO `chinese_modernpoetry_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END"
+        ]
+      },
+      {
+        "tableName": "chinese_proverb",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_proverb_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`content` TEXT NOT NULL, tokenize=icu, content=`chinese_proverb`)",
+        "fields": [
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "chinese_proverb",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_proverb_fts_BEFORE_UPDATE BEFORE UPDATE ON `chinese_proverb` BEGIN DELETE FROM `chinese_proverb_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_proverb_fts_BEFORE_DELETE BEFORE DELETE ON `chinese_proverb` BEGIN DELETE FROM `chinese_proverb_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_proverb_fts_AFTER_UPDATE AFTER UPDATE ON `chinese_proverb` BEGIN INSERT INTO `chinese_proverb_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_proverb_fts_AFTER_INSERT AFTER INSERT ON `chinese_proverb` BEGIN INSERT INTO `chinese_proverb_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END"
+        ]
+      },
+      {
+        "tableName": "chinese_quote",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `content` TEXT NOT NULL, `author` TEXT NOT NULL, `from` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "from",
+            "columnName": "from",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_quote_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`content` TEXT NOT NULL, tokenize=icu, content=`chinese_quote`)",
+        "fields": [
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "chinese_quote",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_quote_fts_BEFORE_UPDATE BEFORE UPDATE ON `chinese_quote` BEGIN DELETE FROM `chinese_quote_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_quote_fts_BEFORE_DELETE BEFORE DELETE ON `chinese_quote` BEGIN DELETE FROM `chinese_quote_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_quote_fts_AFTER_UPDATE AFTER UPDATE ON `chinese_quote` BEGIN INSERT INTO `chinese_quote_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_chinese_quote_fts_AFTER_INSERT AFTER INSERT ON `chinese_quote` BEGIN INSERT INTO `chinese_quote_fts`(`docid`, `content`) VALUES (NEW.`rowid`, NEW.`content`); END"
+        ]
+      },
+      {
+        "tableName": "chinese_riddle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `puzzle` TEXT NOT NULL, `answer` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "puzzle",
+            "columnName": "puzzle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "answer",
+            "columnName": "answer",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_tonguetwister",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `content2` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content2",
+            "columnName": "content2",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "chinese_wisecrack",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `riddle` TEXT NOT NULL, `answer` TEXT NOT NULL, `first_word` TEXT NOT NULL, `first_letter` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "riddle",
+            "columnName": "riddle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "answer",
+            "columnName": "answer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstWord",
+            "columnName": "first_word",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstLetter",
+            "columnName": "first_letter",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "classicalliterature_classicpoem",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `dynasty` TEXT NOT NULL, `writer` TEXT NOT NULL, `writer_introduction` TEXT, `title` TEXT NOT NULL, `subtitle` TEXT, `preface` TEXT, `content` TEXT NOT NULL, `annotation` TEXT, `translation` TEXT, `creative_background` TEXT, `explain` TEXT, `comment` TEXT, `collection` TEXT NOT NULL, `category` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dynasty",
+            "columnName": "dynasty",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "writer",
+            "columnName": "writer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "writerIntroduction",
+            "columnName": "writer_introduction",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subtitle",
+            "columnName": "subtitle",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "preface",
+            "columnName": "preface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "annotation",
+            "columnName": "annotation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "translation",
+            "columnName": "translation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "creativeBackground",
+            "columnName": "creative_background",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "explain",
+            "columnName": "explain",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "collection",
+            "columnName": "collection",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "classicalliterature_classicpoem_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`writer` TEXT NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, tokenize=icu, content=`classicalliterature_classicpoem`)",
+        "fields": [
+          {
+            "fieldPath": "writer",
+            "columnName": "writer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "classicalliterature_classicpoem",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_classicpoem_fts_BEFORE_UPDATE BEFORE UPDATE ON `classicalliterature_classicpoem` BEGIN DELETE FROM `classicalliterature_classicpoem_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_classicpoem_fts_BEFORE_DELETE BEFORE DELETE ON `classicalliterature_classicpoem` BEGIN DELETE FROM `classicalliterature_classicpoem_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_classicpoem_fts_AFTER_UPDATE AFTER UPDATE ON `classicalliterature_classicpoem` BEGIN INSERT INTO `classicalliterature_classicpoem_fts`(`docid`, `writer`, `title`, `content`) VALUES (NEW.`rowid`, NEW.`writer`, NEW.`title`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_classicpoem_fts_AFTER_INSERT AFTER INSERT ON `classicalliterature_classicpoem` BEGIN INSERT INTO `classicalliterature_classicpoem_fts`(`docid`, `writer`, `title`, `content`) VALUES (NEW.`rowid`, NEW.`writer`, NEW.`title`, NEW.`content`); END"
+        ]
+      },
+      {
+        "tableName": "classicalliterature_people",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `birth_year` TEXT, `birth_day` TEXT, `death_year` TEXT, `death_day` TEXT, `dynasty` TEXT NOT NULL, `aliases` TEXT, `titles` TEXT, `hometown` TEXT, `details` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthYear",
+            "columnName": "birth_year",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "birthDay",
+            "columnName": "birth_day",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deathYear",
+            "columnName": "death_year",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deathDay",
+            "columnName": "death_day",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dynasty",
+            "columnName": "dynasty",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "aliases",
+            "columnName": "aliases",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "titles",
+            "columnName": "titles",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "hometown",
+            "columnName": "hometown",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "details",
+            "columnName": "details",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "classicalliterature_sentence",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `content` TEXT NOT NULL, `from` TEXT NOT NULL, `poem_id` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "from",
+            "columnName": "from",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "poemId",
+            "columnName": "poem_id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "classicalliterature_writing",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `group_index` INTEGER, `classes` TEXT, `froms` TEXT, `allusions` TEXT, `pictures` TEXT, `dynasty` TEXT NOT NULL, `author` TEXT NOT NULL, `author_id` INTEGER, `author_date` TEXT, `author_years` TEXT, `author_place` TEXT, `type` TEXT NOT NULL, `type_detail` TEXT, `rhyme` TEXT, `first_clause_rhyme` TEXT, `preface` TEXT, `clauses` TEXT NOT NULL, `note` TEXT, `comments` TEXT, `title2` TEXT, `content` TEXT, `title_content` TEXT NOT NULL, `title_comments` TEXT, `title_breakAfter` INTEGER, `subtitle_content` TEXT, `subtitle_comments` TEXT, `subtitle_breakAfter` INTEGER, `tune_name` TEXT, `tune_id` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groupIndex",
+            "columnName": "group_index",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "classes",
+            "columnName": "classes",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "froms",
+            "columnName": "froms",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "allusions",
+            "columnName": "allusions",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "pictures",
+            "columnName": "pictures",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dynasty",
+            "columnName": "dynasty",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorId",
+            "columnName": "author_id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "authorDate",
+            "columnName": "author_date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authorYears",
+            "columnName": "author_years",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authorPlace",
+            "columnName": "author_place",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typeDetail",
+            "columnName": "type_detail",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "rhyme",
+            "columnName": "rhyme",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "firstClauseRhyme",
+            "columnName": "first_clause_rhyme",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "preface",
+            "columnName": "preface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "clauses",
+            "columnName": "clauses",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title2",
+            "columnName": "title2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title.content",
+            "columnName": "title_content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title.comments",
+            "columnName": "title_comments",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title.breakAfter",
+            "columnName": "title_breakAfter",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "subtitle.content",
+            "columnName": "subtitle_content",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subtitle.comments",
+            "columnName": "subtitle_comments",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subtitle.breakAfter",
+            "columnName": "subtitle_breakAfter",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tuneId.name",
+            "columnName": "tune_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "tuneId.id",
+            "columnName": "tune_id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "classicalliterature_writing_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`author` TEXT, `title2` TEXT, `content` TEXT, tokenize=icu, content=`classicalliterature_writing`)",
+        "fields": [
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title2",
+            "columnName": "title2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowid"
+          ]
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "icu",
+          "tokenizerArgs": [],
+          "contentTable": "classicalliterature_writing",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_writing_fts_BEFORE_UPDATE BEFORE UPDATE ON `classicalliterature_writing` BEGIN DELETE FROM `classicalliterature_writing_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_writing_fts_BEFORE_DELETE BEFORE DELETE ON `classicalliterature_writing` BEGIN DELETE FROM `classicalliterature_writing_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_writing_fts_AFTER_UPDATE AFTER UPDATE ON `classicalliterature_writing` BEGIN INSERT INTO `classicalliterature_writing_fts`(`docid`, `author`, `title2`, `content`) VALUES (NEW.`rowid`, NEW.`author`, NEW.`title2`, NEW.`content`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_classicalliterature_writing_fts_AFTER_INSERT AFTER INSERT ON `classicalliterature_writing` BEGIN INSERT INTO `classicalliterature_writing_fts`(`docid`, `author`, `title2`, `content`) VALUES (NEW.`rowid`, NEW.`author`, NEW.`title2`, NEW.`content`); END"
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2412a5b26577fb716d940031b4486839')"
+    ]
+  }
+}

@@ -20,12 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -35,11 +37,11 @@ fun WritingBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (id: Int) -> Unit
 ) {
-    val writings = viewModel.writings.collectAsLazyPagingItems()
+    val writingEntities = viewModel.writingEntities.collectAsLazyPagingItems()
 
     WritingBookmarksScreen(
         onBackClick = onBackClick,
-        writings = writings,
+        writingEntities = writingEntities,
         onItemClick = onItemClick
     )
 }
@@ -48,20 +50,20 @@ fun WritingBookmarksRoute(
 private fun WritingBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    writings: LazyPagingItems<WritingEntity>,
+    writingEntities: LazyPagingItems<WritingEntity>,
     onItemClick: (id: Int) -> Unit
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "收藏列表"
+        title = stringResource(R.string.bookmarks)
     ) {
         LazyColumn(
             modifier = modifier.fillMaxWidth()
         ) {
             items(
-                count = writings.itemCount
+                count = writingEntities.itemCount
             ) {
-                writings[it]?.let { entity ->
+                writingEntities[it]?.let { entity ->
                     Column(
                         modifier = modifier
                             .fillMaxWidth()

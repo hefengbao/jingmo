@@ -30,11 +30,11 @@ fun TongueTwisterShowRoute(
     viewModel: TongueTwisterShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val tongueTwister by viewModel.tongueTwister.collectAsState(initial = null)
+    val tongueTwisterEntity by viewModel.tongueTwisterEntity.collectAsState(initial = null)
 
     TongueTwisterShowScreen(
         onBackClick = onBackClick,
-        tongueTwister = tongueTwister,
+        tongueTwisterEntity = tongueTwisterEntity,
     )
 }
 
@@ -42,9 +42,9 @@ fun TongueTwisterShowRoute(
 private fun TongueTwisterShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    tongueTwister: TongueTwisterEntity?,
+    tongueTwisterEntity: TongueTwisterEntity?,
 ) {
-    tongueTwister?.let { entity ->
+    tongueTwisterEntity?.let { entity ->
         SimpleScaffold(
             onBackClick = onBackClick,
             title = entity.title

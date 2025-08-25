@@ -13,27 +13,28 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
+import com.hefengbao.jingmo.data.model.DataWrapper
 import com.hefengbao.jingmo.data.model.china.WorldCulturalHeritage
 import com.hefengbao.jingmo.data.model.china.asWorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
+import com.hefengbao.jingmo.data.model.chinese.Character
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
-import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
-import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
-import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
+import com.hefengbao.jingmo.data.model.chinese.Expression
+import com.hefengbao.jingmo.data.model.chinese.Idiom
 import com.hefengbao.jingmo.data.model.chinese.Lyric
 import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
+import com.hefengbao.jingmo.data.model.chinese.Wisecrack
 import com.hefengbao.jingmo.data.model.chinese.asAntitheticalCoupletEntity
-import com.hefengbao.jingmo.data.model.chinese.asChineseExpressionEntity
+import com.hefengbao.jingmo.data.model.chinese.asCharacterEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
-import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
+import com.hefengbao.jingmo.data.model.chinese.asExpressionEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
 import com.hefengbao.jingmo.data.model.chinese.asModernPoetryEntity
@@ -42,12 +43,12 @@ import com.hefengbao.jingmo.data.model.chinese.asQuoteEntity
 import com.hefengbao.jingmo.data.model.chinese.asRiddleEntity
 import com.hefengbao.jingmo.data.model.chinese.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
-import com.hefengbao.jingmo.data.model.classicalliterature.PeopleWrapper
-import com.hefengbao.jingmo.data.model.classicalliterature.PoemSentence
-import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
+import com.hefengbao.jingmo.data.model.classicalliterature.People
+import com.hefengbao.jingmo.data.model.classicalliterature.Sentence
+import com.hefengbao.jingmo.data.model.classicalliterature.Writing
 import com.hefengbao.jingmo.data.model.classicalliterature.asClassicPoemEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asPeopleEntity
-import com.hefengbao.jingmo.data.model.classicalliterature.asPoemSentenceEntity
+import com.hefengbao.jingmo.data.model.classicalliterature.asSentenceEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asWritingEntity
 import com.hefengbao.jingmo.data.repository.settings.ImportRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,10 +56,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import java.io.BufferedReader
@@ -74,32 +72,114 @@ class ImportViewModel @Inject constructor(
     private val repository: ImportRepository,
     private val preference: DatasetPreference,
 ) : ViewModel() {
-    private val chinaWorldCultureHeritageCount = 44
-    private val chineseAntitheticalCoupletCount = 490
-    private val chineseExpressionCount = 320349
-    private val chineseKnowledgeCount = 465
-    private val chineseModernPoetryCount = 62
-    private val chineseProverbsCount = 964
-    private val chineseQuotesCount = 362
-    private val chineseWisecracksCount = 14026
-    private val chineseDictionaryCount = 20552
-    private val chineseIdiomsCount = 49639
-    private val chineseLyricCount = 499
-    private val chineseRiddlesCount = 42446
-    private val chineseTongueTwistersCount = 45
-    private val classicalLiteratureClassicPoemCount = 955
-    private val classicalLiteraturePeopleCount = 126830
-    private val classicalLiteratureSentencesCount = 10000
-    private val classicalLiteratureWritingsCount = 1430340
 
-    val chinaWorldCultureHeritageRatio =
-        repository.chinaChinaWorldCultureHeritageTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chinaWorldCultureHeritageCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
+    var chinaWorldCultureHeritageRatio = MutableStateFlow(0)
+    var chineseAntitheticalCoupletRatio = MutableStateFlow(0)
+    var chineseCharacterRatio = MutableStateFlow(0)
+    var chineseExpressionRatio = MutableStateFlow(0)
+    var chineseIdiomRatio = MutableStateFlow(0)
+    var chineseKnowledgeRatio = MutableStateFlow(0)
+    var chineseLyricRatio = MutableStateFlow(0)
+    var chineseModernPoetryRatio = MutableStateFlow(0)
+    var chineseProverbRatio = MutableStateFlow(0)
+    var chineseQuoteRatio = MutableStateFlow(0)
+    var chineseRiddleRatio = MutableStateFlow(0)
+    var chineseTongueTwisterRatio = MutableStateFlow(0)
+    var chineseWisecrackRatio = MutableStateFlow(0)
+    var classicalLiteratureClassicPoemRatio = MutableStateFlow(0)
+    var classicalLiteraturePeopleRatio = MutableStateFlow(0)
+    var classicalLiteratureSentenceRatio = MutableStateFlow(0)
+    var classicalLiteratureWritingRatio = MutableStateFlow(0)
+
+    init {
+        viewModelScope.launch {
+            repository.chinaChinaWorldCultureHeritageTotal().collectLatest {
+                chinaWorldCultureHeritageRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseAntitheticalCoupletTotal().collectLatest {
+                chineseAntitheticalCoupletRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseCharacterTotal().collectLatest {
+                chineseCharacterRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseExpressionTotal().collectLatest {
+                chineseExpressionRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseIdiomTotal().collectLatest {
+                chineseIdiomRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseKnowledgeTotal().collectLatest {
+                chineseKnowledgeRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseLyricTotal().collectLatest {
+                chineseLyricRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseModernPoetryTotal().collectLatest {
+                chineseModernPoetryRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseProverbTotal().collectLatest {
+                chineseProverbRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseQuoteTotal().collectLatest {
+                chineseQuoteRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseRiddleTotal().collectLatest {
+                chineseRiddleRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseTongueTwisterTotal().collectLatest {
+                chineseTongueTwisterRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.chineseWisecrackTotal().collectLatest {
+                chineseWisecrackRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.classicalLiteratureClassicPoemTotal().collectLatest {
+                classicalLiteratureClassicPoemRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.classicalLiteraturePeopleTotal().collectLatest {
+                classicalLiteraturePeopleRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.classicalLiteratureSentenceTotal().collectLatest {
+                classicalLiteratureSentenceRatio.value = it
+            }
+        }
+        viewModelScope.launch {
+            repository.classicalLiteratureWritingTotal().collectLatest {
+                classicalLiteratureWritingRatio.value = it
+            }
+        }
+    }
+
+
     private val _chinaWorldCultureHeritageStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chinaWorldCultureHeritageStatus: SharedFlow<ImportStatus<Any>> =
@@ -109,7 +189,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chinaWorldCultureHeritageStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<WorldCulturalHeritage>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<WorldCulturalHeritage>>(readTextFromUri(it))
+                    .data
                     .forEach { worldCulturalHeritage ->
                         repository.insertChinaWorldCultureHeritage(worldCulturalHeritage.asWorldCulturalHeritageEntity())
                     }
@@ -124,14 +205,6 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val chineseAntitheticalCoupletRatio =
-        repository.chineseAntitheticalCoupletTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseAntitheticalCoupletCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseAntitheticalCoupletStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseAntitheticalCoupletStatus: SharedFlow<ImportStatus<Any>> =
@@ -141,7 +214,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseAntitheticalCoupletStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<AntitheticalCouplet>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<AntitheticalCouplet>>(readTextFromUri(it))
+                    .data
                     .forEach { antitheticalCouplet ->
                         repository.insertChineseAntitheticalCouplet(antitheticalCouplet.asAntitheticalCoupletEntity())
                     }
@@ -156,14 +230,6 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val chineseExpressionRatio =
-        repository.chineseExpressionTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseExpressionCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseExpressionStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseExpressionStatus: SharedFlow<ImportStatus<Any>> = _chineseExpressionStatus
@@ -171,10 +237,10 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseExpressionStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<ExpressionWrapper>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<Expression>>(readTextFromUri(it))
                     .data
                     .forEach { chineseExpression ->
-                        repository.insertChineseExpression(chineseExpression.asChineseExpressionEntity())
+                        repository.insertChineseExpression(chineseExpression.asExpressionEntity())
                     }
             }
             _chineseExpressionStatus.value = ImportStatus.Finish
@@ -183,19 +249,11 @@ class ImportViewModel @Inject constructor(
 
     fun clearChineseExpressions() {
         viewModelScope.launch {
-            repository.clearChineseExpressions()
+            repository.clearChineseExpression()
             preference.setChineseExpressionVersion(0)
         }
     }
 
-    val chineseModernPoetryRatio =
-        repository.chineseModernPoetryTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseModernPoetryCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseModernPoetryStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseModernPoetryStatus: SharedFlow<ImportStatus<Any>> = _chineseModernPoetryStatus
@@ -203,7 +261,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseModernPoetryStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<ModernPoetry>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<ModernPoetry>>(readTextFromUri(it))
+                    .data
                     .forEach { modernPoetry ->
                         repository.insertChineseModernPoetry(modernPoetry.asModernPoetryEntity())
                     }
@@ -219,14 +278,6 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val chineseProverbRatio =
-        repository.chineseProverbTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseProverbsCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseProversStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseProverbStatus: SharedFlow<ImportStatus<Any>> = _chineseProversStatus
@@ -234,7 +285,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseProversStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<Proverb>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<Proverb>>(readTextFromUri(it))
+                    .data
                     .forEach { proverb ->
                         repository.insertChineseProverb(proverb.asProverbEntity())
                     }
@@ -245,50 +297,34 @@ class ImportViewModel @Inject constructor(
 
     fun clearChineseProverbs() {
         viewModelScope.launch {
-            repository.clearChineseProverbs()
+            repository.clearChineseProverb()
             preference.setChineseProverbVersion(0)
         }
     }
 
-    val chineseQuotesRatio =
-        repository.chineseQuoteTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseQuotesCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _chineseQuotesStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _chineseQuoteStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val chineseQuotesStatus: SharedFlow<ImportStatus<Any>> = _chineseQuotesStatus
+    val chineseQuoteStatus: SharedFlow<ImportStatus<Any>> = _chineseQuoteStatus
     fun chineseQuotes(uris: List<Uri>) {
         viewModelScope.launch {
-            _chineseQuotesStatus.value = ImportStatus.Loading
+            _chineseQuoteStatus.value = ImportStatus.Loading
             uris.forEach {
                 json.decodeFromString<List<Quote>>(readTextFromUri(it))
                     .forEach { quote ->
                         repository.insertChineseQuote(quote.asQuoteEntity())
                     }
             }
-            _chineseQuotesStatus.value = ImportStatus.Finish
+            _chineseQuoteStatus.value = ImportStatus.Finish
         }
     }
 
     fun clearChineseQuotes() {
         viewModelScope.launch {
-            repository.clearChineseQuotes()
+            repository.clearChineseQuote()
             preference.setChineseQuoteVersion(0)
         }
     }
 
-    val chineseWisecrackRatio =
-        repository.chineseWisecrackTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseWisecracksCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseWisecrackStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseWisecrackStatus: SharedFlow<ImportStatus<Any>> = _chineseWisecrackStatus
@@ -296,7 +332,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseWisecrackStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<ChineseWisecrack>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<Wisecrack>>(readTextFromUri(it))
+                    .data
                     .forEach { chineseWisecrack ->
                         repository.insertChineseWisecrack(chineseWisecrack.asChineseWisecrackEntity())
                     }
@@ -308,19 +345,11 @@ class ImportViewModel @Inject constructor(
 
     fun clearChineseWisecracks() {
         viewModelScope.launch {
-            repository.clearChineseWisecracks()
+            repository.clearChineseWisecrack()
             preference.setChineseWisecrackVersion(0)
         }
     }
 
-    val chineseKnowledgeRatio =
-        repository.chineseKnowledgeTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseKnowledgeCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseKnowledgeStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseKnowledgeStatus: SharedFlow<ImportStatus<Any>> = _chineseKnowledgeStatus
@@ -328,7 +357,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseKnowledgeStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<ChineseKnowledge>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<ChineseKnowledge>>(readTextFromUri(it))
+                    .data
                     .forEach { chineseKnowledge ->
                         repository.insertChineseKnowledge(chineseKnowledge.asChineseKnowledgeEntity())
                     }
@@ -344,14 +374,6 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val chineseRiddleRatio =
-        repository.chineseRiddleTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseRiddlesCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
     private val _chineseRiddleStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
     val chineseRiddleStatus: SharedFlow<ImportStatus<Any>> = _chineseRiddleStatus
@@ -359,7 +381,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseRiddleStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<Riddle>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<Riddle>>(readTextFromUri(it))
+                    .data
                     .forEach { riddle ->
                         repository.insertChineseRiddle(riddle.asRiddleEntity())
                     }
@@ -370,98 +393,75 @@ class ImportViewModel @Inject constructor(
 
     fun clearChineseRiddle() {
         viewModelScope.launch {
-            repository.clearChineseRiddles()
+            repository.clearChineseRiddle()
             preference.setChineseRiddleVersion(0)
         }
     }
 
-    val classicPoemsRatio =
-        repository.classicalLiteratureClassicPoemTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / classicalLiteratureClassicPoemCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _classicPoemsStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _classicalLiteratureClassicPoemStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val classicPoemsStatus: SharedFlow<ImportStatus<Any>> = _classicPoemsStatus
-    fun classicPoems(uris: List<Uri>) {
+    val classicalLiteratureClassicPoemStatus: SharedFlow<ImportStatus<Any>> =
+        _classicalLiteratureClassicPoemStatus
+
+    fun classicalLiteratureClassicPoems(uris: List<Uri>) {
         viewModelScope.launch {
-            _classicPoemsStatus.value = ImportStatus.Loading
+            _classicalLiteratureClassicPoemStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<ClassicPoem>>(readTextFromUri(it)).forEach { poem ->
-                    repository.insertClassicalLiteratureClassicPoems(poem.asClassicPoemEntity())
-                }
+                json.decodeFromString<DataWrapper<ClassicPoem>>(readTextFromUri(it))
+                    .data
+                    .forEach { poem ->
+                        repository.insertClassicalLiteratureClassicPoems(poem.asClassicPoemEntity())
+                    }
             }
-            _classicPoemsStatus.value = ImportStatus.Finish
+            _classicalLiteratureClassicPoemStatus.value = ImportStatus.Finish
         }
     }
 
     fun clearClassicalLiteratureClassicPoems() {
         viewModelScope.launch {
-            repository.clearClassicalLiteratureClassicPoems()
+            repository.clearClassicalLiteratureClassicPoem()
             preference.setClassicalLiteratureClassicPoemVersion(0)
         }
     }
 
-    val chineseDictionaryRatio =
-        repository.chineseDictionaryTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseDictionaryCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _dictionaryStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _chineseCharacterStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val chineseDictionaryStatus: SharedFlow<ImportStatus<Any>> = _dictionaryStatus
-    fun dictionary(uris: List<Uri>) {
+    val chineseDictionaryStatus: SharedFlow<ImportStatus<Any>> = _chineseCharacterStatus
+    fun chineseCharacters(uris: List<Uri>) {
         viewModelScope.launch {
-            _dictionaryStatus.value = ImportStatus.Loading
+            _chineseCharacterStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<DictionaryWrapper>(readTextFromUri(it)).data.forEach { dictionary ->
-                    repository.insertChineseDictionary(dictionary.asDictionaryEntity())
-                    dictionary.pinyin2?.map { pinyin ->
-                        repository.insertChineseDictionaryPinyin(
-                            DictionaryPinyinEntity(
-                                dictionaryId = dictionary.id,
-                                pinyin = pinyin,
-                            )
-                        )
+                json.decodeFromString<DataWrapper<Character>>(readTextFromUri(it))
+                    .data
+                    .forEach { character ->
+                        repository.insertChineseCharacter(character.asCharacterEntity())
                     }
-                }
             }
-            _dictionaryStatus.value = ImportStatus.Finish
+            _chineseCharacterStatus.value = ImportStatus.Finish
         }
     }
 
-    fun clearChineseDictionaries() {
+    fun clearChineseCharacters() {
         viewModelScope.launch {
-            repository.clearChineseDictionaries()
+            repository.clearChineseCharacter()
             preference.setChineseDictionaryVersion(0)
         }
     }
 
-    val chineseIdiomsRatio = repository.chineseIdiomTotal().distinctUntilChanged().flatMapLatest {
-        MutableStateFlow(it.toFloat() / chineseIdiomsCount)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = 0f
-    )
-    private val _idiomStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _chineseIdiomStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val chineseIdiomStatus: SharedFlow<ImportStatus<Any>> = _idiomStatus
-    fun idioms(uris: List<Uri>) {
+    val chineseIdiomStatus: SharedFlow<ImportStatus<Any>> = _chineseIdiomStatus
+    fun chineseIdioms(uris: List<Uri>) {
         viewModelScope.launch {
-            _idiomStatus.value = ImportStatus.Loading
+            _chineseIdiomStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<IdiomWrapper>(readTextFromUri(it)).data.forEach { idiom ->
-                    repository.insertChineseIdiom(idiom.asIdiomEntity())
-                }
+                json.decodeFromString<DataWrapper<Idiom>>(readTextFromUri(it))
+                    .data
+                    .forEach { idiom ->
+                        repository.insertChineseIdiom(idiom.asIdiomEntity())
+                    }
             }
-            _idiomStatus.value = ImportStatus.Finish
+            _chineseIdiomStatus.value = ImportStatus.Finish
         }
     }
 
@@ -472,55 +472,46 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val chineseLyricRatio = repository.chineseLyricTotal().distinctUntilChanged().flatMapLatest {
-        MutableStateFlow(it.toFloat() / chineseLyricCount)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = 0f
-    )
-    private val _lyricStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _chineseLyricStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val chineseLyricStatus: SharedFlow<ImportStatus<Any>> = _lyricStatus
-    fun lyrics(uris: List<Uri>) {
+    val chineseLyricStatus: SharedFlow<ImportStatus<Any>> = _chineseLyricStatus
+    fun chineseLyrics(uris: List<Uri>) {
         viewModelScope.launch {
-            _lyricStatus.value = ImportStatus.Loading
+            _chineseLyricStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<Lyric>>(readTextFromUri(it)).forEach { lyric ->
-                    repository.insertChineseLyric(lyric.asLyricEntity())
-                }
+                json.decodeFromString<DataWrapper<Lyric>>(readTextFromUri(it))
+                    .data
+                    .forEach { lyric ->
+                        repository.insertChineseLyric(lyric.asLyricEntity())
+                    }
             }
-            _lyricStatus.value = ImportStatus.Finish
+            _chineseLyricStatus.value = ImportStatus.Finish
         }
     }
 
     fun clearChineseLyrics() {
         viewModelScope.launch {
-            repository.clearChineseLyrics()
+            repository.clearChineseLyric()
             preference.setChineseLyricVersion(0)
         }
     }
 
-    val peopleRatio =
-        repository.classicalLiteraturePeopleTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / classicalLiteraturePeopleCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _peopleStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _classicalLiteraturePeopleStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val peopleStatus: SharedFlow<ImportStatus<Any>> = _peopleStatus
-    fun people(uris: List<Uri>) {
+    val classicalLiteraturePeopleStatus: SharedFlow<ImportStatus<Any>> =
+        _classicalLiteraturePeopleStatus
+
+    fun classicalLiteraturePeople(uris: List<Uri>) {
         viewModelScope.launch {
-            _peopleStatus.value = ImportStatus.Loading
+            _classicalLiteraturePeopleStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<PeopleWrapper>(readTextFromUri(it)).data.forEach { people ->
-                    repository.insertClassicalLiteraturePeople(people.asPeopleEntity())
-                }
+                json.decodeFromString<DataWrapper<People>>(readTextFromUri(it))
+                    .data
+                    .forEach { people ->
+                        repository.insertClassicalLiteraturePeople(people.asPeopleEntity())
+                    }
             }
-            _peopleStatus.value = ImportStatus.Finish
+            _classicalLiteraturePeopleStatus.value = ImportStatus.Finish
         }
     }
 
@@ -531,94 +522,81 @@ class ImportViewModel @Inject constructor(
         }
     }
 
-    val poemSentencesRatio =
-        repository.classicalLiteratureSentenceTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / classicalLiteratureSentencesCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _poemSentenceStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _classicalLiteratureSentenceStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val poemSentenceStatus: SharedFlow<ImportStatus<Any>> = _poemSentenceStatus
-    fun poemSentences(uris: List<Uri>) {
+    val classicalLiteratureSentenceStatus: SharedFlow<ImportStatus<Any>> =
+        _classicalLiteratureSentenceStatus
+
+    fun classicalLiteratureSentences(uris: List<Uri>) {
         viewModelScope.launch {
-            _peopleStatus.value = ImportStatus.Loading
+            _classicalLiteraturePeopleStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<PoemSentence>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<Sentence>>(readTextFromUri(it))
+                    .data
                     .forEach { poemSentence ->
-                        repository.insertClassicalLiteratureSentence(poemSentence.asPoemSentenceEntity())
+                        repository.insertClassicalLiteratureSentence(poemSentence.asSentenceEntity())
                     }
             }
-            _peopleStatus.value = ImportStatus.Finish
+            _classicalLiteraturePeopleStatus.value = ImportStatus.Finish
         }
     }
 
-    fun clearClassicalLiteratureSentence() {
+    fun clearClassicalLiteratureSentences() {
         viewModelScope.launch {
             repository.clearClassicalLiteratureSentence()
             preference.setClassicalLiteratureSentenceVersion(0)
         }
     }
 
-    val chineseTongueTwistersRatio =
-        repository.chineseTongueTwistersTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / chineseTongueTwistersCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _tongueTwisterStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _chineseTongueTwisterStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val chineseTongueTwisterStatus: SharedFlow<ImportStatus<Any>> = _tongueTwisterStatus
-    fun tongueTwisters(uris: List<Uri>) {
+    val chineseTongueTwisterStatus: SharedFlow<ImportStatus<Any>> = _chineseTongueTwisterStatus
+    fun chineseTongueTwisters(uris: List<Uri>) {
         viewModelScope.launch {
-            _tongueTwisterStatus.value = ImportStatus.Loading
+            _chineseTongueTwisterStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<TongueTwister>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<TongueTwister>>(readTextFromUri(it))
+                    .data
                     .forEach { tongueTwister ->
                         repository.insertChineseTongueTwister(tongueTwister.asTongueTwisterEntity())
                     }
             }
-            _tongueTwisterStatus.value = ImportStatus.Finish
+            _chineseTongueTwisterStatus.value = ImportStatus.Finish
         }
     }
 
     fun clearChineseTongueTwisters() {
         viewModelScope.launch {
-            repository.clearChineseTongueTwisters()
+            repository.clearChineseTongueTwister()
             preference.setChineseTongueTwisterVersion(0)
         }
     }
 
-    val writingsRatio =
-        repository.classicalLiteratureWritingTotal().distinctUntilChanged().flatMapLatest {
-            MutableStateFlow(it.toFloat() / classicalLiteratureWritingsCount)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = 0f
-        )
-    private val _writingStatus: MutableStateFlow<ImportStatus<Any>> =
+    private val _classicalLiteratureWritingStatus: MutableStateFlow<ImportStatus<Any>> =
         MutableStateFlow(ImportStatus.Finish)
-    val writingStatus: SharedFlow<ImportStatus<Any>> = _writingStatus
-    fun writings(uris: List<Uri>) {
+    val classicalLiteratureWritingStatus: SharedFlow<ImportStatus<Any>> =
+        _classicalLiteratureWritingStatus
+
+    fun classicalLiteratureWritings(uris: List<Uri>) {
         viewModelScope.launch {
-            _writingStatus.value = ImportStatus.Loading
-            uris.forEach {
-                json.decodeFromString<WritingWrapper>(readTextFromUri(it)).data.forEach { writing ->
-                    repository.insertClassicalLiteratureWriting(writing.asWritingEntity())
-                }
+            _classicalLiteratureWritingStatus.value = ImportStatus.Loading
+            uris.forEach { uri ->
+                val list = mutableListOf<WritingEntity>()
+                json.decodeFromString<DataWrapper<Writing>>(readTextFromUri(uri))
+                    .data
+                    .forEach { writing ->
+                        //repository.insertClassicalLiteratureWriting(writing.asWritingEntity())
+                        list.add(writing.asWritingEntity())
+                    }
+                repository.insertClassicalLiteratureWriting(list)
             }
-            _writingStatus.value = ImportStatus.Finish
+            _classicalLiteratureWritingStatus.value = ImportStatus.Finish
         }
     }
 
     fun clearClassicalLiteratureWritings() {
         viewModelScope.launch {
-            repository.clearClassicalLiteratureWritings()
+            repository.clearClassicalLiteratureWriting()
             preference.setClassicalLiteratureWritingVersion(0)
             preference.setClassicalLiteratureWritingCurrentCount(0)
             preference.setClassicalLiteratureWritingCurrentPage(0)

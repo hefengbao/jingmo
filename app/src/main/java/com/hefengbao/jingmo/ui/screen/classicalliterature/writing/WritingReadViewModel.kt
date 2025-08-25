@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,8 +33,9 @@ import javax.inject.Inject
 class WritingReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val writingRepository: WritingRepository,
-    val json: Json
-) : ViewModel() {
+    val json: Json,
+    bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
 
     private var id = MutableStateFlow(1)
     private var query = MutableStateFlow("")
@@ -55,16 +56,8 @@ class WritingReadViewModel @Inject constructor(
         this.query.value = query
     }
 
-    val writing = id.flatMapLatest {
+    val writingEntity = id.flatMapLatest {
         writingRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val writingCollectionEntity = id.flatMapLatest {
-        writingRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5_000),
@@ -86,18 +79,6 @@ class WritingReadViewModel @Inject constructor(
         started = WhileSubscribed(5_000),
         initialValue = null
     )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            writingRepository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            writingRepository.collect(WritingCollectionEntity(id))
-        }
-    }
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {

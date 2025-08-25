@@ -20,5 +20,5 @@ import javax.inject.Inject
 class WritingBookmarksViewModel @Inject constructor(
     writingRepository: WritingRepository
 ) : ViewModel() {
-    val writings = writingRepository.collections().cachedIn(viewModelScope)
+    val writingEntities = writingRepository.bookmarks().cachedIn(viewModelScope)
 }

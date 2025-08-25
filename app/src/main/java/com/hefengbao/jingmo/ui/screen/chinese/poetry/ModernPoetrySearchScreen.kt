@@ -36,13 +36,13 @@ fun ModernPoetrySearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val items by viewModel.entities.collectAsState(initial = emptyList())
+    val poetryEntities by viewModel.poetryEntities.collectAsState(initial = emptyList())
 
     ModernPoetrySearchScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         onSearch = { viewModel.onQueryChange(it) },
-        items = items
+        poetryEntities = poetryEntities
     )
 }
 
@@ -51,7 +51,7 @@ private fun ModernPoetrySearchScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,
-    items: List<ModernPoetryEntity>
+    poetryEntities: List<ModernPoetryEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -68,7 +68,7 @@ private fun ModernPoetrySearchScreen(
     ) {
         LazyColumn {
             items(
-                items = items
+                items = poetryEntities
             ) { entity ->
                 Card(
                     modifier = Modifier.padding(16.dp),

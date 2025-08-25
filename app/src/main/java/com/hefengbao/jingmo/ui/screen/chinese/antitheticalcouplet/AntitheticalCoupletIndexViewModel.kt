@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.AntitheticalCoupletRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,44 +24,23 @@ import javax.inject.Inject
 @HiltViewModel
 class AntitheticalCoupletIndexViewModel @Inject constructor(
     private val repository: AntitheticalCoupletRepository,
-) : ViewModel() {
+    private val bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
+
     init {
         getRandom()
     }
 
-    private val _antitheticalCouplet: MutableStateFlow<AntitheticalCoupletEntity?> =
+    private val _antitheticalCoupletEntity: MutableStateFlow<AntitheticalCoupletEntity?> =
         MutableStateFlow(null)
-    val antitheticalCouplet: SharedFlow<AntitheticalCoupletEntity?> = _antitheticalCouplet
+    val antitheticalCoupletEntity: SharedFlow<AntitheticalCoupletEntity?> =
+        _antitheticalCoupletEntity
+
     fun getRandom() {
         viewModelScope.launch {
-            repository.random().collectLatest {
-                _antitheticalCouplet.value = it
+            repository.getRandom().collectLatest {
+                _antitheticalCoupletEntity.value = it
             }
-        }
-    }
-
-    private val _antitheticalCoupletCollection: MutableStateFlow<AntitheticalCoupletCollectionEntity?> =
-        MutableStateFlow(null)
-    val antitheticalCoupletCollection: SharedFlow<AntitheticalCoupletCollectionEntity?> =
-        _antitheticalCoupletCollection
-
-    fun getIdiomCollectionEntity(id: Int) {
-        viewModelScope.launch {
-            repository.isCollect(id).collectLatest {
-                _antitheticalCoupletCollection.value = it
-            }
-        }
-    }
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(AntitheticalCoupletCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
         }
     }
 }

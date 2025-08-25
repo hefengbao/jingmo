@@ -9,7 +9,6 @@
 
 package com.hefengbao.jingmo
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -25,8 +24,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,8 +33,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -173,17 +168,15 @@ private fun UserAgreementScreen(
     updateUserAgreementVersion: () -> Unit,
     onFinish: () -> Unit
 ) {
-    var isLoading by rememberSaveable { mutableStateOf(true) }
-
     AlertDialog(
         onDismissRequest = {},
         confirmButton = {
-            Button (onClick = updateUserAgreementVersion, enabled = !isLoading) {
+            Button(onClick = updateUserAgreementVersion) {
                 Text(text = "同意并继续")
             }
         },
         dismissButton = {
-            TextButton(onClick = onFinish, enabled = !isLoading) {
+            TextButton(onClick = onFinish) {
                 Text(text = "不同意并退出")
             }
         },
@@ -198,10 +191,9 @@ private fun UserAgreementScreen(
                             settings.useWideViewPort = true  // 启用广泛视图模式
 
                             // 设置 WebViewClient 以防止外部浏览器打开链接
-                            webViewClient = object : WebViewClient(){
+                            webViewClient = object : WebViewClient() {
                                 override fun onPageFinished(view: WebView?, url: String?) {
                                     super.onPageFinished(view, url)
-                                    isLoading = false
                                 }
                             }
 

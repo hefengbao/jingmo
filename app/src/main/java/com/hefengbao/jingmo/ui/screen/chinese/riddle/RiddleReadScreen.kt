@@ -37,8 +37,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
@@ -50,14 +52,14 @@ fun RiddleReadRoute(
     onInfoClick: () -> Unit,
 ) {
 
-    val riddle by viewModel.riddle.collectAsState()
+    val riddleEntity by viewModel.riddleEntity.collectAsState()
     val nextId by viewModel.nextId.collectAsState()
     val prevId by viewModel.prevId.collectAsState()
 
     RiddleReadScreen(
         onBackClick = onBackClick,
         onInfoClick = onInfoClick,
-        riddle = riddle,
+        riddleEntity = riddleEntity,
         setCurrentId = { viewModel.setCurrentId(it) },
         prevId = prevId,
         nextId = nextId
@@ -69,7 +71,7 @@ private fun RiddleReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit,
-    riddle: RiddleEntity?,
+    riddleEntity: RiddleEntity?,
     setCurrentId: (Int) -> Unit,
     prevId: Int?,
     nextId: Int?
@@ -78,7 +80,7 @@ private fun RiddleReadScreen(
 
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谜语",
+        title = stringResource(R.string.chinese_riddle),
         actions = {
             IconButton(onClick = onInfoClick) {
                 Icon(imageVector = Icons.Outlined.Info, contentDescription = "点击查看谜语知识")
@@ -99,7 +101,7 @@ private fun RiddleReadScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = stringResource(R.string.previous)
                         )
                     }
 
@@ -109,7 +111,7 @@ private fun RiddleReadScreen(
                     ) {
                         Icon(
                             imageVector = if (showAnswer) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
-                            contentDescription = null
+                            contentDescription = if (showAnswer) "显示谜底" else "隐藏谜底"
                         )
                     }
 
@@ -120,14 +122,14 @@ private fun RiddleReadScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = null
+                            contentDescription = stringResource(R.string.next)
                         )
                     }
                 }
             }
         }
     ) {
-        riddle?.let { entity ->
+        riddleEntity?.let { entity ->
             LaunchedEffect(entity) {
                 showAnswer = false // 默认隐藏答案
             }

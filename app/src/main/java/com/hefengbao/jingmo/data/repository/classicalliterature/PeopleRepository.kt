@@ -13,9 +13,9 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntit
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleRepository {
-    fun random(): Flow<PeopleEntity>
-    fun get(id: Int): Flow<PeopleEntity>
-    fun getByName(name: String): Flow<PeopleEntity>
+    fun getRandom(): Flow<PeopleEntity?>
+    fun get(id: Int): Flow<PeopleEntity?>
+    fun getByName(name: String): Flow<PeopleEntity?>
     fun search(query: String): Flow<List<PeopleEntity>>
     fun recommendList(): List<String>
 }

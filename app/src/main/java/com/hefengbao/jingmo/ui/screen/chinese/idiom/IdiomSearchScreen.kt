@@ -36,13 +36,13 @@ fun IdiomSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val idioms = viewModel.idioms.collectAsLazyPagingItems()
+    val idiomEntities = viewModel.idiomEntities.collectAsLazyPagingItems()
 
     IdiomSearchScreen(
         modifier = modifier,
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        idioms = idioms,
+        idiomEntities = idiomEntities,
         onSearch = { viewModel.search(it) },
     )
 }
@@ -52,7 +52,7 @@ private fun IdiomSearchScreen(
     modifier: Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    idioms: LazyPagingItems<IdiomEntity>,
+    idiomEntities: LazyPagingItems<IdiomEntity>,
     onSearch: (String) -> Unit,
 ) {
     var query by rememberSaveable {
@@ -76,9 +76,9 @@ private fun IdiomSearchScreen(
             state = rememberLazyListState()
         ) {
             items(
-                count = idioms.itemCount
+                count = idiomEntities.itemCount
             ) {
-                idioms[it]?.let { entity ->
+                idiomEntities[it]?.let { entity ->
                     Text(
                         modifier = modifier
                             .fillMaxWidth()

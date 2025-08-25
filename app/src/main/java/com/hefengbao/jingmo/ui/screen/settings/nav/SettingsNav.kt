@@ -25,10 +25,12 @@ fun NavController.navigateToSettingsGraph() {
 fun NavGraphBuilder.settingsGraph(
     onAboutClick: () -> Unit,
     onBackClick: () -> Unit,
-    onDataClick: () -> Unit,
+    onCollectedUserInfoClick: () -> Unit,
     onHomeItemManagerClick: () -> Unit,
-    onImportClick: () -> Unit,
+    onImportDataClick: () -> Unit,
     onPrivacyClick: () -> Unit,
+    onSharedUserInfoClick: () -> Unit,
+    onSyncDataClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
@@ -39,10 +41,12 @@ fun NavGraphBuilder.settingsGraph(
             SettingsRoute(
                 onAboutClick = onAboutClick,
                 onBackClick = onBackClick,
-                onDataClick = onDataClick,
+                onCollectedUserInfoClick = onCollectedUserInfoClick,
                 onHomeItemManagerClick = onHomeItemManagerClick,
-                onImportClick = onImportClick,
+                onImportDataClick = onImportDataClick,
                 onPrivacyClick = onPrivacyClick,
+                onSharedUserInfoClick = onSharedUserInfoClick,
+                onSyncDataClick = onSyncDataClick
             )
         }
         nestGraph()

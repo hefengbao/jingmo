@@ -23,8 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.model.HomeItem
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.settings.components.SettingsTitle
@@ -96,112 +98,112 @@ private fun HomeItemManagerScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            SettingsTitle(title = "古诗文")
+            SettingsTitle(title = stringResource(R.string.classicalliterature))
             Item(
-                title = "经典诗文",
+                title = stringResource(R.string.classicalliterature_classicpoem),
                 checked = homeItem.classicalLiteratureClassicPoem,
                 onCheckedChange = setClassicalLiteratureClassicPoem
             )
             Item(
-                title = "诗文",
+                title = stringResource(R.string.classicalliterature_writing),
                 checked = homeItem.classicalLiteratureWriting,
                 onCheckedChange = setClassicalLiteratureWriting
             )
             Item(
-                title = "诗文名句",
+                title = stringResource(R.string.classicalliterature_sentence),
                 checked = homeItem.classicalLiteratureSentence,
                 onCheckedChange = setClassicalLiteratureSentence
             )
             Item(
-                title = "人物",
+                title = stringResource(R.string.classicalliterature_people),
                 checked = homeItem.classicalLiteraturePeople,
                 onCheckedChange = setClassicalLiteraturePeople
             )
-            SettingsTitle(title = "现代汉语")
+            SettingsTitle(title = stringResource(R.string.chinese))
             Item(
-                title = "汉字",
+                title = stringResource(R.string.chinese_character),
                 checked = homeItem.chineseCharacter,
                 onCheckedChange = setChineseCharacter
             )
             Item(
-                title = "词语",
+                title = stringResource(R.string.chinese_expression),
                 checked = homeItem.chineseExpression,
                 onCheckedChange = setChineseExpression
             )
             Item(
-                title = "成语",
+                title = stringResource(R.string.chinese_idiom),
                 checked = homeItem.chineseIdiom,
                 onCheckedChange = setChineseIdiom
             )
             Item(
-                title = "歇后语",
+                title = stringResource(R.string.chinese_wisecrack),
                 checked = homeItem.chineseWisecrack,
                 onCheckedChange = setChineseWisecrack
             )
             Item(
-                title = "谚语",
+                title = stringResource(R.string.chinese_proverb),
                 checked = homeItem.chineseProverb,
                 onCheckedChange = setChineseProverb
             )
             Item(
-                title = "谜语",
+                title = stringResource(R.string.chinese_riddle),
                 checked = homeItem.chineseRiddle,
                 onCheckedChange = setChineseRiddle
             )
             Item(
-                title = "绕口令",
+                title = stringResource(R.string.chinese_tonguetwister),
                 checked = homeItem.chineseTongueTwister,
                 onCheckedChange = setChineseTongueTwister
             )
             Item(
-                title = "对联",
+                title = stringResource(R.string.chinese_antitheticalcouplet),
                 checked = homeItem.chineseAntitheticalCouplet,
                 onCheckedChange = setChineseAntitheticalCouplet
             )
             Item(
-                title = "歌词",
+                title = stringResource(R.string.chinese_lyric),
                 checked = homeItem.chineseLyric,
                 onCheckedChange = setChineseLyric
             )
             Item(
-                title = "知识卡片",
+                title = stringResource(R.string.chinese_knowledge),
                 checked = homeItem.chineseKnowledge,
                 onCheckedChange = setChineseKnowledge
             )
             Item(
-                title = "句子",
+                title = stringResource(R.string.chinese_quote),
                 checked = homeItem.chineseQuote,
                 onCheckedChange = setChineseQuote
             )
             Item(
-                title = "诗歌",
+                title = stringResource(R.string.chinese_modernpoetry),
                 checked = homeItem.chineseModernPoetry,
                 onCheckedChange = setChineseModernPoetry
             )
-            SettingsTitle(title = "传统文化")
+            SettingsTitle(title = stringResource(R.string.traditionalculture))
             Item(
-                title = "节日",
+                title = stringResource(R.string.traditionalculture_festival),
                 checked = homeItem.traditionalCultureFestival,
                 onCheckedChange = setTraditionalCultureFestival
             )
             Item(
-                title = "节气",
+                title = stringResource(R.string.traditionalculture_solarterm),
                 checked = homeItem.traditionalCultureSolarTerm,
                 onCheckedChange = setTraditionalCultureSolarTerm
             )
             Item(
-                title = "颜色",
+                title = stringResource(R.string.traditionalculture_color),
                 checked = homeItem.traditionalCultureColor,
                 onCheckedChange = setTraditionalCultureColor
             )
             Item(
-                title = "老黄历",
+                title = stringResource(R.string.traditionalculture_calendar),
                 checked = homeItem.traditionalCultureCalendar,
                 onCheckedChange = setTraditionalCultureCalendar
             )
-            SettingsTitle(title = "中国")
+            SettingsTitle(title = stringResource(R.string.china))
             Item(
-                title = "世界遗产",
+                title = stringResource(R.string.china_worldcultureheritage),
                 checked = homeItem.chinaWorldCulturalHeritage,
                 onCheckedChange = setChinaWorldCultureHeritage
             )

@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
     tokenizer = FtsOptions.TOKENIZER_ICU,
     contentEntity = ProverbEntity::class,
 )
-@Entity(tableName = "proverbs_fts")
+@Entity(tableName = "chinese_proverb_fts")
 data class ProverbFtsEntity(
     @PrimaryKey
     @ColumnInfo("rowid")

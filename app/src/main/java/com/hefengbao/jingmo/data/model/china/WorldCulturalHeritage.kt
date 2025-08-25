@@ -19,6 +19,7 @@ import kotlinx.serialization.Serializable
 data class WorldCulturalHeritage(
     val id: Int,
     val name: String,
+    val type: String?,
     val year: String,
     val year2: String?,
     val level: String,
@@ -28,5 +29,5 @@ data class WorldCulturalHeritage(
 )
 
 fun WorldCulturalHeritage.asWorldCulturalHeritageEntity() = WorldCulturalHeritageEntity(
-    id, name, year, year2, level, address, image, content
+    id, name, type, year, year2, level, address, image, content
 )

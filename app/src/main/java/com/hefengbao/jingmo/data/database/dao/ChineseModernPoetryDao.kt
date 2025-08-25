@@ -15,7 +15,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -24,37 +23,28 @@ interface ChineseModernPoetryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ModernPoetryEntity)
 
-    @Query("select * from chinese_modern_poetry where id = :id limit 1")
-    fun get(id: Int): Flow<ModernPoetryEntity>
+    @Query("select * from chinese_modernpoetry where id = :id limit 1")
+    fun get(id: Int): Flow<ModernPoetryEntity?>
 
-    @Query("select p.*from chinese_modern_poetry p where p.id = (select id from chinese_modern_poetry order by random() limit 1) limit 1")
-    fun random(): Flow<ModernPoetryEntity>
+    @Query("select p.*from chinese_modernpoetry p where p.id = (select id from chinese_modernpoetry order by random() limit 1) limit 1")
+    fun random(): Flow<ModernPoetryEntity?>
 
-    @Query("select id from chinese_modern_poetry where id > :id order by id asc limit 1")
+    @Query("select id from chinese_modernpoetry where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
 
-    @Query("select id from chinese_modern_poetry where id < :id order by id desc limit 1")
+    @Query("select id from chinese_modernpoetry where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
     @Transaction
-    @Query("select * from chinese_modern_poetry join chinese_modern_poetry_fts on chinese_modern_poetry_fts.rowid = chinese_modern_poetry.id where chinese_modern_poetry_fts match :query")
+    @Query("select * from chinese_modernpoetry join chinese_modernpoetry_fts on chinese_modernpoetry_fts.rowid = chinese_modernpoetry.id where chinese_modernpoetry_fts match :query")
     fun search(query: String): Flow<List<ModernPoetryEntity>>
 
-    @Query("select p.* from chinese_modern_poetry_collections c join chinese_modern_poetry p on c.id = p.id order by collected_at desc")
-    fun collections(): PagingSource<Int, ModernPoetryEntity>
+    @Query("select p.* from bookmarks b join chinese_modernpoetry p on b.bookmarkable_id = p.id and b.bookmarkable_model = 'chinese_modernpoetry' order by b.id desc")
+    fun bookmarks(): PagingSource<Int, ModernPoetryEntity>
 
-    @Query("select count(*) from chinese_modern_poetry")
+    @Query("select count(*) from chinese_modernpoetry")
     fun total(): Flow<Int>
 
-    @Query("select * from chinese_modern_poetry_collections where id = :id")
-    fun isCollect(id: Int): Flow<ModernPoetryCollectionEntity?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun collect(entity: ModernPoetryCollectionEntity)
-
-    @Query("delete from chinese_modern_poetry_collections where id = :id")
-    suspend fun uncollect(id: Int)
-
-    @Query("delete from chinese_modern_poetry")
+    @Query("delete from chinese_modernpoetry")
     suspend fun clear()
 }

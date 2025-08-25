@@ -10,10 +10,10 @@
 package com.hefengbao.jingmo.data.database.entity.chinese
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "dictionary")
+//@Entity(tableName = "dictionary")
+@Deprecated("")
 data class DictionaryEntity(
     @PrimaryKey
     val id: Int,

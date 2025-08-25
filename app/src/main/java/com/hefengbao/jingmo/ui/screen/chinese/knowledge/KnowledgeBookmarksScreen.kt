@@ -17,10 +17,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -30,12 +32,12 @@ fun KnowledgeBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val knowledgeEntityCollections = viewModel.collections.collectAsLazyPagingItems()
+    val knowledgeEntities = viewModel.knowledgeEntities.collectAsLazyPagingItems()
 
     KnowledgeBookmarksScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        items = knowledgeEntityCollections
+        knowledgeEntities = knowledgeEntities
     )
 }
 
@@ -43,14 +45,14 @@ fun KnowledgeBookmarksRoute(
 private fun KnowledgeBookmarksScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<KnowledgeEntity>
+    knowledgeEntities: LazyPagingItems<KnowledgeEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn {
             items(
-                count = items.itemCount
+                count = knowledgeEntities.itemCount
             ) {
-                items[it]?.let { entity ->
+                knowledgeEntities[it]?.let { entity ->
                     Card(
                         modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp),
                         onClick = { onItemClick(entity.id) }

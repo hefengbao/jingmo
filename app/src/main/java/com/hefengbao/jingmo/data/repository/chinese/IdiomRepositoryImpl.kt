@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
-import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,9 +20,9 @@ import javax.inject.Inject
 class IdiomRepositoryImpl @Inject constructor(
     private val chineseIdiomDao: ChineseIdiomDao
 ) : IdiomRepository {
-    override fun get(id: Int): Flow<IdiomEntity> = chineseIdiomDao.get(id)
+    override fun get(id: Int): Flow<IdiomEntity?> = chineseIdiomDao.get(id)
 
-    override fun random(): Flow<IdiomEntity> = chineseIdiomDao.random()
+    override fun getRandom(): Flow<IdiomEntity?> = chineseIdiomDao.random()
 
     override fun getNextId(id: Int): Flow<Int?> = chineseIdiomDao.getNextId(id)
 
@@ -44,15 +43,8 @@ class IdiomRepositoryImpl @Inject constructor(
             }
         ).flow
 
-    override fun collections(): Flow<PagingData<IdiomEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<IdiomEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { chineseIdiomDao.collections() }
+        pagingSourceFactory = { chineseIdiomDao.bookmarks() }
     ).flow
-
-    override suspend fun collect(entity: IdiomCollectionEntity) =
-        chineseIdiomDao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = chineseIdiomDao.uncollect(id)
-
-    override fun isCollect(id: Int): Flow<IdiomCollectionEntity?> = chineseIdiomDao.isCollect(id)
 }

@@ -17,6 +17,7 @@ import kotlinx.serialization.Serializable
  * 汉字
  */
 @Serializable
+@Deprecated("")
 data class Dictionary(
     val id: Int,
     val char: String,
@@ -35,6 +36,7 @@ fun Dictionary.asDictionaryEntity() = DictionaryEntity(
     id, char, wubi, radical, stroke, pinyin, simpleExplanation, explanation, loanword
 )
 
+@Deprecated("")
 @Serializable
 data class DictionaryWrapper(
     val data: List<Dictionary>,

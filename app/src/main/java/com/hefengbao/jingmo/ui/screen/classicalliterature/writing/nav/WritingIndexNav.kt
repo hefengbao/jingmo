@@ -26,8 +26,9 @@ fun NavController.navigateToClassicalLiteratureWritingIndexGraph() {
 
 fun NavGraphBuilder.classicalLiteratureWritingIndexGraph(
     onBackClick: () -> Unit,
-    onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onSearchClick: () -> Unit,
     onReadMoreClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
@@ -40,8 +41,9 @@ fun NavGraphBuilder.classicalLiteratureWritingIndexGraph(
         ) {
             WritingIndexRoute(
                 onBackClick = onBackClick,
-                onSearchClick = onSearchClick,
                 onBookmarksClick = onBookmarksClick,
+                onCaptureClick = onCaptureClick,
+                onSearchClick = onSearchClick,
                 onReadMoreClick = onReadMoreClick,
             )
         }

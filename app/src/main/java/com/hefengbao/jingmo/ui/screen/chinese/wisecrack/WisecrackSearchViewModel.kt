@@ -24,15 +24,15 @@ import javax.inject.Inject
 class WisecrackSearchViewModel @Inject constructor(
     private val repository: WisecrackRepository
 ) : ViewModel() {
-    private val _searchWisecrackList: MutableStateFlow<List<WisecrackEntity>> =
+    private val _wisecrackEntities: MutableStateFlow<List<WisecrackEntity>> =
         MutableStateFlow(emptyList())
-    val searchWisecrackList: SharedFlow<List<WisecrackEntity>> = _searchWisecrackList
+    val wisecrackEntities: SharedFlow<List<WisecrackEntity>> = _wisecrackEntities
 
     fun search(query: String) {
-        _searchWisecrackList.value = emptyList()
+        _wisecrackEntities.value = emptyList()
         viewModelScope.launch {
             repository.search(query).collectLatest {
-                _searchWisecrackList.value = it
+                _wisecrackEntities.value = it
             }
         }
     }

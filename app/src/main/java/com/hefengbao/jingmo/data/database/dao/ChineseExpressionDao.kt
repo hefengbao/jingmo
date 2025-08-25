@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,30 +22,21 @@ interface ChineseExpressionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ExpressionEntity)
 
-    @Query("select * from chinese_expressions where id = (select e.id from chinese_expressions e order by random() limit 1) limit 1")
-    fun random(): Flow<ExpressionEntity>
+    @Query("select * from chinese_expression where id = (select e.id from chinese_expression e order by random() limit 1) limit 1")
+    fun random(): Flow<ExpressionEntity?>
 
-    @Query("select * from chinese_expressions where id = :id")
-    fun get(id: Int): Flow<ExpressionEntity>
+    @Query("select * from chinese_expression where id = :id")
+    fun get(id: Int): Flow<ExpressionEntity?>
 
-    @Query("select i.* from chinese_expression_collections c join chinese_expressions i on c.id = i.id order by collected_at desc")
-    fun collections(): PagingSource<Int, ExpressionEntity>
+    @Query("select e.* from bookmarks b join chinese_expression e on b.bookmarkable_id = e.id and b.bookmarkable_model = 'chinese_expression' order by b.id desc")
+    fun bookmarks(): PagingSource<Int, ExpressionEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun collect(entity: ExpressionCollectionEntity)
-
-    @Query("delete from chinese_expression_collections where id = :id")
-    suspend fun uncollect(id: Int)
-
-    @Query("select * from chinese_expression_collections where id = :id")
-    fun isCollect(id: Int): Flow<ExpressionCollectionEntity?>
-
-    @Query("select * from chinese_expressions where word like :query")
+    @Query("select * from chinese_expression where word like :query")
     fun search(query: String): PagingSource<Int, ExpressionEntity>
 
-    @Query("select count(*) from chinese_expressions")
+    @Query("select count(*) from chinese_expression")
     fun total(): Flow<Int>
 
-    @Query("delete from chinese_expressions")
+    @Query("delete from chinese_expression")
     suspend fun clear()
 }

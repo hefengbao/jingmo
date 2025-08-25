@@ -9,98 +9,62 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.character
 
-import android.annotation.SuppressLint
-import android.util.Log
-import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.data.model.chinese.character.Stroke
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
-
 @Composable
-fun ChineseCharacterStrokeRoute(
-    onBackClick: () -> Unit
+fun CharacterStrokeRoute(
+    viewModel: CharacterStrokeViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
+    onItemClick: (String, String) -> Unit,
 ) {
-    ChineseCharacterStrokeScreen(
-        onBackClick = onBackClick
+    val strokes = viewModel.strokes
+
+    CharacterStrokeScreen(
+        onBackClick = onBackClick,
+        onItemClick = onItemClick,
+        strokes = strokes
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("SetJavaScriptEnabled")
 @Composable
-private fun ChineseCharacterStrokeScreen(
+private fun CharacterStrokeScreen(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onItemClick: (String, String) -> Unit,
+    strokes: List<Stroke>
 ) {
-    SimpleScaffold(
-        onBackClick = onBackClick,
-        title = "汉字笔画"
-    ) {
-        var query by remember {
-            mutableStateOf("墨")
-        }
-
-        Column(
+    SimpleScaffold(onBackClick = onBackClick, title = "笔画查询") {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = modifier
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(16.dp)
         ) {
-            SearchBar(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                inputField = {
-                    TextField(
-                        value = query,
-                        onValueChange = {
-                            if (it.length <= 1) {
-                                query = it
-                            }
-                        }
-                    )
-                },
-                expanded = false,
-                onExpandedChange = {},
-            ) { }
-
-            AndroidView(
-                factory = { context ->
-                    WebView(context).apply {
-                        layoutParams = ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                        )
-                        webViewClient = WebViewClient().apply {
-                            settings.javaScriptEnabled = true
-                        }
-                        loadUrl("file:///android_asset/hanzi/index.html")
-                    }
-                },
-                update = {
-                    it.evaluateJavascript("javascript:callJS('$query')") { value ->
-                        Log.e("ChineseCharacter", "onReceiveValue value = $value")
-                    }
-                }
-            )
+            itemsIndexed(
+                items = strokes
+            ) { _: Int, item: Stroke ->
+                Text(
+                    text = item.label,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onItemClick(item.stroke.toString(), "stroke") }
+                        .padding(vertical = 16.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

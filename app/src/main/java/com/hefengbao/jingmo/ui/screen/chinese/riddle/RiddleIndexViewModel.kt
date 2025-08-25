@@ -24,8 +24,8 @@ import javax.inject.Inject
 class RiddleIndexViewModel @Inject constructor(
     private val riddleRepository: RiddleRepository,
 ) : ViewModel() {
-    private val _riddle: MutableStateFlow<RiddleEntity?> = MutableStateFlow(null)
-    val riddle: SharedFlow<RiddleEntity?> = _riddle
+    private val _riddleEntity: MutableStateFlow<RiddleEntity?> = MutableStateFlow(null)
+    val riddleEntity: SharedFlow<RiddleEntity?> = _riddleEntity
 
     init {
         getRandom()
@@ -33,8 +33,8 @@ class RiddleIndexViewModel @Inject constructor(
 
     fun getRandom() {
         viewModelScope.launch {
-            riddleRepository.random().collectLatest {
-                _riddle.value = it
+            riddleRepository.getRandom().collectLatest {
+                _riddleEntity.value = it
             }
         }
     }

@@ -12,11 +12,12 @@ package com.hefengbao.jingmo.data.database.entity.china
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "china_world_cultural_heritage")
+@Entity(tableName = "china_worldcultureheritage")
 data class WorldCulturalHeritageEntity(
     @PrimaryKey
     val id: Int,
     val name: String,
+    val type: String?,
     val year: String,
     val year2: String?,
     val level: String,

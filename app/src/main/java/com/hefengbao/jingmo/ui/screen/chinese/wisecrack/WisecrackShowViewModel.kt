@@ -10,9 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.ChineseWisecrackSearchShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,45 +21,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class WisecrackShowViewModel @Inject constructor(
+    bookmarkRepository: BookmarkRepository,
     savedStateHandle: SavedStateHandle,
     private val wisecrackRepository: WisecrackRepository
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
 
     private val args = ChineseWisecrackSearchShowArgs(savedStateHandle)
 
     var id = MutableStateFlow(args.id.toInt())
 
-    val wisecrack = id.flatMapLatest {
+    val wisecrackEntity = id.flatMapLatest {
         wisecrackRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    val chineseWisecrackCollectionEntity = id.flatMapLatest {
-        wisecrackRepository.isCollect(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            wisecrackRepository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            wisecrackRepository.collect(WisecrackCollectionEntity(id))
-        }
-    }
 }

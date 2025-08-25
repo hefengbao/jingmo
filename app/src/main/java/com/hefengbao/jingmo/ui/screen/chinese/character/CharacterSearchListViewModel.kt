@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.ui.screen.chinese.character
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
 import com.hefengbao.jingmo.data.repository.chinese.CharacterRepository
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.CharacterSearchListArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,34 +33,34 @@ class CharacterSearchListViewModel @Inject constructor(
     val query = args.query
     val type = args.type
 
-    private val _characters: MutableStateFlow<List<DictionaryEntity>> =
+    private val _characterEntities: MutableStateFlow<List<CharacterEntity>> =
         MutableStateFlow(emptyList())
-    val characters: SharedFlow<List<DictionaryEntity>> = _characters
+    val characterEntities: SharedFlow<List<CharacterEntity>> = _characterEntities
 
     init {
         viewModelScope.launch {
             when (type) {
                 "pinyin" -> {
                     repository.searchByPinyin(query).collectLatest {
-                        _characters.value = it
+                        _characterEntities.value = it
                     }
                 }
 
                 "radical" -> {
                     repository.searchByRadical(query).collectLatest {
-                        _characters.value = it
+                        _characterEntities.value = it
                     }
                 }
 
                 "stroke" -> {
                     repository.searchByStroke(query.toInt()).collectLatest {
-                        _characters.value = it
+                        _characterEntities.value = it
                     }
                 }
 
                 "char" -> {
                     repository.search(query).collectLatest {
-                        _characters.value = it
+                        _characterEntities.value = it
                     }
                 }
             }

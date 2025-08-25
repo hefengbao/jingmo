@@ -2,7 +2,6 @@ import java.io.FileInputStream
 import java.util.Date
 import java.util.Properties
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
@@ -10,7 +9,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    //alias(libs.plugins.protobuf)
 }
 
 val releaseTime = Date().time
@@ -23,14 +21,19 @@ val localPropertiesFile: File = rootProject.file("local.properties")
 val localProperties = Properties()
 localProperties.load(FileInputStream(localPropertiesFile))
 
-val bugly = localProperties["bugly"] as String
+val buglyId = localProperties["bugly_id"] as String
+val buglyPrivacyUrl = localProperties["bugly_privacy_url"] as String
 val userAgreementUrl = localProperties["user_agreement_url"] as String
 val userAgreementVersion = 1 // 用户协议变动时 +1
+val icp = localProperties["icp"] as String
+
+val baseUrl1 = localProperties["base_url1"] as String
+val baseUrl2 = localProperties["base_url2"] as String
+val baseUrl3 = localProperties["base_url3"] as String
 
 android {
     namespace = "com.hefengbao.jingmo"
     compileSdk = 36
-    buildToolsVersion = "35.0.0"
 
     defaultConfig {
         applicationId = "com.hefengbao.jingmo"
@@ -75,9 +78,14 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            buildConfigField("String","BUGLY", bugly)
+            buildConfigField("String","BUGLY_ID", buglyId)
+            buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
             buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
+            buildConfigField("String","ICP", icp)
+            buildConfigField("String","BASE_URL_1", baseUrl1)
+            buildConfigField("String","BASE_URL_2", baseUrl2)
+            buildConfigField("String","BASE_URL_3", baseUrl3)
         }
         release {
             isMinifyEnabled = true
@@ -95,9 +103,14 @@ android {
                     }
                 }
             }
-            buildConfigField("String","BUGLY", bugly)
+            buildConfigField("String","BUGLY_ID", buglyId)
+            buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
             buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
+            buildConfigField("String","ICP", icp)
+            buildConfigField("String","BASE_URL_1", baseUrl1)
+            buildConfigField("String","BASE_URL_2", baseUrl2)
+            buildConfigField("String","BASE_URL_3", baseUrl3)
         }
     }
     compileOptions {
@@ -177,9 +190,6 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     implementation(libs.bugly)
-
-    // 暂时使用，修复 LinearProgressIndicator 调用时的 NoSuchMethodError: No virtual method androidx/compose/animation/core/KeyframesSpec  错误
-    //implementation("androidx.compose.foundation:foundation:1.7.0-alpha02")
 
     // For AppWidgets support
     implementation(libs.androidx.glance.appwidget)

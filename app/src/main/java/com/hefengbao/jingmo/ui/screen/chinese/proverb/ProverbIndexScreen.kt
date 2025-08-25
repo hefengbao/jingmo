@@ -29,13 +29,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.components.ProverbPanel
 import kotlin.math.abs
@@ -49,7 +53,7 @@ fun ProverbIndexRoute(
     onSearchClick: () -> Unit,
 ) {
     val proverbEntity by viewModel.proverbEntity.collectAsState(initial = null)
-    val proverbCollectionEntity by viewModel.proverbCollectionEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     ProverbIndexScreen(
         onBackClick = onBackClick,
@@ -57,11 +61,11 @@ fun ProverbIndexRoute(
         onReadMoreClick = onReadMoreClick,
         onSearchClick = onSearchClick,
         proverbEntity = proverbEntity,
-        proverbCollectionEntity = proverbCollectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        onRefresh = { viewModel.random() },
-        isCollect = { viewModel.isCollect(it) }
+        bookmarkEntity = bookmarkEntity,
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseProverb.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseProverb.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseProverb.model) },
+        onRefresh = viewModel::getRandom,
     )
 }
 
@@ -73,52 +77,58 @@ private fun ProverbIndexScreen(
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     proverbEntity: ProverbEntity?,
-    proverbCollectionEntity: ProverbCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
     onRefresh: () -> Unit,
-    isCollect: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谚语",
+        title = stringResource(R.string.chinese_proverb),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
-            proverbEntity?.let {
+            proverbEntity?.let { entity ->
 
-                isCollect(proverbEntity.id)
+                LaunchedEffect(entity) { isBookmarked(entity.id) }
 
                 BottomAppBar(
                     actions = {
                         Row(
                             modifier = modifier.padding(horizontal = 16.dp)
                         ) {
-                            if (proverbCollectionEntity != null) {
-                                IconButton(onClick = { setUncollect(proverbEntity.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(proverbEntity.id) }) {
+                                IconButton(onClick = { addBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -126,7 +136,10 @@ private fun ProverbIndexScreen(
                     },
                     floatingActionButton = {
                         FloatingActionButton(onClick = onRefresh) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = stringResource(R.string.refresh)
+                            )
                         }
                     }
                 )

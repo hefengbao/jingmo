@@ -10,9 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.proverb
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.ProverbRepository
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.ProverbShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,15 +21,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class ProverbShowViewModel @Inject constructor(
     private val repository: ProverbRepository,
+    bookmarkRepository: BookmarkRepository,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val args = ProverbShowArgs(savedStateHandle)
     private var id = MutableStateFlow(args.id.toInt())
 
@@ -39,23 +39,4 @@ class ProverbShowViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = null
         )
-
-    val proverbCollectionEntity = id.flatMapLatest { repository.isCollect(it) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = null
-        )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(ProverbCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

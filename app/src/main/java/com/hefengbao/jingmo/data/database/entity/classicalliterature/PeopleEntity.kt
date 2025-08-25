@@ -16,7 +16,7 @@ import com.hefengbao.jingmo.data.model.classicalliterature.people.Alias
 import com.hefengbao.jingmo.data.model.classicalliterature.people.Detail
 import com.hefengbao.jingmo.data.model.classicalliterature.people.Hometown
 
-@Entity(tableName = "people")
+@Entity(tableName = "classicalliterature_people")
 data class PeopleEntity(
     @PrimaryKey
     val id: Int,

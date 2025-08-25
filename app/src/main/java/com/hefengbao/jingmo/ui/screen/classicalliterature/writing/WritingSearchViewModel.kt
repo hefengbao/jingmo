@@ -49,7 +49,7 @@ class WritingSearchViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    val writings: Flow<PagingData<WritingEntity>> = queryStateFlow.debounce(200)
+    val writingEntities: Flow<PagingData<WritingEntity>> = queryStateFlow.debounce(200)
         .distinctUntilChanged()
         .filter {
             return@filter it.isNotEmpty()

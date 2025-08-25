@@ -17,7 +17,7 @@ import javax.inject.Inject
 class WorldCultureHeritageRepositoryImpl @Inject constructor(
     private val dao: ChinaWorldCulturalHeritageDao
 ) : WorldCultureHeritageRepository {
-    override fun get(id: Int): Flow<WorldCulturalHeritageEntity> = dao.get(id)
+    override fun get(id: Int): Flow<WorldCulturalHeritageEntity?> = dao.get(id)
 
     override fun list(): Flow<List<WorldCulturalHeritageEntity>> = dao.list()
 }

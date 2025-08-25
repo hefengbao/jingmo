@@ -22,22 +22,22 @@ import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val antitheticalCoupletCaptureIdArg = "antitheticalCoupletId"
+internal const val captureIdArg = "id"
 private const val base = "chinese_antithetical_couplet_capture"
-private const val ROUTE = "$base/{$antitheticalCoupletCaptureIdArg}"
+private const val ROUTE = "$base/{$captureIdArg}"
 
-internal class AntitheticalCoupletCaptureArgs(val antitheticalCoupletId: String) {
+internal class AntitheticalCoupletCaptureArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[antitheticalCoupletCaptureIdArg]),
+                    checkNotNull(savedStateHandle[captureIdArg]),
                     UTF_8.name()
                 )
             )
 }
 
-fun NavController.navigateToChineseAntitheticalCoupletCaptureScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseAntitheticalCoupletCaptureScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
@@ -49,7 +49,7 @@ fun NavGraphBuilder.chineseAntitheticalCoupletCaptureScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(antitheticalCoupletCaptureIdArg) { type = NavType.StringType }
+            navArgument(captureIdArg) { type = NavType.StringType }
         )
     ) {
         AntitheticalCoupletCaptureRoute(

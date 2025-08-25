@@ -38,12 +38,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
 
@@ -56,19 +59,30 @@ fun SentenceReadRoute(
 
     val prevId by viewModel.prevId.collectAsState()
     val nextId by viewModel.nextId.collectAsState()
-    val sentence by viewModel.sentence.collectAsState()
-    val sentenceCollectionEntity by viewModel.sentenceCollectionEntity.collectAsState()
+    val sentenceEntity by viewModel.sentenceEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
+
+    sentenceEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            viewModel.isBookmarked(entity.id, Category.ClassicalLiteratureSentence.model)
+        }
+    }
 
     SentenceReadScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        sentence = sentence,
-        sentenceCollectionEntity = sentenceCollectionEntity,
+        sentenceEntity = sentenceEntity,
+        bookmarkEntity = bookmarkEntity,
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
-        setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) },
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ClassicalLiteratureSentence.model
+            )
+        },
+        addBookmark = { viewModel.addBookmark(it, Category.ClassicalLiteratureSentence.model) },
         setLastReadId = { viewModel.setLastReadId(it) },
     )
 }
@@ -78,22 +92,25 @@ private fun SentenceReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    sentence: SentenceEntity?,
-    sentenceCollectionEntity: SentenceCollectionEntity?,
+    sentenceEntity: SentenceEntity?,
+    bookmarkEntity: BookmarkEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
     setLastReadId: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "诗文名句",
+        title = stringResource(R.string.classicalliterature_sentence),
         actions = {
-            sentence?.let {
-                IconButton(onClick = { onCaptureClick(sentence.id) }) {
-                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
+            sentenceEntity?.let {
+                IconButton(onClick = { onCaptureClick(sentenceEntity.id) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
                 }
             }
         },
@@ -115,30 +132,30 @@ private fun SentenceReadScreen(
                             Icon(
                                 modifier = modifier.padding(8.dp),
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.previous)
                             )
                         }
                         IconButton(
                             onClick = {
-                                sentence?.let {
-                                    if (sentenceCollectionEntity != null) {
-                                        setUncollect(it.id)
+                                sentenceEntity?.let {
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(it.id)
                                     } else {
-                                        setCollect(it.id)
+                                        addBookmark(it.id)
                                     }
                                 }
                             }
                         ) {
-                            if (sentenceCollectionEntity != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -151,7 +168,7 @@ private fun SentenceReadScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.next)
                             )
                         }
                     }
@@ -179,9 +196,9 @@ private fun SentenceReadScreen(
                     }
                 )
         ) {
-            sentence?.let {
+            sentenceEntity?.let {
                 LaunchedEffect(it) {
-                    setLastReadId(sentence.id)
+                    setLastReadId(sentenceEntity.id)
                 }
                 Row(
                     modifier = modifier
@@ -193,7 +210,7 @@ private fun SentenceReadScreen(
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                        sentence.content.split("，", "。", "？", "！", "、").map {
+                        sentenceEntity.content.split("，", "。", "？", "！", "、").map {
 
                             Column {
                                 it.toCharArray().map { char ->
@@ -206,7 +223,7 @@ private fun SentenceReadScreen(
                         }
                     }
                     Column {
-                        sentence.from.replace("《", "﹁")
+                        sentenceEntity.from.replace("《", "﹁")
                             .replace("》", "﹂")
                             .toCharArray()
                             .map { text ->

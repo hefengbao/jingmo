@@ -23,19 +23,24 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.quote.components.QuotePanel
 import kotlin.math.abs
@@ -44,21 +49,24 @@ import kotlin.math.abs
 fun QuoteReadRoute(
     viewModel: QuoteReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
-    val entity by viewModel.entity.collectAsState()
-    val collectionEntity by viewModel.collectionEntity.collectAsState()
+    val quoteEntity by viewModel.quoteEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
     val nextId by viewModel.nextId.collectAsState()
     val prevId by viewModel.prevId.collectAsState()
 
     QuoteReadScreen(
         onBackClick = onBackClick,
-        entity = entity,
-        collectionEntity = collectionEntity,
+        onCaptureClick = onCaptureClick,
+        quoteEntity = quoteEntity,
+        bookmarkEntity = bookmarkEntity,
         nextId = nextId,
         prevId = prevId,
         setCurrentId = viewModel::setCurrentId,
-        setCollect = viewModel::collect,
-        setUncollect = viewModel::uncollect
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseQuote.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseQuote.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseQuote.model) }
     )
 }
 
@@ -66,19 +74,30 @@ fun QuoteReadRoute(
 private fun QuoteReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    entity: QuoteEntity?,
-    collectionEntity: QuoteCollectionEntity?,
+    onCaptureClick: (Int) -> Unit,
+    quoteEntity: QuoteEntity?,
+    bookmarkEntity: BookmarkEntity?,
     nextId: Int?,
     prevId: Int?,
     setCurrentId: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit
 ) {
-    SimpleScaffold(
-        onBackClick = onBackClick,
-        title = "句子",
-        bottomBar = {
-            entity?.let {
+    quoteEntity?.let { entity ->
+        LaunchedEffect(entity) { isBookmarked(entity.id) }
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = stringResource(R.string.chinese_quote),
+            actions = {
+                IconButton(onClick = { onCaptureClick(entity.id) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
+                }
+            },
+            bottomBar = {
                 BottomAppBar(
                     actions = {
                         Row(
@@ -94,22 +113,22 @@ private fun QuoteReadScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.previous)
                                 )
                             }
-                            if (collectionEntity != null) {
-                                IconButton(onClick = { setUncollect(entity.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(quoteEntity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(entity.id) }) {
+                                IconButton(onClick = { addBookmark(quoteEntity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -119,32 +138,32 @@ private fun QuoteReadScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.next)
                                 )
                             }
                         }
                     }
                 )
             }
-        }
-    ) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .draggable(
-                    state = rememberDraggableState {},
-                    orientation = Orientation.Horizontal,
-                    onDragStarted = {},
-                    onDragStopped = { velocity ->
-                        if (velocity < 0 && abs(velocity) > 500f) {
-                            nextId?.let(setCurrentId)
-                        } else if (velocity > 0 && abs(velocity) > 500f) {
-                            prevId?.let(setCurrentId)
-                        }
-                    }
-                )
         ) {
-            entity?.let { entity -> QuotePanel(entity = entity) }
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = { velocity ->
+                            if (velocity < 0 && abs(velocity) > 500f) {
+                                nextId?.let(setCurrentId)
+                            } else if (velocity > 0 && abs(velocity) > 500f) {
+                                prevId?.let(setCurrentId)
+                            }
+                        }
+                    )
+            ) {
+                QuotePanel(entity = entity)
+            }
         }
     }
 }

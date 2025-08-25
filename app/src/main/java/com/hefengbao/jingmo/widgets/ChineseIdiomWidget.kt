@@ -56,7 +56,7 @@ class IdiomWidget(
 
     @Composable
     private fun Content(modifier: GlanceModifier = GlanceModifier) {
-        val idiom by repository.random().collectAsState(initial = null)
+        val idiom by repository.getRandom().collectAsState(initial = null)
         Column(
             modifier = modifier.fillMaxSize()
                 .background(GlanceTheme.colors.background)

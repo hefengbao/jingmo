@@ -20,13 +20,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.components.AntitheticalCoupletPanel
 
@@ -36,16 +40,22 @@ fun AntitheticalCoupletShowRoute(
     onCaptureClick: (Int) -> Unit,
     viewModel: AntitheticalCoupletShowViewModel = hiltViewModel()
 ) {
-    val antitheticalCouplet by viewModel.antitheticalCouplet.collectAsState()
-    val antitheticalCoupletCollection by viewModel.antitheticalCoupletCollection.collectAsState()
+    val antitheticalCoupletEntity by viewModel.antitheticalCoupletEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
 
     AntitheticalCoupletShowScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        antitheticalCouplet = antitheticalCouplet,
-        antitheticalCoupletCollection = antitheticalCoupletCollection,
-        setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) }
+        antitheticalCoupletEntity = antitheticalCoupletEntity,
+        bookmarkEntity = bookmarkEntity,
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ChineseAntitheticalCouplet.model
+            )
+        },
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseAntitheticalCouplet.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseAntitheticalCouplet.model) }
     )
 }
 
@@ -53,19 +63,26 @@ fun AntitheticalCoupletShowRoute(
 private fun AntitheticalCoupletShowScreen(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    antitheticalCouplet: AntitheticalCoupletEntity?,
-    antitheticalCoupletCollection: AntitheticalCoupletCollectionEntity?,
-    setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit
+    antitheticalCoupletEntity: AntitheticalCoupletEntity?,
+    bookmarkEntity: BookmarkEntity?,
+    cancelBookmark: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
 ) {
 
-    antitheticalCouplet?.let { entity ->
+    antitheticalCoupletEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            isBookmarked(entity.id)
+        }
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "对联",
+            title = stringResource(R.string.chinese_antitheticalcouplet),
             actions = {
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
-                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
                 }
             },
             bottomBar = {
@@ -75,23 +92,23 @@ private fun AntitheticalCoupletShowScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                if (antitheticalCoupletCollection != null) {
-                                    setUncollect(entity.id)
+                                if (bookmarkEntity != null) {
+                                    cancelBookmark(entity.id)
                                 } else {
-                                    setCollect(entity.id)
+                                    addBookmark(entity.id)
                                 }
                             }
                         ) {
-                            if (antitheticalCoupletCollection != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -99,7 +116,7 @@ private fun AntitheticalCoupletShowScreen(
                 }
             }
         ) {
-            AntitheticalCoupletPanel(antitheticalCouplet = antitheticalCouplet)
+            AntitheticalCoupletPanel(antitheticalCouplet = antitheticalCoupletEntity)
         }
     }
 }

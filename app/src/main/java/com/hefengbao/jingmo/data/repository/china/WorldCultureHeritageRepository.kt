@@ -13,6 +13,6 @@ import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEnti
 import kotlinx.coroutines.flow.Flow
 
 interface WorldCultureHeritageRepository {
-    fun get(id: Int): Flow<WorldCulturalHeritageEntity>
+    fun get(id: Int): Flow<WorldCulturalHeritageEntity?>
     fun list(): Flow<List<WorldCulturalHeritageEntity>>
 }

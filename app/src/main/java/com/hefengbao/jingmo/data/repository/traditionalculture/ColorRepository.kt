@@ -9,8 +9,8 @@
 
 package com.hefengbao.jingmo.data.repository.traditionalculture
 
-import com.hefengbao.jingmo.data.model.traditionalculture.Color
+import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 
 interface ColorRepository {
-    fun list(): List<Color>
+    fun list(): List<ChineseColor>
 }

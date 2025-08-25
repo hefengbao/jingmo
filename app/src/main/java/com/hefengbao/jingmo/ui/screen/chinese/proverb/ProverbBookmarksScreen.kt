@@ -18,10 +18,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.ProverbEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -31,12 +33,12 @@ fun ProverbBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val pagingItems = viewModel.proverbEntityCollections.collectAsLazyPagingItems()
+    val proverbEntities = viewModel.proverbEntities.collectAsLazyPagingItems()
 
     ProverbBookmarksScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        items = pagingItems
+        proverbEntities = proverbEntities
     )
 }
 
@@ -45,14 +47,14 @@ private fun ProverbBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<ProverbEntity>
+    proverbEntities: LazyPagingItems<ProverbEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn {
             items(
-                count = items.itemCount
+                count = proverbEntities.itemCount
             ) {
-                items[it]?.let { entity ->
+                proverbEntities[it]?.let { entity ->
                     Column(
                         modifier = modifier
                             .fillMaxWidth()

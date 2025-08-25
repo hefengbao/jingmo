@@ -20,5 +20,5 @@ import javax.inject.Inject
 class CharacterBookmarksViewModel @Inject constructor(
     repository: CharacterRepository
 ) : ViewModel() {
-    val items = repository.collections().cachedIn(viewModelScope)
+    val characterEntities = repository.bookmarks().cachedIn(viewModelScope)
 }

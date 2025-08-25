@@ -23,19 +23,24 @@ import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.quote.components.QuotePanel
 import kotlin.math.abs
@@ -45,23 +50,25 @@ fun QuoteIndexRoute(
     viewModel: QuoteIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
 ) {
-    val entity by viewModel.entity.collectAsState(initial = null)
-    val collectionEntity by viewModel.collectionEntity.collectAsState(initial = null)
+    val quoteEntity by viewModel.quoteEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     QuoteIndexScreen(
         onBackClick = onBackClick,
         onBookmarksClick = onBookmarksClick,
+        onCaptureClick = onCaptureClick,
         onReadMoreClick = onReadMoreClick,
         onSearchClick = onSearchClick,
-        entity = entity,
-        collectionEntity = collectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        onRefresh = { viewModel.random() },
-        isCollect = { viewModel.isCollect(it) }
+        quoteEntity = quoteEntity,
+        bookmarkEntity = bookmarkEntity,
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseQuote.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseQuote.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseQuote.model) },
+        onRefresh = { viewModel.getRandom() },
     )
 }
 
@@ -70,55 +77,72 @@ private fun QuoteIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
-    entity: QuoteEntity?,
-    collectionEntity: QuoteCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    quoteEntity: QuoteEntity?,
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
     onRefresh: () -> Unit,
-    isCollect: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "句子",
+        title = stringResource(R.string.chinese_quote),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
+            quoteEntity?.let {
+                IconButton(onClick = { onCaptureClick(quoteEntity.id) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
+                }
+            }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
-            entity?.let {
+            quoteEntity?.let {
 
-                isCollect(entity.id)
+                LaunchedEffect(quoteEntity) {
+                    isBookmarked(quoteEntity.id)
+                }
 
                 BottomAppBar(
                     actions = {
                         Row(
                             modifier = modifier.padding(horizontal = 16.dp)
                         ) {
-                            if (collectionEntity != null) {
-                                IconButton(onClick = { setUncollect(entity.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(quoteEntity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(entity.id) }) {
+                                IconButton(onClick = { addBookmark(quoteEntity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -126,7 +150,10 @@ private fun QuoteIndexScreen(
                     },
                     floatingActionButton = {
                         FloatingActionButton(onClick = onRefresh) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = stringResource(R.string.refresh)
+                            )
                         }
                     }
                 )
@@ -149,7 +176,7 @@ private fun QuoteIndexScreen(
                     }
                 )
         ) {
-            entity?.let { entity -> QuotePanel(entity = entity) }
+            quoteEntity?.let { entity -> QuotePanel(entity = entity) }
         }
     }
 }

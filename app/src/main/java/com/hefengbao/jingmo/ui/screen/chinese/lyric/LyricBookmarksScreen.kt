@@ -19,10 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -32,12 +34,12 @@ fun LyricBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val lyricEntityCollections = viewModel.lyricEntityCollections.collectAsLazyPagingItems()
+    val lyricEntities = viewModel.lyricEntities.collectAsLazyPagingItems()
 
     LyricBookmarksScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        items = lyricEntityCollections
+        lyricEntities = lyricEntities
     )
 }
 
@@ -46,14 +48,14 @@ private fun LyricBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<LyricEntity>
+    lyricEntities: LazyPagingItems<LyricEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn {
             items(
-                count = items.itemCount
+                count = lyricEntities.itemCount
             ) {
-                items[it]?.let { entity ->
+                lyricEntities[it]?.let { entity ->
                     var text = ""
                     if (entity.writer != null) {
                         text += "填词：${entity.writer}"

@@ -34,13 +34,13 @@ fun KnowledgeSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val knowledgeEntityCollections by viewModel.knowledgeEntityCollections.collectAsState(initial = emptyList())
+    val knowledgeEntities by viewModel.knowledgeEntities.collectAsState(initial = emptyList())
 
     KnowledgeSearchScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         onSearch = { viewModel.onQueryChange(it) },
-        items = knowledgeEntityCollections
+        knowledgeEntities = knowledgeEntities
     )
 }
 
@@ -49,7 +49,7 @@ private fun KnowledgeSearchScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,
-    items: List<KnowledgeEntity>
+    knowledgeEntities: List<KnowledgeEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -66,7 +66,7 @@ private fun KnowledgeSearchScreen(
     ) {
         LazyColumn {
             items(
-                items = items
+                items = knowledgeEntities
             ) { entity ->
                 Card(
                     modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp),

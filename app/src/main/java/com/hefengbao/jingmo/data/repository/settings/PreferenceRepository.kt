@@ -18,7 +18,7 @@ interface PreferenceRepository {
     fun getDatasetStatus(): Flow<DatasetVersion>
     suspend fun setChinaWorldCultureHeritageVersion(version: Int)
     suspend fun setChineseAntitheticalVersion(version: Int)
-    suspend fun setChineseDictionaryVersion(version: Int)
+    suspend fun setChineseCharacterVersion(version: Int)
     suspend fun setChineseExpressionVersion(version: Int)
     suspend fun setChineseIdiomVersion(version: Int)
     suspend fun setChineseKnowledgeVersion(version: Int)

@@ -13,7 +13,7 @@ import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import kotlinx.serialization.Serializable
 
 /**
- * 只是卡片
+ * 知识卡片
  */
 @Serializable
 data class ChineseKnowledge(

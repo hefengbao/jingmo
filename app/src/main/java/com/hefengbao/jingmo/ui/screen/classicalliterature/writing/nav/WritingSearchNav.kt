@@ -24,7 +24,7 @@ fun NavController.navigateToClassicalLiteratureWritingSearchScreen() {
 
 fun NavGraphBuilder.classicalLiteratureWritingSearchScreen(
     onBackClick: () -> Unit,
-    onItemClick: (id: String) -> Unit,
+    onItemClick: (id: Int) -> Unit,
 ) {
     composable(
         route = ROUTE,

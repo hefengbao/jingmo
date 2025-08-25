@@ -10,19 +10,15 @@
 package com.hefengbao.jingmo.data.repository.chinese
 
 import androidx.paging.PagingData
-import com.hefengbao.jingmo.data.database.entity.chinese.LyricCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import kotlinx.coroutines.flow.Flow
 
 interface LyricRepository {
-    fun get(id: Int): Flow<LyricEntity>
-    fun random(): Flow<LyricEntity>
+    fun get(id: Int): Flow<LyricEntity?>
+    fun getRandom(): Flow<LyricEntity?>
     fun search(query: String): Flow<List<LyricEntity>>
-    fun collections(): Flow<PagingData<LyricEntity>>
     fun total(): Flow<Int>
-    fun isCollect(id: Int): Flow<LyricCollectionEntity?>
     fun prevId(id: Int): Flow<Int?>
     fun nextId(id: Int): Flow<Int?>
-    suspend fun collect(entity: LyricCollectionEntity)
-    suspend fun uncollect(id: Int)
+    fun bookmarks(): Flow<PagingData<LyricEntity>>
 }

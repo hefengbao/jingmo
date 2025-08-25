@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
     tokenizer = FtsOptions.TOKENIZER_ICU,
     contentEntity = LyricEntity::class,
 )
-@Entity(tableName = "lyrics_fts")
+@Entity(tableName = "chinese_lyric_fts")
 data class LyricFtsEntity(
     @PrimaryKey
     @ColumnInfo("rowid")

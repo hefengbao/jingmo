@@ -31,7 +31,7 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setChineseAntitheticalVersion(version: Int) =
         datasetStatus.setChineseAntitheticalCoupletVersion(version)
 
-    override suspend fun setChineseDictionaryVersion(version: Int) =
+    override suspend fun setChineseCharacterVersion(version: Int) =
         datasetStatus.setChineseDictionaryVersion(version)
 
     override suspend fun setChineseExpressionVersion(version: Int) =

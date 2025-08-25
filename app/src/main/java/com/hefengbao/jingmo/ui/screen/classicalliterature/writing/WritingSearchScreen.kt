@@ -41,11 +41,11 @@ import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 fun WritingSearchRoute(
     viewModel: WritingSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onItemClick: (id: String) -> Unit,
+    onItemClick: (id: Int) -> Unit,
 ) {
     val recommendList by viewModel.recommendList.collectAsState(initial = emptyList())
 
-    val writings = viewModel.writings.collectAsLazyPagingItems()
+    val writingEntities = viewModel.writingEntities.collectAsLazyPagingItems()
 
     var query: String by rememberSaveable { mutableStateOf("") }
     var type: String by rememberSaveable { mutableStateOf("keyword") }
@@ -57,7 +57,7 @@ fun WritingSearchRoute(
     WritingSearchScreen(
         onBackClick = onBackClick,
         recommendList = recommendList,
-        writings = writings,
+        writingEntities = writingEntities,
         onItemClick = onItemClick,
         onTypeChange = { type = it },
         query = query,
@@ -73,8 +73,8 @@ private fun WritingSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     recommendList: List<String>,
-    writings: LazyPagingItems<WritingEntity>,
-    onItemClick: (id: String) -> Unit,
+    writingEntities: LazyPagingItems<WritingEntity>,
+    onItemClick: (id: Int) -> Unit,
     onTypeChange: (String) -> Unit,
     query: String,
     onQueryChange: (String) -> Unit,
@@ -107,19 +107,20 @@ private fun WritingSearchScreen(
                 items(
                     items = recommendList
                 ) {
-                    Text(text = it, modifier = modifier
-                        .clickable {
-                            onTypeChange("author")
-                            onQueryChange(it)
-                        }
-                        .padding(8.dp))
+                    Text(
+                        text = it, modifier = modifier
+                            .clickable {
+                                onTypeChange("author")
+                                onQueryChange(it)
+                            }
+                            .padding(8.dp))
                 }
             }
         } else {
-            if (writings.itemCount == 0) {
+            if (writingEntities.itemCount == 0) {
                 Text(text = "没有查找到数据 /(ㄒoㄒ)/~~", modifier = Modifier.padding(16.dp))
             }
-            List(writings = writings, onItemClick = onItemClick)
+            List(writings = writingEntities, onItemClick = onItemClick)
         }
     }
 }
@@ -128,7 +129,7 @@ private fun WritingSearchScreen(
 private fun List(
     modifier: Modifier = Modifier,
     writings: LazyPagingItems<WritingEntity>,
-    onItemClick: (id: String) -> Unit,
+    onItemClick: (id: Int) -> Unit,
 ) {
     LazyColumn {
         items(
@@ -139,7 +140,7 @@ private fun List(
                     modifier = modifier
                         .fillMaxWidth()
                         .clickable {
-                            onItemClick(entity.id.toString())
+                            onItemClick(entity.id)
                         }
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)

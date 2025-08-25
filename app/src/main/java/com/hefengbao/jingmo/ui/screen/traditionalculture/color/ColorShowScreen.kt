@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.common.util.ClipboardUtil
+import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
-import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun ColorShowRoute(

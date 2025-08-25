@@ -14,18 +14,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WisecrackBookmarksViewModel @Inject constructor(
     private val repository: WisecrackRepository
 ) : ViewModel() {
-    val bookmarks = repository.collections().cachedIn(viewModelScope)
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
+    val wisecrackEntities = repository.bookmarks().cachedIn(viewModelScope)
 }

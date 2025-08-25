@@ -21,22 +21,22 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 
 @VisibleForTesting
-internal const val idiomIdArg = "idiomId"
+internal const val showIdArg = "id"
 private const val base = "chinese_idiom_show"
-private const val ROUTE_IDIOM_SHOW = "$base/{$idiomIdArg}"
+private const val ROUTE_IDIOM_SHOW = "$base/{$showIdArg}"
 
-internal class IdiomShowArgs(val idiomId: String) {
+internal class IdiomShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[idiomIdArg]),
+                    checkNotNull(savedStateHandle[showIdArg]),
                     Charsets.UTF_8.name()
                 )
             )
 }
 
-fun NavController.navigateToChineseIdiomShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, Charsets.UTF_8.name())
+fun NavController.navigateToChineseIdiomShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), Charsets.UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
@@ -49,7 +49,7 @@ fun NavGraphBuilder.chineseIdiomShowScreen(
     composable(
         route = ROUTE_IDIOM_SHOW,
         arguments = listOf(
-            navArgument(idiomIdArg) { type = NavType.StringType }
+            navArgument(showIdArg) { type = NavType.StringType }
         )
     ) {
         IdiomRoute(

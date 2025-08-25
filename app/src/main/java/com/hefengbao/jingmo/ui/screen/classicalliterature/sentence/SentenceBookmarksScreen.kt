@@ -14,19 +14,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -35,22 +33,21 @@ fun SentenceBookmarksRoute(
     viewModel: SentenceBookmarksViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    val bookmarks = viewModel.bookmarks.collectAsLazyPagingItems()
+    val pagingItems = viewModel.sentenceEntities.collectAsLazyPagingItems()
 
     SentenceBookmarksScreen(
         onBackClick = onBackClick,
-        bookmarks = bookmarks,
-        onUncollectClick = { viewModel.setUncollect(it) })
+        pagingItems = pagingItems,
+    )
 }
 
 @Composable
 private fun SentenceBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    bookmarks: LazyPagingItems<SentenceEntity>,
-    onUncollectClick: (Int) -> Unit
+    pagingItems: LazyPagingItems<SentenceEntity>,
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏列表") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn(
             modifier = modifier
                 .fillMaxWidth()
@@ -58,23 +55,13 @@ private fun SentenceBookmarksScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                count = bookmarks.itemCount
+                count = pagingItems.itemCount
             ) {
-                bookmarks[it]?.let { entity ->
+                pagingItems[it]?.let { entity ->
                     Card(
                         modifier = modifier.fillMaxWidth()
                     ) {
                         Column {
-                            IconButton(
-                                modifier = modifier.padding(horizontal = 16.dp),
-                                onClick = { onUncollectClick(entity.id) }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
                             Column(
                                 modifier = modifier.padding(16.dp),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)

@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureClassicPoemDao
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
 import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
@@ -25,9 +24,9 @@ class ClassicPoemRepositoryImpl @Inject constructor(
     override suspend fun insert(entity: ClassicPoemEntity) =
         classicalLiteratureClassicPoemDao.insert(entity)
 
-    override fun random(): Flow<ClassicPoemEntity> = classicalLiteratureClassicPoemDao.random()
+    override fun getRandom(): Flow<ClassicPoemEntity?> = classicalLiteratureClassicPoemDao.random()
 
-    override fun get(id: Int): Flow<ClassicPoemEntity> = classicalLiteratureClassicPoemDao.get(id)
+    override fun get(id: Int): Flow<ClassicPoemEntity?> = classicalLiteratureClassicPoemDao.get(id)
 
     override fun total(): Flow<Int> = classicalLiteratureClassicPoemDao.total()
 
@@ -35,17 +34,9 @@ class ClassicPoemRepositoryImpl @Inject constructor(
 
     override fun getPrevId(id: Int): Flow<Int?> = classicalLiteratureClassicPoemDao.getPrevId(id)
 
-    override suspend fun collect(entity: ClassicPoemCollectionEntity) =
-        classicalLiteratureClassicPoemDao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = classicalLiteratureClassicPoemDao.uncollect(id)
-
-    override fun isCollect(id: Int): Flow<ClassicPoemCollectionEntity?> =
-        classicalLiteratureClassicPoemDao.isCollect(id)
-
-    override fun collections(): Flow<PagingData<ClassicPoemEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<ClassicPoemEntity>> = Pager(
         config = PagingConfig(15),
-        pagingSourceFactory = { classicalLiteratureClassicPoemDao.collections() }
+        pagingSourceFactory = { classicalLiteratureClassicPoemDao.bookmarks() }
     ).flow
 
     override fun search(query: String): Flow<List<ClassicPoemEntity>> =

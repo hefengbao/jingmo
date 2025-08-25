@@ -35,7 +35,7 @@ class QuoteSearchViewModel @Inject constructor(
         this.query.value = query
     }
 
-    val entities = query.debounce(200)
+    val quoteEntities = query.debounce(200)
         .distinctUntilChanged()
         .filter {
             return@filter it.isNotEmpty()

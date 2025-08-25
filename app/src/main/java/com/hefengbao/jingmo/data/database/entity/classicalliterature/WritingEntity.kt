@@ -18,7 +18,7 @@ import com.hefengbao.jingmo.data.model.classicalliterature.writing.Clause
 import com.hefengbao.jingmo.data.model.classicalliterature.writing.Quote
 import com.hefengbao.jingmo.data.model.classicalliterature.writing.Tune
 
-@Entity(tableName = "writings")
+@Entity(tableName = "classicalliterature_writing")
 data class WritingEntity(
     @PrimaryKey
     val id: Int,

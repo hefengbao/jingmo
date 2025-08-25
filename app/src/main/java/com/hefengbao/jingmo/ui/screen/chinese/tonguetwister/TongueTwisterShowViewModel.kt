@@ -31,13 +31,14 @@ class TongueTwisterShowViewModel @Inject constructor(
 
     val id = args.tongueTwisterId.toInt()
 
-    private val _tongueTwister: MutableStateFlow<TongueTwisterEntity?> = MutableStateFlow(null)
-    val tongueTwister: SharedFlow<TongueTwisterEntity?> = _tongueTwister
+    private val _tongueTwisterEntity: MutableStateFlow<TongueTwisterEntity?> =
+        MutableStateFlow(null)
+    val tongueTwisterEntity: SharedFlow<TongueTwisterEntity?> = _tongueTwisterEntity
 
     init {
         viewModelScope.launch {
             tongueTwisterRepository.get(id).collectLatest { tongueTwister ->
-                _tongueTwister.value = tongueTwister
+                _tongueTwisterEntity.value = tongueTwister
             }
         }
     }

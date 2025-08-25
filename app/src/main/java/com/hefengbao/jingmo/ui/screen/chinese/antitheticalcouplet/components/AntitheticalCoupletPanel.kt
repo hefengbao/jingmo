@@ -19,9 +19,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 
 @Composable
 fun AntitheticalCoupletPanel(
@@ -43,7 +45,7 @@ fun AntitheticalCoupletPanel(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    BackgroundTitle(title = "说明")
+                    EmphasizedTitle(title = stringResource(R.string.explain))
                     Text(
                         text = it,
                     )

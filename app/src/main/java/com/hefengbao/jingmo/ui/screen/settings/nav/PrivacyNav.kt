@@ -14,13 +14,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.hefengbao.jingmo.ui.screen.settings.PrivacyRoute
 
-private const val ROUTE_PRIVACY = "privacy"
+private const val ROUTE_PRIVACY = "settings_privacy"
 
-fun NavController.navigateToPrivacyScreen() {
+fun NavController.navigateToSettingsPrivacyScreen() {
     this.navigate(ROUTE_PRIVACY)
 }
 
-fun NavGraphBuilder.privacyScreen(
+fun NavGraphBuilder.settingsPrivacyScreen(
     onBackClick: () -> Unit
 ) {
     composable(ROUTE_PRIVACY) {

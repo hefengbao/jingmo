@@ -13,8 +13,8 @@ import com.hefengbao.jingmo.data.database.entity.chinese.TongueTwisterEntity
 import kotlinx.coroutines.flow.Flow
 
 interface TongueTwisterRepository {
-    fun get(id: Int): Flow<TongueTwisterEntity>
+    fun get(id: Int): Flow<TongueTwisterEntity?>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
-    fun search(): Flow<List<TongueTwisterEntity>>
+    fun list(): Flow<List<TongueTwisterEntity>>
 }

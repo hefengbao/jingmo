@@ -12,7 +12,10 @@ package com.hefengbao.jingmo.data.database.entity.chinese
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "chinese_antithetical_couplets")
+/**
+ * 对联
+ */
+@Entity(tableName = "chinese_antitheticalcouplet")
 data class AntitheticalCoupletEntity(
     @PrimaryKey
     val id: Int,

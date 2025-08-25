@@ -14,7 +14,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PoemSentence(
+data class Sentence(
     val id: Int,
     val content: String,
     val from: String,
@@ -22,6 +22,6 @@ data class PoemSentence(
     val poemId: Int? = null
 )
 
-fun PoemSentence.asPoemSentenceEntity() = SentenceEntity(
+fun Sentence.asSentenceEntity() = SentenceEntity(
     id, content, from, poemId
 )

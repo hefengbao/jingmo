@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ReadMore
 import androidx.compose.material.icons.filled.Bookmark
@@ -32,10 +33,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.components.KnowledgePanel
 import kotlin.math.abs
@@ -49,7 +53,7 @@ fun ChineseKnowledgeIndexRoute(
     onReadMoreClick: () -> Unit,
 ) {
     val knowledgeEntity by viewModel.knowledgeEntity.collectAsState(initial = null)
-    val knowledgeCollectionEntity by viewModel.knowledgeCollectionEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     ChineseKnowledgeReadScreen(
         onBackClick = onBackClick,
@@ -57,11 +61,11 @@ fun ChineseKnowledgeIndexRoute(
         onReadMoreClick = onReadMoreClick,
         onSearchClick = onSearchClick,
         knowledgeEntity = knowledgeEntity,
-        knowledgeCollectionEntity = knowledgeCollectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        isCollect = { viewModel.isCollect(it) },
-        refresh = { viewModel.random() }
+        bookmarkEntity = bookmarkEntity,
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseKnowledge.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseKnowledge.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseKnowledge.model) },
+        refresh = { viewModel.getRandom() }
     )
 }
 
@@ -73,27 +77,35 @@ private fun ChineseKnowledgeReadScreen(
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     knowledgeEntity: KnowledgeEntity?,
-    knowledgeCollectionEntity: KnowledgeCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
-    isCollect: (Int) -> Unit,
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
     refresh: () -> Unit,
 ) {
+    val state = rememberScrollState()
+
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "知识卡片",
+        title = stringResource(R.string.chinese_knowledge),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ReadMore,
-                    contentDescription = "进入阅读"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
@@ -103,19 +115,19 @@ private fun ChineseKnowledgeReadScreen(
                         Row(
                             modifier = modifier.padding(horizontal = 16.dp)
                         ) {
-                            if (knowledgeCollectionEntity != null) {
-                                IconButton(onClick = { setUncollect(entity.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(entity.id) }) {
+                                IconButton(onClick = { addBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -123,7 +135,10 @@ private fun ChineseKnowledgeReadScreen(
                     },
                     floatingActionButton = {
                         FloatingActionButton(onClick = refresh) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = stringResource(R.string.refresh)
+                            )
                         }
                     }
                 )
@@ -147,8 +162,8 @@ private fun ChineseKnowledgeReadScreen(
                 )
         ) {
             knowledgeEntity?.let { entity ->
-                isCollect(entity.id)
-                KnowledgePanel(entity = entity)
+                isBookmarked(entity.id)
+                KnowledgePanel(entity = entity, state = state)
             }
         }
     }

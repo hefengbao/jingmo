@@ -9,15 +9,15 @@
 
 package com.hefengbao.jingmo.data.repository.traditionalculture
 
-import com.hefengbao.jingmo.data.model.traditionalculture.Color
+import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 import javax.inject.Inject
 
 class ColorRepositoryImpl @Inject constructor(
 
 ) : ColorRepository {
-    override fun list(): List<Color> {
+    override fun list(): List<ChineseColor> {
         return listOf(
-            Color(
+            ChineseColor(
                 id = "255179167",
                 name = "粉红",
                 traName = "粉紅",
@@ -31,7 +31,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "即浅红色。别称：妃色、杨妃色、湘妃色、妃红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2378754",
                 name = "妃色",
                 traName = "妃色",
@@ -45,7 +45,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "妃红色。古同\"绯\"，粉红色。杨妃色湘妃色粉红皆同义。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "240086",
                 name = "品红",
                 traName = "品紅",
@@ -59,7 +59,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "比大红浅的红色（这里的\"品红\"估计是指的\"一品红\"，是基于大红色系的，和现在我们印刷用色的\"品红M100\"不是一个概念）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "244121131",
                 name = "桃红",
                 traName = "桃紅",
@@ -73,7 +73,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "桃花的颜色，比粉红略鲜润的颜色。（不大于M70的色彩，有时可加入适量黄色）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "21990107",
                 name = "海棠红",
                 traName = "海棠紅",
@@ -87,7 +87,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡紫红色、较桃红色深一些，是非常妩媚娇艳的颜色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "242120",
                 name = "石榴红",
                 traName = "石榴紅",
@@ -101,7 +101,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "石榴花的颜色，高色度和纯度的红色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2015586",
                 name = "樱桃色",
                 traName = "櫻桃色",
@@ -115,7 +115,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鲜红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2408684",
                 name = "银红",
                 traName = "銀紅",
@@ -129,7 +129,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "银朱和粉红色颜料配成的颜色。多用来形容有光泽的各种红色，尤指有光泽浅红。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2553333",
                 name = "大红",
                 traName = "大紅",
@@ -143,7 +143,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "正红色，三原色中的红，传统的中国红，又称绛色（RGB色中的R255系列明度）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1406786",
                 name = "绛紫",
                 traName = "絳紫",
@@ -157,7 +157,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "紫中略带红的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2006035",
                 name = "绯红",
                 traName = "緋紅",
@@ -171,7 +171,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "艳丽的深红",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1574151",
                 name = "胭脂",
                 traName = "胭脂",
@@ -185,7 +185,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1，女子装扮时用的胭脂的颜色。2，国画暗红色颜料",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "255760",
                 name = "朱红",
                 traName = "朱紅",
@@ -199,7 +199,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "朱砂的颜色，比大红活泼，也称铅朱朱色丹色（在YM对等的情况下，适量减少红色的成分就是该色的色彩系列感觉）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2557832",
                 name = "丹",
                 traName = "丹",
@@ -213,7 +213,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "丹砂的鲜艳红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2438354",
                 name = "彤",
                 traName = "彤",
@@ -227,7 +227,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "赤色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2035886",
                 name = "茜色",
                 traName = "茜色",
@@ -241,7 +241,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "茜草染的色彩，呈深红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2554581",
                 name = "火红",
                 traName = "火紅",
@@ -255,7 +255,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "火焰的红色，赤色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2013155",
                 name = "赫赤",
                 traName = "赫赤",
@@ -269,7 +269,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深红，火红。泛指赤色、火红色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "239122130",
                 name = "嫣红",
                 traName = "嫣紅",
@@ -283,7 +283,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鲜艳的红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2550151",
                 name = "洋红",
                 traName = "洋紅",
@@ -297,7 +297,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "色橘红（这个色彩方向不太对，通常洋红指的是倾向于M100系列的红色，应该削弱黄色成分。）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "255510",
                 name = "炎",
                 traName = "炎",
@@ -311,7 +311,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "引申为红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1953943",
                 name = "赤",
                 traName = "赤",
@@ -325,7 +325,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "本义火的颜色，即红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "169129117",
                 name = "绾",
                 traName = "綰",
@@ -339,7 +339,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "绛色；浅绛色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1953354",
                 name = "枣红",
                 traName = "棗紅",
@@ -353,7 +353,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "即深红（色相不变，是深浅变化）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "17910997",
                 name = "檀",
                 traName = "檀",
@@ -367,7 +367,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅红色，浅绛色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "190047",
                 name = "殷红",
                 traName = "殷紅",
@@ -381,7 +381,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "发黑的红色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2204835",
                 name = "酡红",
                 traName = "酡紅",
@@ -395,7 +395,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "像饮酒后脸上泛现的红色，泛指脸红",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "249144111",
                 name = "酡颜",
                 traName = "酡顏",
@@ -409,7 +409,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "饮酒脸红的样子。亦泛指脸红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "25524167",
                 name = "鹅黄",
                 traName = "鵝黃",
@@ -423,7 +423,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡黄色（鹅嘴的颜色，高明度微偏红黄色）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "250255114",
                 name = "鸭黄",
                 traName = "鴨黃",
@@ -437,7 +437,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "小鸭毛的黄色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "23425586",
                 name = "樱草色",
                 traName = "櫻草色",
@@ -451,7 +451,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡黄色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "25516649",
                 name = "杏黄",
                 traName = "杏黃",
@@ -465,7 +465,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "成熟杏子的黄色（Y100M20~30感觉的色彩，比较常用且有浓郁中国味道）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "25514049",
                 name = "杏红",
                 traName = "杏紅",
@@ -479,7 +479,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "成熟杏子偏红色的一种颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "25513754",
                 name = "橘黄",
                 traName = "橘黃",
@@ -493,7 +493,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "柑橘的黄色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2551640",
                 name = "橙黄",
                 traName = "橙黃",
@@ -507,7 +507,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "同上。（Y100M50感觉的色彩，现代感比较强。广告上用得较多）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "2551170",
                 name = "橘红",
                 traName = "橘紅",
@@ -521,7 +521,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "柑橘皮所呈现的红色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "255199115",
                 name = "姜黄",
                 traName = "薑黃",
@@ -535,7 +535,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "中药名。别名黄姜。为姜科植物姜黄的根茎。又指人脸色不正,呈黄白色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "24019457",
                 name = "缃色",
                 traName = "緗色",
@@ -549,7 +549,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅黄色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "25014053",
                 name = "橙色",
                 traName = "橙色",
@@ -563,7 +563,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "界于红色和黄色之间的混合色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1799268",
                 name = "茶色",
                 traName = "茶色",
@@ -577,7 +577,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "一种比栗色稍红的棕橙色至浅棕色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "16813298",
                 name = "驼色",
                 traName = "駝色",
@@ -591,7 +591,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "一种比咔叽色稍红而微淡、比肉桂色黄而稍淡和比核桃棕色黄而暗的浅黄棕色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "20015564",
                 name = "昏黄",
                 traName = "昏黃",
@@ -605,7 +605,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "形容天色、灯光等呈幽暗的黄色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "964030",
                 name = "栗色",
                 traName = "慄色",
@@ -619,7 +619,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "栗壳的颜色。即紫黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1789337",
                 name = "棕色",
                 traName = "棕色",
@@ -633,7 +633,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "棕毛的颜色,即褐色。1，在红色和黄色之间的任何一种颜色2，适中的暗淡和适度的浅黑。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1301130",
                 name = "棕绿",
                 traName = "棕綠",
@@ -647,7 +647,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "绿中泛棕色的一种颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "124750",
                 name = "棕黑",
                 traName = "棕黑",
@@ -661,7 +661,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深棕色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "155680",
                 name = "棕红",
                 traName = "棕紅",
@@ -675,7 +675,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "红褐色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1741120",
                 name = "棕黄",
                 traName = "棕黃",
@@ -689,7 +689,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅褐色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1568351",
                 name = "赭",
                 traName = "赭",
@@ -703,7 +703,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "赤红如赭土的颜料,古人用以饰面",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1498557",
                 name = "赭色",
                 traName = "赭色",
@@ -717,7 +717,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "红色、赤红色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "20210536",
                 name = "琥珀",
                 traName = "琥珀",
@@ -731,7 +731,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1108130",
                 name = "褐色",
                 traName = "褐色",
@@ -745,7 +745,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "黄黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "211177125",
                 name = "枯黄",
                 traName = "枯黃",
@@ -759,7 +759,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "干枯焦黄",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "22615669",
                 name = "黄栌",
                 traName = "黃櫨",
@@ -773,7 +773,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "一种落叶灌木，花黄绿色,叶子秋天变成红色。木材黄色可做染料。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "13710857",
                 name = "秋色",
                 traName = "秋色",
@@ -787,7 +787,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1，中常橄榄棕色,它比一般橄榄棕色稍暗,且稍稍绿些。2，古以秋为金,其色白,故代指白色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "21718217",
                 name = "秋香色",
                 traName = "秋香色",
@@ -801,7 +801,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅橄榄色浅黄绿色。（直接在Y中掺入k10~30可得到不同浓淡的该类色彩）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "18922134",
                 name = "嫩绿",
                 traName = "嫩綠",
@@ -815,7 +815,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "像刚长出的嫩叶的浅绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "20122134",
                 name = "柳黄",
                 traName = "柳黃",
@@ -829,7 +829,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "像柳树芽那样的浅黄色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "17522134",
                 name = "柳绿",
                 traName = "柳綠",
@@ -843,7 +843,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "柳叶的青绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "12014698",
                 name = "竹青",
                 traName = "竹青",
@@ -857,7 +857,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "竹子的绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1632170",
                 name = "葱黄",
                 traName = "蔥黃",
@@ -871,7 +871,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "黄绿色，嫩黄色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1582170",
                 name = "葱绿",
                 traName = "蔥綠",
@@ -885,7 +885,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1:浅绿又略显微黄的颜色 2:草木青翠的样子",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1418458",
                 name = "葱青",
                 traName = "蔥青",
@@ -899,7 +899,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡淡的青绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1418464",
                 name = "葱倩",
                 traName = "蔥倩",
@@ -913,7 +913,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "青绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1016368",
                 name = "青葱",
                 traName = "青蔥",
@@ -927,7 +927,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "翠绿色,形容植物浓绿",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "018818",
                 name = "油绿",
                 traName = "油綠",
@@ -941,7 +941,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "光润而浓绿的颜色。以上几种绿色都是明亮可爱的色彩。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1213724",
                 name = "绿沈",
                 traName = "綠沈",
@@ -955,7 +955,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "（沉）深绿",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "27209165",
                 name = "碧色",
                 traName = "碧色",
@@ -969,7 +969,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1，青绿色。2，青白色,浅蓝色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "42221156",
                 name = "碧绿",
                 traName = "碧綠",
@@ -983,7 +983,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鲜艳的青绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "72192163",
                 name = "青碧",
                 traName = "青碧",
@@ -997,7 +997,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鲜艳的青蓝色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "61225173",
                 name = "翡翠色",
                 traName = "翡翠色",
@@ -1011,7 +1011,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1，翡翠鸟羽毛的青绿色。2，翡翠宝石的颜色。（C-Y≥30的系列色彩，多与白色配合以体现清新明丽感觉，与黑色配合效果不好该色个性柔弱，会被黑色牵制）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "6422290",
                 name = "草绿",
                 traName = "草綠",
@@ -1025,7 +1025,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "绿而略黄的颜色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "0224158",
                 name = "青色",
                 traName = "青色",
@@ -1039,7 +1039,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1，一类带绿的蓝色,中等深浅,高度饱和。3，本义是蓝色。4，一般指深绿色。5，也指黑色。6，四色印刷中的一色。2，特指三补色中的一色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "0224121",
                 name = "青翠",
                 traName = "青翠",
@@ -1053,7 +1053,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鲜绿",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "192235215",
                 name = "青白",
                 traName = "青白",
@@ -1067,7 +1067,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "白而发青,尤指脸没有血色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "224238232",
                 name = "鸭卵青",
                 traName = "鴨卵青",
@@ -1081,7 +1081,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡青灰色，极淡的青绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "187205197",
                 name = "蟹壳青",
                 traName = "蟹殼青",
@@ -1095,7 +1095,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深灰绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "667680",
                 name = "鸦青",
                 traName = "鴉青",
@@ -1109,7 +1109,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鸦羽的颜色。即黑而带有紫绿光的颜色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "02290",
                 name = "绿色",
                 traName = "綠色",
@@ -1123,7 +1123,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "1，在光谱中介于蓝与黄之间的那种颜色。2，本义青中带黄的颜色。3，引申为黑色，如绿鬓乌黑而光亮的鬓发。代指为青春年少的容颜。（现代色彩研究中，把绿色提高到了一个重要的位置，和其它红黄兰三原色并列研究，称做\"心理原色\"之一）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "15820872",
                 name = "豆绿",
                 traName = "豆綠",
@@ -1137,7 +1137,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅黄绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "15020684",
                 name = "豆青",
                 traName = "豆青",
@@ -1151,7 +1151,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅青绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "123207166",
                 name = "石青",
                 traName = "石青",
@@ -1165,7 +1165,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡灰绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "46223163",
                 name = "玉色",
                 traName = "玉色",
@@ -1179,7 +1179,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "玉的颜色，高雅的淡绿、淡青色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "127236173",
                 name = "缥",
                 traName = "縹",
@@ -1193,7 +1193,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "绿色而微白",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "164226198",
                 name = "艾绿",
                 traName = "艾綠",
@@ -1207,7 +1207,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "艾草的颜色。偏苍白的绿色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "33166117",
                 name = "松柏绿",
                 traName = "松柏綠",
@@ -1221,7 +1221,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "经冬松柏叶的深绿",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "511972",
                 name = "松花绿",
                 traName = "松花綠",
@@ -1235,7 +1235,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "亦作\"松花\"、\"松绿\"。偏黑的深绿色,墨绿。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "188230114",
                 name = "松花色",
                 traName = "松花色",
@@ -1249,7 +1249,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅黄绿色。（松树花粉的颜色）《红楼梦》中提及松花配桃红为娇艳",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "68206246",
                 name = "蓝",
                 traName = "藍",
@@ -1263,7 +1263,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "三原色的一种。像晴天天空的颜色（这里的蓝色指的不是RGB色彩中的B，而是CMY色彩中的C）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "23124176",
                 name = "靛青",
                 traName = "靛青",
@@ -1277,7 +1277,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "也叫\"蓝靛\"。用蓼蓝叶泡水调和与石灰沉淀所得的蓝色染料。呈深蓝绿色（靛，发音dian四声，有些地方将蓝墨水称为\"靛水\"或者\"兰靛水\"）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "682121",
                 name = "靛蓝",
                 traName = "靛藍",
@@ -1291,7 +1291,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "由植物(例如靛蓝或菘蓝属植物)得到的蓝色染料",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "62237231",
                 name = "碧蓝",
                 traName = "碧藍",
@@ -1305,7 +1305,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "青蓝色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "112243255",
                 name = "蔚蓝",
                 traName = "蔚藍",
@@ -1319,7 +1319,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "类似晴朗天空的颜色的一种蓝色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "7592196",
                 name = "宝蓝",
                 traName = "寶藍",
@@ -1333,7 +1333,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "鲜艳明亮的蓝色（英文中为RoyalBlue即皇家蓝色，是皇室选用的色彩，多和小面积纯黄色（金色）配合使用。）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "161175201",
                 name = "蓝灰色",
                 traName = "藍灰色",
@@ -1347,7 +1347,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "一种近于灰略带蓝的深灰色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "4678126",
                 name = "藏青",
                 traName = "藏青",
@@ -1361,7 +1361,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "蓝而近黑",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "5946126",
                 name = "藏蓝",
                 traName = "藏藍",
@@ -1375,7 +1375,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "蓝里略透红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "7466102",
                 name = "黛",
                 traName = "黛",
@@ -1389,7 +1389,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "别名：黛色，黛螺。青黑色的颜料。古代女子用以画眉。绘画或画眉所使用的青黑色颜料，代指女子眉妩。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "66102102",
                 name = "黛绿",
                 traName = "黛綠",
@@ -1403,7 +1403,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "墨绿",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "6680102",
                 name = "黛蓝",
                 traName = "黛藍",
@@ -1417,7 +1417,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深蓝色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "8766102",
                 name = "黛紫",
                 traName = "黛紫",
@@ -1431,7 +1431,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深紫色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "14175187",
                 name = "紫色",
                 traName = "紫色",
@@ -1445,7 +1445,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "蓝和红组成的颜色。古人以紫为祥瑞的颜色。代指与帝王、皇宫有关的事物",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1298499",
                 name = "紫酱",
                 traName = "紫醬",
@@ -1459,7 +1459,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浑浊的紫色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "12984118",
                 name = "酱紫",
                 traName = "醬紫",
@@ -1473,7 +1473,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "紫中略带红的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "763427",
                 name = "紫檀",
                 traName = "紫檀",
@@ -1487,7 +1487,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "檀木的颜色，也称乌檀色乌木色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "051113",
                 name = "绀青绀紫",
                 traName = "紺青紺紫",
@@ -1501,7 +1501,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "纯度较低的深紫色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "86079",
                 name = "紫棠",
                 traName = "紫棠",
@@ -1515,7 +1515,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "黑红色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "12829174",
                 name = "青莲",
                 traName = "青蓮",
@@ -1529,7 +1529,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "偏蓝的紫色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "76141174",
                 name = "群青",
                 traName = "群青",
@@ -1543,7 +1543,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深蓝色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "176164227",
                 name = "雪青",
                 traName = "雪青",
@@ -1557,7 +1557,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅蓝紫色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "204164227",
                 name = "丁香色",
                 traName = "丁香色",
@@ -1571,7 +1571,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "紫丁香的颜色，浅浅的紫色，很娇柔淡雅的色彩",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "237209216",
                 name = "藕色",
                 traName = "藕色",
@@ -1585,7 +1585,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅灰而略带红的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "228198208",
                 name = "藕荷色",
                 traName = "藕荷色",
@@ -1599,7 +1599,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "浅紫而略带红的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "984229",
                 name = "玄色",
                 traName = "玄色",
@@ -1613,7 +1613,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "赤黑色，黑中带红的颜色，又泛指黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "615979",
                 name = "玄青",
                 traName = "玄青",
@@ -1627,7 +1627,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "11494130",
                 name = "乌色",
                 traName = "烏色",
@@ -1641,7 +1641,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "暗而呈黑的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "574765",
                 name = "乌黑",
                 traName = "烏黑",
@@ -1655,7 +1655,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深黑；漆黑",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "222435",
                 name = "漆黑",
                 traName = "漆黑",
@@ -1669,7 +1669,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "非常黑的",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "8097109",
                 name = "墨色",
                 traName = "墨色",
@@ -1683,7 +1683,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "即黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "117138153",
                 name = "墨灰",
                 traName = "墨灰",
@@ -1697,7 +1697,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "即黑灰",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "000",
                 name = "黑色",
                 traName = "黑色",
@@ -1711,7 +1711,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "亮度最低的非彩色的或消色差的物体的颜色；最暗的灰色；与白色截然不同的消色差的颜色；被认为特别属于那些既不能反射、又不能透过能使人感觉到的微小入射光的物体,任何亮度很低的物体颜色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "734949",
                 name = "缁色",
                 traName = "緇色",
@@ -1725,7 +1725,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "帛黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "493732",
                 name = "煤黑",
                 traName = "煤黑",
@@ -1739,7 +1739,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "别称：象牙黑。都是黑，不过有冷暖之分",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "938160",
                 name = "黧",
                 traName = "黧",
@@ -1753,7 +1753,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "黑中带黄的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "11710277",
                 name = "黎",
                 traName = "黎",
@@ -1767,7 +1767,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "黑中带黄似黎草色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "107104130",
                 name = "黝",
                 traName = "黝",
@@ -1781,7 +1781,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "本义为淡黑色或微青黑色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "1028787",
                 name = "黝黑",
                 traName = "黝黑",
@@ -1795,7 +1795,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "（皮肤暴露在太阳光下而晒成的）青黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "658593",
                 name = "黯",
                 traName = "黯",
@@ -1809,7 +1809,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "深黑色、泛指黑色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "117135138",
                 name = "苍色",
                 traName = "蒼色",
@@ -1823,7 +1823,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "即各种颜色掺入黑色后的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "81154115",
                 name = "苍翠",
                 traName = "蒼翠",
@@ -1837,7 +1837,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "162155124",
                 name = "苍黄",
                 traName = "蒼黃",
@@ -1851,7 +1851,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "115151171",
                 name = "苍青",
                 traName = "蒼青",
@@ -1865,7 +1865,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "578296",
                 name = "苍黑",
                 traName = "蒼黑",
@@ -1879,7 +1879,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "209217224",
                 name = "苍白",
                 traName = "蒼白",
@@ -1893,7 +1893,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = "fan"
             ),
-            Color(
+            ChineseColor(
                 id = "136173166",
                 name = "水色",
                 traName = "水色",
@@ -1907,7 +1907,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "243211231",
                 name = "水红",
                 traName = "水紅",
@@ -1921,7 +1921,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "212242231",
                 name = "水绿",
                 traName = "水綠",
@@ -1935,7 +1935,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "210240244",
                 name = "水蓝",
                 traName = "水藍",
@@ -1949,7 +1949,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "211224243",
                 name = "淡青",
                 traName = "淡青",
@@ -1963,7 +1963,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "48223243",
                 name = "湖蓝",
                 traName = "湖藍",
@@ -1977,7 +1977,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "37248203",
                 name = "湖绿",
                 traName = "湖綠",
@@ -1991,7 +1991,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "皆是浅色。深色淡色，颜色深的或浅的，不再一一列出。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "255255255",
                 name = "精白",
                 traName = "精白",
@@ -2005,7 +2005,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "纯白，洁白，净白，粉白。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "255251240",
                 name = "象牙白",
                 traName = "象牙白",
@@ -2019,7 +2019,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "乳白色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "242253255",
                 name = "雪白",
                 traName = "雪白",
@@ -2033,7 +2033,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "如雪般洁白",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "214236240",
                 name = "月白",
                 traName = "月白",
@@ -2047,7 +2047,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "淡蓝，因近似月色，故称。古人认为月亮的颜色并不是纯白，而是带着一点淡淡的蓝色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "242236222",
                 name = "缟",
                 traName = "縞",
@@ -2061,7 +2061,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "白色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "224240233",
                 name = "素",
                 traName = "素",
@@ -2075,7 +2075,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "白色，无色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "243249241",
                 name = "荼白",
                 traName = "荼白",
@@ -2089,7 +2089,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "如荼之白色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "233241246",
                 name = "霜色",
                 traName = "霜色",
@@ -2103,7 +2103,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "白霜的颜色。",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "194204208",
                 name = "花白",
                 traName = "花白",
@@ -2117,7 +2117,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "白色和黑色混杂的。斑白的夹杂有灰色的白",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "252239232",
                 name = "鱼肚白",
                 traName = "魚肚白",
@@ -2131,7 +2131,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "似鱼腹部的颜色，多指黎明时东方的天色颜色（M5Y5）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "227249253",
                 name = "莹白",
                 traName = "瑩白",
@@ -2145,7 +2145,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "晶莹洁白",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "128128128",
                 name = "灰色",
                 traName = "灰色",
@@ -2159,7 +2159,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "黑色和白色混和成的一种颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "238222176",
                 name = "牙色",
                 traName = "牙色",
@@ -2173,7 +2173,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "与象牙相似的淡黄色（暖白）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "240240244",
                 name = "铅白",
                 traName = "鉛白",
@@ -2187,7 +2187,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "铅粉的白色。铅粉，国画颜料，日久易氧化\"返铅\"变黑。铅粉在古时用以搽脸的化妆品。（冷白）",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "24219069",
                 name = "赤金",
                 traName = "赤金",
@@ -2201,7 +2201,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "足金的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "234205118",
                 name = "金色",
                 traName = "金色",
@@ -2215,7 +2215,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "平均为深黄色带光泽的颜色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "233231239",
                 name = "银白",
                 traName = "銀白",
@@ -2229,7 +2229,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "带银光的白色",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "186202198",
                 name = "老银",
                 traName = "老銀",
@@ -2243,7 +2243,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "金属氧化后的色彩",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "16714268",
                 name = "乌金",
                 traName = "烏金",
@@ -2257,7 +2257,7 @@ class ColorRepositoryImpl @Inject constructor(
                 desc = "",
                 figure = ""
             ),
-            Color(
+            ChineseColor(
                 id = "84150136",
                 name = "铜绿",
                 traName = "銅綠",

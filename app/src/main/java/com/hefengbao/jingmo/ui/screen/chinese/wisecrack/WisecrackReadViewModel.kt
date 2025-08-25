@@ -9,9 +9,9 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,15 +28,16 @@ import javax.inject.Inject
 @HiltViewModel
 class WisecrackReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val wisecrackRepository: WisecrackRepository
-) : ViewModel() {
+    private val wisecrackRepository: WisecrackRepository,
+    bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
 
     private var id = MutableStateFlow(1)
 
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.chineseWisecracksLastReadId
+                id.value = it.chineseWisecrackLastReadId
             }
         }
     }
@@ -47,16 +48,8 @@ class WisecrackReadViewModel @Inject constructor(
         setLastReadId(id)
     }
 
-    val chineseCrack = id.flatMapLatest {
+    val wisecrackEntity = id.flatMapLatest {
         wisecrackRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val chineseWisecrackCollectionEntity = id.flatMapLatest {
-        wisecrackRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -78,18 +71,6 @@ class WisecrackReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            wisecrackRepository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            wisecrackRepository.collect(WisecrackCollectionEntity(id))
-        }
-    }
 
     private fun setLastReadId(id: Int) {
         viewModelScope.launch {

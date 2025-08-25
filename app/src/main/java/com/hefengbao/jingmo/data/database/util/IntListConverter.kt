@@ -10,7 +10,6 @@
 package com.hefengbao.jingmo.data.database.util
 
 import androidx.room.TypeConverter
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class IntListConverter {

@@ -20,5 +20,5 @@ import javax.inject.Inject
 class ExpressionBookmarksViewModel @Inject constructor(
     repository: ExpressionRepository
 ) : ViewModel() {
-    val expressions = repository.collections().cachedIn(viewModelScope)
+    val expressionEntities = repository.bookmarks().cachedIn(viewModelScope)
 }

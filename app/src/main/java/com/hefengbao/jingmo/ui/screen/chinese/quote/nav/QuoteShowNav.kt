@@ -40,6 +40,7 @@ fun NavController.navigateToChineseQuoteShowScreen(id: Int) {
 
 fun NavGraphBuilder.chineseQuoteShowScreen(
     onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
@@ -48,7 +49,8 @@ fun NavGraphBuilder.chineseQuoteShowScreen(
         )
     ) {
         QuoteShowRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick
         )
     }
 }

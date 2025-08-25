@@ -19,10 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -32,9 +34,13 @@ fun ExpressionBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val items = viewModel.expressions.collectAsLazyPagingItems()
+    val expressionEntities = viewModel.expressionEntities.collectAsLazyPagingItems()
 
-    ExpressionBookmarksScreen(onBackClick = onBackClick, onItemClick = onItemClick, items = items)
+    ExpressionBookmarksScreen(
+        onBackClick = onBackClick,
+        onItemClick = onItemClick,
+        expressionEntities = expressionEntities
+    )
 }
 
 @Composable
@@ -42,29 +48,29 @@ private fun ExpressionBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<ExpressionEntity>
+    expressionEntities: LazyPagingItems<ExpressionEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                count = items.itemCount,
+                count = expressionEntities.itemCount,
             ) {
-                items[it]?.let { item ->
+                expressionEntities[it]?.let { entity ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { onItemClick(item.id) }
+                        onClick = { onItemClick(entity.id) }
                     ) {
                         Column(
                             modifier = Modifier.padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(text = item.pinyin, style = MaterialTheme.typography.bodyLarge)
-                            Text(text = item.word, style = MaterialTheme.typography.bodyLarge)
-                            item.explanation?.let {
-                                Text(text = item.explanation)
+                            Text(text = entity.pinyin, style = MaterialTheme.typography.bodyLarge)
+                            Text(text = entity.word, style = MaterialTheme.typography.bodyLarge)
+                            entity.explanation?.let {
+                                Text(text = entity.explanation)
                             }
                         }
                     }

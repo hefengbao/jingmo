@@ -21,22 +21,22 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 
 @VisibleForTesting
-internal const val antitheticalCoupletIdArg = "antitheticalCoupletId"
+internal const val showIdArg = "id"
 private const val base = "chinese_antithetical_couplet_show"
-private const val ROUTE = "$base/{$antitheticalCoupletIdArg}"
+private const val ROUTE = "$base/{$showIdArg}"
 
-internal class AntitheticalCoupletShowArgs(val antitheticalCoupletId: String) {
+internal class AntitheticalCoupletShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[antitheticalCoupletIdArg]),
+                    checkNotNull(savedStateHandle[showIdArg]),
                     Charsets.UTF_8.name()
                 )
             )
 }
 
-fun NavController.navigateToChineseAntitheticalCoupletShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, Charsets.UTF_8.name())
+fun NavController.navigateToChineseAntitheticalCoupletShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), Charsets.UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
@@ -49,7 +49,7 @@ fun NavGraphBuilder.chineseAntitheticalCoupletShowScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(antitheticalCoupletIdArg) { type = NavType.StringType }
+            navArgument(showIdArg) { type = NavType.StringType }
         )
     ) {
         AntitheticalCoupletShowRoute(

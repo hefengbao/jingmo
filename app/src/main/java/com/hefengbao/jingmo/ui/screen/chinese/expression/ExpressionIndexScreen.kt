@@ -37,10 +37,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.expression.components.ExpressionPanel
 import kotlin.math.abs
@@ -52,12 +55,12 @@ fun ChineseExpressionIndexRoute(
     onBookmarksClick: () -> Unit,
     onSearchClick: () -> Unit,
 ) {
-    val expression by viewModel.expression.collectAsState(initial = null)
-    val expressionCollectionEntity by viewModel.collected.collectAsState(initial = null)
+    val expression by viewModel.expressionEntity.collectAsState(initial = null)
+    val expressionCollectionEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     LaunchedEffect(expression) {
         expression?.let {
-            viewModel.getCollected(it.id)
+            viewModel.isBookmarked(it.id, Category.ChineseExpression.model)
         }
     }
 
@@ -67,9 +70,9 @@ fun ChineseExpressionIndexRoute(
         onSearchClick = onSearchClick,
         onRefreshClick = { viewModel.getRandom() },
         expression = expression,
-        expressionCollectionEntity = expressionCollectionEntity,
-        setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) }
+        bookmarkEntity = expressionCollectionEntity,
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseExpression.model) },
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseExpression.model) }
     )
 }
 
@@ -81,19 +84,25 @@ private fun ChineseExpressionIndexScreen(
     onSearchClick: () -> Unit,
     onRefreshClick: () -> Unit,
     expression: ExpressionEntity?,
-    expressionCollectionEntity: ExpressionCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "词语",
+        title = stringResource(R.string.chinese_expression),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "查询按钮")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
@@ -105,23 +114,23 @@ private fun ChineseExpressionIndexScreen(
                         ) {
                             IconButton(
                                 onClick = {
-                                    if (expressionCollectionEntity != null) {
-                                        setUncollect(entity.id)
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(entity.id)
                                     } else {
-                                        setCollect(entity.id)
+                                        addBookmark(entity.id)
                                     }
                                 }
                             ) {
-                                if (expressionCollectionEntity != null) {
+                                if (bookmarkEntity != null) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 } else {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -131,7 +140,7 @@ private fun ChineseExpressionIndexScreen(
                         FloatingActionButton(onClick = onRefreshClick) {
                             Icon(
                                 imageVector = Icons.Default.Refresh,
-                                contentDescription = "刷新按钮"
+                                contentDescription = stringResource(R.string.refresh)
                             )
                         }
                     }

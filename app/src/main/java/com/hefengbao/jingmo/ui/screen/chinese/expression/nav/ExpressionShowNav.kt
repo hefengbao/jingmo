@@ -22,16 +22,16 @@ import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val chineseExpressionShowIdArg = "id"
+internal const val showIdArg = "id"
 
 private const val base = "chinese_expression_show"
-private const val ROUTE = "$base/{$chineseExpressionShowIdArg}"
+private const val ROUTE = "$base/{$showIdArg}"
 
 internal class ChineseExpressionShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[chineseExpressionShowIdArg]),
+                    checkNotNull(savedStateHandle[showIdArg]),
                     UTF_8.name()
                 )
             )
@@ -50,7 +50,7 @@ fun NavGraphBuilder.chineseExpressionShowScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(chineseExpressionShowIdArg) { type = NavType.StringType }
+            navArgument(showIdArg) { type = NavType.StringType }
         )
     ) {
         ChineseExpressionShowRoute(onBackClick = onBackClick)

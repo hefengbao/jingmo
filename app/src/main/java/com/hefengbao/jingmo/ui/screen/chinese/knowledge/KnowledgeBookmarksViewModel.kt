@@ -20,5 +20,5 @@ import javax.inject.Inject
 class KnowledgeBookmarksViewModel @Inject constructor(
     repository: KnowledgeRepository,
 ) : ViewModel() {
-    val collections = repository.collections().cachedIn(viewModelScope)
+    val knowledgeEntities = repository.list().cachedIn(viewModelScope)
 }

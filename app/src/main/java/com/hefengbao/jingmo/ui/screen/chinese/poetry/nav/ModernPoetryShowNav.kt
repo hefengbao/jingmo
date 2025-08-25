@@ -40,6 +40,7 @@ fun NavController.navigateToChineseModernPoetryShowScreen(id: Int) {
 
 fun NavGraphBuilder.chineseModernPoetryShowScreen(
     onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
@@ -48,7 +49,8 @@ fun NavGraphBuilder.chineseModernPoetryShowScreen(
         )
     ) {
         ModernPoetryShowRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick
         )
     }
 }

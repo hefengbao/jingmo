@@ -22,17 +22,17 @@ import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
 @VisibleForTesting
-internal const val idiomCaptureIdArg = "idiomId"
+internal const val captureIdArg = "id"
 private const val base = "chinese_idiom_capture"
-private const val ROUTE = "$base/{$idiomCaptureIdArg}"
+private const val ROUTE = "$base/{$captureIdArg}"
 
-internal class IdiomCaptureArgs(val idiomId: String) {
+internal class IdiomCaptureArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(URLDecoder.decode(checkNotNull(savedStateHandle[idiomCaptureIdArg]), UTF_8.name()))
+            this(URLDecoder.decode(checkNotNull(savedStateHandle[captureIdArg]), UTF_8.name()))
 }
 
-fun NavController.navigateToChineseIdiomCaptureScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseIdiomCaptureScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }
@@ -44,7 +44,7 @@ fun NavGraphBuilder.chineseIdiomCaptureScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(idiomCaptureIdArg) { type = NavType.StringType }
+            navArgument(captureIdArg) { type = NavType.StringType }
         )
     ) {
         IdiomCaptureRoute(

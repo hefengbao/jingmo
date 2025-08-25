@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.poetry
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.ModernPoetryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +29,8 @@ import javax.inject.Inject
 class ModernPoetryReadViewModel @Inject constructor(
     private val repository: ModernPoetryRepository,
     private val preference: ReadStatusPreference,
-) : ViewModel() {
+    bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
     private val id = MutableStateFlow(1)
 
     init {
@@ -46,13 +47,7 @@ class ModernPoetryReadViewModel @Inject constructor(
         viewModelScope.launch { preference.setChineseModernPoetryLastReadId(id) }
     }
 
-    val entity = id.flatMapLatest { repository.get(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed((5_000)),
-        initialValue = null
-    )
-
-    val collectionEntity = id.flatMapLatest { repository.isCollect(it) }.stateIn(
+    val poetryEntity = id.flatMapLatest { repository.get(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
@@ -69,16 +64,4 @@ class ModernPoetryReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(ModernPoetryCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

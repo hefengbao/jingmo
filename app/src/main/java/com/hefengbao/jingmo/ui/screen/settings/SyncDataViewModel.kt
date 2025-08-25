@@ -12,14 +12,14 @@ package com.hefengbao.jingmo.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.china.asWorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.model.chinese.asAntitheticalCoupletEntity
-import com.hefengbao.jingmo.data.model.chinese.asChineseExpressionEntity
+import com.hefengbao.jingmo.data.model.chinese.asCharacterEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseKnowledgeEntity
 import com.hefengbao.jingmo.data.model.chinese.asChineseWisecrackEntity
-import com.hefengbao.jingmo.data.model.chinese.asDictionaryEntity
+import com.hefengbao.jingmo.data.model.chinese.asExpressionEntity
 import com.hefengbao.jingmo.data.model.chinese.asIdiomEntity
 import com.hefengbao.jingmo.data.model.chinese.asLyricEntity
 import com.hefengbao.jingmo.data.model.chinese.asModernPoetryEntity
@@ -29,7 +29,7 @@ import com.hefengbao.jingmo.data.model.chinese.asRiddleEntity
 import com.hefengbao.jingmo.data.model.chinese.asTongueTwisterEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asClassicPoemEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asPeopleEntity
-import com.hefengbao.jingmo.data.model.classicalliterature.asPoemSentenceEntity
+import com.hefengbao.jingmo.data.model.classicalliterature.asSentenceEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.asWritingEntity
 import com.hefengbao.jingmo.data.repository.settings.NetworkDatasourceRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
@@ -63,27 +63,34 @@ class DataViewModel @Inject constructor(
     val chinaWorldCultureHeritageProgress: SharedFlow<Float> = _chinaWorldCultureHeritageProgress
     fun syncChinaWorldCultureHeritage(total: Int, version: Int) {
         viewModelScope.launch {
+            var page: Int? = 1
             var count = 0
-            when (val response = repository.syncChinaWorldCultureHeritage(version)) {
-                is Result.Error -> {
-                    _chinaWorldCultureHeritageResult.value = SyncStatus.Error(response.exception)
-                }
-
-                Result.Loading -> {
-                    _chinaWorldCultureHeritageResult.value = SyncStatus.Loading
-                }
-
-                is Result.Success -> {
-                    response.data.map {
-                        repository.insertChinaWorldCultureHeritage(it.asWorldCulturalHeritageEntity())
-                        count++
-                        _chinaWorldCultureHeritageProgress.value = count.toFloat() / total
+            while (page != null) {
+                when (val response = repository.syncChinaWorldCultureHeritage(version, page)) {
+                    is Result.Error -> {
+                        _chinaWorldCultureHeritageResult.value =
+                            SyncStatus.Error(response.exception)
                     }
 
-                    preference.setChinaWorldCultureHeritageVersion(version)
-                    _chinaWorldCultureHeritageResult.value = SyncStatus.Success
+                    Result.Loading -> {
+                        _chinaWorldCultureHeritageResult.value = SyncStatus.Loading
+                    }
+
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChinaWorldCultureHeritage(it.asWorldCulturalHeritageEntity())
+                            count++
+                            _chinaWorldCultureHeritageProgress.value = count.toFloat() / total
+                        }
+
+                        page = response.data.nextPage
+                    }
                 }
             }
+            if (count == total) {
+                preference.setChinaWorldCultureHeritageVersion(version)
+            }
+            _chinaWorldCultureHeritageResult.value = SyncStatus.Success
         }
     }
 
@@ -96,24 +103,31 @@ class DataViewModel @Inject constructor(
     fun syncChineseAntitheticalCouplet(total: Int, version: Int) {
         _chineseAntitheticalCoupletResult.value = SyncStatus.Loading
         viewModelScope.launch {
+            var page: Int? = 1
             var count = 0
-            when (val response = repository.syncChineseAntitheticalCouplets(version)) {
-                is Result.Error -> {
-                    _chineseAntitheticalCoupletResult.value = SyncStatus.Error(response.exception)
-                }
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    response.data.map {
-                        repository.insertChineseAntitheticalCouplet(it.asAntitheticalCoupletEntity())
-                        count++
-                        _chineseAntitheticalCoupletProgress.value = count.toFloat() / total
+            while (page != null) {
+                when (val response = repository.syncChineseAntitheticalCouplet(version, page)) {
+                    is Result.Error -> {
+                        _chineseAntitheticalCoupletResult.value =
+                            SyncStatus.Error(response.exception)
                     }
 
-                    preference.setChineseAntitheticalVersion(version)
-                    _chineseAntitheticalCoupletResult.value = SyncStatus.Success
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseAntitheticalCouplet(it.asAntitheticalCoupletEntity())
+                            count++
+                            _chineseAntitheticalCoupletProgress.value = count.toFloat() / total
+                        }
+
+                        page = response.data.nextPage
+                    }
                 }
             }
+            if (count == total) {
+                preference.setChineseAntitheticalVersion(version)
+            }
+            _chineseAntitheticalCoupletResult.value = SyncStatus.Success
         }
     }
 
@@ -128,28 +142,25 @@ class DataViewModel @Inject constructor(
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncChineseExpressions(version, page)) {
+                when (val response = repository.syncChineseExpression(version, page)) {
                     is Result.Error -> {
                         _chineseExpressionResult.value = SyncStatus.Error(response.exception)
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        if (response.data.nextPage != null) {
-                            page++
-                        } else {
-                            page = null
-                        }
                         response.data.data.map {
-                            repository.insertChineseExpression(it.asChineseExpressionEntity())
+                            repository.insertChineseExpression(it.asExpressionEntity())
                             count++
                             _chineseExpressionResultProgress.value = count.toFloat() / total
                         }
+                        page = response.data.nextPage
                     }
                 }
             }
-            // TODO 这里需优化
-            preference.setChineseExpressionVersion(version)
+            if (count == total) {
+                preference.setChineseExpressionVersion(version)
+            }
             _chineseExpressionResult.value = SyncStatus.Success
         }
     }
@@ -162,23 +173,28 @@ class DataViewModel @Inject constructor(
     fun syncChineseKnowledge(total: Int, version: Int) {
         _chineseKnowledgeResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseKnowledge(version)) {
-                is Result.Error -> _chineseKnowledgeResult.value =
-                    SyncStatus.Error(response.exception)
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseKnowledge(version, page)) {
+                    is Result.Error -> _chineseKnowledgeResult.value =
+                        SyncStatus.Error(response.exception)
 
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChinesKnowledge(it.asChineseKnowledgeEntity())
-                        count++
-                        _chineseKnowledgeResultProgress.value = count.toFloat() / total
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChinesKnowledge(it.asChineseKnowledgeEntity())
+                            count++
+                            _chineseKnowledgeResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
                     }
-
-                    preference.setChineseKnowledgeVersion(version)
-                    _chineseKnowledgeResult.value = SyncStatus.Success
                 }
             }
+            if (count == total) {
+                preference.setChineseKnowledgeVersion(version)
+            }
+            _chineseKnowledgeResult.value = SyncStatus.Success
         }
     }
 
@@ -190,22 +206,28 @@ class DataViewModel @Inject constructor(
     fun syncChineseModernPoetry(total: Int, version: Int) {
         _chineseModernPoetryResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseModernPoetry(version)) {
-                is Result.Error -> _chineseModernPoetryResult.value =
-                    SyncStatus.Error(response.exception)
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseModernPoetry(version, page)) {
+                    is Result.Error -> _chineseModernPoetryResult.value =
+                        SyncStatus.Error(response.exception)
 
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChineseModernPoetry(it.asModernPoetryEntity())
-                        count++
-                        _chineseModernPoetryResultProgress.value = count.toFloat() / total
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseModernPoetry(it.asModernPoetryEntity())
+                            count++
+                            _chineseModernPoetryResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
                     }
-                    preference.setChineseModernPoetryVersion(version)
-                    _chineseModernPoetryResult.value = SyncStatus.Success
                 }
             }
+            if (count == total) {
+                preference.setChineseModernPoetryVersion(version)
+            }
+            _chineseModernPoetryResult.value = SyncStatus.Success
         }
     }
 
@@ -217,380 +239,429 @@ class DataViewModel @Inject constructor(
     fun syncChineseProverbs(total: Int, version: Int) {
         _chineseProverbResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseProverbs(version)) {
-                is Result.Error -> _chineseProverbResult.value =
-                    SyncStatus.Error(response.exception)
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChineseProverb(it.asProverbEntity())
-                        count++
-                        _chineseProverbResultProgress.value = count.toFloat() / total
-                    }
-                    preference.setChineseProverbVersion(version)
-                    _chineseProverbResult.value = SyncStatus.Success
-                }
-            }
-        }
-    }
-
-    private val _chineseQuotesResult: MutableStateFlow<SyncStatus<Any>> =
-        MutableStateFlow(SyncStatus.NonStatus)
-    val chineseQuotesResult: SharedFlow<SyncStatus<Any>> = _chineseQuotesResult
-    private val _chineseQuotesResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val chineseQuotesResultProgress: SharedFlow<Float> = _chineseQuotesResultProgress
-    fun syncChineseQuotes(total: Int, version: Int) {
-        _chineseQuotesResult.value = SyncStatus.Loading
-        viewModelScope.launch {
-            when (val response = repository.syncChineseQuotes(version)) {
-                is Result.Error -> _chineseQuotesResult.value =
-                    SyncStatus.Error(response.exception)
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChineseQuote(it.asQuoteEntity())
-                        count++
-                        _chineseQuotesResultProgress.value = count.toFloat() / total
-                    }
-                    preference.setChineseQuoteVersion(version)
-                    _chineseQuotesResult.value = SyncStatus.Success
-                }
-            }
-        }
-    }
-
-    private val _chineseWisecracksResult: MutableStateFlow<SyncStatus<Any>> =
-        MutableStateFlow(SyncStatus.NonStatus)
-    val chineseWisecracksResult: SharedFlow<SyncStatus<Any>> = _chineseWisecracksResult
-    private val _chineseWisecracksResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val chineseWisecracksResultProgress: SharedFlow<Float> = _chineseWisecracksResultProgress
-    fun syncChineseWisecracks(total: Int, version: Int) {
-        _chineseWisecracksResult.value = SyncStatus.Loading
-        viewModelScope.launch {
-            when (val response = repository.syncChineseWisecracks(version)) {
-                is Result.Error -> _chineseWisecracksResult.value =
-                    SyncStatus.Error(response.exception)
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChineseWisecrack(it.asChineseWisecrackEntity())
-                        count++
-                        _chineseWisecracksResultProgress.value = count.toFloat() / total
-                    }
-
-                    preference.setChineseWisecracksVersion(version)
-                    _chineseWisecracksResult.value = SyncStatus.Success
-                }
-            }
-        }
-    }
-
-    private val _dictionaryResult: MutableStateFlow<SyncStatus<Any>> =
-        MutableStateFlow(SyncStatus.NonStatus)
-    val dictionaryResult: SharedFlow<SyncStatus<Any>> = _dictionaryResult
-    private val _dictionaryResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val dictionaryResultProgress: SharedFlow<Float> = _dictionaryResultProgress
-    fun syncChineseDictionary(total: Int, version: Int) {
-        viewModelScope.launch {
-            repository.clearChineseDictionaryPinyin()
-        }
-        _dictionaryResult.value = SyncStatus.Loading
-        viewModelScope.launch {
             var page: Int? = 1
             var count = 0
             while (page != null) {
-                when (val response = repository.syncChineseDictionary(version, page)) {
-                    is Result.Error -> _dictionaryResult.value =
+                when (val response = repository.syncChineseProverb(version, page)) {
+                    is Result.Error -> _chineseProverbResult.value =
                         SyncStatus.Error(response.exception)
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        if (response.data.nextPage != null) {
-                            page++
-                        } else {
-                            page = null
-                        }
                         response.data.data.map {
-                            repository.insertChineseDictionary(it.asDictionaryEntity())
-                            it.pinyin2?.map { pinyin ->
-                                repository.insertChineseDictionaryPinyin(
-                                    DictionaryPinyinEntity(
-                                        dictionaryId = it.id,
-                                        pinyin = pinyin,
-                                    )
-                                )
-                            }
+                            repository.insertChineseProverb(it.asProverbEntity())
                             count++
-                            _dictionaryResultProgress.value = count.toFloat() / total
+                            _chineseProverbResultProgress.value = count.toFloat() / total
                         }
+                        page = response.data.nextPage
                     }
                 }
             }
-            // TODO 这里需优化
-            preference.setChineseDictionaryVersion(version)
-            _dictionaryResult.value = SyncStatus.Success
+            if (count == total) {
+                preference.setChineseProverbVersion(version)
+            }
+            _chineseProverbResult.value = SyncStatus.Success
         }
     }
 
-    private val _idiomsResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _chineseQuoteResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val idiomsResult: SharedFlow<SyncStatus<Any>> = _idiomsResult
-    private val _idiomsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val idiomsResultProgress: SharedFlow<Float> = _idiomsResultProgress
-    fun syncChineseIdioms(total: Int, version: Int) {
-        _idiomsResult.value = SyncStatus.Loading
+    val chineseQuoteResult: SharedFlow<SyncStatus<Any>> = _chineseQuoteResult
+    private val _chineseQuoteResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseQuoteResultProgress: SharedFlow<Float> = _chineseQuoteResultProgress
+    fun syncChineseQuote(total: Int, version: Int) {
+        _chineseQuoteResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseQuote(version, page)) {
+                    is Result.Error -> _chineseQuoteResult.value =
+                        SyncStatus.Error(response.exception)
+
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseQuote(it.asQuoteEntity())
+                            count++
+                            _chineseQuoteResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
+                }
+            }
+            if (count == total) {
+                preference.setChineseQuoteVersion(version)
+            }
+            _chineseQuoteResult.value = SyncStatus.Success
+        }
+    }
+
+    private val _chineseWisecrackResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseWisecrackResult: SharedFlow<SyncStatus<Any>> = _chineseWisecrackResult
+    private val _chineseWisecracksResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseWisecrackResultProgress: SharedFlow<Float> = _chineseWisecracksResultProgress
+    fun syncChineseWisecrack(total: Int, version: Int) {
+        _chineseWisecrackResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseWisecrack(version, page)) {
+                    is Result.Error -> _chineseWisecrackResult.value =
+                        SyncStatus.Error(response.exception)
+
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseWisecrack(it.asChineseWisecrackEntity())
+                            count++
+                            _chineseWisecracksResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
+                }
+            }
+            if (count == total) {
+                preference.setChineseWisecracksVersion(version)
+            }
+            _chineseWisecrackResult.value = SyncStatus.Success
+        }
+    }
+
+    private val _chineseCharacterResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseCharacterResult: SharedFlow<SyncStatus<Any>> = _chineseCharacterResult
+    private val _chineseCharacterResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseCharacterResultProgress: SharedFlow<Float> = _chineseCharacterResultProgress
+    fun syncChineseCharacter(total: Int, version: Int) {
+        _chineseCharacterResult.value = SyncStatus.Loading
+        viewModelScope.launch {
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseCharacter(version, page)) {
+                    is Result.Error -> _chineseCharacterResult.value =
+                        SyncStatus.Error(response.exception)
+
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseCharacter(it.asCharacterEntity())
+                            count++
+                            _chineseCharacterResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
+                }
+            }
+            if (count == total) {
+                preference.setChineseCharacterVersion(version)
+            }
+            _chineseCharacterResult.value = SyncStatus.Success
+        }
+    }
+
+    private val _chineseIdiomResult: MutableStateFlow<SyncStatus<Any>> =
+        MutableStateFlow(SyncStatus.NonStatus)
+    val chineseIdiomResult: SharedFlow<SyncStatus<Any>> = _chineseIdiomResult
+    private val _chineseIdiomResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseIdiomResultProgress: SharedFlow<Float> = _chineseIdiomResultProgress
+    fun syncChineseIdiom(total: Int, version: Int) {
+        _chineseIdiomResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
 
             while (page != null) {
-                when (val response = repository.syncChineseIdioms(version, page)) {
+                when (val response = repository.syncChineseIdiom(version, page)) {
                     is Result.Error -> {
-                        _idiomsResult.value = SyncStatus.Error(response.exception)
+                        _chineseIdiomResult.value = SyncStatus.Error(response.exception)
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        if (response.data.nextPage != null) {
-                            page++
-                        } else {
-                            page = null
-                        }
-
                         response.data.data.map {
                             repository.insertChineseIdiom(it.asIdiomEntity())
                             count++
-                            _idiomsResultProgress.value = count.toFloat() / total
+                            _chineseIdiomResultProgress.value = count.toFloat() / total
                         }
+                        page = response.data.nextPage
                     }
                 }
             }
-
-            // TODO 这里需优化
-            preference.setChineseIdiomVersion(version)
-            _idiomsResult.value = SyncStatus.Success
+            if (count == total) {
+                preference.setChineseIdiomVersion(version)
+            }
+            _chineseIdiomResult.value = SyncStatus.Success
         }
     }
 
-    private val _lyricResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _chineseLyricResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val lyricResult: SharedFlow<SyncStatus<Any>> = _lyricResult
-    private val _lyricResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val lyricResultProgress: SharedFlow<Float> = _lyricResultProgress
+    val chineseLyricResult: SharedFlow<SyncStatus<Any>> = _chineseLyricResult
+    private val _chineseLyricResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseLyricResultProgress: SharedFlow<Float> = _chineseLyricResultProgress
     fun syncChineseLyric(total: Int, version: Int) {
-        _lyricResult.value = SyncStatus.Loading
+        _chineseLyricResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseLyrics(version)) {
-                is Result.Error -> {
-                    _lyricResult.value = SyncStatus.Error(response.exception)
-                }
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-
-                    response.data.map {
-                        repository.insertChineseLyric(it.asLyricEntity())
-                        count++
-                        _lyricResultProgress.value = count.toFloat() / total
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseLyric(version, page)) {
+                    is Result.Error -> {
+                        _chineseLyricResult.value = SyncStatus.Error(response.exception)
                     }
 
-                    preference.setChineseLyricVersion(version)
-                    _lyricResult.value = SyncStatus.Success
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseLyric(it.asLyricEntity())
+                            count++
+                            _chineseLyricResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
                 }
             }
+            if (count == total) {
+                preference.setChineseLyricVersion(version)
+            }
+            _chineseLyricResult.value = SyncStatus.Success
         }
     }
 
-    private val _peopleResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _classicalLiteraturePeopleResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val peopleResult: SharedFlow<SyncStatus<Any>> = _peopleResult
-    private val _peopleResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val peopleResultProgress: SharedFlow<Float> = _peopleResultProgress
+    val classicalLiteraturePeopleResult: SharedFlow<SyncStatus<Any>> =
+        _classicalLiteraturePeopleResult
+    private val _classicalLiteraturePeopleResultProgress: MutableStateFlow<Float> =
+        MutableStateFlow(0f)
+    val classicalLiteraturePeopleResultProgress: SharedFlow<Float> =
+        _classicalLiteraturePeopleResultProgress
+
     fun syncClassicalLiteraturePeople(total: Int, version: Int) {
-        _peopleResult.value = SyncStatus.Loading
+        _classicalLiteraturePeopleResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
             while (page != null) {
                 when (val response = repository.syncClassicalLiteraturePeople(version, page)) {
-                    is Result.Error -> _peopleResult.value = SyncStatus.Error(response.exception)
+                    is Result.Error -> _classicalLiteraturePeopleResult.value =
+                        SyncStatus.Error(response.exception)
+
                     Result.Loading -> {}
                     is Result.Success -> {
-                        if (response.data.nextPage != null) {
-                            page++
-                        } else {
-                            page = null
-                        }
                         response.data.data.map {
                             repository.insertClassicalLiteraturePeople(it.asPeopleEntity())
                             count++
-                            _peopleResultProgress.value = count.toFloat() / total
+                            _classicalLiteraturePeopleResultProgress.value = count.toFloat() / total
                         }
+                        page = response.data.nextPage
                     }
                 }
             }
-            // TODO 这里需优化
-            preference.setClassicalLiteraturePeopleVersion(version)
-            _peopleResult.value = SyncStatus.Success
+            if (count == total) {
+                preference.setClassicalLiteraturePeopleVersion(version)
+            }
+            _classicalLiteraturePeopleResult.value = SyncStatus.Success
         }
     }
 
-    private val _classicPoemsResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _classicalLiteratureClassicPoemResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val classicPoemsResult: SharedFlow<SyncStatus<Any>> = _classicPoemsResult
-    private val _classicPoemsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val classicPoemsResultProgress: SharedFlow<Float> = _classicPoemsResultProgress
-    fun syncClassicalLiteratureClassicPoems(total: Int, version: Int) {
-        _classicPoemsResult.value = SyncStatus.Loading
+    val classicalLiteratureClassicPoemResult: SharedFlow<SyncStatus<Any>> =
+        _classicalLiteratureClassicPoemResult
+    private val _classicalLiteratureClassicPoemResultProgress: MutableStateFlow<Float> =
+        MutableStateFlow(0f)
+    val classicalLiteratureClassicPoemResultProgress: SharedFlow<Float> =
+        _classicalLiteratureClassicPoemResultProgress
+
+    fun syncClassicalLiteratureClassicPoem(total: Int, version: Int) {
+        _classicalLiteratureClassicPoemResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncClassicalLiteratureClassicPoems(version)) {
-                is Result.Error -> {
-                    _classicPoemsResult.value = SyncStatus.Error(response.exception)
-                }
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertClassicalLiteratureClassicPoem(it.asClassicPoemEntity())
-                        count++
-                        _classicPoemsResultProgress.value = count.toFloat() / total
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncClassicalLiteratureClassicPoem(version, page)) {
+                    is Result.Error -> {
+                        _classicalLiteratureClassicPoemResult.value =
+                            SyncStatus.Error(response.exception)
                     }
 
-                    preference.setClassicalLiteratureClassicPoemsVersion(version)
-                    _classicPoemsResult.value = SyncStatus.Success
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertClassicalLiteratureClassicPoem(it.asClassicPoemEntity())
+                            count++
+                            _classicalLiteratureClassicPoemResultProgress.value =
+                                count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
                 }
             }
+            if (total == count) {
+                preference.setClassicalLiteratureClassicPoemsVersion(version)
+            }
+            _classicalLiteratureClassicPoemResult.value = SyncStatus.Success
         }
     }
 
-    private val _poemSentencesResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _classicalLiteratureSentenceResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val poemSentencesResult: SharedFlow<SyncStatus<Any>> = _poemSentencesResult
-    private val _poemSentencesResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val poemSentencesResultProgress: SharedFlow<Float> = _poemSentencesResultProgress
-    fun syncClassicalLiteratureSentences(total: Int, version: Int) {
-        _poemSentencesResult.value = SyncStatus.Loading
+    val classicalLiteratureSentenceResult: SharedFlow<SyncStatus<Any>> =
+        _classicalLiteratureSentenceResult
+    private val _classicalLiteratureSentenceResultProgress: MutableStateFlow<Float> =
+        MutableStateFlow(0f)
+    val classicalLiteratureSentenceResultProgress: SharedFlow<Float> =
+        _classicalLiteratureSentenceResultProgress
+
+    fun syncClassicalLiteratureSentence(total: Int, version: Int) {
+        _classicalLiteratureSentenceResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncClassicalLiteratureSentence(version)) {
-                is Result.Error -> {
-                    _poemSentencesResult.value = SyncStatus.Error(response.exception)
-                }
-
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertClassicalLiteratureSentence(it.asPoemSentenceEntity())
-                        count++
-                        _poemSentencesResultProgress.value = count.toFloat() / total
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncClassicalLiteratureSentence(version, page)) {
+                    is Result.Error -> {
+                        _classicalLiteratureSentenceResult.value =
+                            SyncStatus.Error(response.exception)
                     }
 
-                    preference.setClassicalLiteratureSentenceVersion(version)
-                    _poemSentencesResult.value = SyncStatus.Success
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertClassicalLiteratureSentence(it.asSentenceEntity())
+                            count++
+                            _classicalLiteratureSentenceResultProgress.value =
+                                count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
                 }
             }
+            if (count == total) {
+                preference.setClassicalLiteratureSentenceVersion(version)
+            }
+            _classicalLiteratureSentenceResult.value = SyncStatus.Success
         }
     }
 
-    private val _riddlesResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _chineseRiddleResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val riddlesResult: SharedFlow<SyncStatus<Any>> = _riddlesResult
-    private val _riddlesResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val riddlesResultProgress: SharedFlow<Float> = _riddlesResultProgress
-    fun syncChineseRiddles(total: Int, version: Int) {
-        _riddlesResult.value = SyncStatus.Loading
+    val chineseRiddleResult: SharedFlow<SyncStatus<Any>> = _chineseRiddleResult
+    private val _chineseRiddleResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseRiddleResultProgress: SharedFlow<Float> = _chineseRiddleResultProgress
+    fun syncChineseRiddle(total: Int, version: Int) {
+        _chineseRiddleResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseRiddles(version)) {
-                is Result.Error -> _riddlesResult.value = SyncStatus.Error(response.exception)
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChineseRiddle(it.asRiddleEntity())
-                        count++
-                        _riddlesResultProgress.value = count.toFloat() / total
-                    }
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseRiddle(version, page)) {
+                    is Result.Error -> _chineseRiddleResult.value =
+                        SyncStatus.Error(response.exception)
 
-                    preference.setChineseRiddleVersion(version)
-                    _riddlesResult.value = SyncStatus.Success
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseRiddle(it.asRiddleEntity())
+                            count++
+                            _chineseRiddleResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
+                    }
                 }
             }
+            if (count == total) {
+                preference.setChineseRiddleVersion(version)
+            }
+            _chineseRiddleResult.value = SyncStatus.Success
         }
     }
 
-    private val _tongueTwistersResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _chineseTongueTwisterResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val tongueTwisterResult: SharedFlow<SyncStatus<Any>> = _tongueTwistersResult
-    private val _tongueTwistersResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val tongueTwistersResultProgress: SharedFlow<Float> = _tongueTwistersResultProgress
-    fun syncChineseTongueTwisters(total: Int, version: Int) {
-        _tongueTwistersResult.value = SyncStatus.Loading
+    val chineseTongueTwisterResult: SharedFlow<SyncStatus<Any>> = _chineseTongueTwisterResult
+    private val _chineseTongueTwisterResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
+    val chineseTongueTwisterResultProgress: SharedFlow<Float> = _chineseTongueTwisterResultProgress
+    fun syncChineseTongueTwister(total: Int, version: Int) {
+        _chineseTongueTwisterResult.value = SyncStatus.Loading
         viewModelScope.launch {
-            when (val response = repository.syncChineseTongueTwisters(version)) {
-                is Result.Error -> _tongueTwistersResult.value =
-                    SyncStatus.Error(response.exception)
+            var page: Int? = 1
+            var count = 0
+            while (page != null) {
+                when (val response = repository.syncChineseTongueTwister(version, page)) {
+                    is Result.Error -> _chineseTongueTwisterResult.value =
+                        SyncStatus.Error(response.exception)
 
-                Result.Loading -> {}
-                is Result.Success -> {
-                    var count = 0
-                    response.data.map {
-                        repository.insertChineseTongueTwister(it.asTongueTwisterEntity())
-                        count++
-                        _tongueTwistersResultProgress.value = count.toFloat() / total
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.data.map {
+                            repository.insertChineseTongueTwister(it.asTongueTwisterEntity())
+                            count++
+                            _chineseTongueTwisterResultProgress.value = count.toFloat() / total
+                        }
+                        page = response.data.nextPage
                     }
-
-                    preference.setChineseTongueTwisterVersion(version)
-                    _tongueTwistersResult.value = SyncStatus.Success
                 }
             }
+            if (count == total) {
+                preference.setChineseTongueTwisterVersion(version)
+            }
+            _chineseTongueTwisterResult.value = SyncStatus.Success
         }
     }
 
-    private val _writingsResult: MutableStateFlow<SyncStatus<Any>> =
+    private val _classicalLiteratureWritingResult: MutableStateFlow<SyncStatus<Any>> =
         MutableStateFlow(SyncStatus.NonStatus)
-    val writingsResult: SharedFlow<SyncStatus<Any>> = _writingsResult
-    private val _writingsResultProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
-    val writingsResultProgress: SharedFlow<Float> = _writingsResultProgress
+    val classicalLiteratureWritingResult: SharedFlow<SyncStatus<Any>> =
+        _classicalLiteratureWritingResult
+    private val _classicalLiteratureWritingResultProgress: MutableStateFlow<Float> =
+        MutableStateFlow(0f)
+    val classicalLiteratureWritingResultProgress: SharedFlow<Float> =
+        _classicalLiteratureWritingResultProgress
 
     private var writingCurrentPage: MutableStateFlow<Int> = MutableStateFlow(1)
     private var writingCurrentCount: MutableStateFlow<Int> = MutableStateFlow(0)
-    fun setWritingsPreviousPage(page: Int) {
+    fun setClassicalLiteratureWritingPreviousPage(page: Int) {
         writingCurrentPage.value = page
     }
 
-    fun setWritingsPreviousCount(count: Int, total: Int) {
+    fun setClassicalLiteratureWritingPreviousCount(count: Int, total: Int) {
         writingCurrentCount.value = count
-        _writingsResultProgress.value =
+        _classicalLiteratureWritingResultProgress.value =
             writingCurrentCount.value.toFloat() / total
     }
 
-    fun syncClassicalLiteratureWritings(total: Int, version: Int) {
-        _writingsResult.value = SyncStatus.Loading
+    fun syncClassicalLiteratureWriting(total: Int, version: Int) {
+        _classicalLiteratureWritingResult.value = SyncStatus.Loading
 
         viewModelScope.launch {
-
             while (writingCurrentPage.value != 0) {
                 when (
-                    val response = repository.syncClassicalLiteratureWritings(
+                    val response = repository.syncClassicalLiteratureWriting(
                         version,
                         writingCurrentPage.value
                     )
                 ) {
-                    is Result.Error -> _writingsResult.value == SyncStatus.Error(response.exception)
+                    is Result.Error -> _classicalLiteratureWritingResult.value == SyncStatus.Error(
+                        response.exception
+                    )
+
                     Result.Loading -> {}
                     is Result.Success -> {
-                        repository.insertClassicalLiteratureWriting(response.data.data.map { it.asWritingEntity() })
+
+                        val list = mutableListOf<WritingEntity>()
+                        response.data.data.map { list.add(it.asWritingEntity()) }
+                        repository.insertClassicalLiteratureWriting(list)
+                        //repository.insertClassicalLiteratureWriting(response.data.data.map { it.asWritingEntity() })
 
                         writingCurrentCount.value += response.data.data.size
-                        _writingsResultProgress.value = writingCurrentCount.value.toFloat() / total
+                        _classicalLiteratureWritingResultProgress.value =
+                            writingCurrentCount.value.toFloat() / total
 
                         // 记录进度
                         preference.setClassicalLiteratureWritingCurrentPage(writingCurrentPage.value)
@@ -601,14 +672,15 @@ class DataViewModel @Inject constructor(
                         } else {
                             writingCurrentPage.value = 0
                         }
-
                     }
                 }
             }
-            preference.setClassicalLiteratureWritingVersion(version)
-            preference.setClassicalLiteratureWritingCurrentPage(1)
-            preference.setClassicalLiteratureWritingCurrentCount(0)
-            _writingsResult.value = SyncStatus.Success
+            if (writingCurrentCount.value == total) {
+                preference.setClassicalLiteratureWritingVersion(version)
+                preference.setClassicalLiteratureWritingCurrentPage(1)
+                preference.setClassicalLiteratureWritingCurrentCount(0)
+            }
+            _classicalLiteratureWritingResult.value = SyncStatus.Success
         }
     }
 }

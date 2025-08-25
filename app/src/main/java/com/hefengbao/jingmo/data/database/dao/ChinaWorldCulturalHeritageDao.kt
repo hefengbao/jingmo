@@ -21,15 +21,15 @@ interface ChinaWorldCulturalHeritageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: WorldCulturalHeritageEntity)
 
-    @Query("select * from china_world_cultural_heritage where id = :id")
-    fun get(id: Int): Flow<WorldCulturalHeritageEntity>
+    @Query("select * from china_worldcultureheritage where id = :id")
+    fun get(id: Int): Flow<WorldCulturalHeritageEntity?>
 
-    @Query("select * from china_world_cultural_heritage order by id")
+    @Query("select * from china_worldcultureheritage order by id")
     fun list(): Flow<List<WorldCulturalHeritageEntity>>
 
-    @Query("select count(*) from china_world_cultural_heritage")
+    @Query("select count(*) from china_worldcultureheritage")
     fun total(): Flow<Int>
 
-    @Query("delete from china_world_cultural_heritage")
+    @Query("delete from china_worldcultureheritage")
     suspend fun clear()
 }

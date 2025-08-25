@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 /**
  * 歇后语
  */
-@Entity("chinese_wisecracks")
+@Entity("chinese_wisecrack")
 data class WisecrackEntity(
     @PrimaryKey
     val id: Int,

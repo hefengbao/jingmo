@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,41 +24,21 @@ import javax.inject.Inject
 @HiltViewModel
 class IdiomIndexViewModel @Inject constructor(
     private val idiomRepository: IdiomRepository,
-) : ViewModel() {
+    private val bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
+
     init {
-        getRandomIdiom()
+        getRandom()
     }
 
-    private val _idiom: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
-    val idiom: SharedFlow<IdiomEntity?> = _idiom
-    fun getRandomIdiom() {
+    private val _idiomEntity: MutableStateFlow<IdiomEntity?> = MutableStateFlow(null)
+    val idiomEntity: SharedFlow<IdiomEntity?> = _idiomEntity
+
+    fun getRandom() {
         viewModelScope.launch {
-            idiomRepository.random().collectLatest {
-                _idiom.value = it
+            idiomRepository.getRandom().collectLatest {
+                _idiomEntity.value = it
             }
-        }
-    }
-
-    private val _idiomCollectionEntity: MutableStateFlow<IdiomCollectionEntity?> =
-        MutableStateFlow(null)
-    val idiomCollectionEntity: SharedFlow<IdiomCollectionEntity?> = _idiomCollectionEntity
-    fun getIdiomCollectionEntity(id: Int) {
-        viewModelScope.launch {
-            idiomRepository.isCollect(id).collectLatest {
-                _idiomCollectionEntity.value = it
-            }
-        }
-    }
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            idiomRepository.collect(IdiomCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            idiomRepository.uncollect(id)
         }
     }
 }

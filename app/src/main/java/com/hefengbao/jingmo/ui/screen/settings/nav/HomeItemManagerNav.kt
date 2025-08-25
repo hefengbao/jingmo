@@ -14,15 +14,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.hefengbao.jingmo.ui.screen.settings.HomeItemManagerRoute
 
-private const val ROUTE = "settings_homeitemmanager"
+private const val ROUTE = "settings_home_item_manager"
 
-fun NavController.navigateToHomeItemManagerScreen() {
+fun NavController.navigateToSettingsHomeItemManagerScreen() {
     this.navigate(ROUTE) {
         launchSingleTop = true
     }
 }
 
-fun NavGraphBuilder.homeItemManagerScreen(
+fun NavGraphBuilder.settingsHomeItemManagerScreen(
     onBackClick: () -> Unit
 ) {
     composable(ROUTE) {

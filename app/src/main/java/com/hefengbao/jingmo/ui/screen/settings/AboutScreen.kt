@@ -31,11 +31,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hefengbao.jingmo.BuildConfig
 import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.util.ClipboardUtil
 import com.hefengbao.jingmo.common.util.SystemUtil
@@ -120,7 +128,6 @@ fun AboutScreen(
                 val copyText = "NowInLife"
 
                 Row(
-                    modifier = modifier.padding(bottom = 48.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "公众号：$copyText")
@@ -134,6 +141,25 @@ fun AboutScreen(
                             .padding(8.dp)
                     )
                 }
+
+                Text(
+                    modifier = modifier.padding(bottom = 48.dp),
+                    text = buildAnnotatedString {
+                        withLink(
+                            LinkAnnotation.Url(
+                                url = "https://beian.miit.gov.cn",
+                                styles = TextLinkStyles(
+                                    style = SpanStyle(
+                                        color = Color.Gray,
+                                        textDecoration = TextDecoration.Underline
+                                    ),
+                                )
+                            )
+                        ) {
+                            append("ICP 备案号：${BuildConfig.ICP}")
+                        }
+                    }
+                )
             }
         }
     }

@@ -53,8 +53,8 @@ class AppPreference(
 ) {
     val appStatus: Flow<AppStatus> = context.app.data.map {
         AppStatus(
-            captureTextColor = it[PREF_CAPTURE_TEXT_COLOR] ?: "white",
-            captureBackgroundColor = it[PREF_CAPTURE_BACKGROUND_COLOR] ?: "#065279",
+            captureTextColorString = it[PREF_CAPTURE_TEXT_COLOR] ?: "#FFFFFF",
+            captureBackgroundColorString = it[PREF_CAPTURE_BACKGROUND_COLOR] ?: "#065279",
             themeBrand = ThemeBrand.from(it[PREF_THEME_BRAND] ?: ThemeBrand.DEFAULT.name),
             darkThemeConfig = DarkThemeConfig.from(
                 it[PREF_DARK_THEME_CONFIG] ?: DarkThemeConfig.FOLLOW_SYSTEM.name

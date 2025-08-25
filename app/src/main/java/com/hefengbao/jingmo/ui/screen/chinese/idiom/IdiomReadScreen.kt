@@ -33,10 +33,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.components.IdiomPanel
 import kotlin.math.abs
@@ -47,21 +50,22 @@ fun IdiomReadRoute(
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit
 ) {
-    val idiom by viewModel.idiom.collectAsState()
-    val idiomCollectionEntity by viewModel.idiomCollectionEntity.collectAsState()
+    val idiomEntity by viewModel.idiomEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
     val prevId by viewModel.prevId.collectAsState()
     val nextId by viewModel.nextId.collectAsState()
 
     IdiomReadScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        idiom = idiom,
-        idiomCollectionEntity = idiomCollectionEntity,
+        idiomEntity = idiomEntity,
+        bookmarkEntity = bookmarkEntity,
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) },
-        setCollect = { viewModel.setCollect(it) },
-        setUncollect = { viewModel.setUncollect(it) },
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseIdiom.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseIdiom.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseIdiom.model) },
         setLastReadId = { viewModel.setLastReadId(it) }
     )
 }
@@ -71,25 +75,32 @@ private fun IdiomReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    idiom: IdiomEntity?,
-    idiomCollectionEntity: IdiomCollectionEntity?,
+    idiomEntity: IdiomEntity?,
+    bookmarkEntity: BookmarkEntity?,
     prevId: Int?,
     nextId: Int?,
     setCurrentId: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
     setLastReadId: (Int) -> Unit,
 ) {
-    idiom?.let { entity ->
+    idiomEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            isBookmarked(entity.id)
+        }
         LaunchedEffect(entity) {
             setLastReadId(entity.id)
         }
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "成语",
+            title = stringResource(R.string.chinese_idiom),
             actions = {
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
-                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
                 }
             },
             bottomBar = {
@@ -106,28 +117,28 @@ private fun IdiomReadScreen(
                             Icon(
                                 modifier = modifier.padding(8.dp),
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.previous)
                             )
                         }
                         IconButton(
                             onClick = {
-                                if (idiomCollectionEntity != null) {
-                                    setUncollect(entity.id)
+                                if (bookmarkEntity != null) {
+                                    cancelBookmark(entity.id)
                                 } else {
-                                    setCollect(entity.id)
+                                    addBookmark(entity.id)
                                 }
                             }
                         ) {
-                            if (idiomCollectionEntity != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -138,7 +149,7 @@ private fun IdiomReadScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.next)
                             )
                         }
                     }

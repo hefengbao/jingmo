@@ -30,8 +30,8 @@ internal class ProverbShowArgs(val id: String) {
     )
 }
 
-fun NavController.navigateToChineseProverbShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseProverbShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
 
     this.navigate("$base/$encodedId") {
         launchSingleTop = true

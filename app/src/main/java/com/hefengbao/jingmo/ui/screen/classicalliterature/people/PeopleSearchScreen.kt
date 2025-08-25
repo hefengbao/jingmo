@@ -18,8 +18,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,7 +30,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
-import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
 fun PeopleSearchRoute(
@@ -41,13 +39,13 @@ fun PeopleSearchRoute(
     onItemClick: (type: String, query: String) -> Unit
 ) {
     val recommendList by viewModel.recommendList.collectAsState(initial = emptyList())
-    val searchResult by viewModel.searchResult.collectAsState(emptyList())
+    val peopleEntities by viewModel.peopleEntities.collectAsState(emptyList())
 
     PeopleSearchScreen(
         onBackClick = onBackClick,
         recommendList = recommendList,
         onSearch = { viewModel.search(it) },
-        searchResult = searchResult,
+        searchResult = peopleEntities,
         onItemClick = onItemClick
     )
 }
@@ -63,57 +61,25 @@ private fun PeopleSearchScreen(
     onItemClick: (type: String, query: String) -> Unit,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
+    var query by rememberSaveable { mutableStateOf("") }
 
-    SimpleScaffold(
+    SimpleSearchScaffold(
         onBackClick = onBackClick,
-        title = "查找人物"
+        query = query,
+        onQueryChange = { query = it },
+        onSearch = {
+            if (it.isNotEmpty()) {
+                onSearch(it)
+                keyboard?.hide()
+            }
+        }
     ) {
-        var query by rememberSaveable { mutableStateOf("") }
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            item(
-                span = {
-                    GridItemSpan(3)
-                }
-            ) {
-
-                SearchBar(
-                    inputField = {
-                        SearchBarDefaults.InputField(
-                            query = query,
-                            onQueryChange = { query = it },
-                            onSearch = {
-                                if (it.isNotEmpty()) {
-                                    onSearch(it)
-                                    keyboard?.hide()
-                                }
-                            },
-                            expanded = false,
-                            onExpandedChange = {},
-                            enabled = true,
-                            placeholder = {
-                                Text(text = "请输入")
-                            },
-                            leadingIcon = null,
-                            trailingIcon = null,
-                            interactionSource = null,
-                        )
-                    },
-                    expanded = false,
-                    onExpandedChange = {},
-                    modifier = Modifier,
-                    shape = SearchBarDefaults.inputFieldShape,
-                    tonalElevation = SearchBarDefaults.TonalElevation,
-                    shadowElevation = SearchBarDefaults.ShadowElevation,
-                    windowInsets = SearchBarDefaults.windowInsets,
-                    content = {}
-                )
-            }
-
             if (query.isNotEmpty()) {
                 item(
                     span = {

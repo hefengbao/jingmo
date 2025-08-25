@@ -1,12 +1,12 @@
 package com.hefengbao.jingmo.ui.screen.chinese.knowledge.components
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,14 +26,15 @@ import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 @Composable
 fun KnowledgePanel(
     modifier: Modifier = Modifier,
-    entity: KnowledgeEntity
+    state: ScrollState,
+    entity: KnowledgeEntity,
 ) {
     val uriHandler = LocalUriHandler.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(state)
     ) {
         Card(
             modifier = modifier

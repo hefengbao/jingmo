@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.classicalliterature.writing.CharDict
 import com.hefengbao.jingmo.data.model.classicalliterature.writing.WordDict
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 import kotlinx.serialization.json.Json
 
 @SuppressLint("RememberReturnType")
@@ -244,14 +244,14 @@ fun WritingPanel(
 
             writing.note?.let {
                 item {
-                    BackgroundTitle(title = "按语、作者自注、跋")
+                    EmphasizedTitle(title = "按语、作者自注、跋")
                     Text(text = it, modifier = modifier.padding(top = 16.dp))
                 }
             }
 
             writing.comments?.let {
                 item {
-                    BackgroundTitle(title = "赏析（评价）")
+                    EmphasizedTitle(title = "赏析（评价）")
                     it.map {
                         Column(
                             modifier = modifier

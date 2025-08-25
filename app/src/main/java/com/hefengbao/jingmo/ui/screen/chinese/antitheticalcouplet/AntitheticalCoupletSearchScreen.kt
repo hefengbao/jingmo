@@ -36,13 +36,14 @@ fun AntitheticalCoupletSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val pagingItems = viewModel.antitheticalCouplets.collectAsLazyPagingItems()
+    val antitheticalCoupletEntities =
+        viewModel.antitheticalCoupletEntities.collectAsLazyPagingItems()
 
     AntitheticalCoupletSearchScreen(
         modifier = modifier,
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        pagingItems = pagingItems,
+        antitheticalCoupletEntities = antitheticalCoupletEntities,
         onSearch = { viewModel.search(it) },
     )
 }
@@ -52,7 +53,7 @@ private fun AntitheticalCoupletSearchScreen(
     modifier: Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    pagingItems: LazyPagingItems<AntitheticalCoupletEntity>,
+    antitheticalCoupletEntities: LazyPagingItems<AntitheticalCoupletEntity>,
     onSearch: (String) -> Unit,
 ) {
     var query by rememberSaveable {
@@ -78,9 +79,9 @@ private fun AntitheticalCoupletSearchScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                count = pagingItems.itemCount
+                count = antitheticalCoupletEntities.itemCount
             ) {
-                pagingItems[it]?.let { entity ->
+                antitheticalCoupletEntities[it]?.let { entity ->
                     Card(onClick = { onItemClick(entity.id) }) {
                         Text(
                             modifier = modifier

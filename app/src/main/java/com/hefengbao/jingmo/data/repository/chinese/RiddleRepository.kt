@@ -13,10 +13,10 @@ import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import kotlinx.coroutines.flow.Flow
 
 interface RiddleRepository {
-    fun get(id: Int): Flow<RiddleEntity>
+    fun get(id: Int): Flow<RiddleEntity?>
+    fun getRandom(): Flow<RiddleEntity?>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
-    fun random(): Flow<RiddleEntity>
     fun search(query: String): Flow<List<RiddleEntity>>
     suspend fun clear()
 }

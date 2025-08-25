@@ -13,9 +13,10 @@ import android.content.Context
 import androidx.room.Room.databaseBuilder
 import com.hefengbao.jingmo.common.Constant
 import com.hefengbao.jingmo.data.database.AppDatabase
+import com.hefengbao.jingmo.data.database.dao.BookmarkDao
 import com.hefengbao.jingmo.data.database.dao.ChinaWorldCulturalHeritageDao
 import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
-import com.hefengbao.jingmo.data.database.dao.ChineseDictionaryDao
+import com.hefengbao.jingmo.data.database.dao.ChineseCharacterDao
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
 import com.hefengbao.jingmo.data.database.dao.ChineseIdiomDao
 import com.hefengbao.jingmo.data.database.dao.ChineseKnowledgeDao
@@ -52,27 +53,33 @@ object DatabaseModule {
 
     @Provides
     @Singleton
+    fun providesBookmarkDao(
+        database: AppDatabase
+    ): BookmarkDao = database.bookmarkDao()
+
+    @Provides
+    @Singleton
     fun providesChinaWorldCultureHeritageDao(
         database: AppDatabase
-    ): ChinaWorldCulturalHeritageDao = database.worldCulturalHeritageDao()
+    ): ChinaWorldCulturalHeritageDao = database.chinaWorldCulturalHeritageDao()
 
     @Provides
     @Singleton
     fun providesChineseAntitheticalCoupletDao(
         database: AppDatabase
-    ): ChineseAntitheticalCoupletDao = database.antitheticalCoupletDao()
+    ): ChineseAntitheticalCoupletDao = database.chineseAntitheticalCoupletDao()
 
     @Provides
     @Singleton
     fun providesChineseExpressionDao(
         database: AppDatabase
-    ): ChineseExpressionDao = database.expressionDao()
+    ): ChineseExpressionDao = database.chineseExpressionDao()
 
     @Provides
     @Singleton
     fun providesChineseKnowledgeDao(
         database: AppDatabase
-    ): ChineseKnowledgeDao = database.knowledgeDao()
+    ): ChineseKnowledgeDao = database.chineseKnowledgeDao()
 
     @Provides
     @Singleton
@@ -84,31 +91,31 @@ object DatabaseModule {
     @Singleton
     fun providesChineseWisecrackDao(
         database: AppDatabase
-    ): ChineseWisecrackDao = database.wisecrackDao()
+    ): ChineseWisecrackDao = database.chineseWisecrackDao()
 
     @Provides
     @Singleton
     fun providesChineseDictionaryDao(
         database: AppDatabase
-    ): ChineseDictionaryDao = database.dictionaryDao()
+    ): ChineseCharacterDao = database.chineseCharacterDao()
 
     @Provides
     @Singleton
     fun providesChineseIdiomDao(
         database: AppDatabase
-    ): ChineseIdiomDao = database.idiomDao()
+    ): ChineseIdiomDao = database.chineseIdiomDao()
 
     @Provides
     @Singleton
     fun providesChineseLyricDao(
         database: AppDatabase
-    ): ChineseLyricDao = database.lyricDao()
+    ): ChineseLyricDao = database.chineseLyricDao()
 
     @Provides
     @Singleton
     fun providesChineseProverbDao(
         database: AppDatabase
-    ): ChineseProverbDao = database.proverbDao()
+    ): ChineseProverbDao = database.chineseProverbDao()
 
     @Provides
     @Singleton
@@ -120,35 +127,35 @@ object DatabaseModule {
     @Singleton
     fun providesClassicalLiteratureClassicPoemDao(
         database: AppDatabase
-    ): ClassicalLiteratureClassicPoemDao = database.classicPoemDao()
+    ): ClassicalLiteratureClassicPoemDao = database.classicalLiteratureClassicPoemDao()
 
     @Provides
     @Singleton
     fun providesClassicalLiteraturePeopleDao(
         database: AppDatabase
-    ): ClassicalLiteraturePeopleDao = database.peopleDao()
+    ): ClassicalLiteraturePeopleDao = database.classicalLiteraturePeopleDao()
 
     @Provides
     @Singleton
     fun providesClassicalLiteratureSentenceDao(
         database: AppDatabase
-    ): ClassicalLiteratureSentenceDao = database.sentenceDao()
+    ): ClassicalLiteratureSentenceDao = database.classicalLiteratureSentenceDao()
 
     @Provides
     @Singleton
     fun providesChineseRiddleDao(
         database: AppDatabase
-    ): ChineseRiddleDao = database.riddleDao()
+    ): ChineseRiddleDao = database.chineseRiddleDao()
 
     @Provides
     @Singleton
     fun providesChineseTongueTwisterDao(
         database: AppDatabase
-    ): ChineseTongueTwisterDao = database.tongueTwisterDao()
+    ): ChineseTongueTwisterDao = database.chineseTongueTwisterDao()
 
     @Provides
     @Singleton
     fun providesClassicalLiteratureWritingDao(
         database: AppDatabase
-    ): ClassicalLiteratureWritingDao = database.writingDao()
+    ): ClassicalLiteratureWritingDao = database.classicalLiteratureWritingDao()
 }

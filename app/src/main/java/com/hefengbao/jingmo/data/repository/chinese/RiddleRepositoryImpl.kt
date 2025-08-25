@@ -17,13 +17,13 @@ import javax.inject.Inject
 class RiddleRepositoryImpl @Inject constructor(
     private val dao: ChineseRiddleDao
 ) : RiddleRepository {
-    override fun get(id: Int): Flow<RiddleEntity> = dao.get(id)
+    override fun get(id: Int): Flow<RiddleEntity?> = dao.get(id)
 
     override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
     override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
-    override fun random(): Flow<RiddleEntity> = dao.random()
+    override fun getRandom(): Flow<RiddleEntity?> = dao.random()
 
     override fun search(query: String): Flow<List<RiddleEntity>> =
         dao.search("%$query%")

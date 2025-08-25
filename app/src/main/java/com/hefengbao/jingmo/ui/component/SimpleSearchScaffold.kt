@@ -27,6 +27,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import com.hefengbao.jingmo.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +37,7 @@ fun SimpleSearchScaffold(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
-    placeholder: String = "请输入",
+    placeholder: String = stringResource(R.string.enter),
     actions: @Composable RowScope.() -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {},
@@ -67,7 +69,7 @@ fun SimpleSearchScaffold(
                                     IconButton(onClick = onBackClick) {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = "返回"
+                                            contentDescription = stringResource(R.string.back)
                                         )
                                     }
                                 },
@@ -76,7 +78,7 @@ fun SimpleSearchScaffold(
                                         IconButton(onClick = { onQueryChange("") }) {
                                             Icon(
                                                 imageVector = Icons.Default.Clear,
-                                                contentDescription = "清除"
+                                                contentDescription = stringResource(R.string.clear)
                                             )
                                         }
                                     }

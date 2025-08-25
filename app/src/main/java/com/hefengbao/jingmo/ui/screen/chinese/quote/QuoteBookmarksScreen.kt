@@ -18,11 +18,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -32,12 +34,12 @@ fun QuoteBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val pagingItems = viewModel.collections.collectAsLazyPagingItems()
+    val quoteEntities = viewModel.quoteEntities.collectAsLazyPagingItems()
 
     QuoteBookmarksScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        items = pagingItems
+        quoteEntities = quoteEntities
     )
 }
 
@@ -45,14 +47,14 @@ fun QuoteBookmarksRoute(
 private fun QuoteBookmarksScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<QuoteEntity>
+    quoteEntities: LazyPagingItems<QuoteEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn {
             items(
-                count = items.itemCount
+                count = quoteEntities.itemCount
             ) {
-                items[it]?.let { entity ->
+                quoteEntities[it]?.let { entity ->
                     Card(
                         modifier = Modifier.padding(16.dp),
                         onClick = { onItemClick(entity.id) }

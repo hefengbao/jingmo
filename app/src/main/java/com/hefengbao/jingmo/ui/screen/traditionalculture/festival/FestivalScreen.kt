@@ -27,7 +27,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.traditionalculture.Festival
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -87,7 +87,7 @@ private fun TextItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        BackgroundTitle(title = title)
+        EmphasizedTitle(title = title)
         Text(text = content)
     }
 }
@@ -100,7 +100,7 @@ fun CommentItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        BackgroundTitle(title = title)
+        EmphasizedTitle(title = title)
         for (comment in comments) {
             Text(text = comment)
         }

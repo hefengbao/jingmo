@@ -35,7 +35,7 @@ class KnowledgeSearchViewModel @Inject constructor(
         this.query.value = query
     }
 
-    val knowledgeEntityCollections = query.debounce(200)
+    val knowledgeEntities = query.debounce(200)
         .distinctUntilChanged()
         .filter {
             return@filter it.isNotEmpty()

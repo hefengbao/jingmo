@@ -34,7 +34,7 @@ class ExpressionSearchViewModel @Inject constructor(
         this.query.value = query
     }
 
-    val expressions = query.debounce(200)
+    val expressionEntities = query.debounce(200)
         .distinctUntilChanged()
         .filter {
             return@filter it.isNotEmpty()

@@ -38,8 +38,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.RiddleEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import kotlin.math.abs
@@ -53,14 +55,14 @@ fun RiddleIndexRoute(
     onReadMoreClick: () -> Unit,
 ) {
 
-    val riddle by viewModel.riddle.collectAsState(null)
+    val riddleEntity by viewModel.riddleEntity.collectAsState(null)
 
     RiddleIndexScreen(
         onBackClick = onBackClick,
         onInfoClick = onInfoClick,
         onSearchClick = onSearchClick,
         onReadMoreClick = onReadMoreClick,
-        riddle = riddle,
+        riddleEntity = riddleEntity,
         onRefresh = { viewModel.getRandom() }
     )
 }
@@ -72,23 +74,26 @@ private fun RiddleIndexScreen(
     onInfoClick: () -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
-    riddle: RiddleEntity?,
+    riddleEntity: RiddleEntity?,
     onRefresh: () -> Unit,
 ) {
     var showAnswer by remember { mutableStateOf(false) }
 
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "谜语",
+        title = stringResource(R.string.chinese_riddle),
         actions = {
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ReadMore,
-                    contentDescription = "阅读更多"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜素")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
             IconButton(onClick = onInfoClick) {
                 Icon(imageVector = Icons.Outlined.Info, contentDescription = "点击查看谜语知识")
@@ -105,7 +110,7 @@ private fun RiddleIndexScreen(
                         ) {
                             Icon(
                                 imageVector = if (showAnswer) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
-                                contentDescription = null
+                                contentDescription = if (showAnswer) "显示谜底" else "隐藏谜底"
                             )
                         }
 
@@ -113,13 +118,16 @@ private fun RiddleIndexScreen(
                 },
                 floatingActionButton = {
                     FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.refresh)
+                        )
                     }
                 }
             )
         }
     ) {
-        riddle?.let { entity ->
+        riddleEntity?.let { entity ->
             LaunchedEffect(entity) {
                 showAnswer = false // 默认隐藏答案
             }

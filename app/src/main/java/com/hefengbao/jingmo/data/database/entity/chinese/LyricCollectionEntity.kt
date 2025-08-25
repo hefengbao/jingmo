@@ -10,14 +10,13 @@
 package com.hefengbao.jingmo.data.database.entity.chinese
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
  * 歌词书签
  */
-@Entity(tableName = "lyric_collections", indices = [Index("collected_at")])
+//@Entity(tableName = "lyric_collections", indices = [Index("collected_at")])
+@Deprecated("")
 data class LyricCollectionEntity(
     @PrimaryKey
     val id: Int

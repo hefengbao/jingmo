@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
     tokenizer = FtsOptions.TOKENIZER_ICU,
     contentEntity = QuoteEntity::class
 )
-@Entity(tableName = "chinese_quotes_fts")
+@Entity(tableName = "chinese_quote_fts")
 data class QuoteFtsEntity(
     @PrimaryKey
     @ColumnInfo("rowid")

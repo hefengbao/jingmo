@@ -23,11 +23,13 @@ fun NavController.navigateToChineseLyricReadScreen() {
 }
 
 fun NavGraphBuilder.chineseLyricReadScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onCaptureClick: (id: Int) -> Unit,
 ) {
     composable(ROUTE) {
         LyricReadRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick
         )
     }
 }

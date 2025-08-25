@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
  * 歇后语
  */
 @Serializable
-data class ChineseWisecrack(
+data class Wisecrack(
     val id: Int,
     val riddle: String,
     val answer: String,
@@ -27,6 +27,6 @@ data class ChineseWisecrack(
     val firstLetter: String = ""
 )
 
-fun ChineseWisecrack.asChineseWisecrackEntity() = WisecrackEntity(
+fun Wisecrack.asChineseWisecrackEntity() = WisecrackEntity(
     id, riddle, answer, firstWord, firstLetter
 )

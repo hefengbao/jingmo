@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
     tokenizer = FtsOptions.TOKENIZER_ICU,
     contentEntity = WritingEntity::class,
 )
-@Entity(tableName = "writing_fts")
+@Entity(tableName = "classicalliterature_writing_fts")
 data class WritingFtsEntity(
     @PrimaryKey
     @ColumnInfo("rowid")

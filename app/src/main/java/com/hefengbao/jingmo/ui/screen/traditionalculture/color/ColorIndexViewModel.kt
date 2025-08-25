@@ -11,7 +11,7 @@ package com.hefengbao.jingmo.ui.screen.traditionalculture.color
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.model.traditionalculture.Color
+import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,18 +24,18 @@ class ColorIndexViewModel @Inject constructor(
     private val repository: ColorRepository
 ) : ViewModel() {
 
-    private val _colors: MutableStateFlow<List<Color>> =
+    private val _colors: MutableStateFlow<List<ChineseColor>> =
         MutableStateFlow(emptyList())
-    val colors: SharedFlow<List<Color>> = _colors
+    val colors: SharedFlow<List<ChineseColor>> = _colors
     fun getList() {
         viewModelScope.launch {
             _colors.value = repository.list()
         }
     }
 
-    private val _searchColors: MutableStateFlow<List<Color>> =
+    private val _searchColors: MutableStateFlow<List<ChineseColor>> =
         MutableStateFlow(emptyList())
-    val searchColors: SharedFlow<List<Color>> = _searchColors
+    val searchColors: SharedFlow<List<ChineseColor>> = _searchColors
     fun search(query: String) {
         _searchColors.value = emptyList()
         viewModelScope.launch {

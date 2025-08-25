@@ -20,11 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -33,9 +35,13 @@ fun CharacterBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val items = viewModel.items.collectAsLazyPagingItems()
+    val characterEntities = viewModel.characterEntities.collectAsLazyPagingItems()
 
-    CharacterBookmarksScreen(onBackClick = onBackClick, onItemClick = onItemClick, items = items)
+    CharacterBookmarksScreen(
+        onBackClick = onBackClick,
+        onItemClick = onItemClick,
+        characterEntities = characterEntities
+    )
 }
 
 @Composable
@@ -43,17 +49,17 @@ private fun CharacterBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<DictionaryEntity>
+    characterEntities: LazyPagingItems<CharacterEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyVerticalGrid(
             modifier = modifier.padding(16.dp),
             columns = GridCells.Fixed(3)
         ) {
             items(
-                count = items.itemCount,
+                count = characterEntities.itemCount,
             ) { index: Int ->
-                val entity = items[index]
+                val entity = characterEntities[index]
                 entity?.let {
                     Card(
                         modifier = Modifier
@@ -71,7 +77,7 @@ private fun CharacterBookmarksScreen(
                             entity.pinyin?.let {
                                 Text(text = entity.pinyin)
                             }
-                            Text(text = entity.char)
+                            Text(text = entity.character)
                         }
                     }
                 }

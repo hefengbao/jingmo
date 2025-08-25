@@ -10,10 +10,10 @@
 package com.hefengbao.jingmo.data.database.entity.classicalliterature
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "classic_poem_collections")
+//@Entity(tableName = "classic_poem_collections")
+@Deprecated("")
 data class ClassicPoemCollectionEntity(
     @PrimaryKey
     val id: Int,

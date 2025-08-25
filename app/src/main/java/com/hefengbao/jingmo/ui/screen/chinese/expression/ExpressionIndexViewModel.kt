@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.expression
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.ExpressionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,43 +23,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExpressionIndexViewModel @Inject constructor(
-    private val repository: ExpressionRepository
-) : ViewModel() {
+    private val repository: ExpressionRepository,
+    private val bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
 
     init {
         getRandom()
     }
 
-    private val _expression: MutableStateFlow<ExpressionEntity?> = MutableStateFlow(null)
-    val expression: SharedFlow<ExpressionEntity?> = _expression
+    private val _expressionEntity: MutableStateFlow<ExpressionEntity?> = MutableStateFlow(null)
+    val expressionEntity: SharedFlow<ExpressionEntity?> = _expressionEntity
 
     fun getRandom() {
         viewModelScope.launch {
-            repository.random().collectLatest {
-                _expression.value = it
+            repository.getRandom().collectLatest {
+                _expressionEntity.value = it
             }
-        }
-    }
-
-    private val _collected: MutableStateFlow<ExpressionCollectionEntity?> = MutableStateFlow(null)
-    val collected: SharedFlow<ExpressionCollectionEntity?> = _collected
-    fun getCollected(id: Int) {
-        viewModelScope.launch {
-            repository.isCollect(id).collectLatest {
-                _collected.value = it
-            }
-        }
-    }
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(ExpressionCollectionEntity(id))
         }
     }
 }

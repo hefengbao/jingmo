@@ -20,5 +20,5 @@ import javax.inject.Inject
 class QuoteBookmarksViewModel @Inject constructor(
     repository: QuoteRepository,
 ) : ViewModel() {
-    val collections = repository.collections().cachedIn(viewModelScope)
+    val quoteEntities = repository.bookmarks().cachedIn(viewModelScope)
 }

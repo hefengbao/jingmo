@@ -38,8 +38,8 @@ internal class WritingShowArgs(val id: String) {
             )
 }
 
-fun NavController.navigateToClassicalLiteratureWritingShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToClassicalLiteratureWritingShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }

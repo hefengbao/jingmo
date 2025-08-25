@@ -34,20 +34,20 @@ import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateTo
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.navigateToChineseAntitheticalCoupletShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterIndexGraph
-import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterPinyinIndexScreen
-import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterRadicalIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterRadicalScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterSearchListScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterShowScreen
-import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterStrokeIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterStrokeScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterStrokeShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.chineseCharacterSyllableScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterIndexGraph
-import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterPinyinIndexScreen
-import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterRadicalIndexScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterRadicalScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterSearchListScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterShowScreen
-import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterStrokeIndexScreen
 import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterStrokeScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterStrokeShowScreen
+import com.hefengbao.jingmo.ui.screen.chinese.character.nav.navigateToChineseCharacterSyllableScreen
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionGraph
 import com.hefengbao.jingmo.ui.screen.chinese.expression.nav.chineseExpressionSearchScreen
@@ -79,21 +79,25 @@ import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKno
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.navigateToChineseKnowledgeShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.chineseLyricShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.lyric.nav.navigateToChineseLyricShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetrySearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.chineseModernPoetryShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetryReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.navigateToChineseModernPoetrySearchScreen
@@ -109,11 +113,13 @@ import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProve
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.proverb.nav.navigateToChineseProverbShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.chineseQuoteBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.chineseQuoteCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.chineseQuoteIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.chineseQuoteReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.chineseQuoteSearchScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.chineseQuoteShowScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.navigateToChineseQuoteBookmarksScreen
+import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.navigateToChineseQuoteCaptureScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.navigateToChineseQuoteIndexGraph
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.navigateToChineseQuoteReadScreen
 import com.hefengbao.jingmo.ui.screen.chinese.quote.nav.navigateToChineseQuoteSearchScreen
@@ -184,18 +190,22 @@ import com.hefengbao.jingmo.ui.screen.home.nav.ROUTE_HOME_GRAPH
 import com.hefengbao.jingmo.ui.screen.home.nav.homeGraph
 import com.hefengbao.jingmo.ui.screen.link.nav.linkIndexScreen
 import com.hefengbao.jingmo.ui.screen.link.nav.navigateToLinkIndexScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.aboutScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.homeItemManagerScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.importScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToAboutScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToHomeItemManagerScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToImportScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToPrivacyScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsDataScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsAboutScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsCollectedUserInfoScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsGraph
-import com.hefengbao.jingmo.ui.screen.settings.nav.privacyScreen
-import com.hefengbao.jingmo.ui.screen.settings.nav.settingsDataScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsHomeItemManagerScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsImportDataScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsPrivacyScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsSharedUserInfoScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.navigateToSettingsSyncDataScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsAboutScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsCollectedUserInfoScreen
 import com.hefengbao.jingmo.ui.screen.settings.nav.settingsGraph
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsHomeItemManagerScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsImportDataScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsPrivacyScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsSharedUserInfoScreen
+import com.hefengbao.jingmo.ui.screen.settings.nav.settingsSyncDataScreen
 import com.hefengbao.jingmo.ui.screen.traditionalculture.calendar.nav.navigateToTraditionalCultureCalendarGraph
 import com.hefengbao.jingmo.ui.screen.traditionalculture.calendar.nav.traditionalCultureCalendarGraph
 import com.hefengbao.jingmo.ui.screen.traditionalculture.color.nav.navigateToTraditionalCultureColorIndexGraph
@@ -240,33 +250,33 @@ fun AppNavHost(
         }
     ) {
         homeGraph(
-            onChinaWorldCultureHeritageClick = { navController.navigateToChinaWorldCultureHeritageGraph() },
-            onChineseAntitheticalCoupletClick = { navController.navigateToChineseAntitheticalCoupletIndexGraph() },
-            onChineseCharacterClick = { navController.navigateToChineseCharacterIndexGraph() },
-            onChineseExpressionClick = { navController.navigateToChineseExpressionGraph() },
-            onChineseIdiomClick = { navController.navigateToChineseIdiomIndexGraph() },
-            onChineseKnowledgeClick = { navController.navigateToChineseKnowledgeIndexGraph() },
-            onChineseLyricClick = { navController.navigateToChineseLyricIndexGraph() },
+            onChinaWorldCultureHeritageClick = navController::navigateToChinaWorldCultureHeritageGraph,
+            onChineseAntitheticalCoupletClick = navController::navigateToChineseAntitheticalCoupletIndexGraph,
+            onChineseCharacterClick = navController::navigateToChineseCharacterIndexGraph,
+            onChineseExpressionClick = navController::navigateToChineseExpressionGraph,
+            onChineseIdiomClick = navController::navigateToChineseIdiomIndexGraph,
+            onChineseKnowledgeClick = navController::navigateToChineseKnowledgeIndexGraph,
+            onChineseLyricClick = navController::navigateToChineseLyricIndexGraph,
             onChineseModernPoetryClick = navController::navigateToChineseModernPoetryIndexGraph,
-            onChineseProverbClick = { navController.navigateToChineseProverbIndexGraph() },
+            onChineseProverbClick = navController::navigateToChineseProverbIndexGraph,
             onChineseQuoteClick = navController::navigateToChineseQuoteIndexGraph,
-            onChineseRiddleClick = { navController.navigateToChineseRiddleIndexGraph() },
-            onChineseTongueTwisterClick = { navController.navigateToChineseTongueTwisterIndexGraph() },
-            onChineseWisecrackClick = { navController.navigateToChineseWisecrackIndexGraph() },
-            onClassicalLiteratureClassicPoemClick = { navController.navigateToClassicalLiteratureClassicPoemIndexGraph() },
-            onClassicalLiteraturePeopleClick = { navController.navigateToClassicalLiteraturePeopleGraph() },
-            onClassicalLiteratureSentenceClick = { navController.navigateToClassicalLiteratureSentenceIndexGraph() },
-            onClassicalLiteratureWritingClick = { navController.navigateToClassicalLiteratureWritingIndexGraph() },
+            onChineseRiddleClick = navController::navigateToChineseRiddleIndexGraph,
+            onChineseTongueTwisterClick = navController::navigateToChineseTongueTwisterIndexGraph,
+            onChineseWisecrackClick = navController::navigateToChineseWisecrackIndexGraph,
+            onClassicalLiteratureClassicPoemClick = navController::navigateToClassicalLiteratureClassicPoemIndexGraph,
+            onClassicalLiteraturePeopleClick = navController::navigateToClassicalLiteraturePeopleGraph,
+            onClassicalLiteratureSentenceClick = navController::navigateToClassicalLiteratureSentenceIndexGraph,
+            onClassicalLiteratureWritingClick = navController::navigateToClassicalLiteratureWritingIndexGraph,
             onTraditionalCultureCalendarClick = navController::navigateToTraditionalCultureCalendarGraph,
-            onTraditionalCultureColorClick = { navController.navigateToTraditionalCultureColorIndexGraph() },
-            onTraditionalCultureFestivalClick = { navController.navigateToTraditionalCultureFestivalIndexGraph() },
-            onTraditionalCultureSolarTermsClick = { navController.navigateToTraditionalCultureSolarTermIndexGraph() },
-            onLinksClick = { navController.navigateToLinkIndexScreen() },
-            onSettingsClick = { navController.navigateToSettingsGraph() },
+            onTraditionalCultureColorClick = navController::navigateToTraditionalCultureColorIndexGraph,
+            onTraditionalCultureFestivalClick = navController::navigateToTraditionalCultureFestivalIndexGraph,
+            onTraditionalCultureSolarTermsClick = navController::navigateToTraditionalCultureSolarTermIndexGraph,
+            onLinksClick = navController::navigateToLinkIndexScreen,
+            onSettingsClick = navController::navigateToSettingsGraph,
             nestGraph = {
                 chinaWorldCultureHeritageGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToChinaWorldCultureHeritageShowScreen(it) }
+                    onItemClick = navController::navigateToChinaWorldCultureHeritageShowScreen
                 ) {
                     chinaWorldCultureHeritageShowScreen(
                         onBackClick = navController::navigateUp
@@ -274,100 +284,65 @@ fun AppNavHost(
                 }
                 chineseAntitheticalCoupletIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onReadMoreClick = { navController.navigateToChineseAntitheticalCoupletReadScreen() },
-                    onBookmarksClick = { navController.navigateToChineseAntitheticalCoupletBookmarksScreen() },
-                    onSearchClick = { navController.navigateToChineseAntitheticalCoupletSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseAntitheticalCoupletBookmarksScreen,
+                    onCaptureClick = navController::navigateToChineseAntitheticalCoupletCaptureScreen,
+                    onReadMoreClick = navController::navigateToChineseAntitheticalCoupletReadScreen,
+                    onSearchClick = navController::navigateToChineseAntitheticalCoupletSearchScreen,
                     nestGraph = {
                         chineseAntitheticalCoupletBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {
-                                navController.navigateToChineseAntitheticalCoupletShowScreen(
-                                    it.toString()
-                                )
-                            }
+                            onItemClick = navController::navigateToChineseAntitheticalCoupletShowScreen
                         )
                         chineseAntitheticalCoupletCaptureScreen(
                             onBackClick = navController::navigateUp
                         )
                         chineseAntitheticalCoupletReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToChineseAntitheticalCoupletCaptureScreen(
-                                    it.toString()
-                                )
-                            }
+                            onCaptureClick = navController::navigateToChineseAntitheticalCoupletCaptureScreen
                         )
                         chineseAntitheticalCoupletShowScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToChineseAntitheticalCoupletCaptureScreen(
-                                    it.toString()
-                                )
-                            }
+                            onCaptureClick = navController::navigateToChineseAntitheticalCoupletCaptureScreen
                         )
                         chineseAntitheticalCoupletSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {
-                                navController.navigateToChineseAntitheticalCoupletShowScreen(
-                                    it.toString()
-                                )
-                            }
+                            onItemClick = navController::navigateToChineseAntitheticalCoupletShowScreen
                         )
                     }
                 )
                 chineseCharacterIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToChineseCharacterBookmarksScreen() },
-                    onPinyinSearchClick = { navController.navigateToChineseCharacterPinyinIndexScreen() },
-                    onRadicalClickSearch = { navController.navigateToChineseCharacterRadicalIndexScreen() },
-                    onStrokeSearchClick = { navController.navigateToChineseCharacterStrokeIndexScreen() },
-                    onStrokeClick = { navController.navigateToChineseCharacterStrokeScreen() },
-                    onSearchClick = { char, type ->
-                        navController.navigateToChineseCharacterSearchListScreen(
-                            char,
-                            type
-                        )
-                    },
+                    onBookmarksClick = navController::navigateToChineseCharacterBookmarksScreen,
+                    onPinyinSearchClick = navController::navigateToChineseCharacterSyllableScreen,
+                    onRadicalClickSearch = navController::navigateToChineseCharacterRadicalScreen,
+                    onStrokeSearchClick = navController::navigateToChineseCharacterStrokeScreen,
+                    onStrokeClick = navController::navigateToChineseCharacterStrokeShowScreen,
+                    onSearchClick = navController::navigateToChineseCharacterSearchListScreen,
                     nestGraph = {
                         chineseCharacterBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseCharacterShowScreen(it.toString()) },
+                            onItemClick = navController::navigateToChineseCharacterShowScreen,
                         )
-                        chineseCharacterPinyinIndexScreen(
+                        chineseCharacterSyllableScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { pinyin, type ->
-                                navController.navigateToChineseCharacterSearchListScreen(
-                                    pinyin,
-                                    type
-                                )
-                            },
+                            onItemClick = navController::navigateToChineseCharacterSearchListScreen,
                         )
-                        chineseCharacterRadicalIndexScreen(
+                        chineseCharacterRadicalScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { radical, type ->
-                                navController.navigateToChineseCharacterSearchListScreen(
-                                    radical,
-                                    type
-                                )
-                            },
+                            onItemClick = navController::navigateToChineseCharacterSearchListScreen,
                         )
-                        chineseCharacterStrokeIndexScreen(
+                        chineseCharacterStrokeScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { stroke, type ->
-                                navController.navigateToChineseCharacterSearchListScreen(
-                                    stroke,
-                                    type
-                                )
-                            },
+                            onItemClick = navController::navigateToChineseCharacterSearchListScreen,
                         )
                         chineseCharacterSearchListScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseCharacterShowScreen(it) }
+                            onItemClick = navController::navigateToChineseCharacterShowScreen
                         )
                         chineseCharacterShowScreen(
                             onBackClick = navController::navigateUp,
                         )
-                        chineseCharacterStrokeScreen(
+                        chineseCharacterStrokeShowScreen(
                             onBackClick = navController::navigateUp
                         )
                     }
@@ -375,16 +350,16 @@ fun AppNavHost(
 
                 chineseExpressionGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToChineseExpressionBookmarksScreen() },
-                    onSearchClick = { navController.navigateToChineseExpressionSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseExpressionBookmarksScreen,
+                    onSearchClick = navController::navigateToChineseExpressionSearchScreen,
                     nestGraph = {
                         chineseExpressionBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseExpressionShow(it) }
+                            onItemClick = navController::navigateToChineseExpressionShow
                         )
                         chineseExpressionSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseExpressionShow(it) }
+                            onItemClick = navController::navigateToChineseExpressionShow
                         )
                         chineseExpressionShowScreen(
                             onBackClick = navController::navigateUp
@@ -393,47 +368,48 @@ fun AppNavHost(
                 )
                 chineseIdiomIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onReadMoreClick = { navController.navigateToChineseIdiomReadScreen() },
-                    onBookmarksClick = { navController.navigateToChineseIdiomBookmarksScreen() },
-                    onSearchClick = { navController.navigateToChineseIdiomSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseIdiomBookmarksScreen,
+                    onCaptureClick = navController::navigateToChineseIdiomCaptureScreen,
+                    onReadMoreClick = navController::navigateToChineseIdiomReadScreen,
+                    onSearchClick = navController::navigateToChineseIdiomSearchScreen,
                     nestGraph = {
                         chineseIdiomSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseIdiomShowScreen(it.toString()) },
+                            onItemClick = navController::navigateToChineseIdiomShowScreen,
                         )
                         chineseIdiomShowScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToChineseIdiomCaptureScreen(it.toString()) },
+                            onCaptureClick = navController::navigateToChineseIdiomCaptureScreen,
                         )
                         chineseIdiomReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = { navController.navigateToChineseIdiomCaptureScreen(it.toString()) }
+                            onCaptureClick = navController::navigateToChineseIdiomCaptureScreen
                         )
                         chineseIdiomCaptureScreen(
                             onBackClick = navController::navigateUp
                         )
                         chineseIdiomBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseIdiomShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseIdiomShowScreen
                         )
                     }
                 )
                 chineseKnowledgeIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToChineseKnowledgeBookmarksScreen() },
-                    onReadMoreClick = { navController.navigateToChineseKnowledgeReadScreen() },
-                    onSearchClick = { navController.navigateToChineseKnowSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseKnowledgeBookmarksScreen,
+                    onReadMoreClick = navController::navigateToChineseKnowledgeReadScreen,
+                    onSearchClick = navController::navigateToChineseKnowSearchScreen,
                     nestGraph = {
                         chineseKnowledgeBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseKnowledgeShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseKnowledgeShowScreen
                         )
                         chineseKnowledgeReadScreen(
                             onBackClick = navController::navigateUp,
                         )
                         chineseKnowledgeSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseKnowledgeShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseKnowledgeShowScreen
                         )
                         chineseKnowledgeShowScreen(
                             onBackClick = navController::navigateUp
@@ -442,29 +418,36 @@ fun AppNavHost(
                 )
                 chineseLyricIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToChineseLyricBookmarksScreen() },
-                    onReadMoreClick = { navController.navigateToChineseLyricReadScreen() },
-                    onSearchClick = { navController.navigateToChineseLyricSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseLyricBookmarksScreen,
+                    onCaptureClick = navController::navigateToChineseLyricCaptureScreen,
+                    onReadMoreClick = navController::navigateToChineseLyricReadScreen,
+                    onSearchClick = navController::navigateToChineseLyricSearchScreen,
                     nestGraph = {
                         chineseLyricBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseLyricShowScreen
+                        )
+                        chineseLyricCaptureScreen(
+                            onBackClick = navController::navigateUp
                         )
                         chineseLyricReadScreen(
                             onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToChineseLyricCaptureScreen,
                         )
                         chineseLyricSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseLyricShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseLyricShowScreen
                         )
                         chineseLyricShowScreen(
-                            onBackClick = navController::navigateUp
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToChineseLyricCaptureScreen,
                         )
                     }
                 )
                 chineseModernPoetryIndexGraph(
                     onBackClick = navController::navigateUp,
                     onBookmarksClick = navController::navigateToChineseModernPoetryBookmarksScreen,
+                    onCaptureClick = navController::navigateToChineseModernPoetryCaptureScreen,
                     onReadMoreClick = navController::navigateToChineseModernPoetryReadScreen,
                     onSearchClick = navController::navigateToChineseModernPoetrySearchScreen,
                     nestGraph = {
@@ -472,34 +455,39 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp,
                             onItemClick = navController::navigateToChineseModernPoetryShowScreen
                         )
-                        chineseModernPoetryReadScreen(
+                        chineseModernPoetryCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        chineseModernPoetryReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToChineseModernPoetryCaptureScreen,
                         )
                         chineseModernPoetrySearchScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = navController::navigateToChineseModernPoetryShowScreen
                         )
                         chineseModernPoetryShowScreen(
-                            onBackClick = navController::navigateUp
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToChineseModernPoetryCaptureScreen,
                         )
                     }
                 )
                 chineseProverbIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToChineseProverbBookmarksScreen() },
-                    onReadMoreClick = { navController.navigateToChineseProverbReadScreen() },
-                    onSearchClick = { navController.navigateToChineseProverbSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseProverbBookmarksScreen,
+                    onReadMoreClick = navController::navigateToChineseProverbReadScreen,
+                    onSearchClick = navController::navigateToChineseProverbSearchScreen,
                     nestGraph = {
                         chineseProverbBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseProverbShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseProverbShowScreen
                         )
                         chineseProverbReadScreen(
                             onBackClick = navController::navigateUp
                         )
                         chineseProverbSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { navController.navigateToChineseProverbShowScreen(it.toString()) }
+                            onItemClick = navController::navigateToChineseProverbShowScreen
                         )
                         chineseProverbShowScreen(
                             onBackClick = navController::navigateUp
@@ -509,6 +497,7 @@ fun AppNavHost(
                 chineseQuoteIndexGraph(
                     onBackClick = navController::navigateUp,
                     onBookmarksClick = navController::navigateToChineseQuoteBookmarksScreen,
+                    onCaptureClick = navController::navigateToChineseQuoteCaptureScreen,
                     onReadMoreClick = navController::navigateToChineseQuoteReadScreen,
                     onSearchClick = navController::navigateToChineseQuoteSearchScreen,
                     nestGraph = {
@@ -516,30 +505,35 @@ fun AppNavHost(
                             onBackClick = navController::navigateUp,
                             onItemClick = navController::navigateToChineseQuoteShowScreen
                         )
-                        chineseQuoteReadScreen(
+                        chineseQuoteCaptureScreen(
                             onBackClick = navController::navigateUp
+                        )
+                        chineseQuoteReadScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToChineseQuoteCaptureScreen,
                         )
                         chineseQuoteSearchScreen(
                             onBackClick = navController::navigateUp,
                             onItemClick = navController::navigateToChineseQuoteShowScreen
                         )
                         chineseQuoteShowScreen(
-                            onBackClick = navController::navigateUp
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToChineseQuoteCaptureScreen,
                         )
                     }
                 )
                 chineseRiddleIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onInfoClick = { navController.navigateToChineseRiddleInfoScreen() },
-                    onReadMoreClick = { navController.navigateToChineseRiddleReadScreen() },
-                    onSearchClick = { navController.navigateToChineseRiddleSearchScreen() },
+                    onInfoClick = navController::navigateToChineseRiddleInfoScreen,
+                    onReadMoreClick = navController::navigateToChineseRiddleReadScreen,
+                    onSearchClick = navController::navigateToChineseRiddleSearchScreen,
                     nestGraph = {
                         chineseRiddleInfoScreen(
                             onBackClick = navController::navigateUp
                         )
                         chineseRiddleReadScreen(
                             onBackClick = navController::navigateUp,
-                            onInfoClick = { navController.navigateToChineseRiddleInfoScreen() },
+                            onInfoClick = navController::navigateToChineseRiddleInfoScreen,
                         )
                         chineseRiddleSearchScreen(
                             onBackClick = navController::navigateUp
@@ -548,7 +542,7 @@ fun AppNavHost(
                 )
                 chineseTongueTwisterIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemsClick = { navController.navigateToChineseTongueTwisterShowScreen(it.toString()) },
+                    onItemsClick = navController::navigateToChineseTongueTwisterShowScreen,
                     nestGraph = {
                         chineseTongueTwisterShowScreen(
                             onBackClick = navController::navigateUp
@@ -557,35 +551,25 @@ fun AppNavHost(
                 )
                 chineseWisecrackIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToChineseWisecrackBookmarksScreen() },
-                    onCaptureClick = { navController.navigateToChineseWisecrackCaptureScreen(it.toString()) },
-                    onReadMoreClick = { navController.navigateToChineseWisecrackReadScreen() },
-                    onSearchClick = { navController.navigateToChineseWisecrackSearchScreen() },
+                    onBookmarksClick = navController::navigateToChineseWisecrackBookmarksScreen,
+                    onCaptureClick = navController::navigateToChineseWisecrackCaptureScreen,
+                    onReadMoreClick = navController::navigateToChineseWisecrackReadScreen,
+                    onSearchClick = navController::navigateToChineseWisecrackSearchScreen,
                     nestGraph = {
                         chineseWisecrackCaptureScreen(
                             onBackClick = navController::navigateUp
                         )
                         chineseWisecrackReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToChineseWisecrackCaptureScreen(
-                                    it.toString()
-                                )
-                            },
+                            onCaptureClick = navController::navigateToChineseWisecrackCaptureScreen,
                         )
                         chineseWisecrackSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {
-                                navController.navigateToChineseWisecrackShowScreen(it.toString())
-                            }
+                            onItemClick = navController::navigateToChineseWisecrackShowScreen
                         )
                         chineseWisecrackShowScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToChineseWisecrackCaptureScreen(
-                                    it.toString()
-                                )
-                            },
+                            onCaptureClick = navController::navigateToChineseWisecrackCaptureScreen,
                         )
                         chineseWisecrackBookmarksScreen(
                             onBackClick = navController::navigateUp
@@ -594,15 +578,13 @@ fun AppNavHost(
                 )
                 classicalLiteratureClassicPoemIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToClassicalLiteratureClassicPoemBookmarksGraph() },
-                    onReadMoreClick = { navController.navigateToClassicalLiteratureClassicPoemReadScreen() },
-                    onSearchClick = { navController.navigateToClassicalLiteratureClassicPoemSearchScreen() },
+                    onBookmarksClick = navController::navigateToClassicalLiteratureClassicPoemBookmarksGraph,
+                    onReadMoreClick = navController::navigateToClassicalLiteratureClassicPoemReadScreen,
+                    onSearchClick = navController::navigateToClassicalLiteratureClassicPoemSearchScreen,
                     nestGraph = {
                         classicalLiteratureClassicPoemBookmarksGraph(
                             onBackClick = navController::navigateUp,
-                            onReadClick = {
-                                navController.navigateToClassicalLiteratureClassicPoemShowScreen(it)
-                            },
+                            onReadClick = navController::navigateToClassicalLiteratureClassicPoemShowScreen,
                             nestGraph = {
                                 classicalLiteratureClassicPoemShowScreen(
                                     onBackClick = navController::navigateUp
@@ -614,22 +596,16 @@ fun AppNavHost(
                         )
                         classicalLiteratureClassicPoemSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {
-                                navController.navigateToClassicalLiteratureClassicPoemShowScreen(it)
-                            },
+                            onItemClick = navController::navigateToClassicalLiteratureClassicPoemShowScreen,
                         )
                     }
                 )
                 classicalLiteratureSentenceIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onBookmarksClick = { navController.navigateToClassicalLiteratureSentenceBookmarksScreen() },
-                    onCaptureClick = {
-                        navController.navigateToClassicalLiteratureSentenceCaptureScreen(
-                            it.toString()
-                        )
-                    },
-                    onReadMoreClick = { navController.navigateToClassicalLiteratureSentenceReadScreen() },
-                    onSearchClick = { navController.navigateToClassicalLiteratureSentenceSearchScreen() },
+                    onBookmarksClick = navController::navigateToClassicalLiteratureSentenceBookmarksScreen,
+                    onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen,
+                    onReadMoreClick = navController::navigateToClassicalLiteratureSentenceReadScreen,
+                    onSearchClick = navController::navigateToClassicalLiteratureSentenceSearchScreen,
                     nestGraph = {
                         classicalLiteratureSentenceBookmarksScreen(
                             onBackClick = navController::navigateUp
@@ -639,34 +615,21 @@ fun AppNavHost(
                         )
                         classicalLiteratureSentenceReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToClassicalLiteratureSentenceCaptureScreen(
-                                    it.toString()
-                                )
-                            }
+                            onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen
                         )
                         classicalLiteratureSentenceSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToClassicalLiteratureSentenceCaptureScreen(
-                                    it.toString()
-                                )
-                            },
+                            onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen,
                         )
                     }
                 )
                 classicalLiteraturePeopleGraph(
                     onBackClick = navController::navigateUp,
-                    onSearchClick = { navController.navigateToClassicalLiteraturePeopleSearchGraph() },
+                    onSearchClick = navController::navigateToClassicalLiteraturePeopleSearchGraph,
                     nestGraph = {
                         classicalLiteraturePeopleSearchGraph(
                             onBackClick = navController::navigateUp,
-                            onItemClick = { type: String, query: String ->
-                                navController.navigateToClassicalLiteraturePeopleShowScreen(
-                                    type,
-                                    query
-                                )
-                            },
+                            onItemClick = navController::navigateToClassicalLiteraturePeopleShowScreen,
                             nestGraph = {
                                 classicalLiteraturePeopleShowScreen(
                                     onBackClick = navController::navigateUp,
@@ -677,41 +640,26 @@ fun AppNavHost(
                 )
                 classicalLiteratureWritingIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onSearchClick = {
-                        navController.navigateToClassicalLiteratureWritingSearchScreen()
-                    },
-                    onBookmarksClick = { navController.navigateToClassicalLiteratureWritingBookmarksScreen() },
-                    onReadMoreClick = {
-                        navController.navigateToClassicalLiteratureWritingReadScreen()
-                    },
+                    onBookmarksClick = navController::navigateToClassicalLiteratureWritingBookmarksScreen,
+                    onCaptureClick = navController::navigateToClassicalLiteratureWritingCaptureScreen,
+                    onSearchClick = navController::navigateToClassicalLiteratureWritingSearchScreen,
+                    onReadMoreClick = navController::navigateToClassicalLiteratureWritingReadScreen,
                     nestGraph = {
                         classicalLiteratureWritingBookmarksScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {
-                                navController.navigateToClassicalLiteratureWritingShowScreen(it.toString())
-                            }
+                            onItemClick = navController::navigateToClassicalLiteratureWritingShowScreen
                         )
                         classicalLiteratureWritingSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onItemClick = {
-                                navController.navigateToClassicalLiteratureWritingShowScreen(it)
-                            },
+                            onItemClick = navController::navigateToClassicalLiteratureWritingShowScreen,
                         )
                         classicalLiteratureWritingShowScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToClassicalLiteratureWritingCaptureScreen(
-                                    it.toString()
-                                )
-                            }
+                            onCaptureClick = navController::navigateToClassicalLiteratureWritingCaptureScreen
                         )
                         classicalLiteratureWritingReadScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = {
-                                navController.navigateToClassicalLiteratureWritingCaptureScreen(
-                                    it.toString()
-                                )
-                            },
+                            onCaptureClick = navController::navigateToClassicalLiteratureWritingCaptureScreen
                         )
                         classicalLiteratureWritingCaptureScreen(
                             onBackClick = navController::navigateUp
@@ -724,7 +672,7 @@ fun AppNavHost(
                 )
                 traditionalCultureColorIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToTraditionalCultureColorShowScreen(it) },
+                    onItemClick = navController::navigateToTraditionalCultureColorShowScreen,
                     nestGraph = {
                         traditionalCultureColorShowScreen(
                             onBackClick = navController::navigateUp
@@ -733,7 +681,7 @@ fun AppNavHost(
                 )
                 traditionalCultureFestivalIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToTraditionalCultureFestivalShowScreen(it.toString()) },
+                    onItemClick = navController::navigateToTraditionalCultureFestivalShowScreen,
                     nestGraph = {
                         traditionalCultureFestivalShowScreen(
                             onBackClick = navController::navigateUp
@@ -742,7 +690,7 @@ fun AppNavHost(
                 )
                 traditionalCultureSolarTermIndexGraph(
                     onBackClick = navController::navigateUp,
-                    onItemClick = { navController.navigateToTraditionalCultureSolarTermShowScreen(it.toString()) },
+                    onItemClick = navController::navigateToTraditionalCultureSolarTermShowScreen,
                     nestGraph = {
                         traditionalCultureSolarTermShowScreen(
                             onBackClick = navController::navigateUp
@@ -753,26 +701,30 @@ fun AppNavHost(
                     onBackClick = navController::navigateUp
                 )
                 settingsGraph(
-                    onAboutClick = { navController.navigateToAboutScreen() },
+                    onAboutClick = navController::navigateToSettingsAboutScreen,
                     onBackClick = navController::navigateUp,
-                    onDataClick = { navController.navigateToSettingsDataScreen() },
-                    onHomeItemManagerClick = { navController.navigateToHomeItemManagerScreen() },
-                    onImportClick = { navController.navigateToImportScreen() },
-                    onPrivacyClick = { navController.navigateToPrivacyScreen() },
+                    onCollectedUserInfoClick = navController::navigateToSettingsCollectedUserInfoScreen,
+                    onHomeItemManagerClick = navController::navigateToSettingsHomeItemManagerScreen,
+                    onImportDataClick = navController::navigateToSettingsImportDataScreen,
+                    onPrivacyClick = navController::navigateToSettingsPrivacyScreen,
+                    onSharedUserInfoClick = navController::navigateToSettingsSharedUserInfoScreen,
+                    onSyncDataClick = navController::navigateToSettingsSyncDataScreen,
                     nestGraph = {
-                        aboutScreen(
+                        settingsAboutScreen(
                             onBackClick = navController::navigateUp
                         )
-                        homeItemManagerScreen(
+                        settingsCollectedUserInfoScreen(navController::navigateUp)
+                        settingsHomeItemManagerScreen(
                             onBackClick = navController::navigateUp
                         )
-                        importScreen(
+                        settingsImportDataScreen(
                             onBackClick = navController::navigateUp
                         )
-                        privacyScreen(
+                        settingsPrivacyScreen(
                             onBackClick = navController::navigateUp
                         )
-                        settingsDataScreen(
+                        settingsSharedUserInfoScreen(navController::navigateUp)
+                        settingsSyncDataScreen(
                             onBackClick = navController::navigateUp
                         )
                     }

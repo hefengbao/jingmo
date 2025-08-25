@@ -27,6 +27,7 @@ fun NavController.navigateToChineseModernPoetryIndexGraph() {
 fun NavGraphBuilder.chineseModernPoetryIndexGraph(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
@@ -39,6 +40,7 @@ fun NavGraphBuilder.chineseModernPoetryIndexGraph(
             ModernPoetryIndexRoute(
                 onBackClick = onBackClick,
                 onBookmarksClick = onBookmarksClick,
+                onCaptureClick = onCaptureClick,
                 onReadMoreClick = onReadMoreClick,
                 onSearchClick = onSearchClick
             )

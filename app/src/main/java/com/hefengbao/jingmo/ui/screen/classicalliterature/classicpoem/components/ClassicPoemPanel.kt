@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,7 +105,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        BackgroundTitle("创作背景")
+                        EmphasizedTitle("创作背景")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }
@@ -117,7 +117,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        BackgroundTitle(title = "文学赏析")
+                        EmphasizedTitle(title = "文学赏析")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }
@@ -129,7 +129,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        BackgroundTitle(title = "名家点评")
+                        EmphasizedTitle(title = "名家点评")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }
@@ -141,7 +141,7 @@ fun ClassicPoemPanel(
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        BackgroundTitle(title = "作者简介")
+                        EmphasizedTitle(title = "作者简介")
                         Text(text = it.replace("\n\n", "\n").replace("\n", "\n\n"))
                     }
                 }

@@ -16,7 +16,7 @@ import com.hefengbao.jingmo.data.datastore.AppPreference
 import com.hefengbao.jingmo.data.datastore.DatasetPreference
 import com.hefengbao.jingmo.data.datastore.HomePreference
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
-import com.hefengbao.jingmo.data.network.fake.FakeAssetManager
+import com.hefengbao.jingmo.data.network.local.LocalAssetManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,9 +44,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesFakeAssetManager(
+    fun providesLocalAssetManager(
         @ApplicationContext context: Context,
-    ): FakeAssetManager = FakeAssetManager(context.assets::open)
+    ): LocalAssetManager = LocalAssetManager(context.assets::open)
 
     @Provides
     @Singleton

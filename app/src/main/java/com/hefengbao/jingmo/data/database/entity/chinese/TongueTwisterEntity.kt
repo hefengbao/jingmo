@@ -12,7 +12,7 @@ package com.hefengbao.jingmo.data.database.entity.chinese
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tongue_twisters")
+@Entity(tableName = "chinese_tonguetwister")
 data class TongueTwisterEntity(
     @PrimaryKey
     val id: Int,

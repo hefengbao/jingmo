@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
@@ -27,35 +29,40 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.common.util.ClipboardUtil
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryCollectionEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
+import com.hefengbao.jingmo.data.enums.Category
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
+import com.hefengbao.jingmo.ui.screen.chinese.character.components.StyledText
 
 @Composable
 fun CharacterShowRoute(
     viewModel: CharacterShowViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    val character by viewModel.character.collectAsState()
-    val characterCollection by viewModel.characterCollection.collectAsState()
+    val characterEntity by viewModel.characterEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
     val context = LocalContext.current
 
     CharacterShowScreen(
         context = context,
         onBackClick = onBackClick,
-        character = character,
-        characterCollection = characterCollection,
-        setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) }
+        characterEntity = characterEntity,
+        bookmarkEntity = bookmarkEntity,
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseCharacter.model) },
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseCharacter.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseCharacter.model) },
     )
 }
 
@@ -64,15 +71,17 @@ private fun CharacterShowScreen(
     modifier: Modifier = Modifier,
     context: Context,
     onBackClick: () -> Unit,
-    character: DictionaryEntity?,
-    characterCollection: DictionaryCollectionEntity?,
-    setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit
+    characterEntity: CharacterEntity?,
+    bookmarkEntity: BookmarkEntity?,
+    cancelBookmark: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
 ) {
-    character?.let { entity ->
+    characterEntity?.let { entity ->
+        LaunchedEffect(entity) { isBookmarked(entity.id) }
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = entity.char,
+            title = entity.character,
             bottomBar = {
                 BottomAppBar {
                     Row(
@@ -80,23 +89,23 @@ private fun CharacterShowScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                if (characterCollection != null) {
-                                    setUncollect(entity.id)
+                                if (bookmarkEntity != null) {
+                                    cancelBookmark(entity.id)
                                 } else {
-                                    setCollect(entity.id)
+                                    addBookmark(entity.id)
                                 }
                             }
                         ) {
-                            if (characterCollection != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -104,97 +113,111 @@ private fun CharacterShowScreen(
                 }
             }
         ) {
-            LazyColumn(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(text = entity.char, style = MaterialTheme.typography.displayLarge)
-                        IconButton(
-                            onClick = {
-                                ClipboardUtil.textCopyThenPost(context, entity.char)
-                            }
+            SelectionContainer {
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.ContentCopy,
-                                contentDescription = "复制"
+                            Text(
+                                text = entity.character,
+                                style = MaterialTheme.typography.displayLarge
                             )
+                            IconButton(
+                                onClick = {
+                                    ClipboardUtil.textCopyThenPost(context, entity.character)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ContentCopy,
+                                    contentDescription = stringResource(R.string.copy)
+                                )
+                            }
                         }
                     }
-                }
-                item {
-                    SelectionContainer {
+                    item {
                         Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             entity.pinyin?.let {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                                ) {
-                                    BackgroundTitle(title = "拼音")
-                                    Text(text = it)
-                                }
+                                Text(text = "拼音：$it")
+                            }
+                            entity.stroke?.let {
+                                Text(text = "笔画：$it")
+                            }
+                            entity.radical?.let {
+                                Text(text = "部首：$it")
                             }
                             entity.wubi?.let {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                                ) {
-                                    BackgroundTitle(title = "五笔")
-                                    Text(text = it)
+                                Text(text = "五笔：$it")
+                            }
+                        }
+                    }
+                    entity.explanations?.let {
+                        if (entity.explanations.isNotEmpty()) {
+                            item {
+                                EmphasizedTitle(title = "简要释义")
+                            }
+                            items(entity.explanations) {
+                                Text(it)
+                            }
+                        }
+                    }
+                    entity.explanations2?.let {
+                        if (entity.explanations2.isNotEmpty()) {
+                            item {
+                                EmphasizedTitle(title = "详细释义")
+                            }
+                            itemsIndexed(entity.explanations2) { index, item ->
+                                var text = "（${index + 1}）"
+                                item.speech?.let {
+                                    text += "【$it】"
                                 }
-                            }
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                BackgroundTitle(title = "总笔画")
-                                Text(text = "${entity.stroke}画")
-                            }
-                        }
-                    }
-                }
-                entity.simpleExplanation?.let {
-                    item {
-                        SelectionContainer {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                BackgroundTitle(title = "简要释义")
-                                Text(
-                                    text = it.replace("<br><br><br>", "")
-                                        .replace("<br><br>", "<br>")
-                                        .replace("<br>", "\n\n")
-                                )
-                                Text(
-                                    text = "💡 1 - 横，2 - 竖，3 - 撇，4 -捺，5 - 折，提为横，点为捺，竖勾为竖，横折为折，竖提为折。",
-                                    style = MaterialTheme.typography.labelMedium
-                                )
-                            }
-                        }
-                    }
-                }
-                entity.explanation?.let {
-                    item {
-                        SelectionContainer {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                BackgroundTitle(title = "详细释义")
-                                Text(
-                                    text = it.replace("<br><br><br>", "")
-                                        .replace("<br><br>", "<br>")
-                                        .replace("<br>", "\n\n")
-                                )
+                                item.content?.let {
+                                    text += it
+                                }
+                                Text(text)
+                                Column(
+                                    modifier = Modifier.padding(vertical = 8.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    item.refer?.let {
+                                        StyledText("参考", it)
+                                    }
+                                    item.detail?.let { details ->
+                                        details.forEach { detail ->
+                                            StyledText("引", "${detail.text} ——${detail.book}")
+                                        }
+                                    }
+                                    item.words?.let { words ->
+                                        words.forEach { word ->
+                                            StyledText("词", "${word.word}：${word.text}")
+                                        }
+                                    }
+                                    item.same?.let {
+                                        StyledText("同", it)
+                                    }
+                                    item.example?.let {
+                                        StyledText("例", it)
+                                    }
+                                    item.simplified?.let {
+                                        StyledText("简体", it)
+                                    }
+                                    item.variant?.let {
+                                        StyledText("异体", it)
+                                    }
+                                }
                             }
                         }
                     }

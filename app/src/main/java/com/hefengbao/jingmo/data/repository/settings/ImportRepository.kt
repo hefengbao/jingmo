@@ -11,8 +11,7 @@ package com.hefengbao.jingmo.data.repository.settings
 
 import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
@@ -35,36 +34,36 @@ interface ImportRepository {
     suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity)
     suspend fun clearChineseAntitheticalCouplet()
     suspend fun insertChineseExpression(entity: ExpressionEntity)
-    suspend fun clearChineseExpressions()
+    suspend fun clearChineseExpression()
     suspend fun insertChineseWisecrack(entity: WisecrackEntity)
-    suspend fun clearChineseWisecracks()
+    suspend fun clearChineseWisecrack()
     suspend fun insertChineseKnowledge(entity: KnowledgeEntity)
     suspend fun clearChineseKnowledge()
     suspend fun insertChineseProverb(entity: ProverbEntity)
-    suspend fun clearChineseProverbs()
+    suspend fun clearChineseProverb()
     suspend fun insertChineseQuote(entity: QuoteEntity)
-    suspend fun clearChineseQuotes()
-    suspend fun insertChineseDictionary(entity: DictionaryEntity)
-    suspend fun insertChineseDictionaryPinyin(entity: DictionaryPinyinEntity)
-    suspend fun clearChineseDictionaries()
+    suspend fun clearChineseQuote()
+    suspend fun insertChineseCharacter(entity: CharacterEntity)
+    suspend fun clearChineseCharacter()
     suspend fun insertChineseIdiom(entity: IdiomEntity)
     suspend fun clearChineseIdioms()
     suspend fun insertChineseLyric(entity: LyricEntity)
-    suspend fun clearChineseLyrics()
+    suspend fun clearChineseLyric()
     suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity)
     suspend fun clearChineseModernPoetry()
     suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity)
-    suspend fun clearChineseTongueTwisters()
+    suspend fun clearChineseTongueTwister()
     suspend fun insertChineseRiddle(entity: RiddleEntity)
-    suspend fun clearChineseRiddles()
+    suspend fun clearChineseRiddle()
     suspend fun insertClassicalLiteratureClassicPoems(entity: ClassicPoemEntity)
-    suspend fun clearClassicalLiteratureClassicPoems()
+    suspend fun clearClassicalLiteratureClassicPoem()
     suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity)
     suspend fun clearClassicalLiteraturePeople()
     suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity)
     suspend fun clearClassicalLiteratureSentence()
     suspend fun insertClassicalLiteratureWriting(entity: WritingEntity)
-    suspend fun clearClassicalLiteratureWritings()
+    suspend fun insertClassicalLiteratureWriting(entities: List<WritingEntity>)
+    suspend fun clearClassicalLiteratureWriting()
     fun chinaChinaWorldCultureHeritageTotal(): Flow<Int>
     fun chineseAntitheticalCoupletTotal(): Flow<Int>
     fun chineseExpressionTotal(): Flow<Int>
@@ -72,11 +71,11 @@ interface ImportRepository {
     fun chineseKnowledgeTotal(): Flow<Int>
     fun chineseProverbTotal(): Flow<Int>
     fun chineseQuoteTotal(): Flow<Int>
-    fun chineseDictionaryTotal(): Flow<Int>
+    fun chineseCharacterTotal(): Flow<Int>
     fun chineseIdiomTotal(): Flow<Int>
     fun chineseLyricTotal(): Flow<Int>
     fun chineseModernPoetryTotal(): Flow<Int>
-    fun chineseTongueTwistersTotal(): Flow<Int>
+    fun chineseTongueTwisterTotal(): Flow<Int>
     fun chineseRiddleTotal(): Flow<Int>
     fun classicalLiteratureClassicPoemTotal(): Flow<Int>
     fun classicalLiteraturePeopleTotal(): Flow<Int>

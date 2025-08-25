@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -33,10 +34,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.components.WritingPanel
 import kotlinx.serialization.json.Json
@@ -46,29 +50,36 @@ import kotlin.math.abs
 fun WritingIndexRoute(
     viewModel: WritingIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onSearchClick: () -> Unit,
     onReadMoreClick: () -> Unit,
 ) {
-    val writing by viewModel.writing.collectAsState(initial = null)
-    val writingCollectionEntity by viewModel.collected.collectAsState(initial = null)
+    val writingEntity by viewModel.writingEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
-    LaunchedEffect(writing) {
-        writing?.let {
-            viewModel.getCollected(it.id)
+    writingEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            viewModel.isBookmarked(entity.id, Category.ClassicalLiteratureWriting.model)
         }
     }
 
     WritingIndexScreen(
         onBackClick = onBackClick,
-        onSearchClick = onSearchClick,
         onBookmarksClick = onBookmarksClick,
+        onCaptureClick = onCaptureClick,
+        onSearchClick = onSearchClick,
         onReadMoreClick = onReadMoreClick,
-        writing = writing,
-        writingCollectionEntity = writingCollectionEntity,
-        setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) },
-        onFabClick = { viewModel.getRandomWriting() },
+        writingEntity = writingEntity,
+        bookmarkEntity = bookmarkEntity,
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ClassicalLiteratureWriting.model
+            )
+        },
+        addBookmark = { viewModel.addBookmark(it, Category.ClassicalLiteratureWriting.model) },
+        onRefresh = { viewModel.getRandom() },
         json = viewModel.json,
     )
 }
@@ -77,38 +88,56 @@ fun WritingIndexRoute(
 private fun WritingIndexScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
     onSearchClick: () -> Unit,
     onBookmarksClick: () -> Unit,
     onReadMoreClick: () -> Unit,
-    writing: WritingEntity?,
-    writingCollectionEntity: WritingCollectionEntity?,
-    setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
-    onFabClick: () -> Unit,
+    writingEntity: WritingEntity?,
+    bookmarkEntity: BookmarkEntity?,
+    cancelBookmark: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    onRefresh: () -> Unit,
     json: Json
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "诗文",
+        title = stringResource(R.string.classicalliterature_writing),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ReadMore,
-                    contentDescription = "阅读"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
+            writingEntity?.let {
+                IconButton(onClick = { onCaptureClick(writingEntity.id) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
+                }
+            }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
             BottomAppBar(
                 floatingActionButton = {
-                    FloatingActionButton(onClick = onFabClick) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                    FloatingActionButton(onClick = onRefresh) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.refresh)
+                        )
                     }
                 },
                 actions = {
@@ -117,25 +146,25 @@ private fun WritingIndexScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                writing?.let {
-                                    if (writingCollectionEntity != null) {
-                                        setUncollect(writing.id)
+                                writingEntity?.let {
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(writingEntity.id)
                                     } else {
-                                        setCollect(writing.id)
+                                        addBookmark(writingEntity.id)
                                     }
                                 }
                             }
                         ) {
-                            if (writingCollectionEntity != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -153,14 +182,14 @@ private fun WritingIndexScreen(
                     onDragStarted = {},
                     onDragStopped = { velocity ->
                         if (velocity < 0 && abs(velocity) > 500f) {
-                            onFabClick()
+                            onRefresh()
                         } else if (velocity > 0 && abs(velocity) > 500f) {
-                            onFabClick()
+                            onRefresh()
                         }
                     }
                 )
         ) {
-            writing?.let { entity ->
+            writingEntity?.let { entity ->
                 WritingPanel(
                     writing = entity,
                     json = json

@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,17 +34,17 @@ import com.hefengbao.jingmo.ui.component.SimpleSearchScaffold
 
 @Composable
 fun ClassicPoemSearchRoute(
-    viewModel: ClassicPoemSearchScreenViewModel = hiltViewModel(),
+    viewModel: ClassicPoemSearchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val poems by viewModel.poems.collectAsState(initial = emptyList())
+    val poemEntities by viewModel.poemEntities.collectAsState(initial = emptyList())
 
     ClassicPoemSearchScreen(
         onBackClick = onBackClick,
         onSearch = { viewModel.search(it) },
         onItemClick = onItemClick,
-        poems = poems
+        poemEntities = poemEntities
     )
 }
 
@@ -54,7 +54,7 @@ private fun ClassicPoemSearchScreen(
     onBackClick: () -> Unit,
     onSearch: (String) -> Unit,
     onItemClick: (Int) -> Unit,
-    poems: List<ClassicPoemEntity>
+    poemEntities: List<ClassicPoemEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -68,7 +68,7 @@ private fun ClassicPoemSearchScreen(
     ) {
         LazyColumn {
             itemsIndexed(
-                items = poems
+                items = poemEntities
             ) { index: Int, item: ClassicPoemEntity ->
                 Column(
                     modifier = modifier
@@ -91,8 +91,8 @@ private fun ClassicPoemSearchScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                if (index != poems.lastIndex) {
-                    Divider()
+                if (index != poemEntities.lastIndex) {
+                    HorizontalDivider()
                 }
             }
         }

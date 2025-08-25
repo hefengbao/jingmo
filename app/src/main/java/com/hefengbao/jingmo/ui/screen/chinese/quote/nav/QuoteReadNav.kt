@@ -21,9 +21,13 @@ fun NavController.navigateToChineseQuoteReadScreen() {
 }
 
 fun NavGraphBuilder.chineseQuoteReadScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
 ) {
     composable(ROUTE) {
-        QuoteReadRoute(onBackClick = onBackClick)
+        QuoteReadRoute(
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick
+        )
     }
 }

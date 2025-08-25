@@ -36,8 +36,8 @@ internal class WritingCaptureArgs(val poemId: String) {
             )
 }
 
-fun NavController.navigateToClassicalLiteratureWritingCaptureScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToClassicalLiteratureWritingCaptureScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
     }

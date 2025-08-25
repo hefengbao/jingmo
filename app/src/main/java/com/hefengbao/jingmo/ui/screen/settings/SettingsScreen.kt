@@ -42,18 +42,22 @@ import com.hefengbao.jingmo.ui.screen.settings.components.SettingsTitle
 fun SettingsRoute(
     onAboutClick: () -> Unit,
     onBackClick: () -> Unit,
-    onDataClick: () -> Unit,
+    onCollectedUserInfoClick: () -> Unit,
     onHomeItemManagerClick: () -> Unit,
-    onImportClick: () -> Unit,
+    onImportDataClick: () -> Unit,
     onPrivacyClick: () -> Unit,
+    onSharedUserInfoClick: () -> Unit,
+    onSyncDataClick: () -> Unit,
 ) {
     SettingsScreen(
         onAboutClick = onAboutClick,
         onBackClick = onBackClick,
-        onDataClick = onDataClick,
+        onCollectedUserInfoClick = onCollectedUserInfoClick,
         onHomeItemManagerClick = onHomeItemManagerClick,
-        onImportClick = onImportClick,
-        onPrivacyClick = onPrivacyClick
+        onImportDataClick = onImportDataClick,
+        onPrivacyClick = onPrivacyClick,
+        onSharedUserInfoClick = onSharedUserInfoClick,
+        onSyncDataClick = onSyncDataClick
     )
 }
 
@@ -63,10 +67,12 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     onAboutClick: () -> Unit,
     onBackClick: () -> Unit,
-    onDataClick: () -> Unit,
+    onCollectedUserInfoClick: () -> Unit,
     onHomeItemManagerClick: () -> Unit,
-    onImportClick: () -> Unit,
+    onImportDataClick: () -> Unit,
     onPrivacyClick: () -> Unit,
+    onSharedUserInfoClick: () -> Unit,
+    onSyncDataClick: () -> Unit,
 ) {
     var showThemeDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -102,11 +108,14 @@ fun SettingsScreen(
             SettingsTitle(title = "UI")
             Item(title = "主题设置", onClick = { showThemeDialog = true }, showBadge = false)
             SettingsTitle(title = "功能")
-            Item(title = "同步数据", onClick = onDataClick, showBadge = false)
-            Item(title = "导入数据", onClick = onImportClick, showBadge = false)
+            Item(title = "同步数据", onClick = onSyncDataClick, showBadge = false)
+            Item(title = "导入数据", onClick = onImportDataClick, showBadge = false)
             Item(title = "栏目管理", onClick = onHomeItemManagerClick, showBadge = false)
-            SettingsTitle(title = "其他")
+            SettingsTitle(title = "隐私")
             Item(title = "隐私政策", onClick = onPrivacyClick, showBadge = false)
+            Item(title = "个人信息收集清单", onClick = onCollectedUserInfoClick, showBadge = false)
+            Item(title = "第三方信息共享清单", onClick = onSharedUserInfoClick, showBadge = false)
+            SettingsTitle(title = "其他")
             Item(title = "关于", onClick = onAboutClick, showBadge = false)
         }
     }

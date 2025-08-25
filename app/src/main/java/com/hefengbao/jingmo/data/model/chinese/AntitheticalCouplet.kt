@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import kotlinx.serialization.Serializable
 
+/**
+ * 对联
+ */
 @Serializable
 data class AntitheticalCouplet(
     val id: Int,

@@ -19,7 +19,7 @@ import com.hefengbao.jingmo.data.model.chinese.IdiomSource
 /**
  * 成语
  */
-@Entity(tableName = "idioms")
+@Entity(tableName = "chinese_idiom")
 data class IdiomEntity(
     @PrimaryKey
     val id: Int,

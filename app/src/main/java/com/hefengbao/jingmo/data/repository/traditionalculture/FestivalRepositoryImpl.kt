@@ -81,11 +81,7 @@ class FestivalRepositoryImpl @Inject constructor(
                 """.trimIndent(),
                 images = listOf(),
                 url = "https://baike.baidu.com/item/%E7%87%8E%E5%B9%B2/585368",
-                comments = listOf(
-                    """
-                        @贺丰宝·老家甘肃镇原 这天一般会去外面收集柴火而不是使用家里已有的柴火，把还没被风吹掉的对联揭下来，晚上一起烧掉，过年彻底结束。
-                    """.trimIndent()
-                )
+                comments = listOf()
             ),
             Festival(
                 id = 202,
@@ -100,11 +96,7 @@ class FestivalRepositoryImpl @Inject constructor(
                 """.trimIndent(),
                 images = listOf(),
                 url = "https://baike.baidu.com/item/%E9%BE%99%E6%8A%AC%E5%A4%B4/48793",
-                comments = listOf(
-                    """
-                        @贺丰宝·老家甘肃镇原 这天会吃炒豆子，小时候最期盼制作爆米花的师傅来村里，自备玉米（还有用豆子、小麦、大米的），花一点钱就可以制作出足够吃个痛快的爆米花。
-                    """.trimIndent()
-                )
+                comments = listOf()
             ),
             Festival(
                 id = 212,
@@ -171,11 +163,7 @@ class FestivalRepositoryImpl @Inject constructor(
                 """.trimIndent(),
                 images = listOf(),
                 url = "https://baike.baidu.com/item/%E6%B8%85%E6%98%8E%E8%8A%82/137575",
-                comments = listOf(
-                    """
-                        @贺丰宝·老家甘肃镇原 有长辈带着上祖坟烧纸钱，有些找不到的就在十字路口烧。
-                    """.trimIndent()
-                )
+                comments = listOf()
             ),
             Festival(
                 id = 505,
@@ -190,11 +178,7 @@ class FestivalRepositoryImpl @Inject constructor(
                 """.trimIndent(),
                 images = listOf(),
                 url = "https://baike.baidu.com/item/%E7%AB%AF%E5%8D%88%E8%8A%82/1054",
-                comments = listOf(
-                    """
-                        @贺丰宝·老家甘肃镇原 家里主要是制作枣糕（以红枣、糯米、糖蒸制而成）而不是包粽子，会给小孩子的手腕、脚腕带上简易”手镯“（几股彩色线合在一起就成了）、佩戴香包。
-                    """.trimIndent()
-                )
+                comments = listOf()
             ),
             Festival(
                 id = 707,
@@ -269,11 +253,7 @@ class FestivalRepositoryImpl @Inject constructor(
                 """.trimIndent(),
                 images = listOf(),
                 url = "https://baike.baidu.com/item/%E5%AF%92%E8%A1%A3%E8%8A%82",
-                comments = listOf(
-                    """
-                        @贺丰宝·老家甘肃镇原 这天或前几天，几乎家家户户都会蒸包子，晚上要用来作为祭品，烧纸钱、纸剪得衣服等。
-                    """.trimIndent()
-                )
+                comments = listOf()
             ),
             Festival(
                 id = 1015,
@@ -328,14 +308,7 @@ class FestivalRepositoryImpl @Inject constructor(
                 """.trimIndent(),
                 images = listOf(),
                 url = "https://baike.baidu.com/item/%E9%99%A4%E5%A4%95/128141",
-                comments = listOf(
-                    """
-                        @贺丰宝·老家甘肃镇原 中午吃”搅团“，烧开水，加入面粉，用擀面杖不断搅拌，直至煮熟黏成团为止。盛入碗中，可加汤吃，或者蘸汁吃。
-                    """.trimIndent(),
-                    """
-                        @贺丰宝 每年春节，央视台春节节目说”过年要吃饺子“，在很多视频的评论区可以看到不少南方的网友不乐意了，你怎么只说北方的习俗呀，我们南方不是这样的... 何必呢？有必要这么讨厌吗？节日习俗总有个起源，然后以此不断演化，各地有所不同，但是以一个全国行性的节目而言，说”源头“的习俗，也没什么错吧！！！每年的端午节，央视的节目不都说的是南方的习俗吗？
-                    """.trimIndent()
-                )
+                comments = listOf()
             ),
         )
     }

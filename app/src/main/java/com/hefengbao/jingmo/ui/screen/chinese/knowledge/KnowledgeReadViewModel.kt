@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.knowledge
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,9 +27,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class KnowledgeReadViewModel @Inject constructor(
-    private val repository: KnowledgeRepository,
+    private val knowledgeRepository: KnowledgeRepository,
+    private val bookmarkRepository: BookmarkRepository,
     private val preference: ReadStatusPreference,
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val id = MutableStateFlow(1)
 
     init {
@@ -48,39 +49,21 @@ class KnowledgeReadViewModel @Inject constructor(
         }
     }
 
-    val knowledge = id.flatMapLatest { repository.get(it) }.stateIn(
+    val knowledgeEntity = id.flatMapLatest { knowledgeRepository.get(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val knowledgeCollection = id.flatMapLatest { repository.isCollect(it) }.stateIn(
+    val nextId = id.flatMapLatest { knowledgeRepository.getNextId(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
 
-    val nextId = id.flatMapLatest { repository.getNextId(it) }.stateIn(
+    val prevId = id.flatMapLatest { knowledgeRepository.getPrevId(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    val prevId = id.flatMapLatest { repository.getPrevId(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(KnowledgeCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

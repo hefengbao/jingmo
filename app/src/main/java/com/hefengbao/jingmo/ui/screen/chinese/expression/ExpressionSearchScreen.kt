@@ -33,13 +33,13 @@ fun ChineseExpressionSearchRoute(
     onItemClick: (Int) -> Unit,
     viewModel: ExpressionSearchViewModel = hiltViewModel(),
 ) {
-    val expressions = viewModel.expressions.collectAsLazyPagingItems()
+    val expressionEntities = viewModel.expressionEntities.collectAsLazyPagingItems()
 
     ChineseExpressionSearchScreen(
         onBackClick = onBackClick,
         onSearch = { viewModel.search(it) },
         onItemClick = onItemClick,
-        expressions = expressions
+        expressionEntities = expressionEntities
     )
 }
 
@@ -48,7 +48,7 @@ private fun ChineseExpressionSearchScreen(
     onBackClick: () -> Unit,
     onSearch: (String) -> Unit,
     onItemClick: (Int) -> Unit,
-    expressions: LazyPagingItems<ExpressionEntity>
+    expressionEntities: LazyPagingItems<ExpressionEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -63,9 +63,9 @@ private fun ChineseExpressionSearchScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             items(
-                count = expressions.itemCount
+                count = expressionEntities.itemCount
             ) {
-                expressions[it]?.let { entity ->
+                expressionEntities[it]?.let { entity ->
                     Text(
                         text = entity.word,
                         modifier = Modifier

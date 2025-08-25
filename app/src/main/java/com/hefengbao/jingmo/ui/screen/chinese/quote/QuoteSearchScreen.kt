@@ -36,13 +36,13 @@ fun QuoteSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val items by viewModel.entities.collectAsState(initial = emptyList())
+    val quoteEntities by viewModel.quoteEntities.collectAsState(initial = emptyList())
 
     QuoteSearchScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         onSearch = { viewModel.onQueryChange(it) },
-        items = items
+        quoteEntities = quoteEntities
     )
 }
 
@@ -51,7 +51,7 @@ private fun QuoteSearchScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,
-    items: List<QuoteEntity>
+    quoteEntities: List<QuoteEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -68,7 +68,7 @@ private fun QuoteSearchScreen(
     ) {
         LazyColumn {
             items(
-                items = items
+                items = quoteEntities
             ) { entity ->
                 Card(
                     modifier = Modifier.padding(16.dp),

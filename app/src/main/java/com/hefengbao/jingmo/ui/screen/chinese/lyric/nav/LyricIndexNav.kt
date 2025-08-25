@@ -27,6 +27,7 @@ fun NavController.navigateToChineseLyricIndexGraph() {
 fun NavGraphBuilder.chineseLyricIndexGraph(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (id: Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
@@ -39,6 +40,7 @@ fun NavGraphBuilder.chineseLyricIndexGraph(
             LyricIndexRoute(
                 onBackClick = onBackClick,
                 onBookmarksClick = onBookmarksClick,
+                onCaptureClick = onCaptureClick,
                 onReadMoreClick = onReadMoreClick,
                 onSearchClick = onSearchClick
             )

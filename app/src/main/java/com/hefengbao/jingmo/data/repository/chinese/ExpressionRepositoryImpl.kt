@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseExpressionDao
-import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,23 +20,17 @@ import javax.inject.Inject
 class ExpressionRepositoryImpl @Inject constructor(
     private val dao: ChineseExpressionDao
 ) : ExpressionRepository {
-    override fun get(id: Int): Flow<ExpressionEntity> = dao.get(id)
+    override fun get(id: Int): Flow<ExpressionEntity?> = dao.get(id)
 
-    override fun random(): Flow<ExpressionEntity> = dao.random()
+    override fun getRandom(): Flow<ExpressionEntity?> = dao.random()
 
     override fun search(query: String): Flow<PagingData<ExpressionEntity>> = Pager(
         config = PagingConfig(pageSize = 20),
         pagingSourceFactory = { dao.search("%$query%") }
     ).flow
 
-    override fun collections(): Flow<PagingData<ExpressionEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<ExpressionEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { dao.collections() }
+        pagingSourceFactory = { dao.bookmarks() }
     ).flow
-
-    override suspend fun collect(entity: ExpressionCollectionEntity) = dao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = dao.uncollect(id)
-
-    override fun isCollect(id: Int): Flow<ExpressionCollectionEntity?> = dao.isCollect(id)
 }

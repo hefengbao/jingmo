@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 /**
  * 经典诗文
  */
-@Entity(tableName = "classic_poems")
+@Entity(tableName = "classicalliterature_classicpoem")
 data class ClassicPoemEntity(
     @PrimaryKey
     val id: Int,

@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -33,10 +34,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.components.IdiomPanel
 import kotlin.math.abs
@@ -45,65 +49,83 @@ import kotlin.math.abs
 fun IdiomIndexRoute(
     viewModel: IdiomIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
 ) {
-    val idiom by viewModel.idiom.collectAsState(initial = null)
-    val idiomCollectionEntity by viewModel.idiomCollectionEntity.collectAsState(initial = null)
+    val idiomEntity by viewModel.idiomEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     IdiomIndexScreen(
-        idiom = idiom,
-        idiomCollectionEntity = idiomCollectionEntity,
+        idiomEntity = idiomEntity,
+        bookmarkEntity = bookmarkEntity,
         onBackClick = onBackClick,
-        onReadMoreClick = onReadMoreClick,
         onBookmarksClick = onBookmarksClick,
+        onCaptureClick = onCaptureClick,
+        onReadMoreClick = onReadMoreClick,
+        onRefresh = { viewModel.getRandom() },
         onSearchClick = onSearchClick,
-        onRefresh = { viewModel.getRandomIdiom() },
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        getIdiomCollectionEntity = {
-            viewModel.getIdiomCollectionEntity(it)
-        }
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseIdiom.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseIdiom.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseIdiom.model) }
     )
 }
 
 @Composable
 private fun IdiomIndexScreen(
     modifier: Modifier = Modifier,
-    idiom: IdiomEntity?,
-    idiomCollectionEntity: IdiomCollectionEntity?,
+    idiomEntity: IdiomEntity?,
+    bookmarkEntity: BookmarkEntity?,
     onBackClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
-    onSearchClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
     onRefresh: () -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
-    getIdiomCollectionEntity: (Int) -> Unit,
+    onSearchClick: () -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "成语",
+        title = stringResource(R.string.chinese_idiom),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ReadMore,
-                    contentDescription = "阅读"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
+            idiomEntity?.let {
+                IconButton(onClick = { onCaptureClick(idiomEntity.id) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
+                }
+            }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
             BottomAppBar(
                 floatingActionButton = {
                     FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.refresh)
+                        )
                     }
                 },
                 actions = {
@@ -112,25 +134,25 @@ private fun IdiomIndexScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                idiom?.let { entity ->
-                                    if (idiomCollectionEntity != null) {
-                                        setUncollect(entity.id)
+                                idiomEntity?.let { entity ->
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(entity.id)
                                     } else {
-                                        setCollect(entity.id)
+                                        addBookmark(entity.id)
                                     }
                                 }
                             }
                         ) {
-                            if (idiomCollectionEntity != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.cancel_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.add_bookmark)
                                 )
                             }
                         }
@@ -155,9 +177,9 @@ private fun IdiomIndexScreen(
                     }
                 )
         ) {
-            idiom?.let { entity ->
+            idiomEntity?.let { entity ->
                 LaunchedEffect(entity) {
-                    getIdiomCollectionEntity(entity.id)
+                    isBookmarked(entity.id)
                 }
                 IdiomPanel(idiom = entity)
             }

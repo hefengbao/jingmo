@@ -43,10 +43,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.classicpoem.components.ClassicPoemPanel
 import kotlinx.coroutines.launch
@@ -61,11 +64,11 @@ fun ClassicPoemIndexRoute(
     onSearchClick: () -> Unit,
 ) {
     val classicPoemEntity by viewModel.classicPoemEntity.collectAsState(initial = null)
-    val classicPoemCollectionEntity by viewModel.classicPoemCollectionEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     LaunchedEffect(classicPoemEntity) {
         classicPoemEntity?.let {
-            viewModel.isCollected(it.id)
+            viewModel.isBookmarked(it.id, Category.ClassicalLiteratureClassicPoem.model)
         }
     }
 
@@ -75,12 +78,15 @@ fun ClassicPoemIndexRoute(
         onReadMoreClick = onReadMoreClick,
         onSearchClick = onSearchClick,
         classicPoemEntity = classicPoemEntity,
-        onFabClick = {
-            viewModel.getRandom()
-        },
-        classicPoemCollectionEntity = classicPoemCollectionEntity,
-        setCollected = { viewModel.collect(it) },
-        setUncollected = { viewModel.uncollect(it) }
+        bookmarkEntity = bookmarkEntity,
+        onRefresh = { viewModel.getRandom() },
+        addBookmark = { viewModel.addBookmark(it, Category.ClassicalLiteratureClassicPoem.model) },
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ClassicalLiteratureClassicPoem.model
+            )
+        }
     )
 }
 
@@ -93,10 +99,10 @@ private fun ClassicPoemIndexScreen(
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     classicPoemEntity: ClassicPoemEntity?,
-    onFabClick: () -> Unit,
-    classicPoemCollectionEntity: ClassicPoemCollectionEntity?,
-    setCollected: (Int) -> Unit,
-    setUncollected: (Int) -> Unit
+    bookmarkEntity: BookmarkEntity?,
+    onRefresh: () -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit
 ) {
     val annotationSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showAnnotationBottomSheet by remember { mutableStateOf(false) }
@@ -109,16 +115,25 @@ private fun ClassicPoemIndexScreen(
 
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "经典诗文",
+        title = stringResource(R.string.classicalliterature_classicpoem),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ReadMore, contentDescription = "阅读")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ReadMore,
+                    contentDescription = stringResource(R.string.read_more)
+                )
             }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "搜索")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
@@ -148,19 +163,19 @@ private fun ClassicPoemIndexScreen(
                             OutlinedButton(onClick = { showPoemBottomSheet = true }) {
                                 Text(text = "文")
                             }
-                            if (classicPoemCollectionEntity != null) {
-                                IconButton(onClick = { setUncollected(classicPoemEntity.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(classicPoemEntity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollected(classicPoemEntity.id) }) {
+                                IconButton(onClick = { addBookmark(classicPoemEntity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -169,11 +184,14 @@ private fun ClassicPoemIndexScreen(
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = {
-                                onFabClick()
+                                onRefresh()
                                 scope.launch { state.animateScrollToItem(0) }
                             }
                         ) {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = stringResource(R.string.refresh)
+                            )
                         }
                     }
                 )
@@ -189,9 +207,9 @@ private fun ClassicPoemIndexScreen(
                     onDragStarted = {},
                     onDragStopped = { velocity ->
                         if (velocity < 0 && abs(velocity) > 500f) {
-                            onFabClick()
+                            onRefresh()
                         } else if (velocity > 0 && abs(velocity) > 500f) {
-                            onFabClick()
+                            onRefresh()
                         }
                     }
                 )

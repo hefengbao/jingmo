@@ -13,7 +13,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "poem_sentences")
+@Entity(tableName = "classicalliterature_sentence")
 data class SentenceEntity(
     @PrimaryKey
     val id: Int,

@@ -21,21 +21,21 @@ interface ClassicalLiteraturePeopleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: PeopleEntity)
 
-    @Query("select * from people where id = (select p.id from people p order by random() limit 1) limit 1")
-    fun random(): Flow<PeopleEntity>
+    @Query("select * from classicalliterature_people where id = (select p.id from classicalliterature_people p order by random() limit 1) limit 1")
+    fun random(): Flow<PeopleEntity?>
 
-    @Query("select * from people where id = :id limit 1")
-    fun getPeopleById(id: Int): Flow<PeopleEntity>
+    @Query("select * from classicalliterature_people where id = :id limit 1")
+    fun getPeopleById(id: Int): Flow<PeopleEntity?>
 
-    @Query("select * from people where name = :name limit 1")
-    fun getPeopleByName(name: String): Flow<PeopleEntity>
+    @Query("select * from classicalliterature_people where name = :name limit 1")
+    fun getPeopleByName(name: String): Flow<PeopleEntity?>
 
-    @Query("select * from people where name like :query")
+    @Query("select * from classicalliterature_people where name like :query")
     fun search(query: String): Flow<List<PeopleEntity>>
 
-    @Query("select count(*) from people")
+    @Query("select count(*) from classicalliterature_people")
     fun total(): Flow<Int>
 
-    @Query("delete from people")
+    @Query("delete from classicalliterature_people")
     suspend fun clear()
 }

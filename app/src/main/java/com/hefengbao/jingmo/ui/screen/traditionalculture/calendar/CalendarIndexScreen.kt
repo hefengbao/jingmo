@@ -40,16 +40,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.nlf.calendar.Lunar
 import com.nlf.calendar.Solar
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
 import java.util.Date
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Composable
 fun CalendarIndexRoute(
@@ -60,6 +61,7 @@ fun CalendarIndexRoute(
     )
 }
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun CalendarIndexScreen(
     modifier: Modifier = Modifier,
@@ -88,7 +90,7 @@ fun CalendarIndexScreen(
 
     Log.i(
         "CalendarIndexScreen",
-        "year = ${localDate.year}, month = ${localDate.monthNumber}, day = ${localDate.dayOfMonth}"
+        "year = ${localDate.year}, month = ${localDate.month}, day = ${localDate.day}"
     )
 
     val lunar = Lunar.fromDate(Date(mills))
@@ -113,7 +115,7 @@ fun CalendarIndexScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
-                BackgroundTitle("阳历")
+                EmphasizedTitle("阳历")
             }
 
             item {
@@ -145,7 +147,7 @@ fun CalendarIndexScreen(
             }
 
             item {
-                BackgroundTitle("阴历")
+                EmphasizedTitle("阴历")
             }
 
             item {

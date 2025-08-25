@@ -16,6 +16,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.hefengbao.jingmo.common.Constant
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.data.model.ReadStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -32,27 +33,27 @@ class ReadStatusPreference(
     val readStatus: Flow<ReadStatus> = context.readStatus.data.map {
         ReadStatus(
             chineseAntitheticalCoupletLastReadId = it[PREF_CHINESE_ANTITHETICAL_COUPLET] ?: 1,
-            chineseIdiomsLastReadId = it[PREF_CHINESE_IDIOMS] ?: 1,
+            chineseIdiomLastReadId = it[PREF_CHINESE_IDIOM] ?: 1,
             chineseKnowledgeLastReadId = it[PREF_CHINESE_KNOWLEDGE] ?: 1,
             chineseLyricLastReadId = it[PREF_CHINESE_LYRIC] ?: 1,
             chineseModernPoetryLastReadId = it[PREF_CHINESE_MODERN_POETRY] ?: 1,
             chineseProverbLastReadId = it[PREF_CHINESE_PROVERB] ?: 1,
             chineseQuoteLastReadId = it[PREF_CHINESE_QUOTE] ?: 1,
-            chineseRiddlesLastReadId = it[PREF_CHINESE_RIDDLES] ?: 1,
-            chineseTongueTwistersLastReadId = it[PREF_CHINESE_TONGUE_TWISTERS] ?: 1,
-            chineseWisecracksLastReadId = it[PREF_CHINESE_WISECRACKS] ?: 1,
-            classicLiteratureClassicPoemsLastReadId = it[PREF_CLASSICAL_LITERATURE_CLASSIC_POEMS]
+            chineseRiddleLastReadId = it[PREF_CHINESE_RIDDLE] ?: 1,
+            chineseTongueTwisterLastReadId = it[PREF_CHINESE_TONGUE_TWISTER] ?: 1,
+            chineseWisecrackLastReadId = it[PREF_CHINESE_WISECRACK] ?: 1,
+            classicLiteratureClassicPoemLastReadId = it[PREF_CLASSICAL_LITERATURE_CLASSIC_POEM]
                 ?: 1,
             classicLiteraturePeopleLastReadId = it[PREF_CLASSICAL_LITERATURE_PEOPLE] ?: 1,
-            classicLiteratureSentencesLastReadId = it[PREF_CLASSICAL_LITERATURE_SENTENCES] ?: 1,
-            classicLiteratureWritingsLastReadId = it[PREF_CLASSICAL_LITERATURE_WRITINGS] ?: 1,
+            classicLiteratureSentenceLastReadId = it[PREF_CLASSICAL_LITERATURE_SENTENCE] ?: 1,
+            classicLiteratureWritingsLastReadId = it[PREF_CLASSICAL_LITERATURE_WRITING] ?: 1,
         )
     }
 
     suspend fun setChineseAntitheticalCoupletLastReadId(id: Int) =
         setInt(context, PREF_CHINESE_ANTITHETICAL_COUPLET, id)
 
-    suspend fun setChineseIdiomsLastReadId(id: Int) = setInt(context, PREF_CHINESE_IDIOMS, id)
+    suspend fun setChineseIdiomsLastReadId(id: Int) = setInt(context, PREF_CHINESE_IDIOM, id)
 
     suspend fun setChineseKnowledgeLastReadId(id: Int) =
         setInt(context, PREF_CHINESE_KNOWLEDGE, id)
@@ -67,44 +68,50 @@ class ReadStatusPreference(
 
     suspend fun setChineseQuoteLastReadId(id: Int) = setInt(context, PREF_CHINESE_QUOTE, id)
 
-    suspend fun setChineseRiddlesLastReadId(id: Int) = setInt(context, PREF_CHINESE_RIDDLES, id)
+    suspend fun setChineseRiddlesLastReadId(id: Int) = setInt(context, PREF_CHINESE_RIDDLE, id)
 
     suspend fun setChineseTongueTwistersLastReadId(id: Int) =
-        setInt(context, PREF_CHINESE_TONGUE_TWISTERS, id)
+        setInt(context, PREF_CHINESE_TONGUE_TWISTER, id)
 
     suspend fun setChineseWisecracksLastReadId(id: Int) =
-        setInt(context, PREF_CHINESE_WISECRACKS, id)
+        setInt(context, PREF_CHINESE_WISECRACK, id)
 
 
     suspend fun setClassicLiteratureClassicPoemsLastReadId(id: Int) =
-        setInt(context, PREF_CLASSICAL_LITERATURE_CLASSIC_POEMS, id)
+        setInt(context, PREF_CLASSICAL_LITERATURE_CLASSIC_POEM, id)
 
 
     suspend fun setClassicLiteraturePeopleLastReadId(id: Int) =
         setInt(context, PREF_CLASSICAL_LITERATURE_PEOPLE, id)
 
     suspend fun setClassicLiteratureSentencesLastReadId(id: Int) =
-        setInt(context, PREF_CLASSICAL_LITERATURE_SENTENCES, id)
+        setInt(context, PREF_CLASSICAL_LITERATURE_SENTENCE, id)
 
     suspend fun setClassicLiteratureWritingsLastReadId(id: Int) =
-        setInt(context, PREF_CLASSICAL_LITERATURE_WRITINGS, id)
+        setInt(context, PREF_CLASSICAL_LITERATURE_WRITING, id)
 
     companion object {
         private val PREF_CHINESE_ANTITHETICAL_COUPLET =
-            intPreferencesKey("key_chinese_antithetical_couplet")
-        private val PREF_CHINESE_IDIOMS = intPreferencesKey("key_idioms")
-        private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey("key_chinese_knowledge")
-        private val PREF_CHINESE_LYRIC = intPreferencesKey("key_chinese_lyric")
-        private val PREF_CHINESE_MODERN_POETRY = intPreferencesKey("key_chinese_modern_poetry")
-        private val PREF_CHINESE_PROVERB = intPreferencesKey("key_chinese_proverb")
-        private val PREF_CHINESE_QUOTE = intPreferencesKey("key_chinese_quote")
-        private val PREF_CHINESE_RIDDLES = intPreferencesKey("key_riddles")
-        private val PREF_CHINESE_TONGUE_TWISTERS = intPreferencesKey("key_tongue_twisters")
-        private val PREF_CHINESE_WISECRACKS = intPreferencesKey("key_chinese_wisecracks")
+            intPreferencesKey(Category.ChineseAntitheticalCouplet.model)
+        private val PREF_CHINESE_IDIOM = intPreferencesKey(Category.ChineseIdiom.model)
+        private val PREF_CHINESE_KNOWLEDGE = intPreferencesKey(Category.ChineseKnowledge.model)
+        private val PREF_CHINESE_LYRIC = intPreferencesKey(Category.ChineseLyric.model)
+        private val PREF_CHINESE_MODERN_POETRY =
+            intPreferencesKey(Category.ChineseModernPoetry.model)
+        private val PREF_CHINESE_PROVERB = intPreferencesKey(Category.ChineseProverb.model)
+        private val PREF_CHINESE_QUOTE = intPreferencesKey(Category.ChineseQuote.model)
+        private val PREF_CHINESE_RIDDLE = intPreferencesKey(Category.ChineseRiddle.model)
+        private val PREF_CHINESE_TONGUE_TWISTER =
+            intPreferencesKey(Category.ChineseTongueTwister.model)
+        private val PREF_CHINESE_WISECRACK = intPreferencesKey(Category.ChineseWisecrack.model)
 
-        private val PREF_CLASSICAL_LITERATURE_CLASSIC_POEMS = intPreferencesKey("key_classic_poems")
-        private val PREF_CLASSICAL_LITERATURE_PEOPLE = intPreferencesKey("key_people")
-        private val PREF_CLASSICAL_LITERATURE_SENTENCES = intPreferencesKey("key_poem_sentences")
-        private val PREF_CLASSICAL_LITERATURE_WRITINGS = intPreferencesKey("key_writings")
+        private val PREF_CLASSICAL_LITERATURE_CLASSIC_POEM =
+            intPreferencesKey(Category.ClassicalLiteratureClassicPoem.model)
+        private val PREF_CLASSICAL_LITERATURE_PEOPLE =
+            intPreferencesKey(Category.ClassicalLiteraturePeople.model)
+        private val PREF_CLASSICAL_LITERATURE_SENTENCE =
+            intPreferencesKey(Category.ClassicalLiteratureSentence.model)
+        private val PREF_CLASSICAL_LITERATURE_WRITING =
+            intPreferencesKey(Category.ClassicalLiteratureWriting.model)
     }
 }

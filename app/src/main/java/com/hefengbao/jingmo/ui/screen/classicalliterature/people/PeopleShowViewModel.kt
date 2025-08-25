@@ -29,18 +29,18 @@ class PeopleShowViewModel @Inject constructor(
 ) : ViewModel() {
     private val args = PeopleShowArgs(savedStateHandle)
 
-    private val _people: MutableStateFlow<PeopleEntity?> = MutableStateFlow(null)
-    val people: SharedFlow<PeopleEntity?> = _people
+    private val _peopleEntity: MutableStateFlow<PeopleEntity?> = MutableStateFlow(null)
+    val peopleEntity: SharedFlow<PeopleEntity?> = _peopleEntity
 
     init {
         viewModelScope.launch {
             if (args.type == "name") {
                 peopleRepository.getByName(args.query).collectLatest {
-                    _people.value = it
+                    _peopleEntity.value = it
                 }
             } else {
                 peopleRepository.get(args.query.toInt()).collectLatest {
-                    _people.value = it
+                    _peopleEntity.value = it
                 }
             }
         }

@@ -12,6 +12,9 @@ package com.hefengbao.jingmo.data.model.chinese
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import kotlinx.serialization.Serializable
 
+/**
+ * 句子
+ */
 @Serializable
 data class Quote(
     val id: Int,

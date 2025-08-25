@@ -19,11 +19,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.hefengbao.jingmo.R
 import com.hefengbao.jingmo.data.database.entity.chinese.ModernPoetryEntity
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
@@ -33,12 +35,12 @@ fun ModernPoetryBookmarksRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit
 ) {
-    val pagingItems = viewModel.collections.collectAsLazyPagingItems()
+    val poetryEntities = viewModel.poetryEntities.collectAsLazyPagingItems()
 
     ModernPoetryBookmarksScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
-        items = pagingItems
+        poetryEntities = poetryEntities
     )
 }
 
@@ -46,14 +48,14 @@ fun ModernPoetryBookmarksRoute(
 private fun ModernPoetryBookmarksScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
-    items: LazyPagingItems<ModernPoetryEntity>
+    poetryEntities: LazyPagingItems<ModernPoetryEntity>
 ) {
-    SimpleScaffold(onBackClick = onBackClick, title = "收藏") {
+    SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
         LazyColumn {
             items(
-                count = items.itemCount
+                count = poetryEntities.itemCount
             ) {
-                items[it]?.let { entity ->
+                poetryEntities[it]?.let { entity ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()

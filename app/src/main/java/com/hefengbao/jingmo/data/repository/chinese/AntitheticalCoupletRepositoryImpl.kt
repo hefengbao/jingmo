@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseAntitheticalCoupletDao
-import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,9 +20,9 @@ import javax.inject.Inject
 class AntitheticalCoupletRepositoryImpl @Inject constructor(
     private val dao: ChineseAntitheticalCoupletDao
 ) : AntitheticalCoupletRepository {
-    override fun get(id: Int): Flow<AntitheticalCoupletEntity> = dao.get(id)
+    override fun get(id: Int): Flow<AntitheticalCoupletEntity?> = dao.get(id)
 
-    override fun random(): Flow<AntitheticalCoupletEntity> = dao.random()
+    override fun getRandom(): Flow<AntitheticalCoupletEntity?> = dao.random()
 
     override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
@@ -39,14 +38,8 @@ class AntitheticalCoupletRepositoryImpl @Inject constructor(
         pagingSourceFactory = { dao.search("%$query%") }
     ).flow
 
-    override fun collections(): Flow<PagingData<AntitheticalCoupletEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<AntitheticalCoupletEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { dao.collections() }
+        pagingSourceFactory = { dao.bookmarks() }
     ).flow
-
-    override suspend fun collect(entity: AntitheticalCoupletCollectionEntity) = dao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = dao.uncollect(id)
-
-    override fun isCollect(id: Int): Flow<AntitheticalCoupletCollectionEntity?> = dao.isCollect(id)
 }

@@ -20,5 +20,5 @@ import javax.inject.Inject
 class IdiomBookmarksViewModel @Inject constructor(
     repository: IdiomRepository
 ) : ViewModel() {
-    val bookmarks = repository.collections().cachedIn(viewModelScope)
+    val idiomEntities = repository.bookmarks().cachedIn(viewModelScope)
 }

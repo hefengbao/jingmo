@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ChineseWisecrackDao
-import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,9 +20,9 @@ import javax.inject.Inject
 class WisecrackRepositoryImpl @Inject constructor(
     private val chineseWisecrackDao: ChineseWisecrackDao
 ) : WisecrackRepository {
-    override fun get(id: Int): Flow<WisecrackEntity> = chineseWisecrackDao.get(id)
+    override fun get(id: Int): Flow<WisecrackEntity?> = chineseWisecrackDao.get(id)
 
-    override fun random(): Flow<WisecrackEntity> = chineseWisecrackDao.random()
+    override fun getRandom(): Flow<WisecrackEntity?> = chineseWisecrackDao.random()
 
     override fun getNextId(id: Int): Flow<Int?> = chineseWisecrackDao.getNextId(id)
 
@@ -32,17 +31,8 @@ class WisecrackRepositoryImpl @Inject constructor(
     override fun search(query: String): Flow<List<WisecrackEntity>> =
         chineseWisecrackDao.search("%$query%")
 
-    override fun collections(): Flow<PagingData<WisecrackEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<WisecrackEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { chineseWisecrackDao.collections() }
+        pagingSourceFactory = { chineseWisecrackDao.bookmarks() }
     ).flow
-
-    override suspend fun collect(entity: WisecrackCollectionEntity) =
-        chineseWisecrackDao.collect(entity)
-
-    override suspend fun uncollect(id: Int) =
-        chineseWisecrackDao.uncollect(id)
-
-    override fun isCollect(id: Int): Flow<WisecrackCollectionEntity?> =
-        chineseWisecrackDao.isCollect(id)
 }

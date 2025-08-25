@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,36 +22,27 @@ interface ChineseWisecrackDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: WisecrackEntity)
 
-    @Query("select w.* from chinese_wisecracks w  where w.id = :id")
-    fun get(id: Int): Flow<WisecrackEntity>
+    @Query("select w.* from chinese_wisecrack w  where w.id = :id")
+    fun get(id: Int): Flow<WisecrackEntity?>
 
-    @Query("select w.* from chinese_wisecracks w where w.id = (select id from chinese_wisecracks order by random() limit 1)")
-    fun random(): Flow<WisecrackEntity>
+    @Query("select w.* from chinese_wisecrack w where w.id = (select id from chinese_wisecrack order by random() limit 1)")
+    fun random(): Flow<WisecrackEntity?>
 
-    @Query("select id from chinese_wisecracks where id > :id order by id asc limit 1")
+    @Query("select id from chinese_wisecrack where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
 
-    @Query("select id from chinese_wisecracks where id < :id order by id desc limit 1")
+    @Query("select id from chinese_wisecrack where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Query("select * from chinese_wisecracks where riddle like :query or answer like :query")
+    @Query("select * from chinese_wisecrack where riddle like :query or answer like :query")
     fun search(query: String): Flow<List<WisecrackEntity>>
 
-    @Query("select w.* from chinese_wisecrack_collections c join chinese_wisecracks w on c.id = w.id order by c.collected_at desc")
-    fun collections(): PagingSource<Int, WisecrackEntity>
+    @Query("select w.* from bookmarks b join chinese_wisecrack w on b.bookmarkable_id = w.id and b.bookmarkable_model = 'chinese_wisecrack' order by b.id desc")
+    fun bookmarks(): PagingSource<Int, WisecrackEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun collect(entity: WisecrackCollectionEntity)
-
-    @Query("delete from chinese_wisecrack_collections where id = :id")
-    suspend fun uncollect(id: Int)
-
-    @Query("select * from chinese_wisecrack_collections where id = :id")
-    fun isCollect(id: Int): Flow<WisecrackCollectionEntity?>
-
-    @Query("select count(*) from chinese_wisecracks")
+    @Query("select count(*) from chinese_wisecrack")
     fun total(): Flow<Int>
 
-    @Query("delete from chinese_wisecracks")
+    @Query("delete from chinese_wisecrack")
     suspend fun clear()
 }

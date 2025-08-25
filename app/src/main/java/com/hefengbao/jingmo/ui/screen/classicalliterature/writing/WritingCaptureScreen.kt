@@ -9,99 +9,102 @@
 
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
-import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.AppStatus
+import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
-import com.hefengbao.jingmo.data.model.traditionalculture.Color as ChineseColor
 
 @Composable
 fun WritingCaptureRoute(
     viewModel: WritingCaptureViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val writing by viewModel.writing.collectAsState()
+    val writingEntity by viewModel.writingEntity.collectAsState()
     val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
     val appStatus by viewModel.appStatus.collectAsState(null)
 
-    LaunchedEffect(Unit) {
-        viewModel.getColors()
-    }
-
-    appStatus?.let { status: AppStatus ->
-        Log.i("WritingCaptureRoute", appStatus.toString())
-        WritingCaptureScreen(
-            onBackClick = onBackClick,
-            writing = writing,
-            textColor = status.captureTextColor,
-            onTextColorChange = { viewModel.setCaptureColor(it) },
-            backgroundColor = status.captureBackgroundColor,
-            onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-            colors = chineseColors
-        )
-    }
+    WritingCaptureScreen(
+        onBackClick = onBackClick,
+        writingEntity = writingEntity,
+        onTextColorChange = { viewModel.setCaptureTextColor(it) },
+        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
+        colors = chineseColors,
+        appStatus = appStatus
+    )
 }
 
 @Composable
 private fun WritingCaptureScreen(
     onBackClick: () -> Unit,
-    textColor: String,
     onTextColorChange: (String) -> Unit,
-    backgroundColor: String,
     onBackgroundColorChange: (String) -> Unit,
-    writing: WritingEntity?,
-    colors: List<ChineseColor>
+    writingEntity: WritingEntity?,
+    colors: List<ChineseColor>,
+    appStatus: AppStatus?,
 ) {
-    CaptureScaffold(
-        colors = colors,
-        onBackClick = onBackClick,
-        textColor = textColor,
-        onTextColorChange = onTextColorChange,
-        backgroundColor = backgroundColor,
-        onBackgroundColorChange = onBackgroundColorChange
-    ) {
+    appStatus?.let {
+        CaptureScaffold(
+            colors = colors,
+            onBackClick = onBackClick,
+            onTextColorChange = onTextColorChange,
+            onBackgroundColorChange = onBackgroundColorChange
+        ) {
+            val tColor = appStatus.captureTextColor
 
-        val tColor = if (textColor == "white") Color.White else Color.Black
+            writingEntity?.let { entity ->
+                val content = buildString {
+                    entity.clauses.mapIndexed { _, clause ->
+                        if (entity.type != "文") {
+                            append(clause.content)
+                            append("\n")
+                        } else {
+                            append(clause.content)
+                        }
 
-        Log.i("WritingCaptureScreen", "颜色改变了, $textColor, $tColor")
-        writing?.let { entity ->
-            val content = buildString {
-                entity.clauses.mapIndexed { _, clause ->
-                    if (entity.type != "文") {
-                        append(clause.content)
-                        append("\n")
-                    } else {
-                        append(clause.content)
-                    }
-
-                    if (clause.breakAfter != null) {
-                        append("\n")
+                        if (clause.breakAfter != null) {
+                            append("\n")
+                        }
                     }
                 }
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(appStatus.captureBackgroundColor)
+                        .padding(16.dp, 32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        text = entity.title.content,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = tColor
+                    )
+                    Text(
+                        text = "${entity.dynasty}·${entity.author}",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = tColor
+                    )
+                    Text(
+                        text = content,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = tColor
+                    )
+                }
             }
-            Text(
-                text = entity.title.content,
-                style = MaterialTheme.typography.titleLarge,
-                color = tColor
-            )
-            Text(
-                text = "${entity.dynasty}·${entity.author}",
-                style = MaterialTheme.typography.titleSmall,
-                color = tColor
-            )
-            Text(
-                text = content,
-                style = MaterialTheme.typography.bodyLarge,
-                color = tColor
-            )
         }
     }
 }

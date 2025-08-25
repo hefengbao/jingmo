@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.quote
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.QuoteCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.QuoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,44 +23,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuoteIndexViewModel @Inject constructor(
-    private val repository: QuoteRepository
-) : ViewModel() {
+    private val quoteRepository: QuoteRepository,
+    bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
+
+    private val _quoteEntity: MutableStateFlow<QuoteEntity?> = MutableStateFlow(null)
+    val quoteEntity: SharedFlow<QuoteEntity?> = _quoteEntity
+
     init {
-        random()
+        getRandom()
     }
 
-    private val _entity: MutableStateFlow<QuoteEntity?> = MutableStateFlow(null)
-    val entity: SharedFlow<QuoteEntity?> = _entity
-
-    fun random() {
+    fun getRandom() {
         viewModelScope.launch {
-            repository.random().collectLatest {
-                _entity.value = it
+            quoteRepository.getRandom().collectLatest {
+                _quoteEntity.value = it
             }
-        }
-    }
-
-    private val _collectionEntity: MutableStateFlow<QuoteCollectionEntity?> =
-        MutableStateFlow(null)
-    val collectionEntity: SharedFlow<QuoteCollectionEntity?> = _collectionEntity
-
-    fun isCollect(id: Int) {
-        viewModelScope.launch {
-            repository.isCollect(id).collectLatest {
-                _collectionEntity.value = it
-            }
-        }
-    }
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(QuoteCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
         }
     }
 }

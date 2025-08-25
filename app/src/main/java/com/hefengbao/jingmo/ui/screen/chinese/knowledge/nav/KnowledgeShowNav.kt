@@ -20,18 +20,18 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
-internal const val knowledgeShowIdArg = "id"
+internal const val showhowIdArg = "id"
 private const val base = "chinese_knowledge_show"
-private const val ROUTE = "$base/{$knowledgeShowIdArg}"
+private const val ROUTE = "$base/{$showhowIdArg}"
 
 internal class KnowledgeShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        URLDecoder.decode(checkNotNull(savedStateHandle[knowledgeShowIdArg]), UTF_8.name())
+        URLDecoder.decode(checkNotNull(savedStateHandle[showhowIdArg]), UTF_8.name())
     )
 }
 
-fun NavController.navigateToChineseKnowledgeShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseKnowledgeShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
 
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
@@ -44,7 +44,7 @@ fun NavGraphBuilder.chineseKnowledgeShowScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(knowledgeShowIdArg) { type = NavType.StringType }
+            navArgument(showhowIdArg) { type = NavType.StringType }
         )
     ) {
         KnowledgeShowRoute(

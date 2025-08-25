@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,39 +22,30 @@ interface ChineseIdiomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: IdiomEntity)
 
-    @Query("select i.* from idioms i left join idiom_collections c on i.id = c.id where i.id = :id")
-    fun get(id: Int): Flow<IdiomEntity>
+    @Query("select * from chinese_idiom where id = :id")
+    fun get(id: Int): Flow<IdiomEntity?>
 
-    @Query("select i.* from idioms i where i.id = (select id from idioms order by random() limit 1)")
-    fun random(): Flow<IdiomEntity>
+    @Query("select i.* from chinese_idiom i where i.id = (select id from chinese_idiom order by random() limit 1)")
+    fun random(): Flow<IdiomEntity?>
 
-    @Query("select id from idioms where id > :id order by id asc limit 1")
+    @Query("select id from chinese_idiom where id > :id order by id asc limit 1")
     fun getNextId(id: Int): Flow<Int?>
 
-    @Query("select id from idioms where id < :id order by id desc limit 1")
+    @Query("select id from chinese_idiom where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Query("select * from idioms order by id asc")
+    @Query("select * from chinese_idiom order by id asc")
     fun list(): PagingSource<Int, IdiomEntity>
 
-    @Query("select * from idioms where word like :query order by id asc")
+    @Query("select * from chinese_idiom where word like :query order by id asc")
     fun search(query: String): PagingSource<Int, IdiomEntity>
 
-    @Query("select i.* from idiom_collections c join idioms i on c.id = i.id order by collected_at desc")
-    fun collections(): PagingSource<Int, IdiomEntity>
+    @Query("select i.* from bookmarks b join chinese_idiom i on b.bookmarkable_id = i.id and b.bookmarkable_model = 'chinese_idiom' order by b.id desc")
+    fun bookmarks(): PagingSource<Int, IdiomEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun collect(entity: IdiomCollectionEntity)
-
-    @Query("delete from idiom_collections where id = :id")
-    suspend fun uncollect(id: Int)
-
-    @Query("select * from idiom_collections where id = :id")
-    fun isCollect(id: Int): Flow<IdiomCollectionEntity?>
-
-    @Query("select count(*) from idioms")
+    @Query("select count(*) from chinese_idiom")
     fun total(): Flow<Int>
 
-    @Query("delete from idioms")
+    @Query("delete from chinese_idiom")
     suspend fun clear()
 }

@@ -14,8 +14,7 @@ import com.hefengbao.jingmo.common.network.SafeApiCall
 import com.hefengbao.jingmo.data.database.AppDatabase
 import com.hefengbao.jingmo.data.database.entity.china.WorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryEntity
-import com.hefengbao.jingmo.data.database.entity.chinese.DictionaryPinyinEntity
+import com.hefengbao.jingmo.data.database.entity.chinese.CharacterEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.ExpressionEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
@@ -30,24 +29,25 @@ import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoem
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.model.DataWrapper
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.china.WorldCulturalHeritage
 import com.hefengbao.jingmo.data.model.chinese.AntitheticalCouplet
+import com.hefengbao.jingmo.data.model.chinese.Character
 import com.hefengbao.jingmo.data.model.chinese.ChineseKnowledge
-import com.hefengbao.jingmo.data.model.chinese.ChineseWisecrack
-import com.hefengbao.jingmo.data.model.chinese.DictionaryWrapper
-import com.hefengbao.jingmo.data.model.chinese.ExpressionWrapper
-import com.hefengbao.jingmo.data.model.chinese.IdiomWrapper
+import com.hefengbao.jingmo.data.model.chinese.Expression
+import com.hefengbao.jingmo.data.model.chinese.Idiom
 import com.hefengbao.jingmo.data.model.chinese.Lyric
 import com.hefengbao.jingmo.data.model.chinese.ModernPoetry
 import com.hefengbao.jingmo.data.model.chinese.Proverb
 import com.hefengbao.jingmo.data.model.chinese.Quote
 import com.hefengbao.jingmo.data.model.chinese.Riddle
 import com.hefengbao.jingmo.data.model.chinese.TongueTwister
+import com.hefengbao.jingmo.data.model.chinese.Wisecrack
 import com.hefengbao.jingmo.data.model.classicalliterature.ClassicPoem
-import com.hefengbao.jingmo.data.model.classicalliterature.PeopleWrapper
-import com.hefengbao.jingmo.data.model.classicalliterature.PoemSentence
-import com.hefengbao.jingmo.data.model.classicalliterature.WritingWrapper
+import com.hefengbao.jingmo.data.model.classicalliterature.People
+import com.hefengbao.jingmo.data.model.classicalliterature.Sentence
+import com.hefengbao.jingmo.data.model.classicalliterature.Writing
 import com.hefengbao.jingmo.data.network.Network
 import javax.inject.Inject
 
@@ -60,159 +60,185 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity) =
-        database.worldCulturalHeritageDao().insert(entity)
+        database.chinaWorldCulturalHeritageDao().insert(entity)
 
-    override suspend fun syncChinaWorldCultureHeritage(version: Int): Result<List<WorldCulturalHeritage>> =
+    override suspend fun syncChinaWorldCultureHeritage(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<WorldCulturalHeritage>> =
         safeApiCall {
-            network.chinaWorldCultureHeritage(version)
+            network.chinaWorldCultureHeritages(version, page)
         }
 
     override suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity) =
-        database.antitheticalCoupletDao().insert(entity)
+        database.chineseAntitheticalCoupletDao().insert(entity)
 
-    override suspend fun syncChineseAntitheticalCouplets(version: Int): Result<List<AntitheticalCouplet>> =
+    override suspend fun syncChineseAntitheticalCouplet(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<AntitheticalCouplet>> =
         safeApiCall {
-            network.chineseAntitheticalCouplets(version)
+            network.chineseAntitheticalCouplets(version, page)
         }
 
-    override suspend fun clearChineseDictionaryPinyin() =
-        database.dictionaryDao().clearDictionaryPinyin()
+    override suspend fun insertChineseCharacter(entity: CharacterEntity) =
+        database.chineseCharacterDao().insert(entity)
 
-    override suspend fun insertChineseDictionary(entity: DictionaryEntity) =
-        database.dictionaryDao().insert(entity)
 
-    override suspend fun insertChineseDictionaryPinyin(entity: DictionaryPinyinEntity) =
-        database.dictionaryDao().insertDictionaryPinyin(entity)
-
-    override suspend fun syncChineseDictionary(version: Int, page: Int): Result<DictionaryWrapper> =
+    override suspend fun syncChineseCharacter(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<Character>> =
         safeApiCall {
-            network.chineseDictionary(version, page)
+            network.chineseCharacters(version, page)
         }
 
     override suspend fun insertChineseExpression(entity: ExpressionEntity) =
-        database.expressionDao().insert(entity)
+        database.chineseExpressionDao().insert(entity)
 
-    override suspend fun syncChineseExpressions(
+    override suspend fun syncChineseExpression(
         version: Int,
         page: Int
-    ): Result<ExpressionWrapper> =
+    ): Result<DataWrapper<Expression>> =
         safeApiCall {
             network.chineseExpressions(version, page)
         }
 
-    override suspend fun syncChineseIdioms(version: Int, page: Int): Result<IdiomWrapper> =
+    override suspend fun syncChineseIdiom(version: Int, page: Int): Result<DataWrapper<Idiom>> =
         safeApiCall {
             network.chineseIdioms(version, page)
         }
 
     override suspend fun insertChineseIdiom(entity: IdiomEntity) {
-        database.idiomDao().insert(entity)
+        database.chineseIdiomDao().insert(entity)
     }
 
     override suspend fun insertChinesKnowledge(entity: KnowledgeEntity) {
-        database.knowledgeDao().insert(entity)
+        database.chineseKnowledgeDao().insert(entity)
     }
 
-    override suspend fun syncChineseKnowledge(version: Int): Result<List<ChineseKnowledge>> =
+    override suspend fun syncChineseKnowledge(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<ChineseKnowledge>> =
         safeApiCall {
-            network.chineseKnowledge(version)
+            network.chineseKnowledge(version, page)
         }
 
     override suspend fun insertChineseLyric(entity: LyricEntity) =
-        database.lyricDao().insert(entity)
+        database.chineseLyricDao().insert(entity)
 
-    override suspend fun syncChineseLyrics(version: Int): Result<List<Lyric>> = safeApiCall {
-        network.chineseLyrics(version)
-    }
+    override suspend fun syncChineseLyric(version: Int, page: Int): Result<DataWrapper<Lyric>> =
+        safeApiCall {
+            network.chineseLyrics(version, page)
+        }
 
     override suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity) =
         database.chineseModernPoetryDao().insert(entity)
 
-    override suspend fun syncChineseModernPoetry(version: Int): Result<List<ModernPoetry>> =
+    override suspend fun syncChineseModernPoetry(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<ModernPoetry>> =
         safeApiCall {
-            network.chineseModernPoetry(version)
+            network.chineseModernPoetry(version, page)
         }
 
     override suspend fun insertChineseProverb(entity: ProverbEntity) =
-        database.proverbDao().insert(entity)
+        database.chineseProverbDao().insert(entity)
 
-    override suspend fun syncChineseProverbs(version: Int): Result<List<Proverb>> = safeApiCall {
-        network.chineseProverbs(version)
-    }
+    override suspend fun syncChineseProverb(version: Int, page: Int): Result<DataWrapper<Proverb>> =
+        safeApiCall {
+            network.chineseProverbs(version, page)
+        }
 
     override suspend fun insertChineseQuote(entity: QuoteEntity) =
         database.chineseQuoteDao().insert(entity)
 
-    override suspend fun syncChineseQuotes(version: Int): Result<List<Quote>> = safeApiCall {
-        network.chineseQuotes(version)
-    }
-
-    override suspend fun insertChineseRiddle(entity: RiddleEntity) {
-        database.riddleDao().insert(entity)
-    }
-
-    override suspend fun syncChineseRiddles(version: Int): Result<List<Riddle>> = safeApiCall {
-        network.chineseRiddles(version)
-    }
-
-    override suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity) {
-        database.tongueTwisterDao().insert(entity)
-    }
-
-    override suspend fun syncChineseTongueTwisters(version: Int): Result<List<TongueTwister>> =
+    override suspend fun syncChineseQuote(version: Int, page: Int): Result<DataWrapper<Quote>> =
         safeApiCall {
-            network.chineseTongueTwisters(version)
+            network.chineseQuotes(version, page)
         }
 
-    override suspend fun syncChineseWisecracks(version: Int): Result<List<ChineseWisecrack>> =
+    override suspend fun insertChineseRiddle(entity: RiddleEntity) {
+        database.chineseRiddleDao().insert(entity)
+    }
+
+    override suspend fun syncChineseRiddle(version: Int, page: Int): Result<DataWrapper<Riddle>> =
         safeApiCall {
-            network.chineseWisecracks(version)
+            network.chineseRiddles(version, page)
+        }
+
+    override suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity) {
+        database.chineseTongueTwisterDao().insert(entity)
+    }
+
+    override suspend fun syncChineseTongueTwister(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<TongueTwister>> =
+        safeApiCall {
+            network.chineseTongueTwisters(version, page)
+        }
+
+    override suspend fun syncChineseWisecrack(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<Wisecrack>> =
+        safeApiCall {
+            network.chineseWisecracks(version, page)
         }
 
     override suspend fun insertChineseWisecrack(entity: WisecrackEntity) {
-        database.wisecrackDao().insert(entity)
+        database.chineseWisecrackDao().insert(entity)
     }
 
     override suspend fun insertClassicalLiteratureClassicPoem(entity: ClassicPoemEntity) =
-        database.classicPoemDao().insert(entity)
+        database.classicalLiteratureClassicPoemDao().insert(entity)
 
-    override suspend fun syncClassicalLiteratureClassicPoems(version: Int): Result<List<ClassicPoem>> =
+    override suspend fun syncClassicalLiteratureClassicPoem(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<ClassicPoem>> =
         safeApiCall {
-            network.classicalLiteratureClassicPoems(version)
+            network.classicalLiteratureClassicPoems(version, page)
         }
 
     override suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity) {
-        database.peopleDao().insert(entity)
+        database.classicalLiteraturePeopleDao().insert(entity)
     }
 
     override suspend fun syncClassicalLiteraturePeople(
         version: Int,
         page: Int
-    ): Result<PeopleWrapper> =
+    ): Result<DataWrapper<People>> =
         safeApiCall {
             network.classicalLiteraturePeople(version, page)
         }
 
     override suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity) {
-        database.sentenceDao().insert(entity)
+        database.classicalLiteratureSentenceDao().insert(entity)
     }
 
-    override suspend fun syncClassicalLiteratureSentence(version: Int): Result<List<PoemSentence>> =
+    override suspend fun syncClassicalLiteratureSentence(
+        version: Int,
+        page: Int
+    ): Result<DataWrapper<Sentence>> =
         safeApiCall {
-            network.classicalLiteratureSentences(version)
+            network.classicalLiteratureSentences(version, page)
         }
 
     override suspend fun insertClassicalLiteratureWriting(entity: WritingEntity) {
-        database.writingDao().insert(entity)
+        database.classicalLiteratureWritingDao().insert(entity)
     }
 
     override suspend fun insertClassicalLiteratureWriting(entities: List<WritingEntity>) =
-        database.writingDao().insert(entities)
+        database.classicalLiteratureWritingDao().insert(entities)
 
-    override suspend fun syncClassicalLiteratureWritings(
+    override suspend fun syncClassicalLiteratureWriting(
         version: Int,
         page: Int
-    ): Result<WritingWrapper> =
+    ): Result<DataWrapper<Writing>> =
         safeApiCall {
             network.classicalLiteratureWritings(version, page)
         }

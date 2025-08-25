@@ -17,12 +17,12 @@ import javax.inject.Inject
 class PeopleRepositoryImpl @Inject constructor(
     private val classicalLiteraturePeopleDao: ClassicalLiteraturePeopleDao
 ) : PeopleRepository {
-    override fun random(): Flow<PeopleEntity> = classicalLiteraturePeopleDao.random()
+    override fun getRandom(): Flow<PeopleEntity?> = classicalLiteraturePeopleDao.random()
 
-    override fun get(id: Int): Flow<PeopleEntity> =
+    override fun get(id: Int): Flow<PeopleEntity?> =
         classicalLiteraturePeopleDao.getPeopleById(id)
 
-    override fun getByName(name: String): Flow<PeopleEntity> =
+    override fun getByName(name: String): Flow<PeopleEntity?> =
         classicalLiteraturePeopleDao.getPeopleByName(name)
 
     override fun search(query: String) = classicalLiteraturePeopleDao.search("%$query%")

@@ -34,7 +34,7 @@ class RiddleReadViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.chineseRiddlesLastReadId
+                id.value = it.chineseRiddleLastReadId
             }
         }
     }
@@ -59,7 +59,7 @@ class RiddleReadViewModel @Inject constructor(
         initialValue = null
     )
 
-    val riddle = id.flatMapLatest { riddleRepository.get(it) }.stateIn(
+    val riddleEntity = id.flatMapLatest { riddleRepository.get(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null

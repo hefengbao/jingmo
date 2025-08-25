@@ -20,5 +20,5 @@ import javax.inject.Inject
 class LyricBookmarksViewModel @Inject constructor(
     repository: LyricRepository,
 ) : ViewModel() {
-    val lyricEntityCollections = repository.collections().cachedIn(viewModelScope)
+    val lyricEntities = repository.bookmarks().cachedIn(viewModelScope)
 }

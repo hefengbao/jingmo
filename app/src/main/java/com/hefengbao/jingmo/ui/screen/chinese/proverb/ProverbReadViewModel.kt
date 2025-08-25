@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.proverb
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.ProverbCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.datastore.ReadStatusPreference
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.ProverbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,9 +27,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class ProverbReadViewModel @Inject constructor(
+    bookmarkRepository: BookmarkRepository,
     private val repository: ProverbRepository,
     private val preference: ReadStatusPreference,
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val id = MutableStateFlow(1)
 
     init {
@@ -46,13 +47,7 @@ class ProverbReadViewModel @Inject constructor(
         viewModelScope.launch { preference.setChineseProverbLastReadId(id) }
     }
 
-    val proverb = id.flatMapLatest { repository.get(it) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed((5_000)),
-        initialValue = null
-    )
-
-    val proverbCollection = id.flatMapLatest { repository.isCollect(it) }.stateIn(
+    val proverbEntity = id.flatMapLatest { repository.get(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
@@ -69,16 +64,4 @@ class ProverbReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed((5_000)),
         initialValue = null
     )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(ProverbCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

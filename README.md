@@ -72,34 +72,28 @@ Gitee:[https://gitee.com/hefengbao/jingmo](https://gitee.com/hefengbao/jingmo)
 <img src="screenshot/alipay.jpg" style="width: 45%" alt="支付宝赞赏码">
 </div>
 
-| 平台     | 时间         | 用户      | 金额  |
-|--------|------------|---------|-----|
-| 微信赞赏码  | 2024.03.10 | zzz     | ￥5  |
-| 微信赞赏码  | 2024.03.10 | 小明同学*   | ￥1  |
-| 微信赞赏码  | 2024.04.28 | 初见      | ￥9  |
-| 微信赞赏码  | 2024.05.10 | 大王叫我来巡山 | ￥9  |
-| 微信赞赏码  | 2024.07.23 | 白鱼炖汤    | ￥19 |
-| 微信赞赏码  | 2024.12.29 | 1235    | ￥9  |
-| 微信赞赏码  | 2024.01.06 | TECH    | ￥5  |
-| 微信赞赏码  | 2025.03.18 | xxx     | ￥9  |
-| 支付宝赞赏码 | 2024.05.06 | *冉      | ￥5  |
-| 支付宝赞赏码 | 2024.07.04 | **国     | ￥10 |
-| 支付宝赞赏码 | 2025.01.21 | **如     | ￥1  |
-| 公众号赞赏  | 2024-01-29 | 十里坡剑神   | ￥19 |
-| 公众号赞赏  | 2024-02-19 | F       | ￥5  |
-| 公众号赞赏  | 2024-03-03 | 七月流火    | ￥9  |
-| 公众号赞赏  | 2024-03-15 | 帅蜀黍     | ￥9  |
-| 公众号赞赏  | 2024-12-26 | yuebao  | ￥5  |
-| 公众号赞赏  | 2025-01-05 | 牧淳      | ￥9  |
+感谢各位的支持：
 
-感谢各位的支持！！！
+![https://hefengbao.github.io/sponsors/](https://hefengbao.github.io/sponsors/)
 
 ## 运行项目
 
 ```shell
 git clone https://github.com/hefengbao/jingmo.git
 ```
-在项目根目录下新建 `keystore.properties` 文件， 添加的参数
+在 `local.properties` 按如下示例添加：
+
+```
+user_agreement_url="https://jingmo.pages.dev/docs/user-agreement"
+icp="蜀ICP备17009649号-10A"
+bugly_id="f75198f767"
+bugly_privacy_url="https://privacy.qq.com/document/preview/fc748b3d96224fdb825ea79e132c1a56"
+base_url1="https://jingmo-data.pages.dev/api/"
+base_url2="https://jingmo-data2.pages.dev/api/"
+base_url3="https://jingmo-data3.pages.dev/api/"
+```
+
+在项目根目录下新建 `keystore.properties` 文件， 添加的参数：
 
 ```
 storeFile=
@@ -107,7 +101,6 @@ storePassword=
 keyAlias=
 keyPassword=
 ```
-
 运行项目即可。
 
 ## 参考数据源：

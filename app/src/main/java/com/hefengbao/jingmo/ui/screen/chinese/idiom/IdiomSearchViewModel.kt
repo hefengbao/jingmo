@@ -32,7 +32,7 @@ class IdiomSearchViewModel @Inject constructor(
     }
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-    var idioms = queryStateFlow
+    var idiomEntities = queryStateFlow
         .debounce(200)
         .distinctUntilChanged()
         .flatMapLatest {

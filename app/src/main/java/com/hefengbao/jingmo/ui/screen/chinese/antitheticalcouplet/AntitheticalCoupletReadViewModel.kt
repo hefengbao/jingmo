@@ -9,9 +9,9 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.AntitheticalCoupletRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,8 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AntitheticalCoupletReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
+    private val bookmarkRepository: BookmarkRepository,
     private val repository: AntitheticalCoupletRepository
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
 
     private var id = MutableStateFlow(1)
 
@@ -46,16 +47,8 @@ class AntitheticalCoupletReadViewModel @Inject constructor(
         setLastReadId(id)
     }
 
-    val antitheticalCouplet = id.flatMapLatest {
+    val antitheticalCoupletEntity = id.flatMapLatest {
         repository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val antitheticalCoupletCollection = id.flatMapLatest {
-        repository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -77,18 +70,6 @@ class AntitheticalCoupletReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(AntitheticalCoupletCollectionEntity(id))
-        }
-    }
 
     private fun setLastReadId(id: Int) {
         viewModelScope.launch {

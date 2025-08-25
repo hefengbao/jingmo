@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -33,10 +34,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.AntitheticalCoupletEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.components.AntitheticalCoupletPanel
 import kotlin.math.abs
@@ -45,67 +49,85 @@ import kotlin.math.abs
 fun AntitheticalCoupletIndexRoute(
     viewModel: AntitheticalCoupletIndexViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
 ) {
-    val antitheticalCouplet by viewModel.antitheticalCouplet.collectAsState(initial = null)
-    val antitheticalCoupletCollection by viewModel.antitheticalCoupletCollection.collectAsState(
-        initial = null
-    )
+    val antitheticalCoupletEntity by viewModel.antitheticalCoupletEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
 
     AntitheticalCoupletIndexScreen(
-        antitheticalCouplet = antitheticalCouplet,
-        antitheticalCoupletCollection = antitheticalCoupletCollection,
+        antitheticalCoupletEntity = antitheticalCoupletEntity,
+        bookmarkEntity = bookmarkEntity,
         onBackClick = onBackClick,
-        onReadMoreClick = onReadMoreClick,
         onBookmarksClick = onBookmarksClick,
-        onSearchClick = onSearchClick,
+        onCaptureClick = onCaptureClick,
+        onReadMoreClick = onReadMoreClick,
         onRefresh = { viewModel.getRandom() },
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
-        isCollect = {
-            viewModel.getIdiomCollectionEntity(it)
-        }
+        onSearchClick = onSearchClick,
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseAntitheticalCouplet.model) },
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ChineseAntitheticalCouplet.model
+            )
+        },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseAntitheticalCouplet.model) }
     )
 }
 
 @Composable
 private fun AntitheticalCoupletIndexScreen(
     modifier: Modifier = Modifier,
-    antitheticalCouplet: AntitheticalCoupletEntity?,
-    antitheticalCoupletCollection: AntitheticalCoupletCollectionEntity?,
+    antitheticalCoupletEntity: AntitheticalCoupletEntity?,
+    bookmarkEntity: BookmarkEntity?,
     onBackClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
-    onSearchClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
     onRefresh: () -> Unit,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
-    isCollect: (Int) -> Unit,
+    onSearchClick: () -> Unit,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
 ) {
     SimpleScaffold(
         onBackClick = onBackClick,
-        title = "对联",
+        title = stringResource(R.string.chinese_antitheticalcouplet),
         actions = {
             IconButton(onClick = onBookmarksClick) {
-                Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏")
+                Icon(
+                    imageVector = Icons.Outlined.Bookmarks,
+                    contentDescription = stringResource(R.string.bookmarks)
+                )
             }
             IconButton(onClick = onReadMoreClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ReadMore,
-                    contentDescription = "阅读"
+                    contentDescription = stringResource(R.string.read_more)
                 )
             }
+            antitheticalCoupletEntity?.let { entity ->
+                IconButton(onClick = { onCaptureClick(entity.id) }) {
+                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
+                }
+            }
             IconButton(onClick = onSearchClick) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "查找")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = stringResource(R.string.search)
+                )
             }
         },
         bottomBar = {
             BottomAppBar(
                 floatingActionButton = {
                     FloatingActionButton(onClick = onRefresh) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "刷新")
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.refresh)
+                        )
                     }
                 },
                 actions = {
@@ -114,25 +136,25 @@ private fun AntitheticalCoupletIndexScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                antitheticalCouplet?.let { entity ->
-                                    if (antitheticalCoupletCollection != null) {
-                                        setUncollect(entity.id)
+                                antitheticalCoupletEntity?.let { entity ->
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(entity.id)
                                     } else {
-                                        setCollect(entity.id)
+                                        addBookmark(entity.id)
                                     }
                                 }
                             }
                         ) {
-                            if (antitheticalCoupletCollection != null) {
+                            if (bookmarkEntity != null) {
                                 Icon(
                                     imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.add_bookmark),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
+                                    contentDescription = stringResource(R.string.cancel_bookmark)
                                 )
                             }
                         }
@@ -157,9 +179,9 @@ private fun AntitheticalCoupletIndexScreen(
                     }
                 )
         ) {
-            antitheticalCouplet?.let { entity ->
+            antitheticalCoupletEntity?.let { entity ->
                 LaunchedEffect(entity) {
-                    isCollect(entity.id)
+                    isBookmarked(entity.id)
                 }
                 AntitheticalCoupletPanel(antitheticalCouplet = entity)
             }

@@ -36,13 +36,13 @@ fun LyricSearchRoute(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
 ) {
-    val lyricEntityCollections by viewModel.lyricEntityCollections.collectAsState(initial = emptyList())
+    val lyricEntities by viewModel.lyricEntities.collectAsState(initial = emptyList())
 
     LyricSearchScreen(
         onBackClick = onBackClick,
         onItemClick = onItemClick,
         onSearch = { viewModel.onQueryChange(it) },
-        items = lyricEntityCollections
+        lyricEntities = lyricEntities
     )
 }
 
@@ -52,7 +52,7 @@ private fun LyricSearchScreen(
     onBackClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onSearch: (String) -> Unit,
-    items: List<LyricEntity>
+    lyricEntities: List<LyricEntity>
 ) {
     var query by rememberSaveable {
         mutableStateOf("")
@@ -69,7 +69,7 @@ private fun LyricSearchScreen(
     ) {
         LazyColumn {
             items(
-                items = items
+                items = lyricEntities
             ) { entity ->
                 var text = ""
                 if (entity.writer != null) {

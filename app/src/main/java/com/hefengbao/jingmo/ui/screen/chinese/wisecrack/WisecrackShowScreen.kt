@@ -9,25 +9,24 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.outlined.Photo
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.components.ChineseWisecrackPanel
 
@@ -38,61 +37,64 @@ fun ChineseWisecrackShowRoute(
     onCaptureClick: (Int) -> Unit,
 ) {
 
-    val chineseWisecrack by viewModel.wisecrack.collectAsState()
-    val chineseWisecrackCollectionEntity by viewModel.chineseWisecrackCollectionEntity.collectAsState()
+    val wisecrackEntity by viewModel.wisecrackEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
 
     ChineseWisecrackShowScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        chineseCrack = chineseWisecrack,
-        wisecrackCollectionEntity = chineseWisecrackCollectionEntity,
-        setUncollect = { viewModel.setUncollect(it) },
-        setCollect = { viewModel.setCollect(it) },
+        wisecrackEntity = wisecrackEntity,
+        bookmarkEntity = bookmarkEntity,
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseWisecrack.model) },
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseWisecrack.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseWisecrack.model) }
     )
 }
 
 @Composable
 private fun ChineseWisecrackShowScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    chineseCrack: WisecrackEntity?,
-    wisecrackCollectionEntity: WisecrackCollectionEntity?,
-    setUncollect: (Int) -> Unit,
-    setCollect: (Int) -> Unit,
+    wisecrackEntity: WisecrackEntity?,
+    bookmarkEntity: BookmarkEntity?,
+    cancelBookmark: (Int) -> Unit,
+    addBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit
 ) {
-    chineseCrack?.let { entity ->
+    wisecrackEntity?.let { entity ->
+        LaunchedEffect(entity) { isBookmarked(entity.id) }
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "歇后语",
+            title = stringResource(R.string.chinese_wisecrack),
             actions = {
                 IconButton(onClick = { onCaptureClick(entity.id) }) {
-                    Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Outlined.Photo,
+                        contentDescription = stringResource(R.string.capture)
+                    )
                 }
             },
-            bottomBar = {
-                BottomAppBar {
-                    Row(
-                        modifier = modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        if (wisecrackCollectionEntity == null) {
-                            IconButton(onClick = { setCollect(entity.id) }) {
-                                Icon(
-                                    imageVector = Icons.Default.BookmarkBorder,
-                                    contentDescription = null
-                                )
-                            }
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = {
+                        if (bookmarkEntity == null) {
+                            addBookmark(entity.id)
                         } else {
-                            IconButton(onClick = { setUncollect(entity.id) }) {
-                                Icon(
-                                    imageVector = Icons.Default.Bookmark,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
+                            cancelBookmark(entity.id)
                         }
+                    }
+                ) {
+                    if (bookmarkEntity == null) {
+                        Icon(
+                            imageVector = Icons.Default.BookmarkBorder,
+                            contentDescription = stringResource(R.string.add_bookmark)
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Bookmark,
+                            contentDescription = stringResource(R.string.cancel_bookmark),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
             }

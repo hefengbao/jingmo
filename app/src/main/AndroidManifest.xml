@@ -45,7 +45,7 @@
         <receiver
             android:name=".widgets.ChineseIdiomWidgetReceiver"
             android:exported="false"
-            android:label="@string/widget_idiom">
+            android:label="@string/widget_chinese_idiom">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -56,7 +56,7 @@
         <receiver
             android:name=".widgets.ClassicalLiteraturePoemWidgetReceiver"
             android:exported="false"
-            android:label="@string/widget_poem">
+            android:label="@string/widget_classicalliterature_writing">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -67,7 +67,7 @@
         <receiver
             android:name=".widgets.ClassicalLiteratureSentenceWidgetReceiver"
             android:exported="false"
-            android:label="@string/widget_poem_sentence">
+            android:label="@string/widget_classicalliterature_sentence">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

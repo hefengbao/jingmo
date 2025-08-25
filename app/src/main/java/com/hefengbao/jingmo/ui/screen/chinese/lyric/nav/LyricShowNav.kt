@@ -20,18 +20,18 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
-internal const val lyricShowIdArg = "id"
+internal const val showIdArg = "id"
 private const val base = "chinese_lyric_show"
-private const val ROUTE = "$base/{$lyricShowIdArg}"
+private const val ROUTE = "$base/{$showIdArg}"
 
 internal class LyricShowArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        URLDecoder.decode(checkNotNull(savedStateHandle[lyricShowIdArg]), UTF_8.name())
+        URLDecoder.decode(checkNotNull(savedStateHandle[showIdArg]), UTF_8.name())
     )
 }
 
-fun NavController.navigateToChineseLyricShowScreen(id: String) {
-    val encodedId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseLyricShowScreen(id: Int) {
+    val encodedId = URLEncoder.encode(id.toString(), UTF_8.name())
 
     this.navigate("$base/$encodedId") {
         launchSingleTop = true
@@ -40,15 +40,17 @@ fun NavController.navigateToChineseLyricShowScreen(id: String) {
 
 fun NavGraphBuilder.chineseLyricShowScreen(
     onBackClick: () -> Unit,
+    onCaptureClick: (id: Int) -> Unit,
 ) {
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(lyricShowIdArg) { type = NavType.StringType }
+            navArgument(showIdArg) { type = NavType.StringType }
         )
     ) {
         LyricShowRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onCaptureClick = onCaptureClick
         )
     }
 }

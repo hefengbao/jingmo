@@ -9,9 +9,9 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.IdiomCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,15 +28,16 @@ import javax.inject.Inject
 @HiltViewModel
 class IdiomReadViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
-    private val idiomRepository: IdiomRepository
-) : ViewModel() {
+    private val idiomRepository: IdiomRepository,
+    private val bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
 
     private var id = MutableStateFlow(1)
 
     init {
         viewModelScope.launch {
             preferenceRepository.getReadStatus().collectLatest {
-                id.value = it.chineseIdiomsLastReadId
+                id.value = it.chineseIdiomLastReadId
             }
         }
     }
@@ -45,16 +46,8 @@ class IdiomReadViewModel @Inject constructor(
         this.id.value = id
     }
 
-    val idiom = id.flatMapLatest {
+    val idiomEntity = id.flatMapLatest {
         idiomRepository.get(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    val idiomCollectionEntity = id.flatMapLatest {
-        idiomRepository.isCollect(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -76,18 +69,6 @@ class IdiomReadViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            idiomRepository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            idiomRepository.collect(IdiomCollectionEntity(id))
-        }
-    }
 
     fun setLastReadId(id: Int) {
         viewModelScope.launch {

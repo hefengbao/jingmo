@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureWritingDao
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
@@ -22,9 +21,9 @@ import javax.inject.Inject
 class WritingRepositoryImpl @Inject constructor(
     private val dao: ClassicalLiteratureWritingDao
 ) : WritingRepository {
-    override fun get(id: Int): Flow<WritingEntity> = dao.get(id)
+    override fun get(id: Int): Flow<WritingEntity?> = dao.get(id)
 
-    override fun random(): Flow<WritingEntity> = dao.random()
+    override fun getRandom(): Flow<WritingEntity?> = dao.random()
 
     override fun list(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
@@ -47,21 +46,12 @@ class WritingRepositoryImpl @Inject constructor(
 
     override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
-    override fun collections(): Flow<PagingData<WritingEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<WritingEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            dao.collections()
+            dao.bookmarks()
         }
     ).flow
-
-    override suspend fun collect(entity: WritingCollectionEntity) =
-        dao.collect(entity)
-
-    override suspend fun uncollect(writingId: Int) =
-        dao.uncollect(writingId)
-
-    override fun isCollect(id: Int): Flow<WritingCollectionEntity?> =
-        dao.isCollect(id)
 
     override fun getIdTitle(query: String): Flow<PagingData<IdTitle>> = Pager(
         config = PagingConfig(pageSize = 30),

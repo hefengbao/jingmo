@@ -38,11 +38,11 @@ fun SentenceSearchRoute(
     onBackClick: () -> Unit,
     onCardClick: (Int) -> Unit,
 ) {
-    val sentences = viewModel.sentences.collectAsLazyPagingItems()
+    val pagingItems = viewModel.sentenceEntities.collectAsLazyPagingItems()
 
     SentenceSearchScreen(
         onBackClick = onBackClick,
-        sentences = sentences,
+        pagingItems = pagingItems,
         onSearch = { viewModel.search(it) },
         onCardClick = onCardClick
     )
@@ -52,7 +52,7 @@ fun SentenceSearchRoute(
 private fun SentenceSearchScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    sentences: LazyPagingItems<SentenceEntity>,
+    pagingItems: LazyPagingItems<SentenceEntity>,
     onSearch: (String) -> Unit,
     onCardClick: (Int) -> Unit,
 ) {
@@ -74,9 +74,9 @@ private fun SentenceSearchScreen(
             modifier = modifier.fillMaxWidth()
         ) {
             items(
-                count = sentences.itemCount
+                count = pagingItems.itemCount
             ) {
-                sentences[it]?.let { entity ->
+                pagingItems[it]?.let { entity ->
                     Card(
                         modifier = modifier
                             .fillMaxWidth()

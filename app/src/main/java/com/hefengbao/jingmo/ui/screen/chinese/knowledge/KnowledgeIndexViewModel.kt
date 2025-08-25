@@ -9,10 +9,10 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.knowledge
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,45 +23,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class KnowledgeIndexViewModel @Inject constructor(
-    private val repository: KnowledgeRepository
-) : ViewModel() {
+    private val knowledgeRepository: KnowledgeRepository,
+    private val bookmarkRepository: BookmarkRepository
+) : BaseViewModel(bookmarkRepository) {
+
     init {
-        random()
+        getRandom()
     }
 
     private val _knowledgeEntity: MutableStateFlow<KnowledgeEntity?> = MutableStateFlow(null)
     val knowledgeEntity: SharedFlow<KnowledgeEntity?> = _knowledgeEntity
 
-    fun random() {
+    fun getRandom() {
         viewModelScope.launch {
-            repository.random().collectLatest {
+            knowledgeRepository.getRandom().collectLatest {
                 _knowledgeEntity.value = it
             }
-        }
-    }
-
-    private val _knowledgeCollectionEntity: MutableStateFlow<KnowledgeCollectionEntity?> =
-        MutableStateFlow(null)
-    val knowledgeCollectionEntity: SharedFlow<KnowledgeCollectionEntity?> =
-        _knowledgeCollectionEntity
-
-    fun isCollect(id: Int) {
-        viewModelScope.launch {
-            repository.isCollect(id).collectLatest {
-                _knowledgeCollectionEntity.value = it
-            }
-        }
-    }
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(KnowledgeCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
         }
     }
 }

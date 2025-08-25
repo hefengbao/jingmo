@@ -21,13 +21,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.components.WritingPanel
 import kotlinx.serialization.json.Json
@@ -39,19 +43,26 @@ fun WritingShowRoute(
     onCaptureClick: (Int) -> Unit
 ) {
 
-    val writing by viewModel.writing.collectAsState()
-    val writingCollectionEntity by viewModel.writingCollectionEntity.collectAsState()
+    val writingEntity by viewModel.writingEntity.collectAsState()
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(null)
+
+    writingEntity?.let { entity ->
+        LaunchedEffect(entity) {
+            viewModel.isBookmarked(entity.id, Category.ClassicalLiteratureWriting.model)
+        }
+    }
 
     WritingShowScreen(
         onBackClick = onBackClick,
         onCaptureClick = onCaptureClick,
-        writing = writing,
-        writingCollectionEntity = writingCollectionEntity,
-        setCollect = {
-            viewModel.setCollect(it)
-        },
-        setUncollect = {
-            viewModel.setUncollect(it)
+        writingEntity = writingEntity,
+        bookmarkEntity = bookmarkEntity,
+        addBookmark = { viewModel.addBookmark(it, Category.ClassicalLiteratureWriting.model) },
+        cancelBookmark = {
+            viewModel.cancelBookmark(
+                it,
+                Category.ClassicalLiteratureWriting.model
+            )
         },
         json = viewModel.json
     )
@@ -62,16 +73,16 @@ private fun WritingShowScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onCaptureClick: (Int) -> Unit,
-    writing: WritingEntity?,
-    writingCollectionEntity: WritingCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    writingEntity: WritingEntity?,
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
     json: Json
 ) {
-    writing?.let {
+    writingEntity?.let {
         SimpleScaffold(
             onBackClick = onBackClick,
-            title = "诗文",
+            title = stringResource(R.string.classicalliterature_writing),
             actions = {
                 IconButton(onClick = { onCaptureClick(it.id) }) {
                     Icon(imageVector = Icons.Outlined.Photo, contentDescription = null)
@@ -88,23 +99,23 @@ private fun WritingShowScreen(
                         ) {
                             IconButton(
                                 onClick = {
-                                    if (writingCollectionEntity != null) {
-                                        setUncollect(writing.id)
+                                    if (bookmarkEntity != null) {
+                                        cancelBookmark(writingEntity.id)
                                     } else {
-                                        setCollect(writing.id)
+                                        addBookmark(writingEntity.id)
                                     }
                                 }
                             ) {
-                                if (writingCollectionEntity != null) {
+                                if (bookmarkEntity != null) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 } else {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }

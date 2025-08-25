@@ -13,7 +13,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.ClassicalLiteratureSentenceDao
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceCollectionEntity
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,10 +20,10 @@ import javax.inject.Inject
 class SentenceRepositoryImpl @Inject constructor(
     private val classicalLiteratureSentenceDao: ClassicalLiteratureSentenceDao
 ) : SentenceRepository {
-    override fun get(id: Int): Flow<SentenceEntity> =
+    override fun get(id: Int): Flow<SentenceEntity?> =
         classicalLiteratureSentenceDao.get(id)
 
-    override fun random(): Flow<SentenceEntity> = classicalLiteratureSentenceDao.random()
+    override fun getRandom(): Flow<SentenceEntity?> = classicalLiteratureSentenceDao.random()
 
     override fun getNextId(id: Int): Flow<Int?> = classicalLiteratureSentenceDao.getNextId(id)
 
@@ -35,18 +34,10 @@ class SentenceRepositoryImpl @Inject constructor(
         pagingSourceFactory = { classicalLiteratureSentenceDao.search("%$query%") }
     ).flow
 
-    override fun collections(): Flow<PagingData<SentenceEntity>> = Pager(
+    override fun bookmarks(): Flow<PagingData<SentenceEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            classicalLiteratureSentenceDao.collections()
+            classicalLiteratureSentenceDao.bookmarks()
         }
     ).flow
-
-    override suspend fun collect(entity: SentenceCollectionEntity) =
-        classicalLiteratureSentenceDao.collect(entity)
-
-    override suspend fun uncollect(id: Int) = classicalLiteratureSentenceDao.uncollect(id)
-
-    override fun isCollect(id: Int): Flow<SentenceCollectionEntity?> =
-        classicalLiteratureSentenceDao.isCollect(id)
 }

@@ -10,9 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.knowledge
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.chinese.KnowledgeRepository
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.nav.KnowledgeShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,41 +21,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class KnowledgeShowViewModel @Inject constructor(
-    private val repository: KnowledgeRepository,
+    bookmarkRepository: BookmarkRepository,
+    private val knowledgeRepository: KnowledgeRepository,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val args = KnowledgeShowArgs(savedStateHandle)
     private var id = MutableStateFlow(args.id.toInt())
 
-    val knowledgeEntity = id.flatMapLatest { repository.get(it) }
+    val knowledgeEntity = id.flatMapLatest { knowledgeRepository.get(it) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = null
         )
-
-    val knowledgeCollectionEntity = id.flatMapLatest { repository.isCollect(it) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = null
-        )
-
-    fun collect(id: Int) {
-        viewModelScope.launch {
-            repository.collect(KnowledgeCollectionEntity(id))
-        }
-    }
-
-    fun uncollect(id: Int) {
-        viewModelScope.launch {
-            repository.uncollect(id)
-        }
-    }
 }

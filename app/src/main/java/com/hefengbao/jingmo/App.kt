@@ -10,14 +10,21 @@
 package com.hefengbao.jingmo
 
 import android.app.Application
+import android.content.Context
 import com.tencent.bugly.crashreport.CrashReport
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class App : Application() {
+
     override fun onCreate() {
         super.onCreate()
+        appContext = applicationContext
+        CrashReport.initCrashReport(applicationContext, BuildConfig.BUGLY_ID, BuildConfig.DEBUG)
+    }
 
-        CrashReport.initCrashReport(applicationContext, BuildConfig.BUGLY, BuildConfig.DEBUG)
+    companion object {
+        lateinit var appContext: Context
+            private set
     }
 }

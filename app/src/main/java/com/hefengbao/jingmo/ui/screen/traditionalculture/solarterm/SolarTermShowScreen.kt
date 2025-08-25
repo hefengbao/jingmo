@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.model.traditionalculture.SolarTerm
-import com.hefengbao.jingmo.ui.component.BackgroundTitle
+import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 
 @Composable
@@ -90,7 +90,7 @@ private fun SolarTermItem(
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        BackgroundTitle(title = label)
+        EmphasizedTitle(title = label)
         Text(text = text, modifier = modifier.fillMaxWidth())
     }
 }

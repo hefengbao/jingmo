@@ -20,22 +20,22 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 
-internal const val tongueTwisterShowIdArg = "tongueTwisterId"
+internal const val showIdArg = "tongueTwisterId"
 private const val base = "chinese_tongue_twister"
-private const val ROUTE = "$base/{$tongueTwisterShowIdArg}"
+private const val ROUTE = "$base/{$showIdArg}"
 
 internal class TongueTwisterShowArgs(val tongueTwisterId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[tongueTwisterShowIdArg]),
+                    checkNotNull(savedStateHandle[showIdArg]),
                     UTF_8.name()
                 )
             )
 }
 
-fun NavController.navigateToChineseTongueTwisterShowScreen(id: String) {
-    val encodeId = URLEncoder.encode(id, UTF_8.name())
+fun NavController.navigateToChineseTongueTwisterShowScreen(id: Int) {
+    val encodeId = URLEncoder.encode(id.toString(), UTF_8.name())
     this.navigate("$base/$encodeId") {
         launchSingleTop = true
     }
@@ -47,7 +47,7 @@ fun NavGraphBuilder.chineseTongueTwisterShowScreen(
     composable(
         route = ROUTE,
         arguments = listOf(
-            navArgument(tongueTwisterShowIdArg) { type = NavType.StringType }
+            navArgument(showIdArg) { type = NavType.StringType }
         )
     ) {
         TongueTwisterShowRoute(

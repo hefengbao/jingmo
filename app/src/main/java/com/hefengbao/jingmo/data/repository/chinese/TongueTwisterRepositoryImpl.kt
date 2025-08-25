@@ -17,12 +17,12 @@ import javax.inject.Inject
 class TongueTwisterRepositoryImpl @Inject constructor(
     private val dao: ChineseTongueTwisterDao
 ) : TongueTwisterRepository {
-    override fun get(id: Int): Flow<TongueTwisterEntity> = dao.get(id)
+    override fun get(id: Int): Flow<TongueTwisterEntity?> = dao.get(id)
 
     override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
     override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
-    override fun search(): Flow<List<TongueTwisterEntity>> =
+    override fun list(): Flow<List<TongueTwisterEntity>> =
         dao.list()
 }

@@ -16,6 +16,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.hefengbao.jingmo.common.Constant
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.data.model.HomeItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -128,42 +129,44 @@ class HomePreference(
     companion object {
         //古诗文 classical_literature CLASSICAL_LITERATURE
         private val PREF_CLASSICAL_LITERATURE_CLASSIC_POEM =
-            booleanPreferencesKey("key_classical_literature_classic_poem")
+            booleanPreferencesKey(Category.ClassicalLiteratureClassicPoem.model)
         private val PREF_CLASSICAL_LITERATURE_PEOPLE =
-            booleanPreferencesKey("key_classical_literature_people")
+            booleanPreferencesKey(Category.ClassicalLiteraturePeople.model)
         private val PREF_CLASSICAL_LITERATURE_SENTENCE =
-            booleanPreferencesKey("key_classical_literature_sentence")
+            booleanPreferencesKey(Category.ClassicalLiteratureSentence.model)
         private val PREF_CLASSICAL_LITERATURE_WRITING =
-            booleanPreferencesKey("key_classical_literature_writing")
+            booleanPreferencesKey(Category.ClassicalLiteratureWriting.model)
 
         //传统文化 traditional_culture TRADITIONAL_CULTURE
         private val PREF_TRADITIONAL_CULTURE_CALENDAR =
-            booleanPreferencesKey("key_traditional_calendar")
+            booleanPreferencesKey(Category.TraditionalCultureCalendar.model)
         private val PREF_TRADITIONAL_CULTURE_COLOR =
-            booleanPreferencesKey("key_traditional_culture_color")
+            booleanPreferencesKey(Category.TraditionalCultureColor.model)
         private val PREF_TRADITIONAL_CULTURE_FESTIVAL =
-            booleanPreferencesKey("key_traditional_culture_festival")
+            booleanPreferencesKey(Category.TraditionalCultureFestival.model)
         private val PREF_TRADITIONAL_CULTURE_SOLAR_TERM =
-            booleanPreferencesKey("key_traditional_culture_solar_term")
+            booleanPreferencesKey(Category.TraditionalCultureSolarTerm.model)
 
         // 中国
         private val PREF_CHINA_WORLD_CULTURE_HERITAGE =
-            booleanPreferencesKey("key_china_world_culture_heritage")
+            booleanPreferencesKey(Category.ChinaWorldCulturalHeritage.model)
 
         // 汉语
         private val PREF_CHINESE_ANTITHETICAL_COUPLET =
-            booleanPreferencesKey("key_chinese_antithetical_couplet")
-        private val PREF_CHINESE_CHARACTER = booleanPreferencesKey("key_chinese_character")
-        private val PREF_CHINESE_EXPRESSION = booleanPreferencesKey("key_chinese_expression")
-        private val PREF_CHINESE_IDIOM = booleanPreferencesKey("key_chinese_idiom")
-        private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey("key_chinese_knowledge")
-        private val PREF_CHINESE_LYRIC = booleanPreferencesKey("key_chinese_lyric")
-        private val PREF_CHINESE_MODERN_POETRY = booleanPreferencesKey("key_chinese_modern_poetry")
-        private val PREF_CHINESE_PROVERB = booleanPreferencesKey("key_chinese_proverb")
-        private val PREF_CHINESE_QUOTE = booleanPreferencesKey("key_chinese_quote")
-        private val PREF_CHINESE_RIDDLE = booleanPreferencesKey("key_chinese_riddle")
+            booleanPreferencesKey(Category.ChineseAntitheticalCouplet.model)
+        private val PREF_CHINESE_CHARACTER = booleanPreferencesKey(Category.ChineseCharacter.model)
+        private val PREF_CHINESE_EXPRESSION =
+            booleanPreferencesKey(Category.ChineseExpression.model)
+        private val PREF_CHINESE_IDIOM = booleanPreferencesKey(Category.ChineseIdiom.model)
+        private val PREF_CHINESE_KNOWLEDGE = booleanPreferencesKey(Category.ChineseKnowledge.model)
+        private val PREF_CHINESE_LYRIC = booleanPreferencesKey(Category.ChineseLyric.model)
+        private val PREF_CHINESE_MODERN_POETRY =
+            booleanPreferencesKey(Category.ChineseModernPoetry.model)
+        private val PREF_CHINESE_PROVERB = booleanPreferencesKey(Category.ChineseProverb.model)
+        private val PREF_CHINESE_QUOTE = booleanPreferencesKey(Category.ChineseQuote.model)
+        private val PREF_CHINESE_RIDDLE = booleanPreferencesKey(Category.ChineseRiddle.model)
         private val PREF_CHINESE_TONGUE_TWISTER =
-            booleanPreferencesKey("key_chinese_tongue_twister")
-        private val PREF_CHINESE_WISECRACK = booleanPreferencesKey("key_chinese_wisecrack")
+            booleanPreferencesKey(Category.ChineseTongueTwister.model)
+        private val PREF_CHINESE_WISECRACK = booleanPreferencesKey(Category.ChineseWisecrack.model)
     }
 }

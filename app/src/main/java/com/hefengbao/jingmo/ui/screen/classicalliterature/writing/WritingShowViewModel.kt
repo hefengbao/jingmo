@@ -10,9 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingCollectionEntity
+import com.hefengbao.jingmo.base.BaseViewModel
+import com.hefengbao.jingmo.data.repository.BookmarkRepository
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.WritingShowArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -29,37 +28,18 @@ import javax.inject.Inject
 @HiltViewModel
 class WritingShowViewModel @Inject constructor(
     private val writingRepository: WritingRepository,
+    bookmarkRepository: BookmarkRepository,
     savedStateHandle: SavedStateHandle,
     val json: Json
-) : ViewModel() {
+) : BaseViewModel(bookmarkRepository) {
     private val args = WritingShowArgs(savedStateHandle)
     private var id = MutableStateFlow(args.id.toInt())
 
-    val writing = id.flatMapLatest {
+    val writingEntity = id.flatMapLatest {
         writingRepository.get(it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = null
     )
-
-    val writingCollectionEntity = id.flatMapLatest {
-        writingRepository.isCollect(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null
-    )
-
-    fun setUncollect(id: Int) {
-        viewModelScope.launch {
-            writingRepository.uncollect(id)
-        }
-    }
-
-    fun setCollect(id: Int) {
-        viewModelScope.launch {
-            writingRepository.collect(WritingCollectionEntity(id))
-        }
-    }
 }

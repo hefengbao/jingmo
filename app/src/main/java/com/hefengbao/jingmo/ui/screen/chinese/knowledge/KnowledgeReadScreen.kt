@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -28,13 +29,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeCollectionEntity
+import com.hefengbao.jingmo.R
+import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
+import com.hefengbao.jingmo.data.enums.Category
 import com.hefengbao.jingmo.ui.component.SimpleScaffold
 import com.hefengbao.jingmo.ui.screen.chinese.knowledge.components.KnowledgePanel
 import kotlin.math.abs
@@ -44,17 +49,18 @@ fun ChineseKnowledgeReadRoute(
     viewModel: KnowledgeReadViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    val knowledgeEntity by viewModel.knowledge.collectAsState(initial = null)
-    val knowledgeCollectionEntity by viewModel.knowledgeCollection.collectAsState(initial = null)
+    val knowledgeEntity by viewModel.knowledgeEntity.collectAsState(initial = null)
+    val bookmarkEntity by viewModel.bookmarkEntity.collectAsState(initial = null)
     val nextId by viewModel.nextId.collectAsState()
     val prevId by viewModel.prevId.collectAsState()
 
     ChineseKnowledgeReadScreen(
         onBackClick = onBackClick,
         knowledgeEntity = knowledgeEntity,
-        knowledgeCollectionEntity = knowledgeCollectionEntity,
-        setCollect = { viewModel.collect(it) },
-        setUncollect = { viewModel.uncollect(it) },
+        bookmarkEntity = bookmarkEntity,
+        addBookmark = { viewModel.addBookmark(it, Category.ChineseKnowledge.model) },
+        cancelBookmark = { viewModel.cancelBookmark(it, Category.ChineseKnowledge.model) },
+        isBookmarked = { viewModel.isBookmarked(it, Category.ChineseKnowledge.model) },
         prevId = prevId,
         nextId = nextId,
         setCurrentId = { viewModel.setCurrentId(it) }
@@ -66,18 +72,21 @@ private fun ChineseKnowledgeReadScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     knowledgeEntity: KnowledgeEntity?,
-    knowledgeCollectionEntity: KnowledgeCollectionEntity?,
-    setCollect: (Int) -> Unit,
-    setUncollect: (Int) -> Unit,
+    bookmarkEntity: BookmarkEntity?,
+    addBookmark: (Int) -> Unit,
+    cancelBookmark: (Int) -> Unit,
+    isBookmarked: (Int) -> Unit,
     nextId: Int?,
     prevId: Int?,
     setCurrentId: (Int) -> Unit,
 ) {
-    SimpleScaffold(
-        onBackClick = onBackClick,
-        title = "知识卡片",
-        bottomBar = {
-            knowledgeEntity?.let { entity ->
+    val state = rememberScrollState()
+    knowledgeEntity?.let { entity ->
+        LaunchedEffect(entity) { isBookmarked(entity.id) }
+        SimpleScaffold(
+            onBackClick = onBackClick,
+            title = stringResource(R.string.chinese_knowledge),
+            bottomBar = {
                 BottomAppBar(
                     actions = {
                         Row(
@@ -92,22 +101,22 @@ private fun ChineseKnowledgeReadScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                    contentDescription = "上一个"
+                                    contentDescription = stringResource(R.string.previous)
                                 )
                             }
-                            if (knowledgeCollectionEntity != null) {
-                                IconButton(onClick = { setUncollect(entity.id) }) {
+                            if (bookmarkEntity != null) {
+                                IconButton(onClick = { cancelBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
+                                        contentDescription = stringResource(R.string.cancel_bookmark),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             } else {
-                                IconButton(onClick = { setCollect(entity.id) }) {
+                                IconButton(onClick = { addBookmark(entity.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.BookmarkBorder,
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.add_bookmark)
                                     )
                                 }
                             }
@@ -117,33 +126,31 @@ private fun ChineseKnowledgeReadScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                    contentDescription = "下一个"
+                                    contentDescription = stringResource(R.string.next)
                                 )
                             }
                         }
                     },
                 )
             }
-        }
-    ) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .draggable(
-                    state = rememberDraggableState {},
-                    orientation = Orientation.Horizontal,
-                    onDragStarted = {},
-                    onDragStopped = {
-                        if (it < 0 && abs(it) > 500f) {
-                            nextId?.let(setCurrentId)
-                        } else if (it > 0 && abs(it) > 500f) {
-                            prevId?.let(setCurrentId)
-                        }
-                    }
-                )
         ) {
-            knowledgeEntity?.let { entity ->
-                KnowledgePanel(entity = entity)
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .draggable(
+                        state = rememberDraggableState {},
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = {},
+                        onDragStopped = {
+                            if (it < 0 && abs(it) > 500f) {
+                                nextId?.let(setCurrentId)
+                            } else if (it > 0 && abs(it) > 500f) {
+                                prevId?.let(setCurrentId)
+                            }
+                        }
+                    )
+            ) {
+                KnowledgePanel(entity = entity, state = state)
             }
         }
     }

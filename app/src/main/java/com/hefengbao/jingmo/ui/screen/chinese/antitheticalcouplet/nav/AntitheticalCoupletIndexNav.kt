@@ -24,8 +24,9 @@ fun NavController.navigateToChineseAntitheticalCoupletIndexGraph() {
 
 fun NavGraphBuilder.chineseAntitheticalCoupletIndexGraph(
     onBackClick: () -> Unit,
-    onReadMoreClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
+    onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
 ) {
@@ -36,8 +37,9 @@ fun NavGraphBuilder.chineseAntitheticalCoupletIndexGraph(
         composable(ROUTE) {
             AntitheticalCoupletIndexRoute(
                 onBackClick = onBackClick,
-                onReadMoreClick = onReadMoreClick,
                 onBookmarksClick = onBookmarksClick,
+                onCaptureClick = onCaptureClick,
+                onReadMoreClick = onReadMoreClick,
                 onSearchClick = onSearchClick
             )
         }

@@ -27,6 +27,7 @@ fun NavController.navigateToChineseQuoteIndexGraph() {
 fun NavGraphBuilder.chineseQuoteIndexGraph(
     onBackClick: () -> Unit,
     onBookmarksClick: () -> Unit,
+    onCaptureClick: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     onSearchClick: () -> Unit,
     nestGraph: NavGraphBuilder.() -> Unit
@@ -39,6 +40,7 @@ fun NavGraphBuilder.chineseQuoteIndexGraph(
             QuoteIndexRoute(
                 onBackClick = onBackClick,
                 onBookmarksClick = onBookmarksClick,
+                onCaptureClick = onCaptureClick,
                 onReadMoreClick = onReadMoreClick,
                 onSearchClick = onSearchClick
             )
