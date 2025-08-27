@@ -5,6 +5,7 @@
 .DS_Store
 /build
 /captures
+/.kotlin
 .externalNativeBuild
 .cxx
 local.properties

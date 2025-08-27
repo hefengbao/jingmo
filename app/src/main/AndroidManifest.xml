@@ -38,10 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 配置APP渠道号 -->
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
-            android:value="web" />
-
+            android:value="${APP_CHANNEL}" />
         <receiver
             android:name=".widgets.ChineseIdiomWidgetReceiver"
             android:exported="false"

@@ -66,6 +66,28 @@ android {
         }*/
 
     }
+
+    // 多渠道打包配置
+    flavorDimensions += listOf("version")
+
+    productFlavors {
+        create("github"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "github"
+        }
+        create("gitee"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "gitee"
+        }
+        create("huawei"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "huawei"
+        }
+        create("xiaomi"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
+        }
+    }
     signingConfigs {
         create("release") {
             keyAlias = keystoreProperties["keyAlias"] as String
