@@ -23,11 +23,13 @@ fun NavController.navigateToClassicalLiteratureSentenceBookmarksScreen() {
 }
 
 fun NavGraphBuilder.classicalLiteratureSentenceBookmarksScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onCardClick: (Int) -> Unit
 ) {
     composable(ROUTE) {
         SentenceBookmarksRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onCardClick = onCardClick
         )
     }
 }

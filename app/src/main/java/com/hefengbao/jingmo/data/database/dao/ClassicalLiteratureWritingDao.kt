@@ -29,6 +29,9 @@ interface ClassicalLiteratureWritingDao {
     @Query("select * from classicalliterature_writing where id = :id limit 1")
     fun get(id: Int): Flow<WritingEntity?>
 
+    @Query("select * from classicalliterature_writing where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<WritingEntity>>
+
     @Query("select * from classicalliterature_writing where id = (select id from classicalliterature_writing order by random() limit 1) limit 1")
     fun random(): Flow<WritingEntity?>
 

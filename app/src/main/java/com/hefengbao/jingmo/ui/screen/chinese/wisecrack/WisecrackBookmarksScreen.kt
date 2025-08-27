@@ -30,12 +30,14 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 @Composable
 fun ChineseWisecrackBookmarksRoute(
     viewModel: WisecrackBookmarksViewModel = hiltViewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onCardClick: (Int) -> Unit,
 ) {
     val pagingItems = viewModel.wisecrackEntities.collectAsLazyPagingItems()
 
     ChineseWisecrackBookmarksScreen(
         onBackClick = onBackClick,
+        onCardClick = onCardClick,
         pagingItems = pagingItems
     )
 }
@@ -44,6 +46,7 @@ fun ChineseWisecrackBookmarksRoute(
 private fun ChineseWisecrackBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCardClick: (Int) -> Unit,
     pagingItems: LazyPagingItems<WisecrackEntity>,
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
@@ -56,7 +59,8 @@ private fun ChineseWisecrackBookmarksScreen(
             ) {
                 pagingItems[it]?.let { entity ->
                     Card(
-                        modifier = modifier.fillMaxWidth()
+                        modifier = modifier.fillMaxWidth(),
+                        onClick = { onCardClick(entity.id) }
                     ) {
                         Column(
                             modifier = modifier.padding(16.dp),

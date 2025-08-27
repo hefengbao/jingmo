@@ -26,6 +26,9 @@ interface ChineseLyricDao {
     @Query("select * from chinese_lyric where id = :id limit 1")
     fun get(id: Int): Flow<LyricEntity?>
 
+    @Query("select * from chinese_lyric where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<LyricEntity>>
+
     @Query("select l.*from chinese_lyric l where l.id = (select id from chinese_lyric order by random() limit 1) limit 1")
     fun random(): Flow<LyricEntity?>
 

@@ -22,8 +22,11 @@ interface ChineseWisecrackDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: WisecrackEntity)
 
-    @Query("select w.* from chinese_wisecrack w  where w.id = :id")
+    @Query("select w.* from chinese_wisecrack w  where w.id = :id limit 1")
     fun get(id: Int): Flow<WisecrackEntity?>
+
+    @Query("select w.* from chinese_wisecrack w  where w.id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<WisecrackEntity>>
 
     @Query("select w.* from chinese_wisecrack w where w.id = (select id from chinese_wisecrack order by random() limit 1)")
     fun random(): Flow<WisecrackEntity?>

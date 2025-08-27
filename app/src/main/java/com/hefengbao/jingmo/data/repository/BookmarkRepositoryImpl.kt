@@ -1,5 +1,8 @@
 package com.hefengbao.jingmo.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.hefengbao.jingmo.data.database.dao.BookmarkDao
 import com.hefengbao.jingmo.data.database.entity.BookmarkEntity
 import kotlinx.coroutines.flow.Flow
@@ -16,4 +19,9 @@ class BookmarkRepositoryImpl @Inject constructor(
         id: Int,
         model: String
     ): Flow<BookmarkEntity?> = dao.bookmarked(id, model)
+
+    override fun bookmarks(): Flow<PagingData<BookmarkEntity>> = Pager(
+        config = PagingConfig(pageSize = 30),
+        pagingSourceFactory = { dao.bookmarks() }
+    ).flow
 }

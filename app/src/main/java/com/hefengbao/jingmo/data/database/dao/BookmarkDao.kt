@@ -1,5 +1,6 @@
 package com.hefengbao.jingmo.data.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,4 +18,7 @@ interface BookmarkDao {
 
     @Query("select * from bookmarks where bookmarkable_id = :id and bookmarkable_model = :model limit 1")
     fun bookmarked(id: Int, model: String): Flow<BookmarkEntity?>
+
+    @Query("select * from bookmarks order by id desc")
+    fun bookmarks(): PagingSource<Int, BookmarkEntity>
 }

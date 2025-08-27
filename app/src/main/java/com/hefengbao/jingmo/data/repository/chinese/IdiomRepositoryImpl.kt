@@ -18,20 +18,22 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class IdiomRepositoryImpl @Inject constructor(
-    private val chineseIdiomDao: ChineseIdiomDao
+    private val dao: ChineseIdiomDao
 ) : IdiomRepository {
-    override fun get(id: Int): Flow<IdiomEntity?> = chineseIdiomDao.get(id)
+    override fun get(id: Int): Flow<IdiomEntity?> = dao.get(id)
 
-    override fun getRandom(): Flow<IdiomEntity?> = chineseIdiomDao.random()
+    override fun get(ids: List<Int>): Flow<List<IdiomEntity>> = dao.get(ids)
 
-    override fun getNextId(id: Int): Flow<Int?> = chineseIdiomDao.getNextId(id)
+    override fun getRandom(): Flow<IdiomEntity?> = dao.random()
 
-    override fun getPrevId(id: Int): Flow<Int?> = chineseIdiomDao.getPrevId(id)
+    override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
+
+    override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
     override fun list(): Flow<PagingData<IdiomEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            chineseIdiomDao.list()
+            dao.list()
         }
     ).flow
 
@@ -39,12 +41,12 @@ class IdiomRepositoryImpl @Inject constructor(
         Pager(
             config = PagingConfig(pageSize = 30),
             pagingSourceFactory = {
-                chineseIdiomDao.search("%$query%")
+                dao.search("%$query%")
             }
         ).flow
 
     override fun bookmarks(): Flow<PagingData<IdiomEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { chineseIdiomDao.bookmarks() }
+        pagingSourceFactory = { dao.bookmarks() }
     ).flow
 }

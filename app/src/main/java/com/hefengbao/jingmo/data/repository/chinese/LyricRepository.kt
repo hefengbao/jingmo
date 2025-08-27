@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LyricRepository {
     fun get(id: Int): Flow<LyricEntity?>
+    fun get(ids: List<Int>): Flow<List<LyricEntity>>
     fun getRandom(): Flow<LyricEntity?>
     fun search(query: String): Flow<List<LyricEntity>>
     fun total(): Flow<Int>

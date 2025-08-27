@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,6 +45,7 @@ import com.hefengbao.jingmo.data.model.HomeItem
 @Composable
 fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
+    onBookmarkClick: () -> Unit,
     onChinaWorldCultureHeritageClick: () -> Unit,
     onChineseAntitheticalCoupletClick: () -> Unit,
     onChineseCharacterClick: () -> Unit,
@@ -73,6 +75,7 @@ fun HomeRoute(
 
     HomeScreen(
         homeItem = homeItem,
+        onBookmarkClick = onBookmarkClick,
         onChinaWorldCultureHeritageClick = onChinaWorldCultureHeritageClick,
         onChineseAntitheticalCoupletClick = onChineseAntitheticalCoupletClick,
         onChineseCharacterClick = onChineseCharacterClick,
@@ -106,6 +109,7 @@ fun HomeRoute(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     homeItem: HomeItem,
+    onBookmarkClick: () -> Unit,
     onChinaWorldCultureHeritageClick: () -> Unit,
     onChineseAntitheticalCoupletClick: () -> Unit,
     onChineseCharacterClick: () -> Unit,
@@ -153,6 +157,9 @@ private fun HomeScreen(
                     Text(text = stringResource(id = R.string.app_name))
                 },
                 actions = {
+                    IconButton(onBookmarkClick) {
+                        Icon(imageVector = Icons.Outlined.Bookmarks, contentDescription = "收藏夹")
+                    }
                     IconButton(onClick = onLinksClick) {
                         Icon(imageVector = Icons.Default.Link, contentDescription = "链接")
                     }

@@ -24,6 +24,8 @@ class ModernPoetryRepositoryImpl @Inject constructor(
 
     override fun get(id: Int): Flow<ModernPoetryEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<ModernPoetryEntity>> = dao.get(ids)
+
     override fun getRandom(): Flow<ModernPoetryEntity?> = dao.random()
 
     override fun search(query: String): Flow<List<ModernPoetryEntity>> = dao.search(query)

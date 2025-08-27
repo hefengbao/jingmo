@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IdiomRepository {
     fun get(id: Int): Flow<IdiomEntity?>
+    fun get(ids: List<Int>): Flow<List<IdiomEntity>>
     fun getRandom(): Flow<IdiomEntity?>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>

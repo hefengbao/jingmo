@@ -24,6 +24,8 @@ class KnowledgeRepositoryImpl @Inject constructor(
 
     override fun get(id: Int): Flow<KnowledgeEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<KnowledgeEntity>> = dao.get(ids)
+
     override fun getRandom(): Flow<KnowledgeEntity?> = dao.random()
 
     override fun search(query: String): Flow<List<KnowledgeEntity>> = dao.search(query)

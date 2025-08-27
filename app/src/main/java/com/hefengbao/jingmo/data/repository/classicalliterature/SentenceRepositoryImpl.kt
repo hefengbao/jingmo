@@ -18,26 +18,27 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SentenceRepositoryImpl @Inject constructor(
-    private val classicalLiteratureSentenceDao: ClassicalLiteratureSentenceDao
+    private val dao: ClassicalLiteratureSentenceDao
 ) : SentenceRepository {
-    override fun get(id: Int): Flow<SentenceEntity?> =
-        classicalLiteratureSentenceDao.get(id)
+    override fun get(id: Int): Flow<SentenceEntity?> = dao.get(id)
 
-    override fun getRandom(): Flow<SentenceEntity?> = classicalLiteratureSentenceDao.random()
+    override fun get(ids: List<Int>): Flow<List<SentenceEntity>> = dao.get(ids)
 
-    override fun getNextId(id: Int): Flow<Int?> = classicalLiteratureSentenceDao.getNextId(id)
+    override fun getRandom(): Flow<SentenceEntity?> = dao.random()
 
-    override fun getPrevId(id: Int): Flow<Int?> = classicalLiteratureSentenceDao.getPrevId(id)
+    override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
+
+    override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
     override fun search(query: String): Flow<PagingData<SentenceEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { classicalLiteratureSentenceDao.search("%$query%") }
+        pagingSourceFactory = { dao.search("%$query%") }
     ).flow
 
     override fun bookmarks(): Flow<PagingData<SentenceEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
         pagingSourceFactory = {
-            classicalLiteratureSentenceDao.bookmarks()
+            dao.bookmarks()
         }
     ).flow
 }

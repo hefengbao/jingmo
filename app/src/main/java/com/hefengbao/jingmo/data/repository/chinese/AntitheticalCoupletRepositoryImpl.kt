@@ -22,6 +22,8 @@ class AntitheticalCoupletRepositoryImpl @Inject constructor(
 ) : AntitheticalCoupletRepository {
     override fun get(id: Int): Flow<AntitheticalCoupletEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<AntitheticalCoupletEntity>> = dao.get(ids)
+
     override fun getRandom(): Flow<AntitheticalCoupletEntity?> = dao.random()
 
     override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)

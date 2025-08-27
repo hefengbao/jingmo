@@ -25,8 +25,11 @@ interface ChineseExpressionDao {
     @Query("select * from chinese_expression where id = (select e.id from chinese_expression e order by random() limit 1) limit 1")
     fun random(): Flow<ExpressionEntity?>
 
-    @Query("select * from chinese_expression where id = :id")
+    @Query("select * from chinese_expression where id = :id limit 1")
     fun get(id: Int): Flow<ExpressionEntity?>
+
+    @Query("select * from chinese_expression where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<ExpressionEntity>>
 
     @Query("select e.* from bookmarks b join chinese_expression e on b.bookmarkable_id = e.id and b.bookmarkable_model = 'chinese_expression' order by b.id desc")
     fun bookmarks(): PagingSource<Int, ExpressionEntity>

@@ -22,6 +22,7 @@ interface CharacterRepository {
     fun strokes(): List<Stroke>
     fun getRandom(): Flow<CharacterEntity?>
     fun get(id: Int): Flow<CharacterEntity?>
+    fun get(ids: List<Int>): Flow<List<CharacterEntity>>
     fun search(character: String): Flow<List<CharacterEntity>>
     fun searchByPinyin(pinyin: String): Flow<List<CharacterEntity>>
     fun searchByRadical(radical: String): Flow<List<CharacterEntity>>

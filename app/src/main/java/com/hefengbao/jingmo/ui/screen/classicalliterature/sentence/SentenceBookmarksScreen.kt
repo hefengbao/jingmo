@@ -32,11 +32,13 @@ import com.hefengbao.jingmo.ui.component.SimpleScaffold
 fun SentenceBookmarksRoute(
     viewModel: SentenceBookmarksViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
+    onCardClick: (Int) -> Unit
 ) {
     val pagingItems = viewModel.sentenceEntities.collectAsLazyPagingItems()
 
     SentenceBookmarksScreen(
         onBackClick = onBackClick,
+        onCardClick = onCardClick,
         pagingItems = pagingItems,
     )
 }
@@ -45,6 +47,7 @@ fun SentenceBookmarksRoute(
 private fun SentenceBookmarksScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onCardClick: (Int) -> Unit,
     pagingItems: LazyPagingItems<SentenceEntity>,
 ) {
     SimpleScaffold(onBackClick = onBackClick, title = stringResource(R.string.bookmarks)) {
@@ -59,7 +62,8 @@ private fun SentenceBookmarksScreen(
             ) {
                 pagingItems[it]?.let { entity ->
                     Card(
-                        modifier = modifier.fillMaxWidth()
+                        modifier = modifier.fillMaxWidth(),
+                        onClick = { onCardClick(entity.id) }
                     ) {
                         Column {
                             Column(

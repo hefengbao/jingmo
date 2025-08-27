@@ -18,21 +18,23 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class WisecrackRepositoryImpl @Inject constructor(
-    private val chineseWisecrackDao: ChineseWisecrackDao
+    private val dao: ChineseWisecrackDao
 ) : WisecrackRepository {
-    override fun get(id: Int): Flow<WisecrackEntity?> = chineseWisecrackDao.get(id)
+    override fun get(id: Int): Flow<WisecrackEntity?> = dao.get(id)
 
-    override fun getRandom(): Flow<WisecrackEntity?> = chineseWisecrackDao.random()
+    override fun get(ids: List<Int>): Flow<List<WisecrackEntity>> = dao.get(ids)
 
-    override fun getNextId(id: Int): Flow<Int?> = chineseWisecrackDao.getNextId(id)
+    override fun getRandom(): Flow<WisecrackEntity?> = dao.random()
 
-    override fun getPrevId(id: Int): Flow<Int?> = chineseWisecrackDao.getPrevId(id)
+    override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
+
+    override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
     override fun search(query: String): Flow<List<WisecrackEntity>> =
-        chineseWisecrackDao.search("%$query%")
+        dao.search("%$query%")
 
     override fun bookmarks(): Flow<PagingData<WisecrackEntity>> = Pager(
         config = PagingConfig(pageSize = 30),
-        pagingSourceFactory = { chineseWisecrackDao.bookmarks() }
+        pagingSourceFactory = { dao.bookmarks() }
     ).flow
 }

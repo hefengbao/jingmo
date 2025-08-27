@@ -18,6 +18,7 @@ interface ClassicPoemRepository {
     suspend fun insert(entity: ClassicPoemEntity)
     fun getRandom(): Flow<ClassicPoemEntity?>
     fun get(id: Int): Flow<ClassicPoemEntity?>
+    fun get(ids: List<Int>): Flow<List<ClassicPoemEntity>>
     fun total(): Flow<Int>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>

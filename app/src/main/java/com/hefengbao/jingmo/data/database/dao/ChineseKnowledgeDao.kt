@@ -26,6 +26,9 @@ interface ChineseKnowledgeDao {
     @Query("select * from chinese_knowledge where id = :id limit 1")
     fun get(id: Int): Flow<KnowledgeEntity?>
 
+    @Query("select * from chinese_knowledge where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<KnowledgeEntity>>
+
     @Query("select k.*from chinese_knowledge k where k.id = (select id from chinese_knowledge order by random() limit 1) limit 1")
     fun random(): Flow<KnowledgeEntity?>
 

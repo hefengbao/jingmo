@@ -22,8 +22,11 @@ interface ChineseAntitheticalCoupletDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: AntitheticalCoupletEntity)
 
-    @Query("select * from chinese_antitheticalcouplet where id = :id")
+    @Query("select * from chinese_antitheticalcouplet where id = :id limit 1")
     fun get(id: Int): Flow<AntitheticalCoupletEntity?>
+
+    @Query("select * from chinese_antitheticalcouplet where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<AntitheticalCoupletEntity>>
 
     @Query("select a.* from chinese_antitheticalcouplet a where a.id = (select id from chinese_antitheticalcouplet order by random() limit 1)")
     fun random(): Flow<AntitheticalCoupletEntity?>

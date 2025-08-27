@@ -28,6 +28,9 @@ interface ChineseCharacterDao {
     @Query("select * from chinese_character where id = :id limit 1")
     fun get(id: Int): Flow<CharacterEntity?>
 
+    @Query("select * from chinese_character where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<CharacterEntity>>
+
     @Query("select * from chinese_character where character = :character")
     fun get(character: String): Flow<List<CharacterEntity>>
 

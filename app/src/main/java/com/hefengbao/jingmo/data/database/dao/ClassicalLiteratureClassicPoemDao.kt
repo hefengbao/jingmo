@@ -30,6 +30,9 @@ interface ClassicalLiteratureClassicPoemDao {
     @Query("select * from classicalliterature_classicpoem where id = :id limit 1")
     fun get(id: Int): Flow<ClassicPoemEntity?>
 
+    @Query("select * from classicalliterature_classicpoem where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<ClassicPoemEntity>>
+
     @Query("select count(p.id) from classicalliterature_classicpoem p")
     fun total(): Flow<Int>
 

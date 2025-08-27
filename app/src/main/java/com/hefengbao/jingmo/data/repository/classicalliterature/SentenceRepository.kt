@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SentenceRepository {
     fun get(id: Int): Flow<SentenceEntity?>
+    fun get(ids: List<Int>): Flow<List<SentenceEntity>>
     fun getRandom(): Flow<SentenceEntity?>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>

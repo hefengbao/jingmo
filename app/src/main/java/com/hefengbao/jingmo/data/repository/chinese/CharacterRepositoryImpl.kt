@@ -388,6 +388,8 @@ class CharacterRepositoryImpl @Inject constructor(
 
     override fun get(id: Int): Flow<CharacterEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<CharacterEntity>> = dao.get(ids)
+
     override fun search(character: String): Flow<List<CharacterEntity>> = dao.get(character)
 
     override fun searchByPinyin(pinyin: String): Flow<List<CharacterEntity>> =

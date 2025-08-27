@@ -19,31 +19,31 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ClassicPoemRepositoryImpl @Inject constructor(
-    private val classicalLiteratureClassicPoemDao: ClassicalLiteratureClassicPoemDao
+    private val dao: ClassicalLiteratureClassicPoemDao
 ) : ClassicPoemRepository {
-    override suspend fun insert(entity: ClassicPoemEntity) =
-        classicalLiteratureClassicPoemDao.insert(entity)
+    override suspend fun insert(entity: ClassicPoemEntity) = dao.insert(entity)
 
-    override fun getRandom(): Flow<ClassicPoemEntity?> = classicalLiteratureClassicPoemDao.random()
+    override fun getRandom(): Flow<ClassicPoemEntity?> = dao.random()
 
-    override fun get(id: Int): Flow<ClassicPoemEntity?> = classicalLiteratureClassicPoemDao.get(id)
+    override fun get(id: Int): Flow<ClassicPoemEntity?> = dao.get(id)
 
-    override fun total(): Flow<Int> = classicalLiteratureClassicPoemDao.total()
+    override fun get(ids: List<Int>): Flow<List<ClassicPoemEntity>> = dao.get(ids)
 
-    override fun getNextId(id: Int): Flow<Int?> = classicalLiteratureClassicPoemDao.getNextId(id)
+    override fun total(): Flow<Int> = dao.total()
 
-    override fun getPrevId(id: Int): Flow<Int?> = classicalLiteratureClassicPoemDao.getPrevId(id)
+    override fun getNextId(id: Int): Flow<Int?> = dao.getNextId(id)
+
+    override fun getPrevId(id: Int): Flow<Int?> = dao.getPrevId(id)
 
     override fun bookmarks(): Flow<PagingData<ClassicPoemEntity>> = Pager(
         config = PagingConfig(15),
-        pagingSourceFactory = { classicalLiteratureClassicPoemDao.bookmarks() }
+        pagingSourceFactory = { dao.bookmarks() }
     ).flow
 
-    override fun search(query: String): Flow<List<ClassicPoemEntity>> =
-        classicalLiteratureClassicPoemDao.search(query)
+    override fun search(query: String): Flow<List<ClassicPoemEntity>> = dao.search(query)
 
     override fun getIdTitle(query: String): Flow<PagingData<IdTitle>> = Pager(
         config = PagingConfig(30),
-        pagingSourceFactory = { classicalLiteratureClassicPoemDao.getIdTitle("%${query}%") }
+        pagingSourceFactory = { dao.getIdTitle("%${query}%") }
     ).flow
 }

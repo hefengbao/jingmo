@@ -24,6 +24,8 @@ class QuoteRepositoryImpl @Inject constructor(
 
     override fun get(id: Int): Flow<QuoteEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<QuoteEntity>> = dao.get(ids)
+
     override fun getRandom(): Flow<QuoteEntity?> = dao.random()
 
     override fun search(query: String): Flow<List<QuoteEntity>> = dao.search(query)

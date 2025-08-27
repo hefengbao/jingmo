@@ -22,6 +22,8 @@ class ExpressionRepositoryImpl @Inject constructor(
 ) : ExpressionRepository {
     override fun get(id: Int): Flow<ExpressionEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<ExpressionEntity>> = dao.get(ids)
+
     override fun getRandom(): Flow<ExpressionEntity?> = dao.random()
 
     override fun search(query: String): Flow<PagingData<ExpressionEntity>> = Pager(

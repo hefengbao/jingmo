@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 interface KnowledgeRepository {
     suspend fun insert(entity: KnowledgeEntity)
     fun get(id: Int): Flow<KnowledgeEntity?>
+    fun get(ids: List<Int>): Flow<List<KnowledgeEntity>>
     fun getRandom(): Flow<KnowledgeEntity?>
     fun search(query: String): Flow<List<KnowledgeEntity>>
     fun list(): Flow<PagingData<KnowledgeEntity>>

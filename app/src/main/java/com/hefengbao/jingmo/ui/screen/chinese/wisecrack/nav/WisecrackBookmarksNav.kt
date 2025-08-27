@@ -21,11 +21,13 @@ fun NavController.navigateToChineseWisecrackBookmarksScreen() {
 }
 
 fun NavGraphBuilder.chineseWisecrackBookmarksScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onCardClick: (Int) -> Unit
 ) {
     composable(ROUTE) {
         ChineseWisecrackBookmarksRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onCardClick = onCardClick
         )
     }
 }

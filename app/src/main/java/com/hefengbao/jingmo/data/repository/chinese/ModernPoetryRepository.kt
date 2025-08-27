@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface ModernPoetryRepository {
     suspend fun insert(entity: ModernPoetryEntity)
     fun get(id: Int): Flow<ModernPoetryEntity?>
+    fun get(ids: List<Int>): Flow<List<ModernPoetryEntity>>
     fun getRandom(): Flow<ModernPoetryEntity?>
     fun search(query: String): Flow<List<ModernPoetryEntity>>
     fun total(): Flow<Int>

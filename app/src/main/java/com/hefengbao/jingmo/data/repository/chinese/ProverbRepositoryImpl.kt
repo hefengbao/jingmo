@@ -9,24 +9,26 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProverbRepositoryImpl @Inject constructor(
-    private val proverbDao: ChineseProverbDao
+    private val dao: ChineseProverbDao
 ) : ProverbRepository {
-    override suspend fun insert(entity: ProverbEntity) = proverbDao.insert(entity)
+    override suspend fun insert(entity: ProverbEntity) = dao.insert(entity)
 
-    override fun get(id: Int): Flow<ProverbEntity?> = proverbDao.get(id)
+    override fun get(id: Int): Flow<ProverbEntity?> = dao.get(id)
 
-    override fun getRandom(): Flow<ProverbEntity?> = proverbDao.random()
+    override fun get(ids: List<Int>): Flow<List<ProverbEntity>> = dao.get(ids)
 
-    override fun search(query: String): Flow<List<ProverbEntity>> = proverbDao.search(query)
+    override fun getRandom(): Flow<ProverbEntity?> = dao.random()
 
-    override fun total(): Flow<Int> = proverbDao.total()
+    override fun search(query: String): Flow<List<ProverbEntity>> = dao.search(query)
 
-    override fun prevId(id: Int): Flow<Int?> = proverbDao.getPrevId(id)
+    override fun total(): Flow<Int> = dao.total()
 
-    override fun nextId(id: Int): Flow<Int?> = proverbDao.getNextId(id)
+    override fun prevId(id: Int): Flow<Int?> = dao.getPrevId(id)
+
+    override fun nextId(id: Int): Flow<Int?> = dao.getNextId(id)
 
     override fun bookmarks(): Flow<PagingData<ProverbEntity>> = Pager(
         config = PagingConfig(pageSize = 15),
-        pagingSourceFactory = { proverbDao.bookmarks() }
+        pagingSourceFactory = { dao.bookmarks() }
     ).flow
 }

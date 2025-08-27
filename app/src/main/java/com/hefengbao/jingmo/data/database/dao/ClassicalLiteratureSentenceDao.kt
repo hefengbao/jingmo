@@ -22,8 +22,11 @@ interface ClassicalLiteratureSentenceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: SentenceEntity)
 
-    @Query("select * from classicalliterature_sentence where id = :id")
+    @Query("select * from classicalliterature_sentence where id = :id limit 1")
     fun get(id: Int): Flow<SentenceEntity?>
+
+    @Query("select * from classicalliterature_sentence where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<SentenceEntity>>
 
     @Query("select * from classicalliterature_sentence where id = (select id from classicalliterature_sentence order by random() limit 1)")
     fun random(): Flow<SentenceEntity?>

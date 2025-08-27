@@ -23,6 +23,8 @@ class WritingRepositoryImpl @Inject constructor(
 ) : WritingRepository {
     override fun get(id: Int): Flow<WritingEntity?> = dao.get(id)
 
+    override fun get(ids: List<Int>): Flow<List<WritingEntity>> = dao.get(ids)
+
     override fun getRandom(): Flow<WritingEntity?> = dao.random()
 
     override fun list(): Flow<PagingData<WritingEntity>> = Pager(

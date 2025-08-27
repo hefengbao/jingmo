@@ -17,6 +17,9 @@ interface ChineseProverbDao {
     @Query("select * from chinese_proverb where id = :id limit 1")
     fun get(id: Int): Flow<ProverbEntity?>
 
+    @Query("select * from chinese_proverb where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<ProverbEntity>>
+
     @Query("select p.* from chinese_proverb p where p.id = (select id from chinese_proverb order by random() limit 1) limit 1")
     fun random(): Flow<ProverbEntity?>
 

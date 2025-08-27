@@ -26,6 +26,9 @@ interface ChineseModernPoetryDao {
     @Query("select * from chinese_modernpoetry where id = :id limit 1")
     fun get(id: Int): Flow<ModernPoetryEntity?>
 
+    @Query("select * from chinese_modernpoetry where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<ModernPoetryEntity>>
+
     @Query("select p.*from chinese_modernpoetry p where p.id = (select id from chinese_modernpoetry order by random() limit 1) limit 1")
     fun random(): Flow<ModernPoetryEntity?>
 

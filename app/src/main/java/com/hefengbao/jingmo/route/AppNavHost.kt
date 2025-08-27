@@ -16,6 +16,8 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.hefengbao.jingmo.ui.screen.bookmarks.nav.bookmarkIndexScreen
+import com.hefengbao.jingmo.ui.screen.bookmarks.nav.navigateToBookmarkIndexScreen
 import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.chinaWorldCultureHeritageGraph
 import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.chinaWorldCultureHeritageShowScreen
 import com.hefengbao.jingmo.ui.screen.china.worldcultureheritage.nav.navigateToChinaWorldCultureHeritageGraph
@@ -169,11 +171,13 @@ import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classical
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceIndexGraph
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceReadScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceSearchScreen
+import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.classicalLiteratureSentenceShowScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceCaptureScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceIndexGraph
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceReadScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceSearchScreen
+import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.navigateToClassicalLiteratureSentenceShowScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.classicalLiteratureWritingBookmarksScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.classicalLiteratureWritingCaptureScreen
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.classicalLiteratureWritingIndexGraph
@@ -250,6 +254,7 @@ fun AppNavHost(
         }
     ) {
         homeGraph(
+            onBookmarkClick = navController::navigateToBookmarkIndexScreen,
             onChinaWorldCultureHeritageClick = navController::navigateToChinaWorldCultureHeritageGraph,
             onChineseAntitheticalCoupletClick = navController::navigateToChineseAntitheticalCoupletIndexGraph,
             onChineseCharacterClick = navController::navigateToChineseCharacterIndexGraph,
@@ -274,6 +279,22 @@ fun AppNavHost(
             onLinksClick = navController::navigateToLinkIndexScreen,
             onSettingsClick = navController::navigateToSettingsGraph,
             nestGraph = {
+                bookmarkIndexScreen(
+                    onBackClick = navController::navigateUp,
+                    onChineseAntitheticalCoupletCardClick = navController::navigateToChineseAntitheticalCoupletShowScreen,
+                    onChineseCharacterCardClick = navController::navigateToChineseCharacterShowScreen,
+                    onChineseExpressionCardClick = navController::navigateToChineseExpressionShow,
+                    onChineseIdiomCardClick = navController::navigateToChineseIdiomShowScreen,
+                    onChineseKnowledgeCardClick = navController::navigateToChineseKnowledgeShowScreen,
+                    onChineseLyricCardClick = navController::navigateToChineseLyricShowScreen,
+                    onChineseModernPoetryCardClick = navController::navigateToChineseModernPoetryShowScreen,
+                    onChineseProverbCardClick = navController::navigateToChineseProverbShowScreen,
+                    onChineseQuoteCardClick = navController::navigateToChineseQuoteShowScreen,
+                    onChineseWisecrackCardClick = navController::navigateToChineseWisecrackShowScreen,
+                    onClassicalLiteratureClassicPoemCardClick = navController::navigateToClassicalLiteratureClassicPoemShowScreen,
+                    onClassicalLiteratureSentenceCardClick = navController::navigateToClassicalLiteratureSentenceShowScreen,
+                    onClassicalLiteratureWritingCardClick = navController::navigateToClassicalLiteratureWritingShowScreen
+                )
                 chinaWorldCultureHeritageGraph(
                     onBackClick = navController::navigateUp,
                     onItemClick = navController::navigateToChinaWorldCultureHeritageShowScreen
@@ -572,7 +593,8 @@ fun AppNavHost(
                             onCaptureClick = navController::navigateToChineseWisecrackCaptureScreen,
                         )
                         chineseWisecrackBookmarksScreen(
-                            onBackClick = navController::navigateUp
+                            onBackClick = navController::navigateUp,
+                            onCardClick = navController::navigateToChineseWisecrackShowScreen
                         )
                     }
                 )
@@ -608,7 +630,8 @@ fun AppNavHost(
                     onSearchClick = navController::navigateToClassicalLiteratureSentenceSearchScreen,
                     nestGraph = {
                         classicalLiteratureSentenceBookmarksScreen(
-                            onBackClick = navController::navigateUp
+                            onBackClick = navController::navigateUp,
+                            onCardClick = navController::navigateToClassicalLiteratureSentenceShowScreen
                         )
                         classicalLiteratureSentenceCaptureScreen(
                             onBackClick = navController::navigateUp
@@ -618,6 +641,10 @@ fun AppNavHost(
                             onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen
                         )
                         classicalLiteratureSentenceSearchScreen(
+                            onBackClick = navController::navigateUp,
+                            onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen,
+                        )
+                        classicalLiteratureSentenceShowScreen(
                             onBackClick = navController::navigateUp,
                             onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen,
                         )

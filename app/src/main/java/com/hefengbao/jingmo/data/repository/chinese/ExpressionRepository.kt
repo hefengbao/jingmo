@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExpressionRepository {
     fun get(id: Int): Flow<ExpressionEntity?>
+    fun get(ids: List<Int>): Flow<List<ExpressionEntity>>
     fun getRandom(): Flow<ExpressionEntity?>
     fun search(query: String): Flow<PagingData<ExpressionEntity>>
     fun bookmarks(): Flow<PagingData<ExpressionEntity>>

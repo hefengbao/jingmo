@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface WritingRepository {
     fun get(id: Int): Flow<WritingEntity?>
+    fun get(ids: List<Int>): Flow<List<WritingEntity>>
     fun getRandom(): Flow<WritingEntity?>
     fun list(): Flow<PagingData<WritingEntity>>
     fun search(query: String): Flow<PagingData<WritingEntity>>

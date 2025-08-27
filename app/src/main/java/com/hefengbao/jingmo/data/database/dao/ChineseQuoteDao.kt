@@ -26,6 +26,9 @@ interface ChineseQuoteDao {
     @Query("select * from chinese_quote where id = :id limit 1")
     fun get(id: Int): Flow<QuoteEntity?>
 
+    @Query("select * from chinese_quote where id in (:ids)")
+    fun get(ids: List<Int>): Flow<List<QuoteEntity>>
+
     @Query("select * from chinese_quote where id = (select id from chinese_quote order by random() limit 1) limit 1")
     fun random(): Flow<QuoteEntity?>
 

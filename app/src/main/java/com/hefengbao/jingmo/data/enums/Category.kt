@@ -88,5 +88,10 @@ enum class Category(val model: String, val label: String) {
     TraditionalCultureSolarTerm(
         "traditionalculture_solarterm",
         App.appContext.resources.getString(R.string.traditionalculture_solarterm)
-    ),
+    );
+
+    companion object {
+        infix fun from(model: String): Category? =
+            Category.entries.firstOrNull { it.model == model }
+    }
 }

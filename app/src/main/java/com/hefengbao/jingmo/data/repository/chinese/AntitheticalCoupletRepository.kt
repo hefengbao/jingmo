@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AntitheticalCoupletRepository {
     fun get(id: Int): Flow<AntitheticalCoupletEntity?>
+    fun get(ids: List<Int>): Flow<List<AntitheticalCoupletEntity>>
     fun getRandom(): Flow<AntitheticalCoupletEntity?>
     fun getNextId(id: Int): Flow<Int?>
     fun getPrevId(id: Int): Flow<Int?>
