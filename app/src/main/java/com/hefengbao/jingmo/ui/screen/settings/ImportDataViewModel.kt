@@ -530,7 +530,7 @@ class ImportViewModel @Inject constructor(
 
     fun classicalLiteratureSentences(uris: List<Uri>) {
         viewModelScope.launch {
-            _classicalLiteraturePeopleStatus.value = ImportStatus.Loading
+            _classicalLiteratureSentenceStatus.value = ImportStatus.Loading
             uris.forEach {
                 json.decodeFromString<DataWrapper<Sentence>>(readTextFromUri(it))
                     .data
@@ -538,7 +538,7 @@ class ImportViewModel @Inject constructor(
                         repository.insertClassicalLiteratureSentence(poemSentence.asSentenceEntity())
                     }
             }
-            _classicalLiteraturePeopleStatus.value = ImportStatus.Finish
+            _classicalLiteratureSentenceStatus.value = ImportStatus.Finish
         }
     }
 
