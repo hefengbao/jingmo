@@ -39,8 +39,8 @@ android {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1_015_000
-        versionName = "1.15.0"
+        versionCode = 1_015_001
+        versionName = "1.15.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
