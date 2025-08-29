@@ -83,10 +83,10 @@ android {
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "huawei"
         }
-        create("xiaomi"){
+        /*create("xiaomi"){
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
-        }
+        }*/
     }
     signingConfigs {
         create("release") {
