@@ -309,7 +309,8 @@ class ImportViewModel @Inject constructor(
         viewModelScope.launch {
             _chineseQuoteStatus.value = ImportStatus.Loading
             uris.forEach {
-                json.decodeFromString<List<Quote>>(readTextFromUri(it))
+                json.decodeFromString<DataWrapper<Quote>>(readTextFromUri(it))
+                    .data
                     .forEach { quote ->
                         repository.insertChineseQuote(quote.asQuoteEntity())
                     }
