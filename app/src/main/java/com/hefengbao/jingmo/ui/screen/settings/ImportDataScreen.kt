@@ -323,7 +323,7 @@ private fun ImportDataScreen(
         onBackClick = onBackClick,
         title = "导入数据",
         actions = {
-            IconButton(onClick = { uriHandler.openUri("https://mp.weixin.qq.com/s/VT4zx-2vnrwuVZ2Eq5yGCg") }) {
+            IconButton(onClick = { uriHandler.openUri("https://www.bilibili.com/video/BV1zqh9z1EZj") }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.HelpOutline,
                     contentDescription = "帮助"
@@ -479,7 +479,7 @@ private fun TipDialog() {
                 Text(text = "提示")
             },
             text = {
-                Text(text = "下载最新版本 app，在网盘下载最新数据，可以避免一些不必要的错误。根据条目选择对应文件夹下的文件，不然会导致 app 奔溃，如果文件夹下的文件比较多，那就找到全选的按钮（菜单）点击全选。导入数据时会占用大量内存，可以提前清理一下内存占用。")
+                Text(text = "下载最新版本 app，在网盘下载最新数据，可以避免一些不必要的错误。根据条目选择对应文件夹下的文件，不然会导致 app 奔溃，如果文件夹下的文件比较多，那就找到全选的按钮（菜单）点击全选。导入数据时会占用大量内存，可以提前清理一下内存占用。演示视频可点击右上角帮助按钮查看。")
             }
         )
     }
