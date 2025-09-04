@@ -24,6 +24,7 @@ localProperties.load(FileInputStream(localPropertiesFile))
 val buglyId = localProperties["bugly_id"] as String
 val buglyPrivacyUrl = localProperties["bugly_privacy_url"] as String
 val userAgreementUrl = localProperties["user_agreement_url"] as String
+val privacyPolicyUrl = localProperties["privacy_policy_url"] as String
 val userAgreementVersion = 1 // 用户协议变动时 +1
 val icp = localProperties["icp"] as String
 
@@ -87,6 +88,10 @@ android {
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
         }*/
+        create("360dev"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "360"
+        }
     }
     signingConfigs {
         create("release") {
@@ -103,6 +108,7 @@ android {
             buildConfigField("String","BUGLY_ID", buglyId)
             buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
+            buildConfigField("String","PRIVACY_POLICY_URL", privacyPolicyUrl)
             buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
             buildConfigField("String","ICP", icp)
             buildConfigField("String","BASE_URL_1", baseUrl1)
@@ -128,6 +134,7 @@ android {
             buildConfigField("String","BUGLY_ID", buglyId)
             buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
+            buildConfigField("String","PRIVACY_POLICY_URL", privacyPolicyUrl)
             buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
             buildConfigField("String","ICP", icp)
             buildConfigField("String","BASE_URL_1", baseUrl1)
