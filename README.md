@@ -25,11 +25,11 @@
 
 目前的内容有：
 1. 经典诗文 955 篇；
-2. 诗文 140 万篇,包含诗、词、辞赋、残句、联、文等；
+2. 诗文 160 万篇,包含诗、词、辞赋、残句、联、文等；
 3. 诗文名句 10000 句；
 4. 人物 126830 个；
-5. 字典 20552 字
-6. 词典 320349 词；
+5. 汉字 24228 字
+6. 词语 422958 词；
 7. 成语 49639 条；
 8. 歇后语 14026 条；
 9. 谚语 964 组；
@@ -43,7 +43,7 @@
 17. 中国传统节日 19 个；
 18. 二十四节气；
 19. 中国传统色 161 种；
-20. 中国的世界文化遗产 44 个；
+20. 世界遗产名录 59 个；
 
 数据来自网络，或有内容错误，欢迎纠错，请在公众号留言。
 
@@ -85,6 +85,7 @@ git clone https://github.com/hefengbao/jingmo.git
 
 ```
 user_agreement_url="https://jingmo.pages.dev/docs/user-agreement"
+privacy_policy_url="https://jingmo.pages.dev/docs/privacy-policy"
 icp="蜀ICP备17009649号-10A"
 bugly_id="f75198f767"
 bugly_privacy_url="https://privacy.qq.com/document/preview/fc748b3d96224fdb825ea79e132c1a56"
@@ -101,6 +102,7 @@ storePassword=
 keyAlias=
 keyPassword=
 ```
+
 运行项目即可。
 
 ## 参考数据源：
