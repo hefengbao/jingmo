@@ -323,7 +323,7 @@ private fun ImportDataScreen(
         onBackClick = onBackClick,
         title = "导入数据",
         actions = {
-            IconButton(onClick = { uriHandler.openUri("https://www.bilibili.com/video/BV1zqh9z1EZj") }) {
+            IconButton(onClick = { uriHandler.openUri("https://mp.weixin.qq.com/s/A4QxajgVkOr14uUBTGBLXA") }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.HelpOutline,
                     contentDescription = "帮助"
