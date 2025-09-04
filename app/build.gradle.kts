@@ -40,8 +40,8 @@ android {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1_015_002
-        versionName = "1.15.2"
+        versionCode = 1_015_003
+        versionName = "1.15.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -84,14 +84,18 @@ android {
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "huawei"
         }
-        /*create("xiaomi"){
-            dimension = "version"
-            manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
-        }*/
         create("360dev"){
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "360"
         }
+        create("tencent"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "tencent"
+        }
+        /*create("xiaomi"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
+        }*/
     }
     signingConfigs {
         create("release") {
