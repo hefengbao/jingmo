@@ -24,6 +24,7 @@ localProperties.load(FileInputStream(localPropertiesFile))
 val buglyId = localProperties["bugly_id"] as String
 val buglyPrivacyUrl = localProperties["bugly_privacy_url"] as String
 val userAgreementUrl = localProperties["user_agreement_url"] as String
+val privacyPolicyUrl = localProperties["privacy_policy_url"] as String
 val userAgreementVersion = 1 // 用户协议变动时 +1
 val icp = localProperties["icp"] as String
 
@@ -39,8 +40,8 @@ android {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1_015_002
-        versionName = "1.15.2"
+        versionCode = 1_015_003
+        versionName = "1.15.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -83,6 +84,14 @@ android {
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "huawei"
         }
+        create("360dev"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "360"
+        }
+        create("tencent"){
+            dimension = "version"
+            manifestPlaceholders["APP_CHANNEL"] = "tencent"
+        }
         /*create("xiaomi"){
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
@@ -103,6 +112,7 @@ android {
             buildConfigField("String","BUGLY_ID", buglyId)
             buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
+            buildConfigField("String","PRIVACY_POLICY_URL", privacyPolicyUrl)
             buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
             buildConfigField("String","ICP", icp)
             buildConfigField("String","BASE_URL_1", baseUrl1)
@@ -128,6 +138,7 @@ android {
             buildConfigField("String","BUGLY_ID", buglyId)
             buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
+            buildConfigField("String","PRIVACY_POLICY_URL", privacyPolicyUrl)
             buildConfigField("int","USER_AGREEMENT_VERSION",  "$userAgreementVersion")
             buildConfigField("String","ICP", icp)
             buildConfigField("String","BASE_URL_1", baseUrl1)

@@ -10,8 +10,6 @@
 package com.hefengbao.jingmo
 
 import android.os.Bundle
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -19,9 +17,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -36,8 +34,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -181,27 +185,43 @@ private fun UserAgreementScreen(
             }
         },
         text = {
-            Column {
-                AndroidView(
-                    factory = { context ->
-                        WebView(context).apply {
-                            settings.javaScriptEnabled = true
-                            settings.domStorageEnabled = true  // 启用 DOM 存储
-                            settings.loadWithOverviewMode = true  // 适应屏幕大小
-                            settings.useWideViewPort = true  // 启用广泛视图模式
-
-                            // 设置 WebViewClient 以防止外部浏览器打开链接
-                            webViewClient = object : WebViewClient() {
-                                override fun onPageFinished(view: WebView?, url: String?) {
-                                    super.onPageFinished(view, url)
-                                }
-                            }
-
-                            loadUrl(BuildConfig.USER_AGREEMENT_URL)
-                        }
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = buildAnnotatedString {
+                    append("欢迎使用『京墨文库』APP，为了更好的保护您的个人信息和隐私，在使用『京墨文库』服务之前，请仔细阅读")
+                    withLink(
+                        LinkAnnotation.Url(
+                            url = BuildConfig.USER_AGREEMENT_URL,
+                            styles = TextLinkStyles(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    textDecoration = TextDecoration.Underline
+                                ),
+                            )
+                        )
+                    ) {
+                        append("《用户协议》")
                     }
-                )
-            }
+                    append("和")
+                    withLink(
+                        LinkAnnotation.Url(
+                            url = BuildConfig.PRIVACY_POLICY_URL,
+                            styles = TextLinkStyles(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    textDecoration = TextDecoration.Underline
+                                ),
+                            )
+                        )
+                    ) {
+                        append("《隐私政策》")
+                    }
+                    append("。")
+                }
+            )
+        },
+        title = {
+            Text("温馨提示")
         }
     )
 }
