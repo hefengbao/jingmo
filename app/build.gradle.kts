@@ -92,10 +92,11 @@ android {
             dimension = "version"
             manifestPlaceholders["APP_CHANNEL"] = "tencent"
         }
-        /*create("xiaomi"){
+        // 酷安
+        create("coolapk"){
             dimension = "version"
-            manifestPlaceholders["APP_CHANNEL"] = "xiaomi"
-        }*/
+            manifestPlaceholders["APP_CHANNEL"] = "coolapk"
+        }
     }
     signingConfigs {
         create("release") {
