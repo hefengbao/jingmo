@@ -12,7 +12,6 @@ package com.hefengbao.jingmo.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hefengbao.jingmo.common.network.Result
-import com.hefengbao.jingmo.data.database.entity.classicalliterature.WritingEntity
 import com.hefengbao.jingmo.data.model.Dataset
 import com.hefengbao.jingmo.data.model.china.asWorldCulturalHeritageEntity
 import com.hefengbao.jingmo.data.model.chinese.asAntitheticalCoupletEntity
@@ -62,6 +61,7 @@ class DataViewModel @Inject constructor(
     private val _chinaWorldCultureHeritageProgress: MutableStateFlow<Float> = MutableStateFlow(0f)
     val chinaWorldCultureHeritageProgress: SharedFlow<Float> = _chinaWorldCultureHeritageProgress
     fun syncChinaWorldCultureHeritage(total: Int, version: Int) {
+        _chinaWorldCultureHeritageResult.value = SyncStatus.Loading
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
@@ -70,19 +70,15 @@ class DataViewModel @Inject constructor(
                     is Result.Error -> {
                         _chinaWorldCultureHeritageResult.value =
                             SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
-                    Result.Loading -> {
-                        _chinaWorldCultureHeritageResult.value = SyncStatus.Loading
-                    }
-
+                    Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChinaWorldCultureHeritage(it.asWorldCulturalHeritageEntity())
-                            count++
-                            _chinaWorldCultureHeritageProgress.value = count.toFloat() / total
-                        }
-
+                        val entities = response.data.data.map { it.asWorldCulturalHeritageEntity() }
+                        repository.insertChinaWorldCultureHeritageAll(entities)
+                        count += entities.size
+                        _chinaWorldCultureHeritageProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -110,16 +106,15 @@ class DataViewModel @Inject constructor(
                     is Result.Error -> {
                         _chineseAntitheticalCoupletResult.value =
                             SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseAntitheticalCouplet(it.asAntitheticalCoupletEntity())
-                            count++
-                            _chineseAntitheticalCoupletProgress.value = count.toFloat() / total
-                        }
-
+                        val entities = response.data.data.map { it.asAntitheticalCoupletEntity() }
+                        repository.insertChineseAntitheticalCoupletAll(entities)
+                        count += entities.size
+                        _chineseAntitheticalCoupletProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -145,15 +140,15 @@ class DataViewModel @Inject constructor(
                 when (val response = repository.syncChineseExpression(version, page)) {
                     is Result.Error -> {
                         _chineseExpressionResult.value = SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseExpression(it.asExpressionEntity())
-                            count++
-                            _chineseExpressionResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asExpressionEntity() }
+                        repository.insertChineseExpressionAll(entities)
+                        count += entities.size
+                        _chineseExpressionResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -177,16 +172,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseKnowledge(version, page)) {
-                    is Result.Error -> _chineseKnowledgeResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseKnowledgeResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChinesKnowledge(it.asChineseKnowledgeEntity())
-                            count++
-                            _chineseKnowledgeResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asChineseKnowledgeEntity() }
+                        repository.insertChinesKnowledgeAll(entities)
+                        count += entities.size
+                        _chineseKnowledgeResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -210,16 +207,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseModernPoetry(version, page)) {
-                    is Result.Error -> _chineseModernPoetryResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseModernPoetryResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseModernPoetry(it.asModernPoetryEntity())
-                            count++
-                            _chineseModernPoetryResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asModernPoetryEntity() }
+                        repository.insertChineseModernPoetryAll(entities)
+                        count += entities.size
+                        _chineseModernPoetryResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -243,16 +242,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseProverb(version, page)) {
-                    is Result.Error -> _chineseProverbResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseProverbResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseProverb(it.asProverbEntity())
-                            count++
-                            _chineseProverbResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asProverbEntity() }
+                        repository.insertChineseProverbAll(entities)
+                        count += entities.size
+                        _chineseProverbResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -276,16 +277,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseQuote(version, page)) {
-                    is Result.Error -> _chineseQuoteResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseQuoteResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseQuote(it.asQuoteEntity())
-                            count++
-                            _chineseQuoteResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asQuoteEntity() }
+                        repository.insertChineseQuoteAll(entities)
+                        count += entities.size
+                        _chineseQuoteResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -309,16 +312,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseWisecrack(version, page)) {
-                    is Result.Error -> _chineseWisecrackResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseWisecrackResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseWisecrack(it.asChineseWisecrackEntity())
-                            count++
-                            _chineseWisecracksResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asChineseWisecrackEntity() }
+                        repository.insertChineseWisecrackAll(entities)
+                        count += entities.size
+                        _chineseWisecracksResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -342,16 +347,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseCharacter(version, page)) {
-                    is Result.Error -> _chineseCharacterResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseCharacterResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseCharacter(it.asCharacterEntity())
-                            count++
-                            _chineseCharacterResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asCharacterEntity() }
+                        repository.insertChineseCharacterAll(entities)
+                        count += entities.size
+                        _chineseCharacterResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -373,20 +380,19 @@ class DataViewModel @Inject constructor(
         viewModelScope.launch {
             var page: Int? = 1
             var count = 0
-
             while (page != null) {
                 when (val response = repository.syncChineseIdiom(version, page)) {
                     is Result.Error -> {
                         _chineseIdiomResult.value = SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseIdiom(it.asIdiomEntity())
-                            count++
-                            _chineseIdiomResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asIdiomEntity() }
+                        repository.insertChineseIdiomAll(entities)
+                        count += entities.size
+                        _chineseIdiomResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -412,15 +418,15 @@ class DataViewModel @Inject constructor(
                 when (val response = repository.syncChineseLyric(version, page)) {
                     is Result.Error -> {
                         _chineseLyricResult.value = SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseLyric(it.asLyricEntity())
-                            count++
-                            _chineseLyricResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asLyricEntity() }
+                        repository.insertChineseLyricAll(entities)
+                        count += entities.size
+                        _chineseLyricResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -448,16 +454,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncClassicalLiteraturePeople(version, page)) {
-                    is Result.Error -> _classicalLiteraturePeopleResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _classicalLiteraturePeopleResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertClassicalLiteraturePeople(it.asPeopleEntity())
-                            count++
-                            _classicalLiteraturePeopleResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asPeopleEntity() }
+                        repository.insertClassicalLiteraturePeopleAll(entities)
+                        count += entities.size
+                        _classicalLiteraturePeopleResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -488,21 +496,21 @@ class DataViewModel @Inject constructor(
                     is Result.Error -> {
                         _classicalLiteratureClassicPoemResult.value =
                             SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertClassicalLiteratureClassicPoem(it.asClassicPoemEntity())
-                            count++
-                            _classicalLiteratureClassicPoemResultProgress.value =
-                                count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asClassicPoemEntity() }
+                        repository.insertClassicalLiteratureClassicPoemAll(entities)
+                        count += entities.size
+                        _classicalLiteratureClassicPoemResultProgress.value =
+                            count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
             }
-            if (total == count) {
+            if (count == total) {
                 preference.setClassicalLiteratureClassicPoemsVersion(version)
             }
             _classicalLiteratureClassicPoemResult.value = SyncStatus.Success
@@ -528,16 +536,16 @@ class DataViewModel @Inject constructor(
                     is Result.Error -> {
                         _classicalLiteratureSentenceResult.value =
                             SyncStatus.Error(response.exception)
+                        return@launch
                     }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertClassicalLiteratureSentence(it.asSentenceEntity())
-                            count++
-                            _classicalLiteratureSentenceResultProgress.value =
-                                count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asSentenceEntity() }
+                        repository.insertClassicalLiteratureSentenceAll(entities)
+                        count += entities.size
+                        _classicalLiteratureSentenceResultProgress.value =
+                            count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -561,16 +569,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseRiddle(version, page)) {
-                    is Result.Error -> _chineseRiddleResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseRiddleResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseRiddle(it.asRiddleEntity())
-                            count++
-                            _chineseRiddleResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asRiddleEntity() }
+                        repository.insertChineseRiddleAll(entities)
+                        count += entities.size
+                        _chineseRiddleResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -594,16 +604,18 @@ class DataViewModel @Inject constructor(
             var count = 0
             while (page != null) {
                 when (val response = repository.syncChineseTongueTwister(version, page)) {
-                    is Result.Error -> _chineseTongueTwisterResult.value =
-                        SyncStatus.Error(response.exception)
+                    is Result.Error -> {
+                        _chineseTongueTwisterResult.value =
+                            SyncStatus.Error(response.exception)
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
-                        response.data.data.map {
-                            repository.insertChineseTongueTwister(it.asTongueTwisterEntity())
-                            count++
-                            _chineseTongueTwisterResultProgress.value = count.toFloat() / total
-                        }
+                        val entities = response.data.data.map { it.asTongueTwisterEntity() }
+                        repository.insertChineseTongueTwisterAll(entities)
+                        count += entities.size
+                        _chineseTongueTwisterResultProgress.value = count.toFloat() / total
                         page = response.data.nextPage
                     }
                 }
@@ -648,19 +660,19 @@ class DataViewModel @Inject constructor(
                         writingCurrentPage.value
                     )
                 ) {
-                    is Result.Error -> _classicalLiteratureWritingResult.value == SyncStatus.Error(
-                        response.exception
-                    )
+                    is Result.Error -> {
+                        _classicalLiteratureWritingResult.value = SyncStatus.Error(
+                            response.exception
+                        )
+                        return@launch
+                    }
 
                     Result.Loading -> {}
                     is Result.Success -> {
+                        val entities = response.data.data.map { it.asWritingEntity() }
+                        repository.insertClassicalLiteratureWriting(entities)
 
-                        val list = mutableListOf<WritingEntity>()
-                        response.data.data.map { list.add(it.asWritingEntity()) }
-                        repository.insertClassicalLiteratureWriting(list)
-                        //repository.insertClassicalLiteratureWriting(response.data.data.map { it.asWritingEntity() })
-
-                        writingCurrentCount.value += response.data.data.size
+                        writingCurrentCount.value += entities.size
                         _classicalLiteratureWritingResultProgress.value =
                             (if (writingCurrentCount.value.toFloat() > total) total.toFloat() else writingCurrentCount.value.toFloat()) / total
 

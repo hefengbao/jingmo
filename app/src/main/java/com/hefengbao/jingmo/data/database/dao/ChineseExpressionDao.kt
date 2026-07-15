@@ -22,6 +22,9 @@ interface ChineseExpressionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ExpressionEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<ExpressionEntity>)
+
     @Query("select * from chinese_expression where id = (select e.id from chinese_expression e order by random() limit 1) limit 1")
     fun random(): Flow<ExpressionEntity?>
 

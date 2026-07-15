@@ -50,52 +50,68 @@ import com.hefengbao.jingmo.data.model.classicalliterature.Writing
 interface NetworkDatasourceRepository {
     suspend fun dataset(): Result<List<Dataset>>
     suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity)
+    suspend fun insertChinaWorldCultureHeritageAll(entities: List<WorldCulturalHeritageEntity>)
     suspend fun syncChinaWorldCultureHeritage(
         version: Int,
         page: Int
     ): Result<DataWrapper<WorldCulturalHeritage>>
 
     suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity)
+    suspend fun insertChineseAntitheticalCoupletAll(entities: List<AntitheticalCoupletEntity>)
     suspend fun syncChineseAntitheticalCouplet(
         version: Int,
         page: Int
     ): Result<DataWrapper<AntitheticalCouplet>>
 
     suspend fun insertChineseCharacter(entity: CharacterEntity)
+    suspend fun insertChineseCharacterAll(entities: List<CharacterEntity>)
     suspend fun syncChineseCharacter(version: Int, page: Int): Result<DataWrapper<Character>>
     suspend fun insertChineseExpression(entity: ExpressionEntity)
+    suspend fun insertChineseExpressionAll(entities: List<ExpressionEntity>)
     suspend fun syncChineseExpression(version: Int, page: Int): Result<DataWrapper<Expression>>
     suspend fun insertChineseIdiom(entity: IdiomEntity)
+    suspend fun insertChineseIdiomAll(entities: List<IdiomEntity>)
     suspend fun syncChineseIdiom(version: Int, page: Int): Result<DataWrapper<Idiom>>
     suspend fun insertChinesKnowledge(entity: KnowledgeEntity)
+    suspend fun insertChinesKnowledgeAll(entities: List<KnowledgeEntity>)
     suspend fun syncChineseKnowledge(version: Int, page: Int): Result<DataWrapper<ChineseKnowledge>>
     suspend fun insertChineseLyric(entity: LyricEntity)
+    suspend fun insertChineseLyricAll(entities: List<LyricEntity>)
     suspend fun syncChineseLyric(version: Int, page: Int): Result<DataWrapper<Lyric>>
     suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity)
+    suspend fun insertChineseModernPoetryAll(entities: List<ModernPoetryEntity>)
     suspend fun syncChineseModernPoetry(version: Int, page: Int): Result<DataWrapper<ModernPoetry>>
     suspend fun insertChineseProverb(entity: ProverbEntity)
+    suspend fun insertChineseProverbAll(entities: List<ProverbEntity>)
     suspend fun syncChineseProverb(version: Int, page: Int): Result<DataWrapper<Proverb>>
     suspend fun insertChineseQuote(entity: QuoteEntity)
+    suspend fun insertChineseQuoteAll(entities: List<QuoteEntity>)
     suspend fun syncChineseQuote(version: Int, page: Int): Result<DataWrapper<Quote>>
     suspend fun insertChineseRiddle(entity: RiddleEntity)
+    suspend fun insertChineseRiddleAll(entities: List<RiddleEntity>)
     suspend fun syncChineseRiddle(version: Int, page: Int): Result<DataWrapper<Riddle>>
     suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity)
+    suspend fun insertChineseTongueTwisterAll(entities: List<TongueTwisterEntity>)
     suspend fun syncChineseTongueTwister(
         version: Int,
         page: Int
     ): Result<DataWrapper<TongueTwister>>
 
     suspend fun insertChineseWisecrack(entity: WisecrackEntity)
+    suspend fun insertChineseWisecrackAll(entities: List<WisecrackEntity>)
     suspend fun syncChineseWisecrack(version: Int, page: Int): Result<DataWrapper<Wisecrack>>
     suspend fun insertClassicalLiteratureClassicPoem(entity: ClassicPoemEntity)
+    suspend fun insertClassicalLiteratureClassicPoemAll(entities: List<ClassicPoemEntity>)
     suspend fun syncClassicalLiteratureClassicPoem(
         version: Int,
         page: Int
     ): Result<DataWrapper<ClassicPoem>>
 
     suspend fun insertClassicalLiteraturePeople(entity: PeopleEntity)
+    suspend fun insertClassicalLiteraturePeopleAll(entities: List<PeopleEntity>)
     suspend fun syncClassicalLiteraturePeople(version: Int, page: Int): Result<DataWrapper<People>>
     suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity)
+    suspend fun insertClassicalLiteratureSentenceAll(entities: List<SentenceEntity>)
     suspend fun syncClassicalLiteratureSentence(
         version: Int,
         page: Int

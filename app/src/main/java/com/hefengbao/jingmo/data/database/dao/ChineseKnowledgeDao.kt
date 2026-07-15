@@ -23,6 +23,9 @@ interface ChineseKnowledgeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: KnowledgeEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<KnowledgeEntity>)
+
     @Query("select * from chinese_knowledge where id = :id limit 1")
     fun get(id: Int): Flow<KnowledgeEntity?>
 

@@ -22,6 +22,9 @@ interface ChineseIdiomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: IdiomEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<IdiomEntity>)
+
     @Query("select * from chinese_idiom where id = :id limit 1")
     fun get(id: Int): Flow<IdiomEntity?>
 

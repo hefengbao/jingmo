@@ -62,6 +62,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChinaWorldCultureHeritage(entity: WorldCulturalHeritageEntity) =
         database.chinaWorldCulturalHeritageDao().insert(entity)
 
+    override suspend fun insertChinaWorldCultureHeritageAll(entities: List<WorldCulturalHeritageEntity>) =
+        database.chinaWorldCulturalHeritageDao().insertAll(entities)
+
     override suspend fun syncChinaWorldCultureHeritage(
         version: Int,
         page: Int
@@ -72,6 +75,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun insertChineseAntitheticalCouplet(entity: AntitheticalCoupletEntity) =
         database.chineseAntitheticalCoupletDao().insert(entity)
+
+    override suspend fun insertChineseAntitheticalCoupletAll(entities: List<AntitheticalCoupletEntity>) =
+        database.chineseAntitheticalCoupletDao().insertAll(entities)
 
     override suspend fun syncChineseAntitheticalCouplet(
         version: Int,
@@ -84,6 +90,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChineseCharacter(entity: CharacterEntity) =
         database.chineseCharacterDao().insert(entity)
 
+    override suspend fun insertChineseCharacterAll(entities: List<CharacterEntity>) =
+        database.chineseCharacterDao().insertAll(entities)
+
 
     override suspend fun syncChineseCharacter(
         version: Int,
@@ -95,6 +104,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun insertChineseExpression(entity: ExpressionEntity) =
         database.chineseExpressionDao().insert(entity)
+
+    override suspend fun insertChineseExpressionAll(entities: List<ExpressionEntity>) =
+        database.chineseExpressionDao().insertAll(entities)
 
     override suspend fun syncChineseExpression(
         version: Int,
@@ -113,9 +125,15 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         database.chineseIdiomDao().insert(entity)
     }
 
+    override suspend fun insertChineseIdiomAll(entities: List<IdiomEntity>) =
+        database.chineseIdiomDao().insertAll(entities)
+
     override suspend fun insertChinesKnowledge(entity: KnowledgeEntity) {
         database.chineseKnowledgeDao().insert(entity)
     }
+
+    override suspend fun insertChinesKnowledgeAll(entities: List<KnowledgeEntity>) =
+        database.chineseKnowledgeDao().insertAll(entities)
 
     override suspend fun syncChineseKnowledge(
         version: Int,
@@ -128,6 +146,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChineseLyric(entity: LyricEntity) =
         database.chineseLyricDao().insert(entity)
 
+    override suspend fun insertChineseLyricAll(entities: List<LyricEntity>) =
+        database.chineseLyricDao().insertAll(entities)
+
     override suspend fun syncChineseLyric(version: Int, page: Int): Result<DataWrapper<Lyric>> =
         safeApiCall {
             network.chineseLyrics(version, page)
@@ -135,6 +156,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun insertChineseModernPoetry(entity: ModernPoetryEntity) =
         database.chineseModernPoetryDao().insert(entity)
+
+    override suspend fun insertChineseModernPoetryAll(entities: List<ModernPoetryEntity>) =
+        database.chineseModernPoetryDao().insertAll(entities)
 
     override suspend fun syncChineseModernPoetry(
         version: Int,
@@ -147,6 +171,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChineseProverb(entity: ProverbEntity) =
         database.chineseProverbDao().insert(entity)
 
+    override suspend fun insertChineseProverbAll(entities: List<ProverbEntity>) =
+        database.chineseProverbDao().insertAll(entities)
+
     override suspend fun syncChineseProverb(version: Int, page: Int): Result<DataWrapper<Proverb>> =
         safeApiCall {
             network.chineseProverbs(version, page)
@@ -154,6 +181,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
 
     override suspend fun insertChineseQuote(entity: QuoteEntity) =
         database.chineseQuoteDao().insert(entity)
+
+    override suspend fun insertChineseQuoteAll(entities: List<QuoteEntity>) =
+        database.chineseQuoteDao().insertAll(entities)
 
     override suspend fun syncChineseQuote(version: Int, page: Int): Result<DataWrapper<Quote>> =
         safeApiCall {
@@ -164,6 +194,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         database.chineseRiddleDao().insert(entity)
     }
 
+    override suspend fun insertChineseRiddleAll(entities: List<RiddleEntity>) =
+        database.chineseRiddleDao().insertAll(entities)
+
     override suspend fun syncChineseRiddle(version: Int, page: Int): Result<DataWrapper<Riddle>> =
         safeApiCall {
             network.chineseRiddles(version, page)
@@ -172,6 +205,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertChineseTongueTwister(entity: TongueTwisterEntity) {
         database.chineseTongueTwisterDao().insert(entity)
     }
+
+    override suspend fun insertChineseTongueTwisterAll(entities: List<TongueTwisterEntity>) =
+        database.chineseTongueTwisterDao().insertAll(entities)
 
     override suspend fun syncChineseTongueTwister(
         version: Int,
@@ -193,8 +229,14 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         database.chineseWisecrackDao().insert(entity)
     }
 
+    override suspend fun insertChineseWisecrackAll(entities: List<WisecrackEntity>) =
+        database.chineseWisecrackDao().insertAll(entities)
+
     override suspend fun insertClassicalLiteratureClassicPoem(entity: ClassicPoemEntity) =
         database.classicalLiteratureClassicPoemDao().insert(entity)
+
+    override suspend fun insertClassicalLiteratureClassicPoemAll(entities: List<ClassicPoemEntity>) =
+        database.classicalLiteratureClassicPoemDao().insertAll(entities)
 
     override suspend fun syncClassicalLiteratureClassicPoem(
         version: Int,
@@ -208,6 +250,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
         database.classicalLiteraturePeopleDao().insert(entity)
     }
 
+    override suspend fun insertClassicalLiteraturePeopleAll(entities: List<PeopleEntity>) =
+        database.classicalLiteraturePeopleDao().insertAll(entities)
+
     override suspend fun syncClassicalLiteraturePeople(
         version: Int,
         page: Int
@@ -219,6 +264,9 @@ class NetworkDatasourceRepositoryImpl @Inject constructor(
     override suspend fun insertClassicalLiteratureSentence(entity: SentenceEntity) {
         database.classicalLiteratureSentenceDao().insert(entity)
     }
+
+    override suspend fun insertClassicalLiteratureSentenceAll(entities: List<SentenceEntity>) =
+        database.classicalLiteratureSentenceDao().insertAll(entities)
 
     override suspend fun syncClassicalLiteratureSentence(
         version: Int,

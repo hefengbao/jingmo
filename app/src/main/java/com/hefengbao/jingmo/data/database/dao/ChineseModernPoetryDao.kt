@@ -23,6 +23,9 @@ interface ChineseModernPoetryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ModernPoetryEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<ModernPoetryEntity>)
+
     @Query("select * from chinese_modernpoetry where id = :id limit 1")
     fun get(id: Int): Flow<ModernPoetryEntity?>
 

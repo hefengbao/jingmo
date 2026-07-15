@@ -23,6 +23,9 @@ interface ChineseQuoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: QuoteEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<QuoteEntity>)
+
     @Query("select * from chinese_quote where id = :id limit 1")
     fun get(id: Int): Flow<QuoteEntity?>
 

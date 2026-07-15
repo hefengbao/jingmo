@@ -21,6 +21,9 @@ interface ChineseTongueTwisterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: TongueTwisterEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<TongueTwisterEntity>)
+
     @Query("select * from chinese_tonguetwister where id = :id")
     fun get(id: Int): Flow<TongueTwisterEntity?>
 

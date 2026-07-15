@@ -296,12 +296,15 @@ private fun SyncDataScreen(
     ) {
         when (datasetResult) {
             is Result.Error -> {
+            val context = LocalContext.current
+            LaunchedEffect(datasetResult) {
                 Toast.makeText(
-                    LocalContext.current,
+                    context,
                     "${datasetResult.exception?.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
 
             Result.Loading -> {
                 LinearProgressIndicator(modifier = modifier.fillMaxWidth())
@@ -602,7 +605,7 @@ private fun Item(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -621,7 +624,7 @@ private fun Item(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (progress > 0 && progress != 100f) {
+                if (progress > 0f && progress != 1f) {
                     Text(text = "${String.format("%.2f", progress * 100)}%")
                 }
 

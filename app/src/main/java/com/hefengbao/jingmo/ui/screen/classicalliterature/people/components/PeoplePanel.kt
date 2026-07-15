@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.PeopleEntity
 import com.hefengbao.jingmo.ui.component.EmphasizedTitle
 
+private val HTML_TAG_REGEX = "<[^>]+>".toRegex()
+
 @Composable
 fun PeoplePanel(
     modifier: Modifier = Modifier,
@@ -82,7 +84,7 @@ fun PeoplePanel(
 
         item {
             Column(
-                modifier = modifier.padding(16.dp, 8.dp),
+                modifier = Modifier.padding(16.dp, 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(text = people.name, style = MaterialTheme.typography.titleMedium)
@@ -93,7 +95,7 @@ fun PeoplePanel(
 
         item {
             Column(
-                modifier = modifier.padding(16.dp, 8.dp),
+                modifier = Modifier.padding(16.dp, 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 EmphasizedTitle(title = "主要生活朝代")
@@ -121,7 +123,7 @@ fun PeoplePanel(
             }.joinToString("")
             item {
                 Column(
-                    modifier = modifier.padding(16.dp, 8.dp),
+                    modifier = Modifier.padding(16.dp, 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     EmphasizedTitle(title = "别称")
@@ -133,7 +135,7 @@ fun PeoplePanel(
         if (!people.titles.isNullOrEmpty()) {
             item {
                 Column(
-                    modifier = modifier.padding(16.dp, 8.dp),
+                    modifier = Modifier.padding(16.dp, 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     EmphasizedTitle(title = "标签")
@@ -145,7 +147,7 @@ fun PeoplePanel(
         if (!people.hometown.isNullOrEmpty()) {
             item {
                 Column(
-                    modifier = modifier.padding(16.dp, 8.dp),
+                    modifier = Modifier.padding(16.dp, 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     EmphasizedTitle(title = "家乡")
@@ -165,7 +167,7 @@ fun PeoplePanel(
             people.details.forEach {
                 item {
                     Column(
-                        modifier = modifier.padding(16.dp, 8.dp),
+                        modifier = Modifier.padding(16.dp, 8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(text = "📖 ${it.book}")
@@ -173,8 +175,10 @@ fun PeoplePanel(
                         it.content?.let { content ->
                             Text(
                                 text = content.replace("<br />", "\n")
+                                    .replace("<br/>", "\n")
+                                    .replace("<br>", "\n")
                                     .replace("</p>", "\n")
-                                    .replace("<[^>]+>".toRegex(), "")
+                                    .replace(HTML_TAG_REGEX, "")
                             )
                         }
                     }

@@ -24,6 +24,9 @@ interface ClassicalLiteratureClassicPoemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ClassicPoemEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<ClassicPoemEntity>)
+
     @Query("select * from classicalliterature_classicpoem where id = (select p.id from classicalliterature_classicpoem p order by random() limit 1) limit 1")
     fun random(): Flow<ClassicPoemEntity?>
 

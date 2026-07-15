@@ -21,6 +21,9 @@ interface ChinaWorldCulturalHeritageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: WorldCulturalHeritageEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<WorldCulturalHeritageEntity>)
+
     @Query("select * from china_worldcultureheritage where id = :id")
     fun get(id: Int): Flow<WorldCulturalHeritageEntity?>
 

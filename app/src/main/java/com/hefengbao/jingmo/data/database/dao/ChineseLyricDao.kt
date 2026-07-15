@@ -23,6 +23,9 @@ interface ChineseLyricDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: LyricEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<LyricEntity>)
+
     @Query("select * from chinese_lyric where id = :id limit 1")
     fun get(id: Int): Flow<LyricEntity?>
 

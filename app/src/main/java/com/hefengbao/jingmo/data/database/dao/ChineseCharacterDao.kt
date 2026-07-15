@@ -22,6 +22,9 @@ interface ChineseCharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: CharacterEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<CharacterEntity>)
+
     @Query("select * from chinese_character where id = (select d.id from chinese_character d order by random() limit 1) limit 1")
     fun random(): Flow<CharacterEntity?>
 
