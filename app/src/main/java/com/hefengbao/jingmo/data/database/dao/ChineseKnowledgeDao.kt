@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.hefengbao.jingmo.data.database.entity.chinese.KnowledgeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -32,7 +31,7 @@ interface ChineseKnowledgeDao {
     @Query("select * from chinese_knowledge where id in (:ids)")
     fun get(ids: List<Int>): Flow<List<KnowledgeEntity>>
 
-    @Query("select k.*from chinese_knowledge k where k.id = (select id from chinese_knowledge order by random() limit 1) limit 1")
+    @Query("select k.* from chinese_knowledge k where k.id = (select id from chinese_knowledge order by random() limit 1) limit 1")
     fun random(): Flow<KnowledgeEntity?>
 
     @Query("select id from chinese_knowledge where id > :id order by id asc limit 1")
@@ -41,8 +40,7 @@ interface ChineseKnowledgeDao {
     @Query("select id from chinese_knowledge where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Transaction
-    @Query("select * from chinese_knowledge join chinese_knowledge_fts on chinese_knowledge_fts.rowid = chinese_knowledge.id where chinese_knowledge_fts match :query")
+    @Query("select k.* from chinese_knowledge k join chinese_knowledge_fts on chinese_knowledge_fts.rowid = k.id where chinese_knowledge_fts match :query")
     fun search(query: String): Flow<List<KnowledgeEntity>>
 
     @Query("select k.* from bookmarks b join chinese_knowledge k on b.bookmarkable_id = k.id and b.bookmarkable_model = 'chinese_knowledge' order by b.id desc")

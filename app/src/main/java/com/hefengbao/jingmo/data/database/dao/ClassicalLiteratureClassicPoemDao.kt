@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.ClassicPoemEntity
 import com.hefengbao.jingmo.data.model.IdTitle
 import kotlinx.coroutines.flow.Flow
@@ -48,8 +47,7 @@ interface ClassicalLiteratureClassicPoemDao {
     @Query("select p.* from bookmarks b join classicalliterature_classicpoem p on b.bookmarkable_id = p.id and b.bookmarkable_model = 'classicalliterature_classicpoem' order by b.id desc")
     fun bookmarks(): PagingSource<Int, ClassicPoemEntity>
 
-    @Transaction
-    @Query("select * from classicalliterature_classicpoem join classicalliterature_classicpoem_fts on classicalliterature_classicpoem_fts.rowid = classicalliterature_classicpoem.id where classicalliterature_classicpoem_fts match :query")
+    @Query("select p.* from classicalliterature_classicpoem p join classicalliterature_classicpoem_fts on classicalliterature_classicpoem_fts.rowid = p.id where classicalliterature_classicpoem_fts match :query")
     fun search(query: String): Flow<List<ClassicPoemEntity>>
 
     @Query("delete from classicalliterature_classicpoem")

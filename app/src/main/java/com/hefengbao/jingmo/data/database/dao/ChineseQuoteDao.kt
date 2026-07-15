@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.hefengbao.jingmo.data.database.entity.chinese.QuoteEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -41,8 +40,7 @@ interface ChineseQuoteDao {
     @Query("select id from chinese_quote where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Transaction
-    @Query("select * from chinese_quote join chinese_quote_fts on chinese_quote_fts.rowid = chinese_quote.id where chinese_quote_fts match :query")
+    @Query("select q.* from chinese_quote q join chinese_quote_fts on chinese_quote_fts.rowid = q.id where chinese_quote_fts match :query")
     fun search(query: String): Flow<List<QuoteEntity>>
 
     @Query("select q.* from bookmarks b join chinese_quote q on b.bookmarkable_id = q.id and b.bookmarkable_model = 'chinese_quote' order by b.id desc")

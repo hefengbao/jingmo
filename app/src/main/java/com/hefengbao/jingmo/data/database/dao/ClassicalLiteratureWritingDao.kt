@@ -38,7 +38,7 @@ interface ClassicalLiteratureWritingDao {
     @Query("select * from classicalliterature_writing w order by id asc")
     fun list(): PagingSource<Int, WritingEntity>
 
-    @Query("select * from classicalliterature_writing w join classicalliterature_writing_fts fts on fts.rowid = w.id where classicalliterature_writing_fts match :query limit 200")
+    @Query("select w.* from classicalliterature_writing w join classicalliterature_writing_fts on classicalliterature_writing_fts.rowid = w.id where classicalliterature_writing_fts match :query limit 200")
     fun search(query: String): PagingSource<Int, WritingEntity>
 
     @Query("select * from classicalliterature_writing where author like '%'|| :author || '%' order by id asc")

@@ -14,7 +14,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.hefengbao.jingmo.data.database.entity.chinese.LyricEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -32,7 +31,7 @@ interface ChineseLyricDao {
     @Query("select * from chinese_lyric where id in (:ids)")
     fun get(ids: List<Int>): Flow<List<LyricEntity>>
 
-    @Query("select l.*from chinese_lyric l where l.id = (select id from chinese_lyric order by random() limit 1) limit 1")
+    @Query("select l.* from chinese_lyric l where l.id = (select id from chinese_lyric order by random() limit 1) limit 1")
     fun random(): Flow<LyricEntity?>
 
     @Query("select id from chinese_lyric where id > :id order by id asc limit 1")
@@ -41,8 +40,7 @@ interface ChineseLyricDao {
     @Query("select id from chinese_lyric where id < :id order by id desc limit 1")
     fun getPrevId(id: Int): Flow<Int?>
 
-    @Transaction
-    @Query("select * from chinese_lyric join chinese_lyric_fts on chinese_lyric_fts.rowid = chinese_lyric.id where chinese_lyric_fts match :query")
+    @Query("select l.* from chinese_lyric l join chinese_lyric_fts on chinese_lyric_fts.rowid = l.id where chinese_lyric_fts match :query")
     fun search(query: String): Flow<List<LyricEntity>>
 
     @Query("select l.* from bookmarks b join chinese_lyric l on b.bookmarkable_id = l.id and b.bookmarkable_model = 'chinese_lyric' order by b.id desc")
