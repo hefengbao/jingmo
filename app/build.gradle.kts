@@ -5,7 +5,6 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose.compiler)
@@ -35,12 +34,12 @@ val baseUrl3 = localProperties["base_url3"] as String
 
 android {
     namespace = "com.hefengbao.jingmo"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.hefengbao.jingmo"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1_016_001
         versionName = "1.16.1"
 
@@ -125,14 +124,7 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
-            applicationVariants.all {
-                val buildType = this.buildType.name
-                outputs.all {
-                    if (this is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
-                        outputFileName = "jingmo_v${defaultConfig.versionName}_$buildType.apk"
-                    }
-                }
-            }
+
             buildConfigField("String","BUGLY_ID", buglyId)
             buildConfigField("String","BUGLY_PRIVACY_URL", buglyPrivacyUrl)
             buildConfigField("String","USER_AGREEMENT_URL", userAgreementUrl)
@@ -166,6 +158,25 @@ android {
     }
     ksp {
         arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
+    }
+}
+
+androidComponents {
+    onVariants(selector().withBuildType("release")) { variant ->
+        val buildType = variant.buildType!!
+        val versionName = android.defaultConfig.versionName!!
+        tasks.matching {
+            it.name.startsWith("assemble") && it.name.endsWith("Release")
+        }.configureEach {
+            doLast {
+                layout.buildDirectory.dir("outputs/apk").get().asFile
+                    .walkTopDown()
+                    .filter { it.extension == "apk" }
+                    .forEach { apk ->
+                        apk.renameTo(File(apk.parentFile, "jingmo_v${versionName}_$buildType.apk"))
+                    }
+            }
+        }
     }
 }
 
